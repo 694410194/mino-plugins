@@ -1,0 +1,17 @@
+mino-image
+Copyright (c) 2026 Mino
+
+This product includes software derived from dsh-image-gen
+(https://github.com/shanliuling/dsh-image-gen), Copyright (c) 2026
+shanliuling, licensed under the Apache License, Version 2.0.
+A copy of the license is included in the LICENSE file.
+
+Significant modifications by Mino:
+- Reduced the multi-provider channel system to the single Mino account
+  channel (api.mino.baby), billed through the Mino account balance.
+- Replaced BYOK credential resolution with the signed-in account token
+  resolved through the host's deepseekAccount service.
+- Removed subscription OAuth channels, ComfyUI, Studio/workbench,
+  gallery, inspiration library, and the tldraw canvas.
+- Rebranded plugin identity, routes, presentation metadata kinds, and
+  user-facing copy from dsh-image-gen to mino-image.

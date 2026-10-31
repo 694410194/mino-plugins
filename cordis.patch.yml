@@ -1,0 +1,5 @@
+- insert:
+    - id: mino-image
+      name: mino-image
+      config:
+        model: ''
