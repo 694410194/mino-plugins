@@ -844,7 +844,7 @@ function registerBrowserTools(ctx, bridge, options) {
 		const sessionId = exec.agent === void 0 ? void 0 : String(exec.agent.id);
 		return normalizeTextResult(sessionId === void 0 ? await bridge.requestTool(name, args, exec.signal, options.toolTimeoutMs) : await bridge.requestTool(name, args, exec.signal, options.toolTimeoutMs, sessionId), name);
 	};
-	for (const tool of defineTools(call, options)) disposers.set(tool.name, ctx.tools.register(tool));
+	for (const tool of defineTools(call, options)) disposers.set(tool.name, ctx.tools.register(tool, { when: () => bridge.hasConnection() }));
 	return disposers;
 }
 /** Normalize the extension's result payload to the canonical `{ text }` shape. */
@@ -2438,7 +2438,7 @@ function mountBridge(ctx, resolved, tokenRes, hostApi) {
 	if (systemPrompt !== void 0) ctx.effect(() => systemPrompt.section({
 		name: "tool:bridge-browser",
 		order: 107,
-		text: "A browser bridge may be connected. To read or operate the user's active browser page, call browser_snapshot (text-only; numbered items are the click/type targets), unless the current turn already includes a plugin-provided followed-page browser_snapshot. Reuse that injected snapshot and its indices directly. Never assume page content you have not snapshotted."
+		text: () => server.hasConnection() ? "A browser bridge is connected. To read or operate the user's active browser page, call browser_snapshot (text-only; numbered items are the click/type targets), unless the current turn already includes a plugin-provided followed-page browser_snapshot. Reuse that injected snapshot and its indices directly. Never assume page content you have not snapshotted." : ""
 	}), "bridge-browser: system prompt section");
 	ctx.logger.info(tokenRes.generated ? `browser bridge: new token generated and persisted at ${tokenRes.file} (chmod 0600); connect the extension and paste it in its settings` : `browser bridge: using token from ${tokenRes.file}`);
 	ctx.logger.info(`browser bridge: listening on ${BRIDGE_PATH}`);

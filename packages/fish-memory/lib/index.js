@@ -4232,6 +4232,7 @@ export function apply(ctx) {
         //   （这里会把用户设的「称呼」拼进去，称呼里带 {{ }} 一样会炸）
         interpolate: false,
         text: () => {
+          if (!isEnabled(sid) || 归档名单(ctx).has(sid)) return ''
           const p = ownerNameOf(sid) || userPronoun()
           const self = selfNameOf(sid)
           return (
@@ -4272,6 +4273,8 @@ export function apply(ctx) {
       interpolate: false,
       text: () => {
         try {
+          // 开关和归档按请求判 —— 关掉或归档的那一轮就不注入，挂载本身不动
+          if (!isEnabled(sid) || 归档名单(ctx).has(sid)) return ''
           const now = Date.now()
           // ⭐ 1.4.0：**这一轮真正的那句优先**（会话里最后一条 user 消息）；
           //   监听那句只在会话读不出来时兜底 —— 见 选查询词() 上面的说明。
@@ -4367,12 +4370,11 @@ export function apply(ctx) {
       },
     })
 
-    // ⭐⭐ 1.3.4：remember 工具**挪回全局**（见下面「同步工具」那一段）。
-    //
-    // 从前它挂在这里（`agent.ctx.tools.register`），会话开关一关就跟着卸掉。
-    // 代价是：默认关 + 要等 0.5 秒的扫描才挂到新会话上 ——
-    // 表现就是「我开了会话，工具列表里根本没有 remember」。
-    // 现在工具全局常驻，这个函数只管**注入**（每轮想起来几条）。
+    // remember 工具是全局的、按 when 门控（见下面注册那一段）——
+    // 不在这里注册第二份：scoped 注册会按对象遮蔽全局那份，
+    // 已入场的工具按对象同一性校验 → 换对象就是当场 unknown tool（issue #15 的根因）。
+    // 这个函数只管**注入**（每轮想起来几条）和常驻提示；会话开关、归档、
+    // 总开关都由注入函数的 text 按请求评估，关掉立即生效，不用卸挂载。
     // 会话开关关着的会话调 remember 时，execute 会明确回一句「这间没开记忆」，
     // 不会假打 ✓（render 认 ok:false 那条早就修好了）。
 
@@ -4444,177 +4446,128 @@ export function apply(ctx) {
     return true
   }
 
-  // ---------- remember 工具：全局注册（1.3.4 起）----------
+  // ---------- remember 工具：全局注册一次，可用性交给 when ----------
   //
-  // 以前是**按会话挂**（`agent.ctx.tools.register`），会话开关一关就跟着卸掉。
-  // 好处是「关掉就真的不出现」，坏处很实际：
-  //   ① 默认关的那些版本里，一堆人开了会话也找不到这个工具；
-  //   ② 挂载靠 tick 每 0.5 秒扫一遍，刚打开的会话那一小段里没有工具；
-  //   ③ 开关一抖，工具列表就变 → 提示词前缀跟着变 → 那一轮全量重算。
-  // 现在改成插件级全局注册：所有会话都看得见 remember；
-  // 会话开关只决定「注不注入」和「调了记不记」（关着的会话 execute 会明确回一句）。
-  // 总开关关掉时这里会把它摘下来 —— 那是用户自己说不要，就别留个点不动的符号。
-  //
-  // ⚠️ `工具在` / `工具off` 的声明**必须在这之前**：tick() 在下面就会调 同步工具()，
-  //    声明放到后面就是 TDZ（抛错还会被外层 try/catch 吃掉，表现成「工具莫名其妙不在」）。
-  let 工具off = null
-  let 工具在 = false
-
-  function 同步工具() {
-    try {
-      if (!ctx.tools || typeof ctx.tools.register !== 'function') return
-      const 要 = globalOn()
-      if (要 && !工具在) {
-        工具off = ctx.tools.register(makeRememberTool(ctx))
-        工具在 = true
-        diag('remember 工具挂上了（全局）')
-      } else if (!要 && 工具在) {
-        卸掉效果(工具off)
-        工具off = null
-        工具在 = false
-        diag('remember 工具卸下了（总开关关着）')
-      }
-    } catch (error) {
-      diag('同步工具失败：' + (error && error.message))
-    }
+  // when 是宿主 tools 服务的官方条件机制：每步装配前评估一次，返回 false 时
+  // 工具既不进 schema 也不能 dispatch —— 总开关/会话开关因此不用靠
+  // 「注册/卸载账本」同步，切换下一步就生效，工具表也不再变来变去。
+  // 同名工具绝不注册第二份：agent 作用域的注册会按对象遮蔽全局注册，
+  // 而已入场的工具按对象同一性校验 → 换对象 = 当场 unknown tool（issue #15 的根因）。
+  try {
+    ctx.tools.register(makeRememberTool(ctx), {
+      when: (context) => {
+        try {
+          const agent = context && context.agent
+          if (!agent) return false
+          if (是子代理(agent)) return false
+          const sid = sessionIdOf(agent.session) || String(agent.id || '')
+          return !!sid && isEnabled(sid)
+        } catch (error) {
+          return false
+        }
+      },
+    })
+    diag('remember 工具挂上了（全局 + when 门控）')
+  } catch (error) {
+    diag('remember 工具注册失败：' + (error && error.message))
   }
 
-  /**
-   * ⭐ 1.3.9（issue #15）：卸一个会话挂的东西时，**按 agent 注册的那个 remember 也要卸** ——
-   *   只卸记忆那段的话，工具会留在那个 agent 的 ctx 上，实例换了还在。
-   */
+  /** 卸一个会话挂的东西 —— mountFor 返回的 disposer 只管注入两段。 */
   function 卸掉挂载(v) {
     if (!v) return
     try {
       v.off && v.off()
     } catch (error) {}
-    try {
-      v.工具off && v.工具off()
-    } catch (error) {}
   }
 
-  // 给每个活着的 agent 挂它自己的那段记忆
-  let 上次心跳 = ''        // 只用来判断「agents 数变了没」，不再每 3 秒写一行日志
-  function tick() {
+  // ---------- 按会话挂载：走官方生命周期事件，不轮询 ----------
+  //
+  // agent/created 是 serial、被 await、保证早于首次 prompt 组装 ——
+  // 比 0.5s 扫 agents.list() 准：新会话不存在「schema 有、底下没挂」的窗口；
+  // 会话重开/换实例时，新实例的 created 会再发一次，天然重挂。
+  // 挂上的 section/context/监听器都注册在 agent.ctx 上，作用域销毁时
+  // 平台自动回滚 —— mounted 账只剩「插件卸载时主动清一遍」这一个用途。
+  // 会话开关/归档不在这里判：注入函数的 text 按请求评估，关掉立即生效。
+
+  function 该挂(agent) {
     try {
-      // 总开关跟着配置走：开着就保证工具在，关掉就把工具摘下来
-      同步工具()
-      const list = ctx.agents.list() || []
-      const 归档的 = 归档名单(ctx)
-      // 2026-10-25（issue #2）：这行以前每 3 秒无条件写，占整个日志的 97%；
-      // 心跳没什么诊断价值 —— 只在「agent 数变了」时记一条。
-      const 心跳 = 'agents=' + list.length
-      if (心跳 !== 上次心跳) { 上次心跳 = 心跳; diag('tick：' + 心跳) }
-      for (const agent of list) {
-        const sid = sessionIdOf(agent.session)
-        if (!sid) { diag('  跳过：拿不到会话 id'); continue }
-        // 归档了就不再注入，而且把它卸下来 —— 归档=藏起来，不该还占她的上下文 ✓
-        if (归档的.has(sid)) {
-          const v = mounted.get(sid)
-          if (v) {
-            卸掉挂载(v)
-            mounted.delete(sid)
-            diag('  归档了，卸下 ' + sid)
-          }
-          continue
-        }
-        // 子代理（派出去干活的）不挂记忆：它只做一件事，给它建一份库既没用又白写文件
-        if (是子代理(agent)) {
-          const v = mounted.get(sid)
-          if (v) {
-            卸掉挂载(v)
-            mounted.delete(sid)
-            diag('  子代理，卸下 ' + sid)
-          }
-          continue
-        }
-        // 分支出来的会话：先把来处的记忆继承过来（每个会话只查一次）
-        if (!查过分支.has(sid)) {
-          查过分支.add(sid)
-          try {
-            继承分支记忆(agent, sid)
-          } catch (error) {
-            diag('  分支继承失败：' + (error && error.message))
-          }
-        }
-        // ⭐ 2026-09-21 修：**关掉了就要卸下来**
-        //
-        // 原来这两句的顺序是反的：
-        //     if (mounted.has(sid)) continue     ← 挂着就直接跳过
-        //     if (!isEnabled(sid)) continue      ← 关着的只是「不挂新的」
-        // 所以**把开关从开改成关，它不会卸** —— 已经挂上的注入和工具会一直留着，
-        // 只有「归档」那条路才会卸。「插件关了怎么还在写」
-        // 就是这个：关掉之后工具还在她的工具列表里 ✗
-        if (!isEnabled(sid)) {
-          const v = mounted.get(sid)
-          if (v) {
-            卸掉挂载(v)
-            mounted.delete(sid)
-            diag('  关了，卸下 ' + sid)
-          }
-          continue
-        }
-        // ⭐⭐ 2026-10-24 修（用户报：「已经有消息的会话，开记忆拿不到 remember 工具」）：
-        //   原来这里只按**会话 id** 记账（`mounted.has(sid)`）——只要挂过一次，
-        //   以后这个会话就再也不挂。可 **agent 实例是会被换掉的**
-        //   （会话重开、插件重载、宿主重建 agent 都会换一个新对象），
-        //   旧注册跟着旧 ctx 一起没了，而我们这边的账还写着「已挂上」⇒ 永远不重挂 ✗
-        //   症状正好是：空会话开记忆→当场挂在活着的那个 agent 上→能用；
-        //   有消息的会话→早就被换过实例→记账说挂上了、实际那个实例上没有工具。
-        //   → 现在连**实例**一起记：实例变了就卸旧的、重新挂。
-        const 已挂 = mounted.get(sid)
-        if (已挂 && 已挂.agent === agent) continue // 还是同一个 agent，不用重挂
-        if (已挂) {
-          卸掉挂载(已挂)
-          mounted.delete(sid)
-          diag('  agent 实例换过了，重挂 ' + sid)
-        }
-        diag('  试挂 ' + sid)
+      const sid = sessionIdOf(agent && agent.session)
+      if (!sid) return ''
+      // 子代理（派出去干活的）不挂记忆：它只做一件事，建一份库既没用又白写文件
+      if (是子代理(agent)) return ''
+      if (归档名单(ctx).has(sid)) return ''
+      const h = agent.session && agent.session.header
+      // preset 组合的会话是别的人格的地盘（酒馆跑团等），米洛记忆不掺和
+      if (h && h.agentPreset) return ''
+      return sid
+    } catch (error) {
+      return ''
+    }
+  }
+
+  function 挂agent(agent) {
+    const sid = 该挂(agent)
+    if (!sid) return
+    const 已挂 = mounted.get(sid)
+    if (已挂 && 已挂.agent === agent) return
+    if (已挂) {
+      // 同一 session 换了 agent 实例：旧实例的注册随其作用域销毁自动回收，
+      // 账上只要换到新实例名下即可
+      mounted.delete(sid)
+      diag('  agent 实例换过了，按新实例挂 ' + sid)
+    }
+    try {
+      // 分支出来的会话：先把来处的记忆继承过来（每个会话只查一次）
+      if (!查过分支.has(sid)) {
+        查过分支.add(sid)
         try {
-          const off = mountFor(agent, sid)
-          // ⭐ 1.3.9（issue #15）：**模型侧也要看得见 remember**。
-          //   只在插件层全局注册时，新会话组装出来的工具表里没有它（旧会话因为重建过才碰巧有），
-          //   模型直接 unknown tool。这里再按 agent 注册一份 —— 同名会盖住全局那份，不会变成两个。
-          let 工具off2 = null
-          try {
-            const at = agent && agent.ctx && agent.ctx.tools
-            if (at && typeof at.register === 'function' && globalOn()) {
-              工具off2 = at.register(makeRememberTool(ctx))
-            }
-          } catch (error) {
-            diag('  按 agent 注册 remember 失败：' + (error && error.message))
-          }
-          mounted.set(sid, { sid, agent, off, 工具off: 工具off2 })
-          diag('  ✓ 挂上 ' + sid + '（' + loadStore(sid).memories.length + ' 条）')
+          继承分支记忆(agent, sid)
         } catch (error) {
-          diag('  ✗ 挂 ' + sid + ' 失败：' + (error && error.message))
+          diag('  分支继承失败：' + (error && error.message))
         }
       }
-    } catch (error) {}
+      const off = mountFor(agent, sid)
+      mounted.set(sid, { sid, agent, off })
+      diag('  ✓ 挂上 ' + sid + '（' + loadStore(sid).memories.length + ' 条）')
+    } catch (error) {
+      diag('  ✗ 挂 ' + sid + ' 失败：' + (error && error.message))
+    }
   }
 
-  tick()
-  // 定时器不可用时也不能让 DSH 起不来
   try {
-    // ⚠️ 2026-10-25：3 秒 → **0.5 秒**。
-    //   起因：DSH 在「打开会话」时会新建 agent 实例，我们那条「实例变了就重挂」要等到下一跳才挂上；
-    //   窗口内如果先跑了一轮（比如 QQ 桥转进来一条），那一轮的工具列表里就没有 remember，
-    //   等挂上之后工具列表变了 → 下一轮前缀对不上 → **全量重算一次**。
-    //   tick 本身很便宜（`agents.list()` 读内存 + 归档名单优先走服务），0.5 秒完全扛得住。
-    ctx.effect(() => ctx.interval(tick, 500))
+    ctx.on('agent/created', (payload) => {
+      try {
+        挂agent(payload && payload.agent)
+      } catch (error) {}
+    })
   } catch (error) {
-    console.error('[记忆] 定时器不可用（不影响对话）：' + (error && error.message))
+    diag('agent/created 监听挂不上：' + (error && error.message))
   }
+
+  try {
+    ctx.on('agent/disposed', (payload) => {
+      try {
+        const agent = payload && payload.agent
+        if (!agent) return
+        for (const [sid, v] of mounted) {
+          if (v.agent === agent) mounted.delete(sid)
+        }
+      } catch (error) {}
+    })
+  } catch (error) {}
+
+  // 插件晚于会话激活（比如重载）时补一遍存量 —— 一次性扫，不挂表
+  try {
+    for (const agent of ctx.agents.list() || []) 挂agent(agent)
+  } catch (error) {}
+
+  // 插件卸载时把每个会话挂的注入主动清掉 —— agent 作用域上的注册归
+  // agent 自己的生命周期管，插件退出时不会自动跟着回滚。
+  // 全局 remember 注册在插件 ctx 上，卸载时平台自己会回收，不用管。
   ctx.effect(() => () => {
     for (const v of mounted.values()) 卸掉挂载(v)
     mounted.clear()
-    卸掉效果(工具off)
-    工具off = null
-    工具在 = false
   })
-
-  // remember 工具是**全局注册**的，见上面「同步工具」那一段。
-  // （这里留个记号，免得以后有人以为漏了。）
 
   // 诊断：看看每次组装时「模型能看到哪些工具」—— 查 remember 到底有没有出现
   let lastToolSig = ''
@@ -4755,21 +4708,8 @@ export function apply(ctx) {
         b = JSON.parse(body || '{}')
       } catch (error) {}
       const on = setGlobalOn(b.on !== false)
-      // 工具跟着总开关走（开 → 立刻注册；关 → 立刻摘掉）
-      同步工具()
-      if (!on) {
-        // 关掉时把所有会话的注入一起卸下，别等下一跳
-        for (const [sid, v] of Array.from(mounted.entries())) {
-          try {
-            v.off()
-          } catch (error) {}
-          mounted.delete(sid)
-        }
-      } else {
-        try {
-          tick()
-        } catch (error) {}
-      }
+      // 工具的 when 门控和注入函数的 text 都按步/按请求评估总开关 ——
+      // 切换当场生效，不需要动注册和挂载。
       diag('总开关 → ' + (on ? '开' : '关'))
       res.writeHead(200, { 'content-type': 'application/json; charset=utf-8' })
       res.end(JSON.stringify({ ok: true, on }))
@@ -4905,21 +4845,8 @@ export function apply(ctx) {
       } catch (error) {}
       const sid = String(b.session || '')
       const list = setEnabled(sid, !!b.on)
-      // 关掉的时候顺手把它卸载（不再记、不再读）
-      if (!b.on) {
-        const v = mounted.get(sid)
-        if (v) {
-          try {
-            v.off()
-          } catch (error) {}
-          mounted.delete(sid)
-        }
-      } else {
-        // 打开就立刻挂上，不用等那 3 秒的定时器 ✓
-        try {
-          tick()
-        } catch (error) {}
-      }
+      // 工具的 when 门控和注入函数的 text 都按步/按请求读这个开关 ——
+      // 切换当场生效，不用装卸挂载。
       diag('toggle：' + sid + ' → ' + (b.on ? '开' : '关') + '（现在开着 ' + list.length + ' 个）')
       res.writeHead(200, { 'content-type': 'application/json; charset=utf-8' })
       res.end(JSON.stringify({ ok: true, enabled: list }))
