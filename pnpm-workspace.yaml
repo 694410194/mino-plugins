@@ -1,5 +1,24 @@
 packages:
   - "packages/*"
+  # Prebuilt community forks shipped only as release tarballs (packed one by
+  # one); they take no part in the desktop build's frozen workspace install.
+  - "!packages/aurabot"
+  - "!packages/balance"
+  - "!packages/bili-humanism"
+  - "!packages/bili-scroll"
+  - "!packages/bridge"
+  - "!packages/browser"
+  - "!packages/fish-memory"
+  - "!packages/market"
+  - "!packages/meme"
+  - "!packages/mood"
+  - "!packages/open-sea"
+  - "!packages/pilot"
+  - "!packages/qq-link"
+  - "!packages/speak-up"
+  - "!packages/status"
+  - "!packages/tavern"
+  - "!packages/whale-musume"
 allowBuilds:
   '@google/genai': false
   koffi: false
