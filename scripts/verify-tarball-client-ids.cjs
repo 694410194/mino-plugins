@@ -5,9 +5,12 @@ const { execFileSync } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 
-const dir = process.argv[2] ?? 'dist'
+const dir = path.resolve(process.argv[2] ?? 'dist')
 const LOAD = /__ModuleLoader__\.load\((?:__stardustUpdatesWrap\()?\{\s*id:\s*(["'])([^"'<]+)\1/g
-const read = (tgz, member) => execFileSync('tar', ['-xOzf', tgz, `package/${member}`], { maxBuffer: 1 << 28 }).toString('utf8')
+const read = (tgz, member) => execFileSync('tar', ['-xOzf', path.basename(tgz), `package/${member}`], {
+  cwd: dir,
+  maxBuffer: 1 << 28,
+}).toString('utf8')
 let bad = 0
 for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.tgz')).sort()) {
   const tgz = path.join(dir, file)

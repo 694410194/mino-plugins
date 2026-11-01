@@ -54,7 +54,7 @@
 
 ### 产品层
 - [x] 首启 onboarding：Mino 卡内置"第一次见面"自我介绍（人设驱动）；凭据向导在文档
-- [x] 插件推荐位：mino-releases `plugins-v0.1.0` 挂 8 个 tgz + 文档页推荐清单
+- [x] 插件推荐位：公开仓 mino-plugin-releases `plugins-v0.1.0`（27 个 tgz）+ 文档页推荐清单；产品仓 mino-releases 只放安装包
 - [x] 接入文档：mino.baby/docs 插件生态章节（已提交，待部署）
 - [ ] 教程素材包：安装录屏脚本 + 话术 + mascot 截图素材（喂给小 UP 主）
 
@@ -77,3 +77,8 @@
 - vendored 包已剥 peer/devDeps（上游 dsh-type-meta 未公开发布，装不了；运行时 host 注入）
 - soul-md 内部命名空间保留上游名（数据兼容），仅包名/patch name 改 mino-persona
 - qqbot 系库拉入含 build 脚本的传递依赖，已在 pnpm-workspace.yaml ignoredBuiltDependencies
+
+### 发版与防护
+- 插件发版只走 `scripts/publish-plugins.sh plugins-vX.Y.Z`：先跑 `node scripts/verify-all.mjs`（打包全量、client id、许可、patch name、数量核对），草稿上传、逐件核对 sha256 后才公开；脚本拒绝写入产品仓 mino-releases。
+- 产品仓 mino-releases 的 Latest 必须是 `v<semver>` 产品安装包：服务器 cron 会镜像它并清理旧文件（2026-11-01 插件 release 被标成 Latest 导致官网安装包被删）。
+- CI（.github/workflows/ci.yml）每次推送跑 verify-all；mino-deploy 的 uptime 工作流每 30 分钟巡检线上入口，失败开 issue。

@@ -8,6 +8,7 @@
     "build": "pnpm -r run build",
     "test": "pnpm -r run test",
     "typecheck": "pnpm -r run typecheck",
-    "pack:all": "pnpm -r exec pnpm pack --pack-destination ../../release"
+    "pack:all": "pnpm -r exec pnpm pack --pack-destination ../../release",
+    "verify": "node scripts/verify-all.mjs"
   }
 }
