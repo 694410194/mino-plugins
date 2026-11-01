@@ -249,8 +249,9 @@ def run_visual(recorder: EventRecorder, snapshot_path: Path | None = None) -> in
         message = Signal(dict)
         closed = Signal()
 
-    manifest_path = bundle_root() / "assets" / "pet-manifest.json"
-    asset_root = manifest_path.parent / "pet"
+    character = os.environ.get("MINO_PET_CHARACTER", "mino")
+    manifest_path = bundle_root() / "assets" / f"{character}-manifest.json"
+    asset_root = manifest_path.parent / character
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     except (OSError, ValueError) as error:

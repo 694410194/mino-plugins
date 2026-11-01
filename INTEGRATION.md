@@ -10,8 +10,9 @@
 | mino-persona | fork dsh-soul-md | 是 | 无（Mino 卡已预置为默认） |
 | mino-im | fork @xmanrui/dsh-im | 推荐位首选 | 扫码即建机器人；微信/QQ/飞书/钉钉/企微/TG/Discord/Slack/WhatsApp 9 渠道 |
 | mino-voice | fork dsh-voice | 推荐位 | TTS 零配置；STT 需 ASR key（Groq 免费档可用） |
-| mino-super-code | fork dsh-super-code (Apache-2.0) | 零配置推荐 | 无（预设选 Super Code）；编码 -21% 耗时 -35% token |
-| mino-pet | fork dsh-dafeiyu | 推荐位 | Python + PySide6；鲸鱼素材已换 Mino 动效帧（gen-pet-frames.py） |
+| mino-pet | fork dsh-dafeiyu | 推荐位 | Python + PySide6；鲸鱼素材保留可切换，默认 Mino 帧 |
+
+> 已否决：dsh-super-code（dsh-xray C3 级：patch 运行时/改写系统提示/起网络服务/读凭据环境变量；21★ 单人作者、无第三方验证）。不并入推荐，避免品牌背书风险。
 | mino-qqbot | 腾讯官方 fork | 推荐位 | QQBOT_APPID/SECRET 环境变量 |
 | mino-qq-console | fork | 推荐位 | 设置卡片填 AppID/Secret |
 | mino-bili-whale | fork | 推荐位 | B站 cookie（插件引导） |

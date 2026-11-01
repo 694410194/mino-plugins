@@ -245,8 +245,9 @@ function cacheWslBundledHelper({
   // executable (see runtime/helper.py bundle_root), so the cache carries them
   // and the npm package ships a single copy instead of embedding three.
   const cachedManifest = resolve(cacheDirectory, 'assets', 'pet-manifest.json')
+  const cachedWhaleManifest = resolve(cacheDirectory, 'assets', 'whale-manifest.json')
   const exeCurrent = fileExists(cachedPath) && fileStat(cachedPath).size === sourceSize
-  if (exeCurrent && fileExists(cachedManifest)) return cachedPath
+  if (exeCurrent && fileExists(cachedManifest) && fileExists(cachedWhaleManifest)) return cachedPath
   makeDirectory(cacheDirectory, { recursive: true })
   if (!exeCurrent) {
     const temporaryPath = `${cachedPath}.${process.pid}.tmp`
@@ -268,7 +269,7 @@ function cacheWslBundledHelper({
       if (fileExists(temporaryPath)) removeFile(temporaryPath)
     }
   }
-  if (!fileExists(cachedManifest)) copyTree(assetsSource, resolve(cacheDirectory, 'assets'), { recursive: true })
+  if (!fileExists(cachedManifest) || !fileExists(cachedWhaleManifest)) copyTree(assetsSource, resolve(cacheDirectory, 'assets'), { recursive: true })
   return cachedPath
 }
 

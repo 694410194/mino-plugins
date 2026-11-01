@@ -36,6 +36,10 @@ const here = dirname(fileURLToPath(import.meta.url))
 const assetsRoot = resolve(here, '..', 'assets')
 export const Config = Schema.object({
   enabled: Schema.boolean().default(true).description('启用桌面大肥鱼'),
+  character: Schema.union([
+    Schema.const('mino').description('Mino'),
+    Schema.const('whale').description('大肥鱼（鲸鱼娘）'),
+  ]).default('mino').description('桌宠角色（切换后重开宠物生效）'),
   scale: Schema.number().min(0.55).max(1.4).step(0.05).default(1).role('slider').description('角色大小'),
   bubbleScale: Schema.number().min(0.8).max(1.2).step(0.05).default(1).role('slider').description('气泡大小'),
   activityLevel: Schema.union([
@@ -69,6 +73,7 @@ for (const [key, field] of Object.entries(Config.dict)) Config.dict[key] = field
 
 const defaults = Object.freeze({
   enabled: true,
+  character: 'mino',
   scale: 1,
   bubbleScale: 1,
   activityLevel: 'normal',
@@ -94,6 +99,7 @@ export function normalizeSoundStates(value) {
 function publicConfig(config = {}) {
   return {
     enabled: config.enabled ?? defaults.enabled,
+    character: config.character === 'whale' ? 'whale' : defaults.character,
     scale: config.scale ?? defaults.scale,
     bubbleScale: config.bubbleScale ?? defaults.bubbleScale,
     activityLevel: config.activityLevel ?? defaults.activityLevel,
@@ -210,10 +216,10 @@ export function createEventsHandler(stream) {
 // Frame bytes are served only for paths the manifest declares, so the query
 // parameter can never steer the reader outside assets/pet. Returns null when
 // the manifest cannot be read; the overlay routes then stay unregistered.
-export function createAssetRoutes() {
+export function createAssetRoutes(character = defaults.character) {
   let manifest
   try {
-    manifest = JSON.parse(readFileSync(join(assetsRoot, 'pet-manifest.json'), 'utf8'))
+    manifest = JSON.parse(readFileSync(join(assetsRoot, `${character}-manifest.json`), 'utf8'))
   } catch {
     return null
   }
@@ -246,7 +252,7 @@ export function createAssetRoutes() {
       }
       let bytes
       try {
-        bytes = readFileSync(join(assetsRoot, 'pet', frame))
+        bytes = readFileSync(join(assetsRoot, character, frame))
       } catch {
         jsonResponse(res, 404, { error: 'frame unavailable' })
         return
@@ -371,6 +377,7 @@ function mountCompanion(ctx, config = {}, eventCtx = ctx, logger) {
 
   const helperEnvironment = (resolved) => ({
     ...helperConfig.env,
+    MINO_PET_CHARACTER: String(resolved.character ?? defaults.character),
     MINO_PET_SCALE: String(resolved.scale ?? defaults.scale),
     MINO_PET_BUBBLE_SCALE: String(resolved.bubbleScale ?? defaults.bubbleScale),
     MINO_PET_ACTIVITY_LEVEL: String(resolved.activityLevel ?? defaults.activityLevel),
@@ -568,7 +575,7 @@ function mountCompanion(ctx, config = {}, eventCtx = ctx, logger) {
         () => httpCtx.webServer.register({ kind: 'exact', path: BALANCE_ENDPOINT, handler: createBalanceHandler(balance) }),
         'mino-pet: local balance endpoint',
       )
-      const assetRoutes = createAssetRoutes()
+      const assetRoutes = createAssetRoutes(publicConfig(config).character)
       if (assetRoutes) {
         httpCtx.effect(
           () => httpCtx.webServer.register({ kind: 'exact', path: MANIFEST_ENDPOINT, handler: assetRoutes.manifestHandler }),
