@@ -47,7 +47,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 |---|---|---|
 | github.com / raw.githubusercontent.com | **超时** | 不能当用户侧通道；开发 push 走本机代理 `127.0.0.1:7897`（`https_proxy=`） |
 | cdn.jsdelivr.net（gh 镜像） | 可用 | 索引的公共镜像 URL：`cdn.jsdelivr.net/gh/694410194/mino-plugin-index@main/index.json` |
-| registry.npmjs.org / registry.npmmirror.com | 可用 | 插件安装通道：发 npmjs，npmmirror 自动同步；索引 per-version `registry` 填 npmmirror |
+| registry.npmjs.org / registry.npmmirror.com | 可用 | npm 通道备用：`npmjs.com` 注册页被反爬拦（代理出口 IP 亦 403），暂无 npm 账号 → **当前安装通道=自建 git**（`/git/` dumb-HTTP）；将来发 npmjs 后 npmmirror 自动同步，索引 per-version `registry` 填 npmmirror |
 | mino.baby | 可用 | **正式归宿**：`mino.baby/plugins/index.json`（deploy 件在 mino-deploy `site/plugins/` + nginx `/plugins/` 规则，sync.sh→服务器后生效） |
 
 ## plugweb 测试档（全插件实测基座）
@@ -70,11 +70,21 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 
 ## 部署事实（mino-deploy）
 
-`site/` → `scripts/sync.sh`（工作站 rsync，需 DEPLOY_HOST/KEY）→
+`site/` → `scripts/sync.sh`（工作站 rsync，需 DEPLOY_HOST/KEY；Windows Git
+Bash 无 rsync，用 `tar czf - . | ssh ... 'tar xzf -'` 等价执行）→
 服务器 `/opt/mino/managed` → `auto-sync-release.sh` cron（10min，
 release 指纹变化时）→ `build-site.py` 重建 → `deploy-site.sh` rsync 到
 `/var/www/mino-home` → `nginx/sites/*.conf`（`location /` 默认 404，
 每个可服务路径都需显式规则）。
+
+**带宽方向不对称（实测 2026-11）**：工作站→服务器上行仅 ~80KB/s，
+服务器→github 却是高速（212MB clone 约 2min，auto-sync cron 直连
+api.github.com 0.02s）。**大文件只走 github→server 方向**：服务器用
+`git clone/fetch` 或 release 资产下载自取，绝不从工作站 git push/scp
+大负载。插件安装源即此模式：`/var/www/git/mino-plugins.git` bare 镜像
+（服务器 cron fetch github + `update-server-info`），nginx `/git/`
+只读 dumb-HTTP 对外，索引安装目标为
+`git+https://mino.baby/git/mino-plugins.git#commit path:packages/<name>`。
 
 ## 产品分层事实（全量实测结论）
 
