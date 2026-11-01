@@ -10,6 +10,8 @@
 | mino-persona | fork dsh-soul-md | 是 | 无（Mino 卡已预置为默认） |
 | mino-im | fork @xmanrui/dsh-im | 推荐位首选 | 扫码即建机器人；微信/QQ/飞书/钉钉/企微/TG/Discord/Slack/WhatsApp 9 渠道 |
 | mino-voice | fork dsh-voice | 推荐位 | TTS 零配置；STT 需 ASR key（Groq 免费档可用） |
+| mino-super-code | fork dsh-super-code (Apache-2.0) | 零配置推荐 | 无（预设选 Super Code）；编码 -21% 耗时 -35% token |
+| mino-pet | fork dsh-dafeiyu | 推荐位 | Python + PySide6；鲸鱼素材已换 Mino 动效帧（gen-pet-frames.py） |
 | mino-qqbot | 腾讯官方 fork | 推荐位 | QQBOT_APPID/SECRET 环境变量 |
 | mino-qq-console | fork | 推荐位 | 设置卡片填 AppID/Secret |
 | mino-bili-whale | fork | 推荐位 | B站 cookie（插件引导） |
@@ -33,14 +35,14 @@
 
 ### 产品层
 - [x] 首启 onboarding：Mino 卡内置"第一次见面"自我介绍（人设驱动）；凭据向导在文档
-- [x] 插件推荐位：mino-releases `plugins-v0.1.0` 挂四个 tgz + 文档页推荐清单
+- [x] 插件推荐位：mino-releases `plugins-v0.1.0` 挂 8 个 tgz + 文档页推荐清单
 - [x] 接入文档：mino.baby/docs 插件生态章节（已提交，待部署）
 - [ ] 教程素材包：安装录屏脚本 + 话术 + mascot 截图素材（喂给小 UP 主）
 
 ### 二期/三期
 - [ ] relay + 配对码（手机连回用户自己桌面 host，proto 已铺好）
 - [ ] 云 host orchestrator（付费档；idle drain + 休眠 + 配额）
-- [ ] mino-pet 桌宠（fork dsh-dafeiyu 换自有吉祥物，锦上添花）
+- [x] mino-pet 桌宠（已 vendor，Mino 帧已生成；helper exe 需 PyInstaller 或 Python 回退）
 
 ### 已验证事实备忘
 - `cordis.patch.yml` insert 行 `name` 必须等于安装包名，否则静默不加载

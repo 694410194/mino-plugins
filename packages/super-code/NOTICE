@@ -1,0 +1,8 @@
+mino-super-code
+================
+
+Fork of dsh-super-code (https://github.com/ArtlexYang/dsh-super-agent),
+Apache License 2.0. See LICENSE.
+
+Internal storage/persistence namespaces keep upstream names for
+compatibility; the package loads as `mino-super-code`.
