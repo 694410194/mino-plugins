@@ -29,6 +29,7 @@
 | mino-pilot | fork @momasiku/dsh-pilot | 进阶推荐位 | Windows 桌面自动化；能力边界大先看说明 |
 | mino-open-sea | fork open-sea-skin | 推荐位 | 无；海洋主题皮肤 |
 | mino-whale-musume | fork dsh-whale-musume | 推荐位（与 pet 二选一） | 无；鲸鱼娘桌宠 45 成就+3 小游戏 |
+| mino-oh-story | fork zenstory-ai/oh-story-dsh（npm @oh-story/dsh 官方包改名） | 推荐位 | 无；小说/短剧/游戏改编/视频解说四工作台，知识库已内置（21MB） |
 
 > 已否决：dsh-super-code（dsh-xray C3 级：patch 运行时/改写系统提示/起网络服务/读凭据环境变量；21★ 单人作者、无第三方验证）。不并入推荐，避免品牌背书风险。
 | mino-qqbot | 腾讯官方 fork | 推荐位 | QQBOT_APPID/SECRET 环境变量 |
@@ -54,7 +55,7 @@
 
 ### 产品层
 - [x] 首启 onboarding：Mino 卡内置"第一次见面"自我介绍（人设驱动）；凭据向导在文档
-- [x] 插件推荐位：公开仓 mino-plugin-releases `plugins-v0.1.0`（27 个 tgz）+ 文档页推荐清单；产品仓 mino-releases 只放安装包
+- [x] 插件推荐位：公开仓 mino-plugin-releases `plugins-v0.1.1`（28 个 tgz，含 mino-oh-story）+ 文档页推荐清单；产品仓 mino-releases 只放安装包
 - [x] 接入文档：mino.baby/docs 插件生态章节（已提交，待部署）
 - [ ] 教程素材包：安装录屏脚本 + 话术 + mascot 截图素材（喂给小 UP 主）
 

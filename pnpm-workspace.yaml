@@ -12,6 +12,7 @@ packages:
   - "!packages/market"
   - "!packages/meme"
   - "!packages/mood"
+  - "!packages/oh-story"
   - "!packages/open-sea"
   - "!packages/pilot"
   - "!packages/qq-link"
