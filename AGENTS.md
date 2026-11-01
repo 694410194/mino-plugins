@@ -63,8 +63,10 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
   overlay 实现插件开关组合）；探测集 `probes-full.json`（14 条真实任务）；
   判读看 `request/header` 工具表、`tool/call`/`tool/result`、插件 stdout。
 - **测试纪律**：插件验收必须真实 agent 对话 + 原始事件流，不只看 UI 装载。
-- 每次 SDK/web 启动会弹默认浏览器（`DSH_SDK_NO_BROWSER` 对 web 档无效），
-  标签页堆积是测试残留，token 过期即黑屏。
+- **启动必须带 `--no-open`**（web-app 官方 flag，`dsh --profile plugweb --no-open`）：
+  不带则每次 boot 弹默认浏览器攒一排 token 过期黑屏页（`DSH_SDK_NO_BROWSER`
+  对 web 档无效）。新 token 见 stdout `dsh web: http://...?token=...`，
+  旧 token 全部作废；浏览器黑屏先 Ctrl+Shift+R 硬刷再查 console。
 
 ## 部署事实（mino-deploy）
 
