@@ -2915,7 +2915,7 @@ window.__ModuleLoader__.load({ id: "mino-market", factory: (require) => {
 		* standing in it."
 		*/
 		function isMarketItself(plugin) {
-			return plugin.name === "dsh-market" || plugin.npm === "dshmarket";
+			return plugin.name === "dsh-market" || plugin.npm === "dshmarket" || plugin.npm === "mino-market";
 		}
 		/**
 		* A single pass that inserts a separator after the character on the left of

@@ -26,7 +26,7 @@
  * ============================================================================
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-bili-scroll',
+  id: 'mino-bili-scroll',
   factory: (require) => {
     const React = require('react')
     const h = React.createElement

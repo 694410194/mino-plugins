@@ -8,7 +8,7 @@
  * "loaded without registering dsh-meme"。
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-meme',
+  id: 'mino-meme',
   factory: (require) => {
     var module = { exports: {} }
     var exports = module.exports

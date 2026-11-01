@@ -5,7 +5,7 @@
  * that shows the pasteable bridge WebSocket URL for the Chrome extension.
  */
 window.__ModuleLoader__.load({
-  id: '@yuxianglin/dsh-bridge-browser',
+  id: 'mino-browser',
   factory: (require) => {
     const module = { exports: {} }
     const React = require('react')

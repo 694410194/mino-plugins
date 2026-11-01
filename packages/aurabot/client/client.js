@@ -3,7 +3,7 @@
 // 视觉：沿用 DSH 的主题变量（--dsw-alias-*），浅色 / 深色自动跟随；点缀用大肥鱼的深蓝、海蓝、白。
 
 window.__ModuleLoader__.load({
-  id: 'dsh-aurabot-qq',
+  id: 'mino-aurabot',
   factory: (require) => {
     var module = { exports: {} }
     var exports = module.exports

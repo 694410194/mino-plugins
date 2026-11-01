@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+const PACKAGE_NAMES = new Set(['mino-superagent', 'dsh-superagent'])
 let cached: string | undefined
 export function packageRoot(): string {
   if (cached) return cached
@@ -10,7 +11,7 @@ export function packageRoot(): string {
   for (let depth = 0; depth < 6; depth++) {
     const manifest = join(directory, 'package.json')
     if (existsSync(manifest)) {
-      try { if ((JSON.parse(readFileSync(manifest, 'utf8')) as { name?: string }).name === 'dsh-superagent') return cached = directory }
+      try { if (PACKAGE_NAMES.has((JSON.parse(readFileSync(manifest, 'utf8')) as { name?: string }).name ?? '')) return cached = directory }
       catch { /* A foreign package.json on the way up is not this package. */ }
     }
     directory = dirname(directory)
