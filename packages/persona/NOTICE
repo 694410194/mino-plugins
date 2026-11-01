@@ -1,0 +1,10 @@
+This package is derived from dsh-soul-md
+(https://github.com/Scorp1o117/dsh-soul-md), licensed under the MIT License.
+
+Copyright (c) dsh-soul-md contributors.
+
+Modifications for Mino:
+- Repackaged as `mino-persona` inside the mino-plugins monorepo.
+- Bundles the official Mino persona card (see examples/mino-card.md).
+
+See LICENSE for the full license text.
