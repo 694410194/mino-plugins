@@ -69,8 +69,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=20.18",
-    "dsh": ">=0.2.0-rc.2 <0.3.0 || 0.2.1-rc.1 || 0.2.1-rc.2 || 0.2.1-rc.3 || 0.2.1-rc.4 || 0.2.1-rc.5"
+    "node": ">=20.18"
   },
   "repository": {
     "type": "git",
@@ -82,12 +81,6 @@
   },
   "dependencies": {
     "@deepseek-ai/schemastery": "^3.18.4"
-  },
-  "peerDependencies": {
-    "@deepseek-ai/dsh-home-paths": ">=0.2.0-rc.2 <0.3.0 || 0.2.1-rc.1 || 0.2.1-rc.2 || 0.2.1-rc.3 || 0.2.1-rc.4 || 0.2.1-rc.5",
-    "@deepseek-ai/dsh-settings": ">=0.2.0-rc.2 <0.3.0 || 0.2.1-rc.1 || 0.2.1-rc.2 || 0.2.1-rc.3 || 0.2.1-rc.4 || 0.2.1-rc.5",
-    "@deepseek-ai/dsh-tools": ">=0.2.0-rc.2 <0.3.0 || 0.2.1-rc.1 || 0.2.1-rc.2 || 0.2.1-rc.3 || 0.2.1-rc.4 || 0.2.1-rc.5",
-    "react": "^18.2.0"
   },
   "devDependencies": {
     "@deepseek-ai/dsh": "0.2.1-rc.5",

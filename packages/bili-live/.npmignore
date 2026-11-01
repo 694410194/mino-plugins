@@ -1,0 +1,8 @@
+# 本机运行时产物，不进发布包
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.bak*
+*.log
+python/probe.err.txt
