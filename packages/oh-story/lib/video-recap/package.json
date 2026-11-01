@@ -1,0 +1,4 @@
+{
+  "private": true,
+  "description": "Bundled upstream Skills; no module type so scripts resolve as in an upstream install."
+}
