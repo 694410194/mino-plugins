@@ -781,6 +781,14 @@ window.__ModuleLoader__.load({
           return h(PersonaSwitcher, Object.assign({}, props, { key: props.sessionId, scope: scope, write: write, t: t, locale: ctx.locale, hero: true, holdComposer: hold }));
         });
       });
+      ctx.slots.inject("sidebar.brand.name", function () {
+        return ctx.slots.register({
+          name: "sidebar.brand.name",
+          id: "mino-brand-name"
+        }, function () {
+          return h("span", { style: { fontSize: "15px", fontWeight: 600, letterSpacing: ".01em" } }, "Mino");
+        });
+      });
     }
 
     exports.apply = apply;
