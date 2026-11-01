@@ -1,0 +1,65 @@
+{
+  "name": "mino-bili-humanism",
+  "version": "1.11.3",
+  "description": "用多彩的人类世界训练 DSH 人格：证据信笺、专用人格札记与人类授权的账号写入",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "bin": {
+    "bili-humanism": "./bin/cli.mjs"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "lib",
+    "bin",
+    "prompts",
+    "scripts/media.py",
+    "scripts/text_probe.py",
+    "scripts/audio_probe.py",
+    "scripts/frame_environment.py",
+    "scripts/requirements-frames.txt",
+    "scripts/requirements-asr.txt",
+    "scripts/asr_environment.py",
+    "scripts/asr-model.json",
+    "README.md",
+    "LICENSE",
+    "NOTICE.md",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=24.0.0",
+    "dsh": ">=0.2.1-rc.2 <0.3.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    },
+    "@deepseek-ai/schemastery": {
+      "optional": true
+    }
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "test:host": "node scripts/test-dsh-host.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InariNGT-Ofiicial/dsh-bili-humanism.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "dsh-plugin",
+    "bilibili",
+    "humanism",
+    "local-first"
+  ]
+}

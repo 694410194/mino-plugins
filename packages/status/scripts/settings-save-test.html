@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>settings-save-test</title>
+<style>
+	body { margin: 0; padding: 16px; font: 14px/1.5 system-ui, sans-serif; background: #14161a; color: #e6e8ec; }
+	#verdict { margin-top: 16px; white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 12px; }
+	body.settings-preview{background:white;color:#1d2026;--dsw-alias-label-primary:#1d2026;--dsw-alias-label-primary-foreground:#fff;--dsw-alias-label-secondary:#666b75;--dsw-alias-label-tertiary:#858a94;--dsw-alias-label-dimmed:#969ba4;--dsw-alias-border-l4:#d4d6da;--dsw-alias-border-l3:#e1e3e6;--dsw-alias-border-l2:#e8eaed;--dsw-alias-bg-layer-3:#fff;--dsw-alias-bg-layer-2:#fff;--dsw-alias-brand-primary:#121418;--dsw-alias-state-error-primary:#c52838}
+	.settings-preview #mount{max-width:700px;margin:0 auto}.settings-preview .dsh-sr-settings>:not(.dsh-sr-panel),.settings-preview .dsh-sr-panel>:not([data-whale-settings]),.settings-preview #verdict{display:none}
+	.settings-preview [data-whale-settings]{margin:0;padding:0}.settings-preview #mount .dsh-sr-panel{padding:0}
+</style>
+</head>
+<body>
+<!--
+	设置页**保存路径**的真浏览器回归(0.27.2 的回归就是它漏掉的):
+
+	  打开设置页 → 点一个开关 → 插件必须把**整份文档** PUT 回去。
+
+	为什么单独一页:scripts/label-layout-test.html 里的 React 替身是**只渲染**的
+	(useState 的 setter 是空函数、useEffect 直接跳过),它能断言「设置页画对了」,
+	但一条交互也跑不了 —— 而 0.27.1 的缺陷正好在交互路径上:commitDrafts() 拿
+	docRef.current(只在 persist 里赋值,首次保存前是 null)当基准,于是全新打开的
+	设置页里任何一次改动都被「配置还没读到」拦下,开关看着拨过去了、其实没写盘,
+	重读又把值拨回存储里的旧值(用户报的「弹幕关不掉」)。
+
+	这一页用一个**能跑的最小 React**(真 state / 真 effect / 真事件)+ 真 fetch 替身,
+	把那条路径跑通:点开关 → 断言发出了 PUT、且写入的是整份文档、且 danmaku 真的被关掉。
+-->
+<div id="mount"></div>
+<div id="verdict">running…</div>
+
+<script>
+	window.__RESULTS__ = [];
+	const R = (name, pass, extra) => window.__RESULTS__.push({ name, pass: !!pass, extra: extra || "" });
+	window.onerror = (msg, src, line) => R("运行时异常", false, String(msg) + " @" + line);
+	// 「外观」页里才有弹幕开关:直接让设置页首帧就落在这一页(与 label 页同一套办法)
+	const packScenario = new URLSearchParams(location.search).get("packs");
+	window.__SETTINGS_TAB__ = packScenario ? "text" : "appearance";
+	const previewMode = new URLSearchParams(location.search).has("preview");
+	if (previewMode) { document.body.classList.add("settings-preview"); document.title = "鲸鱼尾巴 · 设置预览"; }
+
+	// ══ 最小 React:只实现设置页用到的四个 hook + createElement ══
+	let current = null;
+	const hooksOf = () => { if (!current) throw new Error("hook 在组件外被调用"); return current; };
+	const depsChanged = (a, b) => !a || !b || a.length !== b.length || a.some((v, i) => v !== b[i]);
+	const reactStub = {
+		createElement: (type, props, ...children) => ({
+			type,
+			props: props || {},
+			children: children.flat(Infinity).filter((c) => c !== null && c !== undefined && c !== false && c !== true),
+		}),
+		useState: (init) => {
+			const inst = hooksOf();
+			const i = inst.cursor++;
+			if (!(i in inst.slots)) {
+				inst.slots[i] = init === "text" && window.__SETTINGS_TAB__
+					? window.__SETTINGS_TAB__
+					: (typeof init === "function" ? init() : init);
+			}
+			return [inst.slots[i], (v) => {
+				inst.slots[i] = typeof v === "function" ? v(inst.slots[i]) : v;
+				inst.render();
+			}];
+		},
+		useRef: (init) => {
+			const inst = hooksOf();
+			const i = inst.cursor++;
+			if (!(i in inst.slots)) inst.slots[i] = { current: init === undefined ? null : init };
+			return inst.slots[i];
+		},
+		useCallback: (fn, deps) => {
+			const inst = hooksOf();
+			const i = inst.cursor++;
+			const slot = inst.slots[i];
+			if (!slot || depsChanged(slot.deps, deps)) inst.slots[i] = { fn, deps };
+			return inst.slots[i].fn;
+		},
+		useEffect: (fn, deps) => {
+			const inst = hooksOf();
+			const i = inst.cursor++;
+			const key = "e" + i;
+			const slot = inst.slots[key];
+			if (!slot || depsChanged(slot.deps, deps)) {
+				inst.slots[key] = { fn, deps, pending: true, cleanup: slot ? slot.cleanup : undefined };
+			}
+		},
+	};
+
+	const toDom = (node) => {
+		if (node === null || node === undefined || node === false || node === true) return document.createTextNode("");
+		if (typeof node === "string" || typeof node === "number") return document.createTextNode(String(node));
+		if (Array.isArray(node)) {
+			const frag = document.createDocumentFragment();
+			for (const child of node) frag.appendChild(toDom(child));
+			return frag;
+		}
+		if (typeof node.type === "function") return toDom(node.type({ ...node.props, children: node.children }));
+		const el = document.createElement(node.type);
+		for (const [key, value] of Object.entries(node.props || {})) {
+			if (key === "children" || key === "key" || value === null || value === undefined) continue;
+			if (key === "className") el.className = String(value);
+			else if (key === "style" && typeof value === "object") Object.assign(el.style, value);
+			else if (key === "ref" && typeof value === "object") value.current = el;
+			else if (key === "value") el.value = String(value);
+			else if (key === "checked") el.checked = !!value;
+			else if (key.startsWith("on") && typeof value === "function") el.addEventListener(key.slice(2).toLowerCase(), value);
+			// aria-* 的布尔值 React 会渲染成字符串("true"/"false")——先于下面的布尔分支处理
+			else if (key.startsWith("aria-") || key.startsWith("data-")) el.setAttribute(key, String(value));
+			// 其余布尔属性按 React 的语义:false = **不写**这个属性(写成 "disabled=\"false\"" 也会禁用元素)
+			else if (typeof value === "boolean") { if (value) el.setAttribute(key, ""); }
+			else el.setAttribute(key, String(value));
+		}
+		for (const child of node.children || []) el.appendChild(toDom(child));
+		// React applies a controlled select's value after its options exist.
+		// Setting it on an empty select silently falls back to the first option.
+		if (el.tagName === "SELECT" && node.props?.value !== undefined && node.props?.value !== null) el.value = String(node.props.value);
+		return el;
+	};
+
+	const mount = (Component, props, container) => {
+		const inst = { Component, props, slots: [], cursor: 0, render: null };
+		let queued = false;
+		let disposed = false;
+		// 状态更新**不在渲染过程中同步重入**,而是排队到 microtask(React 的批量语义):
+		// 否则 effect 里发起的 setState 会在上一次渲染还没结束时就再渲染一次,游标串槽。
+		const doRender = () => {
+			if (disposed) return;
+			queued = false;
+			current = inst;
+			inst.cursor = 0;
+			const tree = inst.Component(inst.props);
+			current = null;
+			container.textContent = "";
+			container.appendChild(toDom(tree));
+			const pending = [];
+			for (const key of Object.keys(inst.slots)) {
+				const slot = inst.slots[key];
+				if (slot && slot.pending) pending.push(slot);
+			}
+			for (const slot of pending) {
+				slot.pending = false;
+				if (typeof slot.cleanup === "function") { try { slot.cleanup(); } catch (error) { /* ignore */ } }
+				const cleanup = slot.fn();
+				slot.cleanup = typeof cleanup === "function" ? cleanup : undefined;
+			}
+		};
+		inst.render = () => {
+			if (queued || disposed) return;
+			queued = true;
+			queueMicrotask(doRender);
+		};
+		inst.unmount = () => {
+			disposed = true;
+			for (const slot of Object.values(inst.slots)) {
+				if (slot && typeof slot.cleanup === "function") slot.cleanup();
+			}
+			container.textContent = "";
+		};
+		doRender();
+		return inst;
+	};
+
+	// ══ 插件侧桩:localStorage 置空(不要覆盖 fetch 回来的文档)══
+	Object.defineProperty(window, "localStorage", {
+		configurable: true,
+		value: { getItem: () => null, setItem: () => {}, removeItem: () => {} },
+	});
+	window.__ModuleLoader__ = {
+		load(def) {
+			window.__PLUGIN__ = def.factory((name) => {
+				if (name === "react") return reactStub;
+				throw new Error("unexpected require: " + name);
+			});
+		},
+	};
+</script>
+<script src="../lib/client.js"></script>
+<script>
+	// ══ 后端替身:GET 回一份完整文档;PUT 记下来并回 ok ══
+	const PACK = { id: "community", label: { zh: "社区投稿", en: "Community" }, phrases: { zh: { thinking: ["来自社区的文案…"] } } };
+	const DOC = {
+		config: {
+			intervalMs: 10000, typeSpeedMs: 30, longAfterMs: 60000, reloadIntervalMs: 15000, liveTickMs: 1000,
+			weightedRandom: true, labelSource: "phrases", fontWeight: "inherit",
+			gradient: { enabled: false, mode: "auto", direction: "rtl", colors: ["#ff5f6d", "#00ff88"], dayColors: ["#d92b4b", "#0e7490"], speed: 4 },
+			title: { enabled: false, templates: ["⏳ {phaseLabel} {elapsed}"], idleTemplate: "", intervalMs: 8000 },
+			danmaku: {
+				enabled: true, pauseBehindMask: true, intervalMs: 2500, speedMs: 18000, fontSizeMin: 14, fontSizeMax: 30,
+				rainbow: true, colors: ["#ff5f6d", "#00ff88"], color: "#ffffff", opacity: 0.3, maxCount: 12,
+				zIndex: -1, scope: "all", marginTop: 16, marginBottom: 160,
+			},
+		},
+		phrases: { zh: { thinking: [], running: [], long: [] }, en: { thinking: [], running: [], long: [] } },
+		packs: [PACK],
+		enabledPacks: [PACK.id],
+		presets: [],
+		schedule: [],
+	};
+	// issue #171:默认层有 14 个包,但只启用前 10 个。PUT 缺字段时,GET 必须回落到默认层。
+	if (packScenario) {
+		const ids = ["reverse-proxy", "deepseek", "western-ai", "china-ai", "coding", "sysadmin", "math-physics", "slacking", "internet-memes", "daily", "community", "ads", "star-ask", "star-route"];
+		DOC.packs = packScenario === "empty" ? [] : ids.map(id => ({ ...PACK, id, label: { zh: id, en: id } }));
+		DOC.enabledPacks = DOC.packs.slice(0, 10).map(pack => pack.id);
+		if (packScenario === "missing") delete DOC.enabledPacks;
+	}
+	let savedDocument = {};
+	if (previewMode) {
+		DOC.config.danmaku.enabled = false;
+		DOC.config.whaleTail = true;
+		DOC.config.whaleTailMotion = { enabled: true, animation: "random", mode: "tps", tpsTiers: 0, tpsMaxSpeed: 3,
+			fixedSpeed: 1.5, officialRecommendedSpeed: true, randomActions: ["wag", "sway", "official"], toolSwitchEnabled: true, toolSwitchChance: 0.9 };
+	}
+	window.__PUTS__ = [];
+	window.__GETS__ = 0;
+	window.fetch = async (url, opts) => {
+		const method = (opts && opts.method) || "GET";
+		if (method === "GET") window.__GETS__ += 1;
+		const reply = (payload) => ({
+			ok: true, status: 200,
+			headers: { get: () => "application/json" },
+			json: async () => JSON.parse(JSON.stringify(payload)),
+			text: async () => JSON.stringify(payload),
+		});
+		if (method === "PUT") {
+			let body = null;
+			try { body = JSON.parse(opts.body); } catch (error) { body = null; }
+			window.__PUTS__.push({ url: String(url), body });
+			if (packScenario) savedDocument = body || {};
+			return reply({ ok: true, mirror: true });
+		}
+		return reply(packScenario ? { ...DOC, ...savedDocument } : DOC);
+	};
+
+	const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+	const sw = () => document.querySelector('button[role="switch"][aria-label="danmaku.enabled"]');
+	const finalize = () => {
+		window.__RESULTS_DONE__ = true;
+		try {
+			const list = window.__RESULTS__;
+			const verdict = (list.length > 0 && list.every((r) => r.pass) ? "ALL-PASS " : "HAS-FAIL ")
+				+ list.map((r) => (r.pass ? "PASS " : "FAIL ") + r.name + (r.extra ? " [" + r.extra + "]" : "")).join(" | ");
+			document.title = verdict;
+			const box = document.getElementById("verdict");
+			if (box) box.textContent = verdict;
+		} catch (error) {
+			document.title = "HARNESS-ERROR " + ((error && error.stack) || error);
+		}
+	};
+
+	// ══ 挂载插件 + 设置页 ══
+	const previewDictionaries = {};
+	const previewTranslate = namespace => (key, params) => {
+		let text = previewDictionaries[namespace]?.zh?.[key] || key;
+		for (const [name, value] of Object.entries(params || {})) text = text.replaceAll("{" + name + "}", String(value));
+		return text;
+	};
+	const ctx = {
+		locale: {
+			register: (namespace, tables) => { previewDictionaries[namespace] = tables; return () => {}; },
+			subscribe: () => () => {},
+			getLocale: () => ({ active: "zh" }),
+			bind: namespace => previewMode ? previewTranslate(namespace) : null,
+		},
+		slots: {
+			inject: (name, fn) => fn(),
+			register: (def, comp) => { if (typeof comp === "function") settingsComponent = comp; return { dispose() {} }; },
+		},
+		effect: (cb) => cb(),
+		get: () => undefined,
+		on: () => {},
+	};
+	var settingsComponent = null;
+	try {
+		window.__PLUGIN__.apply(ctx);
+		R("apply 不抛异常", true);
+	} catch (error) {
+		R("apply 不抛异常", false, String((error && error.stack) || error));
+	}
+
+	(async () => {
+		try {
+			R("插件注册了设置页组件", typeof settingsComponent === "function");
+			if (typeof settingsComponent !== "function") { finalize(); return; }
+			let mounted = mount(settingsComponent, previewMode ? {} : { t: key => key }, document.getElementById("mount"));
+			if (previewMode) return;
+			if (packScenario) {
+				const packSwitches = () => Array.from(document.querySelectorAll('button[role="switch"][aria-label="packs.enabled"]'));
+				const enabled = () => packSwitches().map((button, i) => button.getAttribute("aria-checked") === "true" ? DOC.packs[i].id : null).filter(Boolean);
+				const waitFor = async (check) => {
+					for (let i = 0; i < 100; i++) { if (check()) return; await sleep(50); }
+					throw new Error("等待设置页载入或自动保存超时");
+				};
+				const ready = () => window.__GETS__ > 0 && document.querySelector('button[role="tab"]') && packSwitches().length === DOC.packs.length && !packSwitches().some(button => button.disabled);
+				await waitFor(ready);
+				R("载入后启用状态与默认层一致", enabled().length === (packScenario === "missing" ? 14 : DOC.enabledPacks.length));
+				const reopen = async (expected) => {
+					const gets = window.__GETS__;
+					mounted.unmount();
+					mounted = mount(settingsComponent, { t: key => key }, document.getElementById("mount"));
+					await waitFor(() => window.__GETS__ > gets && ready());
+					R("重新打开设置后仍启用 " + expected.length + " 个包", JSON.stringify(enabled()) === JSON.stringify(expected), JSON.stringify(enabled()));
+				};
+				if (packScenario === "empty") {
+					document.querySelectorAll('button[role="tab"]')[2].click();
+					await waitFor(() => !!document.querySelector('button[aria-label="title.enabled"]'));
+					document.querySelector('button[aria-label="title.enabled"]').click();
+					await waitFor(() => window.__PUTS__.length > 0);
+					R("没有词库包时保存仍省略 enabledPacks", !Object.hasOwn(window.__PUTS__.at(-1).body, "enabledPacks"));
+					await reopen([]);
+				} else {
+					const all = DOC.packs.map(pack => pack.id);
+					const saveSelection = async (selected) => {
+						const before = window.__PUTS__.length;
+						for (let i = 0; i < all.length; i++) {
+							const button = packSwitches()[i];
+							if ((button.getAttribute("aria-checked") === "true") !== selected.includes(all[i])) {
+								button.click();
+								await sleep(0);
+							}
+						}
+						await waitFor(() => window.__PUTS__.length > before);
+						const body = window.__PUTS__.at(-1).body;
+						R("保存 " + selected.length + " 个包时显式提交启用名单", Array.isArray(body.enabledPacks) && body.enabledPacks.length === selected.length && selected.every(id => body.enabledPacks.includes(id)), JSON.stringify(body.enabledPacks));
+						await reopen(selected);
+					};
+					// 缺 enabledPacks 的旧文档初始全开,先关一个,确保下一次全开真有改动。
+					if (packScenario === "missing") await saveSelection(all.slice(0, -1));
+					await saveSelection(all);
+					await saveSelection(all.slice(0, -1));
+					await saveSelection([]);
+					await saveSelection(all);
+				}
+				mounted.unmount();
+				finalize();
+				return;
+			}
+
+			// 等首次读盘完成(读盘期间开关是 disabled 的)
+			for (let i = 0; i < 60 && (!sw() || sw().disabled); i += 1) await sleep(50);
+			R("设置页发出了读盘请求(GET)", window.__GETS__ > 0, "gets=" + window.__GETS__);
+			R("设置页渲染出弹幕开关,且载入完成后可点", !!sw() && !sw().disabled,
+				"switch=" + (sw() ? "found disabled=" + sw().disabled : "missing"));
+
+			const before = sw() ? sw().getAttribute("aria-checked") : null;
+			sw().click();
+			await sleep(900);   // 改动即写盘:400ms 防抖 + 写盘往返
+			const puts = window.__PUTS__;
+			R("点开关后真的发出了 PUT(0.27.1 的回归:没有请求,只有红字拦截)", puts.length === 1, "puts=" + puts.length);
+			const view = document.getElementById("mount").textContent;
+			R("界面没有被「配置还没读到」拦下", !view.includes("noDocument"),
+				"mount 区提示=" + (view.includes("noDocument") ? "noDocument 出现" : "无"));
+			if (puts.length === 1) {
+				const body = puts[0].body || {};
+				R("写入的是整份文档,不是「只有本次动过的键」",
+					Array.isArray(body.packs) && body.packs.length === DOC.packs.length && !!body.phrases && !!body.config,
+					"packs=" + (body.packs || []).length + " phrases=" + (body.phrases ? "有" : "无") + " keys=" + Object.keys(body).join(","));
+				R("提交文档里弹幕确实被关掉(开关 = " + before + " → 期望 false)",
+					!!(body.config && body.config.danmaku && body.config.danmaku.enabled === false),
+					"danmaku.enabled=" + (body.config && body.config.danmaku ? body.config.danmaku.enabled : "(缺)"));
+				R("其余设置原样带过去(没被残缺文档顶掉)",
+					body.config.intervalMs === DOC.config.intervalMs && body.config.title && body.config.title.enabled === false,
+					"intervalMs=" + (body.config ? body.config.intervalMs : "(缺)"));
+			}
+			// ── issue #96:「行为 → 标签页标题」这一组以前**从不自动落盘** —— 自动落盘的
+			//    签名实参与依赖数组都漏了 titleDraft,只改标题时 effect 根本不重跑。这里单独
+			//    拨一次标题开关,断言真的写出去了(config.title.enabled),再拨回来验证不是旧值 ──
+			// 标题组在「行为」页:先切过去(夹具按 t(k)=k,所以页签文字就是 i18n 键)
+			const behaviorTab = Array.from(document.querySelectorAll('button[role="tab"]')).find((b) => b.textContent === "tab.behavior");
+			R("设置页有「行为」页签", !!behaviorTab);
+			if (behaviorTab) { behaviorTab.click(); await sleep(150); }
+			const titleSwitch = () => document.querySelector('button[role="switch"][aria-label="title.enabled"]');
+			R("渲染出「接管标签页标题」开关", !!titleSwitch());
+			if (titleSwitch()) {
+				const putsBefore = window.__PUTS__.length;
+				R("标题开关初始为关", titleSwitch().getAttribute("aria-checked") === "false", "aria-checked=" + titleSwitch().getAttribute("aria-checked"));
+				titleSwitch().click();
+				await sleep(900);                     // 400ms 防抖 + 写盘往返
+				const afterOn = window.__PUTS__.slice(putsBefore);
+				R("只改标题开关就触发了写盘(issue #96:修前这里 0 个 PUT)", afterOn.length === 1, "new puts=" + afterOn.length);
+				R("写进去的是打开状态(config.title.enabled=true)",
+					!!(afterOn[0] && afterOn[0].body.config && afterOn[0].body.config.title && afterOn[0].body.config.title.enabled === true),
+					"title=" + JSON.stringify(afterOn[0] && afterOn[0].body.config && afterOn[0].body.config.title));
+				const putsBeforeOff = window.__PUTS__.length;
+				if (titleSwitch()) titleSwitch().click();   // 再关掉:验证不是闭包里的旧值
+				await sleep(900);
+				const afterOff = window.__PUTS__.slice(putsBeforeOff);
+				R("再关掉也写盘,且写的是关闭状态(不是旧值)",
+					afterOff.length === 1 && !!(afterOff[0].body.config.title && afterOff[0].body.config.title.enabled === false),
+					"new puts=" + afterOff.length + " title=" + JSON.stringify(afterOff[0] && afterOff[0].body.config.title));
+			}
+
+			// ── 鲸鱼尾巴摇动:保留尾巴、摇动开关、速度模式与固定值都应独立写盘 ──
+			const appearanceTab = Array.from(document.querySelectorAll('button[role="tab"]')).find((b) => b.textContent === "tab.appearance");
+			R("设置页有「外观」页签", !!appearanceTab);
+			if (appearanceTab) { appearanceTab.click(); await sleep(150); }
+			const tailSwitch = () => document.querySelector('button[role="switch"][aria-label="whaleTail.enabled"]');
+			const wagSwitch = () => document.querySelector('button[role="switch"][aria-label="whaleTail.motion.enabled"]');
+			const fieldByLabel = (key) => Array.from(document.querySelectorAll("label.dsh-sr-field")).find((label) => label.textContent.includes(key));
+			const openTailFold = async key => {
+				const fold = document.querySelector('[data-tail-fold="' + key + '"]');
+				if (fold && !fold.open) { fold.querySelector("summary").click(); await sleep(100); }
+			};
+			R("设置页渲染出保留鲸鱼尾巴开关", !!tailSwitch());
+			R("未保留尾巴时摇动开关不可用", !!wagSwitch() && wagSwitch().disabled, wagSwitch() ? "disabled=" + wagSwitch().disabled : "missing");
+			if (tailSwitch()) {
+				const beforeTail = window.__PUTS__.length;
+				tailSwitch().click();
+				await sleep(900);
+				const afterTail = window.__PUTS__.slice(beforeTail);
+				R("单独打开保留鲸鱼尾巴会写盘", afterTail.length === 1 && afterTail[0].body.config.whaleTail === true,
+					"puts=" + afterTail.length + " whaleTail=" + (afterTail[0] && afterTail[0].body.config.whaleTail));
+			}
+			if (wagSwitch()) {
+				const beforeWag = window.__PUTS__.length;
+				wagSwitch().click();
+				await sleep(900);
+				const afterWag = window.__PUTS__.slice(beforeWag);
+				R("单独打开尾巴摇动会写盘", afterWag.length === 1
+					&& afterWag[0].body.config.whaleTailMotion.enabled === true
+					&& afterWag[0].body.config.whaleTailMotion.mode === "tps",
+					"puts=" + afterWag.length + " motion=" + JSON.stringify(afterWag[0] && afterWag[0].body.config.whaleTailMotion));
+			}
+			R("鲸尾高级设置默认折叠", Array.from(document.querySelectorAll('[data-whale-settings] details')).every(fold => !fold.open));
+			const beforeFold = window.__PUTS__.length;
+			await openTailFold("speed"); await sleep(500);
+			R("展开速度设置不触发配置写盘", window.__PUTS__.length === beforeFold && document.querySelector('[data-tail-fold="speed"]').open);
+			const officialRecommended = () => document.querySelector('button[role="switch"][aria-label="whaleTail.motion.officialRecommended"]');
+			R("官方原版推荐速度默认开启", officialRecommended()?.getAttribute("aria-checked") === "true");
+			for (const enabled of [false, true]) {
+				const before = window.__PUTS__.length; officialRecommended()?.click(); await sleep(900);
+				R("官方推荐开关 " + enabled + " 自动保存", window.__PUTS__.length === before + 1 && window.__PUTS__.at(-1).body.config.whaleTailMotion.officialRecommendedSpeed === enabled);
+			}
+			// 摇速档位:tok/s 模式下才有,且必须真的写进文档
+			const tiersSelect = () => fieldByLabel("whaleTail.motion.tiers")?.querySelector("select");
+			if (tiersSelect()) {
+				R("tok/s 模式下渲染出摇速档位下拉(默认 3 档)", tiersSelect().value === "3", "value=" + tiersSelect().value);
+				const beforeTiers = window.__PUTS__.length;
+				tiersSelect().value = "4";
+				tiersSelect().dispatchEvent(new Event("change", { bubbles: true }));
+				await sleep(900);
+				const afterTiers = window.__PUTS__.slice(beforeTiers);
+				R("选择 4 档同步保存档位和 2 次/秒上限", afterTiers.length === 1 && afterTiers[0].body.config.whaleTailMotion.tpsTiers === 4 && afterTiers[0].body.config.whaleTailMotion.tpsMaxSpeed === 2,
+					"puts=" + afterTiers.length + " tpsTiers=" + (afterTiers[0] && afterTiers[0].body.config.whaleTailMotion.tpsTiers));
+			} else R("tok/s 模式下渲染出摇速档位下拉", false);
+			const modeField = fieldByLabel("whaleTail.motion.mode");
+			const cap = fieldByLabel("whaleTail.motion.maxSpeed")?.querySelector("input");
+			R("选择 4 档后最高摇速显示 2,档位选择保持 4", cap?.value === "2" && tiersSelect()?.value === "4" && !!document.querySelector('[data-tail-speed-ladder]'));
+			if (cap) {
+				const before = window.__PUTS__.length;
+				R("自定义输入范围为 1–10 次/秒", cap.min === "1" && cap.max === "10");
+				cap.value = "10"; cap.dispatchEvent(new Event("change", { bubbles: true })); await sleep(900);
+				R("tok/s 自定义上限 10 独立自动保存", window.__PUTS__.length === before + 1 && window.__PUTS__.at(-1).body.config.whaleTailMotion.tpsMaxSpeed === 10);
+				R("手动修改上限后显示自定义,不冒充 4 档预设", tiersSelect()?.value === "custom");
+				const beforeInvalid = window.__PUTS__.length;
+				const invalidCap = fieldByLabel("whaleTail.motion.maxSpeed").querySelector("input");
+				invalidCap.value = "10.25"; invalidCap.dispatchEvent(new Event("change", { bubbles: true })); await sleep(700);
+				R("超过 10 的输入不写盘且显示错误", window.__PUTS__.length === beforeInvalid && document.getElementById("mount").textContent.includes("whaleTail.motion.maxSpeed.invalid"));
+				for (const level of [2, 3, 4, 5]) {
+					const beforeLevel = window.__PUTS__.length;
+					tiersSelect().value = String(level); tiersSelect().dispatchEvent(new Event("change", { bubbles: true })); await sleep(900);
+					const saved = window.__PUTS__.at(-1).body.config.whaleTailMotion;
+					R("选回 " + level + " 档恢复对应上限并自动保存", window.__PUTS__.length === beforeLevel + 1 && saved.tpsTiers === level && saved.tpsMaxSpeed === level / 2 && tiersSelect().value === String(level));
+				}
+			}
+			const modeSelect = modeField && modeField.querySelector("select");
+			if (modeSelect) {
+				const beforeMode = window.__PUTS__.length;
+				modeSelect.value = "fixed";
+				modeSelect.dispatchEvent(new Event("change", { bubbles: true }));
+				await sleep(900);
+				const afterMode = window.__PUTS__.slice(beforeMode);
+				R("切换固定摇速模式会写盘", afterMode.length === 1 && afterMode[0].body.config.whaleTailMotion.mode === "fixed",
+					"puts=" + afterMode.length + " mode=" + (afterMode[0] && afterMode[0].body.config.whaleTailMotion.mode));
+				R("固定模式不再显示摇速档位(与固定摇速互斥)", !fieldByLabel("whaleTail.motion.tiers"), "tiers=" + JSON.stringify(!!fieldByLabel("whaleTail.motion.tiers")));
+				const speedField = fieldByLabel("whaleTail.motion.fixedSpeed");
+				const speedInput = speedField && speedField.querySelector("input");
+				if (speedInput) {
+					const beforeSpeed = window.__PUTS__.length;
+					speedInput.value = "3";
+					speedInput.dispatchEvent(new Event("change", { bubbles: true }));
+					await sleep(900);
+					const afterSpeed = window.__PUTS__.slice(beforeSpeed);
+					R("修改固定摇速会写盘", afterSpeed.length === 1 && afterSpeed[0].body.config.whaleTailMotion.fixedSpeed === 3,
+						"puts=" + afterSpeed.length + " fixedSpeed=" + (afterSpeed[0] && afterSpeed[0].body.config.whaleTailMotion.fixedSpeed));
+				} else R("固定模式渲染出摇速输入框", false);
+			} else R("外观页渲染出摇速模式选择器", false);
+			const actionSelect = () => fieldByLabel("whaleTail.motion.animation")?.querySelector("select");
+			R("尾巴动作选择器包含官方原版晃动和随机模式", !!actionSelect()
+				&& Array.from(actionSelect().options).map(option => option.value).join(",") === "wag,sway,twist,official,random");
+			for (const animation of ["sway", "twist", "official", "random"]) {
+				if (!actionSelect()) break;
+				const before = window.__PUTS__.length;
+				actionSelect().value = animation;
+				actionSelect().dispatchEvent(new Event("change", { bubbles: true }));
+				await sleep(900);
+				const after = window.__PUTS__.slice(before);
+				R("切换动作 " + animation + " 自动落盘且保留固定摇速", after.length === 1
+					&& after[0].body.config.whaleTailMotion.animation === animation
+					&& after[0].body.config.whaleTailMotion.mode === "fixed"
+					&& after[0].body.config.whaleTailMotion.fixedSpeed === 3);
+			}
+			await openTailFold("actions");
+			const poolButtons = () => Array.from(document.querySelectorAll('[data-tail-random-actions] button[role="switch"]'));
+			R("随机模式显示四个参与切换动作开关", poolButtons().length === 4);
+			for (const name of ["sway", "twist", "wag"]) {
+				const button = poolButtons().find(el => el.getAttribute("aria-label") === "whaleTail.motion.animation." + name);
+				const before = window.__PUTS__.length;
+				button?.click(); await sleep(900);
+				R("动作池移除 " + name + " 自动保存", window.__PUTS__.length === before + 1
+					&& !window.__PUTS__.at(-1).body.config.whaleTailMotion.randomActions.includes(name));
+			}
+			R("只剩官方原版晃动时不能取消最后一个动作", poolButtons().find(el => el.getAttribute("aria-label") === "whaleTail.motion.animation.official")?.disabled === true
+				&& JSON.stringify(window.__PUTS__.at(-1).body.config.whaleTailMotion.randomActions) === '["official"]');
+			await openTailFold("tools");
+			const toolSwitch = () => document.querySelector('button[role="switch"][aria-label="whaleTail.motion.toolSwitch"]');
+			const toolChance = () => fieldByLabel("whaleTail.motion.toolChance")?.querySelector("input");
+			R("工具调用切换默认关闭,显示 35% 概率", !!toolSwitch() && toolSwitch().getAttribute("aria-checked") === "false" && toolChance()?.value === "35");
+			if (toolSwitch()) {
+				const before = window.__PUTS__.length;
+				toolSwitch().click(); await sleep(900);
+				R("工具触发开关自动保存", window.__PUTS__.length === before + 1 && window.__PUTS__.at(-1).body.config.whaleTailMotion.toolSwitchEnabled === true);
+				R("工具触发设置显示当前连接状态", !!document.querySelector('[data-tail-tool-status="waiting"]'));
+			}
+			for (const percent of [0, 100]) {
+				if (!toolChance()) break;
+				const before = window.__PUTS__.length;
+				toolChance().value = String(percent);
+				toolChance().dispatchEvent(new Event("change", { bubbles: true }));
+				await sleep(900);
+				R("工具触发概率 " + percent + "% 自动保存", window.__PUTS__.length === before + 1 && window.__PUTS__.at(-1).body.config.whaleTailMotion.toolSwitchChance === percent / 100);
+			}
+
+			// ── 样式归属(issue #94):宿主模块系统会在工厂体跑完后认领「没有 data-plugin 的
+			//    <style>」,并在自己 revision 变化时删掉名下的标签。这里把宿主那两步照搬一遍 ──
+			const owned = () => Array.from(document.querySelectorAll('style[id^="dsh-status-rotator-"]'));
+			R("插件的样式都打了 data-plugin(修前这里是 0 个带标记)", owned().length >= 3
+				&& owned().every((el) => el.getAttribute("data-plugin") === "dsh-status-rotator"),
+				"styles=" + owned().map((el) => el.id.replace("dsh-status-rotator-", "") + ":" + (el.getAttribute("data-plugin") || "(无标记)")).join(","));
+			// ① 另一个模块物化 → 它会认领当下所有无主 <style>
+			document.querySelectorAll("style:not([data-plugin])").forEach((el) => el.setAttribute("data-plugin", "other-plugin"));
+			// ② 那个模块 revision 变化 → 删掉它名下的样式
+			document.querySelectorAll('style[data-plugin="other-plugin"]').forEach((el) => el.remove());
+			R("别的模块认领 + 变更之后,插件的样式仍在(issue #94)", owned().length >= 3,
+				"remaining=" + owned().map((el) => el.id.replace("dsh-status-rotator-", "")).join(","));
+			const toggleEl = document.querySelector(".dsh-sr-toggle");
+			const toggleHeight = toggleEl ? getComputedStyle(toggleEl).height : "";
+			R("设置页仍带着插件样式(取样 .dsh-sr-toggle 的高度 = 20px)", toggleHeight === "20px",
+				"height=" + (toggleHeight || "(没有开关元素)"));
+
+			finalize();
+		} catch (error) {
+			R("保存路径场景跑完(未抛异常)", false, String((error && error.stack) || error));
+			finalize();
+		}
+	})();
+</script>
+</body>
+</html>

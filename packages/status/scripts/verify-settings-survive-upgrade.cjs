@@ -1,0 +1,503 @@
+#!/usr/bin/env node
+/**
+ * 最小可复现验证:「手改 config.json 的设置,升级后会丢」—— issue #51 那条评论
+ * (xiaijiangxue,2026-09-22 14:17Z:「更新到最新的版本,设置又回退了,比如弹幕这个」)。
+ *
+ * 运行:node scripts/verify-settings-survive-upgrade.cjs
+ *
+ * 为什么单独起一档:仓库里 `scripts/smoke-test.cjs` 覆盖的是**设置页保存**那条路径
+ * (settingsDeltaFor 并入上一次差异,v0.23.3 修的),它现在是绿的;而 README 明确允许
+ * 「调文案或选项,可以直接改文件」,那条路径**没人管**:
+ *
+ *   1. `config.json` 只是 serve 时的**文件层**,改完立刻生效;
+ *   2. 把它搬进设置存储的 `trimSettingsSection` 是**一次性**迁移 —— 见到
+ *      `settingsVersion` 标记就直接 return(lib/index.js:`if (raw[SETTINGS_VERSION_KEY]
+ *      === SETTINGS_VERSION) return;`),之后再改文件也不会再搬;
+ *   3. 升级时包目录被整体换掉:npm 包里没有 `config.json`(发布产物 13 个文件里没有它),
+ *      Release 的 zip 里那份是 `config.example.json` 的拷贝(`danmaku.enabled: true`)。
+ *   → 只在文件里改过的设置没了,随包默认值顶回来(关掉的弹幕又打开)。
+ *
+ * 本脚本用**真实插件代码**跑这条时间线,只替换宿主框架(settings / webServer 两个服务,
+ * 以及 @deepseek-ai/schemastery、@deepseek-ai/dsh-settings 两个宿主包的最小替身),
+ * 迁移 / 合并 / 路由全是真跑的。包目录用的是临时目录,不会碰仓库里的文件。
+ *
+ * 场景:
+ *   A(报告人说法)手改 config.json → 升级 → 期望设置还在。**当前实现会失败**。
+ *   B(用过设置页的人)存储里已有 section + settingsVersion 标记,再手改 config.json
+ *     → 升级。同一个回合里:**设置页存的那项活下来、手改的那项丢** —— 这直接把
+ *     「一次性导入被标记关死」这件事坐实。**当前实现也会失败**。
+ *   C(对照)从设置页保存 → 升级 → 期望设置还在。应当通过 —— 证明缺陷只在文件那条路径,
+ *     不是整条持久化都坏了。
+ */
+const fs = require("node:fs");
+const http = require("node:http");
+const os = require("node:os");
+const path = require("node:path");
+const { pathToFileURL } = require("node:url");
+
+const REPO = path.join(__dirname, "..");
+/** 「当前」的存储标记版本:必须跟着 lib/index.js 走 —— 写死的话,下次 bump 会让
+ *  「section 已带标记 → 一次性迁移不再跑」这个前提失效(0.27.1 从 2 提到 3 时踩过)。 */
+const SETTINGS_VERSION = require(path.join(REPO, "lib", "index.js")).SETTINGS_VERSION;
+const ROUTE = "/plugins/dsh-status-rotator/config.json";
+const NS = "status-rotator";
+const WORK = path.join(os.tmpdir(), "dsh-status-rotator-settings-upgrade-verify");
+
+let failures = 0;
+function report(label, ok, detail) {
+	if (!ok) failures++;
+	console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? "  →  " + detail : ""}`);
+}
+const log = (...args) => console.log("      ", ...args);
+
+/** 宿主包的最小替身:schemastery 只要能链式调用, dsh-settings 只要能解析命名空间 */
+const STUBS = {
+	"@deepseek-ai/schemastery": {
+		"package.json": JSON.stringify({ name: "@deepseek-ai/schemastery", version: "0.0.0", type: "module", main: "index.js" }),
+		"index.js": "export default { object: () => ({ loose: () => ({}) }) };\n"
+	},
+	"@deepseek-ai/dsh-settings": {
+		"package.json": JSON.stringify({ name: "@deepseek-ai/dsh-settings", version: "0.0.0", type: "module", main: "index.js" }),
+		"index.js": "export function settingsNamespace(name) { return name; }\nexport default { settingsNamespace };\n"
+	}
+};
+
+/** 造一个「已安装好的插件包目录」:与 npm 包同形 —— lib/ + config.example.json + package.json,**没有** config.json */
+function makePackageDir(dir) {
+	fs.mkdirSync(path.join(dir, "lib"), { recursive: true });
+	fs.copyFileSync(path.join(REPO, "lib", "index.js"), path.join(dir, "lib", "index.js"));
+	fs.copyFileSync(path.join(REPO, "config.example.json"), path.join(dir, "config.example.json"));
+	fs.copyFileSync(path.join(REPO, "package.json"), path.join(dir, "package.json"));
+	for (const [name, files] of Object.entries(STUBS)) {
+		const at = path.join(dir, "node_modules", name);
+		fs.mkdirSync(at, { recursive: true });
+		for (const [file, body] of Object.entries(files)) fs.writeFileSync(path.join(at, file), body);
+	}
+}
+
+/** settings 服务替身:document 就是「$DSH_HOME/settings.yaml 里 status-rotator 那一段」的原文 */
+function makeSettings() {
+	const document = {};
+	return {
+		document,
+		register(ns) {
+			return {
+				get: () => (document[ns] && typeof document[ns] === "object" ? JSON.parse(JSON.stringify(document[ns])) : {}),
+				replace: (next) => { document[ns] = JSON.parse(JSON.stringify(next)); }
+			};
+		},
+		raw: () => document[NS]
+	};
+}
+
+/**
+ * settings 服务替身(**真机形状**)。
+ *
+ * 这一档是 issue #51 在 v0.26.0 上依然能复现的原因:`@deepseek-ai/dsh-settings`
+ * 0.1.7-rc.1 的 settings 服务只有 describe / update / replace / mutate / configure,
+ * **没有插件依赖的 `register()`**(也没有 `document`)—— 所以 lib/index.js 的
+ * `getSettingsApi()` 在真机上一直返回 null,老实现只剩包目录那份 config.json,
+ * 升级即丢。替身按真机形状造(宁可少一个方法,不要多一个),这样"插件以为宿主有
+ * register"这种假设再也不会被自己的测试放过。
+ */
+function makeRealSettings() {
+	const sections = {};
+	return {
+		sections,
+		describe: () => [],
+		async update(ns, patch) { sections[ns] = Object.assign({}, sections[ns], patch); },
+		async replace(ns, section) { sections[ns] = JSON.parse(JSON.stringify(section)); },
+		async mutate() { /* 真机:按 ops 改;本验证不用 */ },
+		configure() { return () => {}; },
+		raw: () => sections[NS]
+	};
+}
+
+function makeWebServer() {
+	let server = null;
+	return {
+		register({ path: routePath, handler }) {
+			if (routePath !== ROUTE) throw new Error("意外的路由注册:" + routePath);
+			server = http.createServer((req, res) => handler(req, res));
+			return () => { try { server.close(); } catch (error) { /* ignore */ } };
+		},
+		listen: async () => {
+			await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+			return server.address().port;
+		}
+	};
+}
+
+/** 起一次「插件启动」:用真实 lib/index.js(可以是新目录、也可以是同一路径的新实例),
+ * 只把 settings / webServer 两个服务换成替身。 */
+async function boot({ pkgDir, homeDir, settings, cacheKey }) {
+	process.env.DSH_HOME = homeDir;
+	process.env.DSH_STATUS_ROTATOR_BANK = path.join(homeDir, "status-rotator", "phrases.json");
+	process.env.DSH_STATUS_ROTATOR_BANK_URL = "off";        // 关掉上游自动更新(测试不联网)
+	process.env.DSH_STATUS_ROTATOR_BANK_INTERVAL_MS = "0";
+	delete process.env.DSH_STATUS_ROTATOR_CONFIG;           // 用户配置存储 = $DSH_HOME/status-rotator/config.json
+
+	const webServer = makeWebServer();
+	const url = pathToFileURL(path.join(pkgDir, "lib", "index.js")).href + (cacheKey ? "?v=" + cacheKey : "");
+	const node = await import(url);
+	node.apply({
+		effect: (callback) => callback(),
+		get: (name) => (name === "webServer" ? webServer : name === "settings" ? settings : null),
+		on: () => {}
+	});
+	const port = await webServer.listen();
+	return {
+		document: async () => {
+			const response = await fetch(`http://127.0.0.1:${port}${ROUTE}`);
+			if (!response.ok) throw new Error(`GET ${ROUTE} → ${response.status}`);
+			return response.json();
+		},
+		/** 设置页保存:浏览器把**整份文档** PUT 回来 */
+		save: async (doc) => {
+			const response = await fetch(`http://127.0.0.1:${port}${ROUTE}`, {
+				method: "PUT",
+				headers: { "content-type": "application/json" },
+				body: JSON.stringify(doc)
+			});
+			let payload = null;
+			try { payload = await response.json(); } catch (error) { /* ignore */ }
+			return { status: response.status, payload };
+		}
+	};
+}
+
+/** 用户配置存储(插件自己的数据目录,升级不会替换) */
+const userConfigFile = (homeDir) => path.join(homeDir, "status-rotator", "config.json");
+const readUserConfig = (homeDir) => {
+	try { return JSON.parse(fs.readFileSync(userConfigFile(homeDir), "utf8")); } catch (error) { return null; }
+};
+
+/** 「升级」:包目录被整体替换成新版本 —— 里面同样没有 config.json(npm 包就是这样) */
+function upgradePackage(pkgDir, pristineDir) {
+	fs.rmSync(pkgDir, { recursive: true, force: true });
+	fs.cpSync(pristineDir, pkgDir, { recursive: true });
+}
+
+async function scenario(name, { seed, edit }) {
+	console.log(`\n── 场景 ${name} ──`);
+	// Human-readable labels may contain ':'; keep fixture paths portable on Windows.
+	const root = path.join(WORK, "scenario-" + name.charAt(0));
+	fs.rmSync(root, { recursive: true, force: true });
+	fs.mkdirSync(path.join(root, "home", "status-rotator"), { recursive: true });
+	const pkgDir = path.join(root, "pkg");
+	const pristineDir = path.join(root, "pkg-pristine");
+	makePackageDir(pkgDir);
+	fs.cpSync(pkgDir, pristineDir, { recursive: true });
+
+	const settings = makeSettings();
+	// seed:这次启动之前,设置存储里已经有什么(模拟「以前用过设置页」)
+	if (seed) settings.document[NS] = JSON.parse(JSON.stringify(seed));
+
+	// ① 第一次启动(旧版本):弹幕是开的;迁移逻辑这时会跑一遍(有 section 且带标记就直接 return)
+	const first = await boot({ pkgDir, homeDir: path.join(root, "home"), settings, cacheKey: 0 });
+	const before = await first.document();
+	report(`[${name}] ① 首装:弹幕默认开启`, before.config.danmaku.enabled === true, "danmaku.enabled=" + before.config.danmaku.enabled);
+	const seededMarker = seed ? seed.settingsVersion : undefined;
+	report(`[${name}] ① 启动后设置存储里那段`,
+		JSON.stringify(settings.raw()) === JSON.stringify(seed === null ? undefined : seed),
+		"stored=" + JSON.stringify(settings.raw()) + (seededMarker === undefined ? "(还没有 section —— 用户没用过设置页)" : "(已带标记,一次性导入从此不再跑)"));
+
+	// ② 用户改设置
+	if (edit === "file") {
+		// README 允许的用法:直接改插件目录里的 config.json(只覆盖要改的那几项)
+		fs.writeFileSync(path.join(pkgDir, "config.json"), JSON.stringify({ config: { danmaku: { enabled: false } } }, null, 2));
+		log("已在包目录写入 config.json: config.danmaku.enabled = false");
+	} else {
+		// 设置页保存:差异进设置存储(升级保留)
+		settings.document[NS] = { config: { danmaku: { enabled: false } }, settingsVersion: SETTINGS_VERSION };
+		log("已在设置存储写入: config.danmaku.enabled = false");
+	}
+	const edited = await first.document();
+	report(`[${name}] ② 改完当下确实生效`, edited.config.danmaku.enabled === false, "danmaku.enabled=" + edited.config.danmaku.enabled);
+	if (seed && seed.config && typeof seed.config.intervalMs === "number") {
+		report(`[${name}] ② 设置页存过的那项也在`, edited.config.intervalMs === seed.config.intervalMs, "intervalMs=" + edited.config.intervalMs);
+	}
+
+	// ③ 升级:包目录整体换掉(新目录里没有 config.json),重新加载模块(同一路径、新实例)
+	upgradePackage(pkgDir, pristineDir);
+	report(`[${name}] ③ 升级后包目录里没有 config.json(与 npm 包一致)`,
+		!fs.existsSync(path.join(pkgDir, "config.json")), "pkg=" + pkgDir);
+
+	// ④ 升级后第一次启动:设置还在吗?
+	const second = await boot({ pkgDir, homeDir: path.join(root, "home"), settings, cacheKey: 1 });
+	const after = await second.document();
+	report(`[${name}] ④ 升级后【手改/设置页】的那项仍在(期望 danmaku.enabled=false)`,
+		after.config.danmaku.enabled === false,
+		"danmaku.enabled=" + after.config.danmaku.enabled + ",settings.yaml 里那段=" + JSON.stringify(settings.raw()));
+	if (seed && seed.config && typeof seed.config.intervalMs === "number") {
+		report(`[${name}] ④ 升级后【设置页存过】的那项仍在(同一次升级的对照)`,
+			after.config.intervalMs === seed.config.intervalMs,
+			"intervalMs=" + after.config.intervalMs + "(期望 " + seed.config.intervalMs + ")");
+	}
+	return after.config.danmaku.enabled === false;
+}
+
+/**
+ * 场景 F/G/H(issue #146 的排查与回归网)。
+ *
+ * 报告人(cxxy161):「我把弹幕的显示关闭后,每次 dsh 自己修改或安装操作其他插件的时候,
+ * 会导致弹幕被重新开启显示……经常需要重新手动关闭」。
+ *
+ * **结论:未能在当前代码上复现(2026-10-15,基于 upstream/main 4e68bd8)。** 排查过并
+ * 逐一排除的机制:
+ *   · 升级/重装替换包目录 → 设置丢(issue #51 那条,本文件场景 A–E 已经守住);
+ *   · 包目录 `config.json` 被换成随包默认且**指纹不匹配** → 被当「用户手改」吸收进存储;
+ *   · 存储里的 `configMirrorHash` 丢失;
+ *   · 宿主 settings schema 默认值回写(实际注册的是 `z.object({}).loose()`,无默认值);
+ *   · `trimSettingsSection` 的一次性收敛(有 `settingsVersion` 守卫;真机形状下
+ *     `getSettingsApi()` 直接返回 null,它根本不跑);
+ *   · 启动路径回写配置(只有保存、迁移、吸收三处会写存储)。
+ * 因此**产品代码没有跟着改** —— 没有可复现证据的改动不该进仓库。
+ *
+ * 这三条仍然是值得留下的**回归网**:它们把现有三层防护钉住,谁哪天动了镜像/指纹/吸收顺序,
+ * 这里会先红。三层防护分别是:
+ *   ① 保存时写下的兼容镜像会在存储里记一个文本指纹(`configMirrorHash`);
+ *      文件字节没变 → `unabsorbedFileLayerText()` 直接跳过(场景 F);
+ *   ② 指纹即使丢了,只要文件仍是插件写的那份字节,同样跳过(场景 G);
+ *   ③ 吸收层只搬「与内置默认的差异」(`absorbableFileDelta` → `pruneShippedBloat`),
+ *      「随包默认 + 换了缩进」这种陈旧文件算出来的差异是空的,进不了存储(场景 H)。
+ *
+ * 若后续真的复现出报告人的路径(建议向报告人要一份 `$DSH_HOME/status-rotator/config.json`
+ * 与插件目录 `config.json`,以及出问题时 DSH 的具体操作),应在这三条旁边补上新的失败场景,
+ * 而不是放宽它们。
+ */
+async function scenarioStaleMirror(name, mutateStore, mutateMirror) {
+	console.log(`\n── 场景 ${name} ──`);
+	// 目录名必须唯一:F/G/H 的首字符都是英文字母,`slice(0,2)` 会把 "F "/"G "/"H "
+	// 过滤成同一个 "F"/"G"/"H" 之外的空串 —— 三个变体曾共用同一个 root,互相污染
+	// (后一个变体的 boot 会读到前一个留下的包目录与存储)。用完整名字的稳定摘要。
+	const root = path.join(WORK, "scenario-" + name.replace(/[^A-Za-z0-9]+/g, "-").slice(0, 40));
+	fs.rmSync(root, { recursive: true, force: true });
+	fs.mkdirSync(path.join(root, "home", "status-rotator"), { recursive: true });
+	const pkgDir = path.join(root, "pkg");
+	const pristineDir = path.join(root, "pkg-pristine");
+	makePackageDir(pkgDir);
+	fs.cpSync(pkgDir, pristineDir, { recursive: true });
+	const homeDir = path.join(root, "home");
+	const settings = makeRealSettings();   // 真机形状:没有 register,存储就是那个文件
+
+	const first = await boot({ pkgDir, homeDir, settings, cacheKey: 0 });
+	const before = await first.document();
+	report(`[${name}] ① 起始:弹幕默认开启`, before.config.danmaku.enabled === true, "danmaku.enabled=" + before.config.danmaku.enabled);
+
+	// ② 用户在设置页关掉弹幕(浏览器 PUT 整份文档,与设置页行为一致)
+	const saved = await first.save({ ...before, config: { ...before.config, danmaku: { ...before.config.danmaku, enabled: false } } });
+	report(`[${name}] ② 设置页关闭弹幕:PUT 成功`, saved.status === 200, "status=" + saved.status + " " + JSON.stringify(saved.payload));
+	const storeAfterSave = readUserConfig(homeDir);
+	report(`[${name}] ② 存储里记下了「用户显式关掉」`,
+		!!(storeAfterSave && storeAfterSave.config && storeAfterSave.config.danmaku && storeAfterSave.config.danmaku.enabled === false),
+		"store=" + JSON.stringify(storeAfterSave && storeAfterSave.config));
+	const mirrorPath = path.join(pkgDir, "config.json");
+	report(`[${name}] ② 保存同时写了包目录兼容镜像`,
+		fs.existsSync(mirrorPath) && JSON.parse(fs.readFileSync(mirrorPath, "utf8")).config.danmaku.enabled === false,
+		"mirror=" + (fs.existsSync(mirrorPath) ? "存在(enabled=false)" : "缺失"));
+
+	// ③ 之后包目录/存储被外部改动(宿主装/卸别的插件、升级、解 zip、老版本残留……)
+	mutateStore(storeAfterSave, homeDir);
+	mutateMirror(mirrorPath, pristineDir);
+	const storeNow = readUserConfig(homeDir);
+	report(`[${name}] ③ 外部改动已生效(存储=用户关着;包目录文件=enabled=true)`,
+		!!(storeNow && storeNow.config && storeNow.config.danmaku && storeNow.config.danmaku.enabled === false)
+			&& JSON.parse(fs.readFileSync(mirrorPath, "utf8")).config.danmaku.enabled === true,
+		"store=" + JSON.stringify(storeNow && storeNow.config) + " file.enabled=" + JSON.parse(fs.readFileSync(mirrorPath, "utf8")).config.danmaku.enabled);
+
+	// ④ 宿主重启/下次开页面 —— 同一份存储、同一份包目录
+	const mirrorBytes = fs.readFileSync(mirrorPath, "utf8");
+	const storeBytes = readUserConfig(homeDir);
+	report(`[${name}] ③b 诊断:文件字节数=${mirrorBytes.length} 缩进=${/\n {2}\S/.test(mirrorBytes) ? "2" : /\n {4}\S/.test(mirrorBytes) ? "4" : "?"} 存储指纹=${String(storeBytes && storeBytes.configMirrorHash).slice(0, 10)}`,
+		true, "file.enabled=" + JSON.parse(mirrorBytes).config.danmaku.enabled);
+	const second = await boot({ pkgDir, homeDir, settings, cacheKey: 1 });
+	const after = await second.document();
+	const finalStore = readUserConfig(homeDir);
+	report(`[${name}] ④ 重启后弹幕仍是「关」(issue #146:期望 false)`,
+		after.config.danmaku.enabled === false,
+		"danmaku.enabled=" + after.config.danmaku.enabled + ",store=" + JSON.stringify(finalStore && finalStore.config));
+	return after.config.danmaku.enabled === false;
+}
+
+/**
+ * 场景 D:**真机形状**的宿主(settings 服务没有 register)+ 设置页保存 → 升级 → 再改回来。
+ *
+ * 这条才是 issue #51 在 v0.26.0 上「还是没修好」的真实路径:v0.26.0 的
+ * `getSettingsApi()` 在真机上返回 null(宿主的 settings 服务没有 register),
+ * 保存只落到包目录 `config.json`,升级把包目录整体换掉 → 用户设置回退。
+ * 场景 A/B/C 的替身都带 register,所以它们一直是绿的 —— 这条链路根本没人跑起来。
+ */
+async function scenarioRealHost() {
+	const name = "D 真机形状(没有 register)+ 设置页 PUT";
+	console.log(`\n── 场景 ${name} ──`);
+	const root = path.join(WORK, name);
+	fs.rmSync(root, { recursive: true, force: true });
+	const homeDir = path.join(root, "home");
+	fs.mkdirSync(path.join(homeDir, "status-rotator"), { recursive: true });
+	const pkgDir = path.join(root, "pkg");
+	const pristineDir = path.join(root, "pkg-pristine");
+	makePackageDir(pkgDir);
+	fs.cpSync(pkgDir, pristineDir, { recursive: true });
+
+	const settings = makeRealSettings();
+	const first = await boot({ pkgDir, homeDir, settings, cacheKey: 0 });
+	report(`[${name}] ① 宿主 settings 服务没有 register / document(与 0.1.7-rc.1 一致)`,
+		typeof settings.register !== "function" && typeof settings.document === "undefined");
+	const before = await first.document();
+	report(`[${name}] ① 首装:弹幕默认开启`, before.config.danmaku.enabled === true, "danmaku.enabled=" + before.config.danmaku.enabled);
+
+	// ② 设置页保存:浏览器把整份文档 PUT 回来(见 lib/client.js 的 writeConfigDocument)
+	const off = JSON.parse(JSON.stringify(before));
+	off.config.danmaku.enabled = false;
+	off.config.intervalMs = 4321;
+	const saved = await first.save(off);
+	report(`[${name}] ② 设置页 PUT 成功`, saved.status === 200 && saved.payload && saved.payload.ok === true,
+		"HTTP " + saved.status + " " + JSON.stringify(saved.payload));
+	const afterSave = await first.document();
+	report(`[${name}] ② 保存后立即生效`, afterSave.config.danmaku.enabled === false && afterSave.config.intervalMs === 4321,
+		"danmaku.enabled=" + afterSave.config.danmaku.enabled + ",intervalMs=" + afterSave.config.intervalMs);
+
+	const store = readUserConfig(homeDir);
+	report(`[${name}] ② 落在用户配置存储 $DSH_HOME/status-rotator/config.json(不是包目录)`,
+		store !== null && store.config.danmaku.enabled === false && store.config.intervalMs === 4321,
+		"store=" + JSON.stringify(store));
+	report(`[${name}] ② 存储里只存差异(词库不跟着抄进去)`,
+		store !== null && store.packs === undefined && store.phrases === undefined && JSON.stringify(store).length < 2048,
+		"bytes=" + (store ? JSON.stringify(store).length : -1));
+	report(`[${name}] ② 同时写了包目录兼容镜像`, fs.existsSync(path.join(pkgDir, "config.json")));
+
+	// ③ 升级:包目录整体换掉
+	upgradePackage(pkgDir, pristineDir);
+	report(`[${name}] ③ 升级后包目录里没有 config.json`, !fs.existsSync(path.join(pkgDir, "config.json")), "pkg=" + pkgDir);
+
+	// ④ 升级后第一次启动:设置还在吗?
+	const second = await boot({ pkgDir, homeDir, settings, cacheKey: 1 });
+	const after = await second.document();
+	const survived = after.config.danmaku.enabled === false && after.config.intervalMs === 4321;
+	report(`[${name}] ④ 升级后设置仍在(期望 danmaku.enabled=false,intervalMs=4321)`, survived,
+		"danmaku.enabled=" + after.config.danmaku.enabled + ",intervalMs=" + after.config.intervalMs);
+
+	// ⑤ 反向:把弹幕改回开启(提交的仍是整份文档)→ 差异必须跟着消失,不能把旧值焊死
+	const on = JSON.parse(JSON.stringify(after));
+	on.config.danmaku.enabled = true;
+	const reSaved = await second.save(on);
+	report(`[${name}] ⑤ 改回默认值也能保存`, reSaved.status === 200);
+	const afterRevert = readUserConfig(homeDir);
+	report(`[${name}] ⑤ 差异里不再有 danmaku(改回默认 = 没有差异,而不是叠加上一次的旧值)`,
+		afterRevert !== null && (afterRevert.config === undefined || afterRevert.config.danmaku === undefined),
+		"store=" + JSON.stringify(afterRevert));
+
+	// ⑥ 再升一次级:改回来的值同样要活下来(叠加语义会把 false 永久焊死)
+	upgradePackage(pkgDir, pristineDir);
+	const third = await boot({ pkgDir, homeDir, settings, cacheKey: 2 });
+	const last = await third.document();
+	const reverted = last.config.danmaku.enabled === true;
+	report(`[${name}] ⑥ 再次升级后「改回开启」仍成立(期望 danmaku.enabled=true)`, reverted,
+		"danmaku.enabled=" + last.config.danmaku.enabled);
+	return survived && reverted;
+}
+
+/**
+ * 场景 E:外部反馈的「共 0 个包,已启用 10 个」「暂无词库包」。
+ * 存储里被写进了「所有词库包都已删除」的墓碑(老版本保存路径的锅),生效文档于是只剩 0 个包;
+ * 这里断言:① 修复后启动即恢复完整词库;② 存储文件本身被治好(不留墓碑);③ 设置页再保存一次
+ * 也不会把词库删掉(保存路径不再写词库包墓碑)。
+ */
+async function scenarioPoisonedStore() {
+	const name = "E 存储里带「词库包已删除」墓碑(外部反馈)";
+	console.log(`\n── 场景 ${name} ──`);
+	const root = path.join(WORK, name);
+	fs.rmSync(root, { recursive: true, force: true });
+	const homeDir = path.join(root, "home");
+	const storeDir = path.join(homeDir, "status-rotator");
+	fs.mkdirSync(storeDir, { recursive: true });
+	const pkgDir = path.join(root, "pkg");
+	makePackageDir(pkgDir);
+
+	const bundled = JSON.parse(fs.readFileSync(path.join(REPO, "config.example.json"), "utf8"));
+	const poisoned = {
+		phrases: { zh: { running: ["用户自己写的文案…"] } },
+		packs: bundled.packs.map((pack) => ({ id: pack.id, $deleted: true })),
+		settingsVersion: SETTINGS_VERSION,
+	};
+	const storeFile = path.join(storeDir, "config.json");
+	fs.writeFileSync(storeFile, JSON.stringify(poisoned, null, 4) + "\n", "utf8");
+
+	const run = await boot({ pkgDir, homeDir, settings: makeRealSettings(), cacheKey: 0 });
+	const doc = await run.document();
+	report(`[${name}] ① 生效文档恢复完整词库(期望 ${bundled.packs.length} 个包)`,
+		Array.isArray(doc.packs) && doc.packs.length === bundled.packs.length,
+		"packs=" + (doc.packs || []).length + ",enabledPacks=" + (doc.enabledPacks || []).length);
+	report(`[${name}] ① 用户的词条还在(修墓碑不该丢用户内容)`,
+		Boolean(doc.phrases && doc.phrases.zh && doc.phrases.zh.running && doc.phrases.zh.running[0] === "用户自己写的文案…"));
+	const healed = JSON.parse(fs.readFileSync(storeFile, "utf8"));
+	report(`[${name}] ② 存储文件被治好:不再有词库包墓碑`, healed.packs === undefined,
+		"store.packs=" + JSON.stringify(healed.packs));
+	report(`[${name}] ② 存储里仍留着用户的词条`, Boolean(healed.phrases && healed.phrases.zh.running));
+
+	// ③ 设置页照旧保存整份文档:词库包不能再被删掉
+	const off = JSON.parse(JSON.stringify(doc));
+	off.config = { ...(off.config || {}), intervalMs: 4321 };
+	const saved = await run.save(off);
+	const after = await run.document();
+	const store2 = JSON.parse(fs.readFileSync(storeFile, "utf8"));
+	report(`[${name}] ③ 保存后词库仍是 ${bundled.packs.length} 个包、enabledPacks 仍在`,
+		saved.status === 200 && (after.packs || []).length === bundled.packs.length && (after.enabledPacks || []).length > 0,
+		"packs=" + (after.packs || []).length);
+	report(`[${name}] ③ 存储里没有词库包墓碑`, store2.packs === undefined && store2.config.intervalMs === 4321,
+		"store=" + JSON.stringify(store2).slice(0, 160));
+	return (doc.packs || []).length === bundled.packs.length && healed.packs === undefined && store2.packs === undefined;
+}
+
+(async () => {
+	fs.rmSync(WORK, { recursive: true, force: true });
+	fs.mkdirSync(WORK, { recursive: true });
+	console.log("dsh-status-rotator 设置跨升级存活验证(真实插件代码 + 替身宿主,包目录在临时目录)");
+	console.log("work dir   : " + WORK);
+
+	const fileOnly = await scenario("A 手改 config.json(没用过设置页)", { seed: null, edit: "file" });
+	const fileAfterPage = await scenario("B 手改 config.json(用过设置页:存储里已有 section)", {
+		seed: { config: { intervalMs: 12345 }, settingsVersion: SETTINGS_VERSION },
+		edit: "file"
+	});
+	const storedOnly = await scenario("C 设置页保存(对照,老宿主:settings 服务带 register)", { seed: null, edit: "settings" });
+	const realHost = await scenarioRealHost();
+	const poisonedStore = await scenarioPoisonedStore();
+	const mirrorIntact = await scenarioStaleMirror("F 陈旧文件指纹完整(镜像保护)",
+		() => {}, (mirrorPath, pristineDir) => fs.copyFileSync(path.join(pristineDir, "config.example.json"), mirrorPath));
+	const hashLost = await scenarioStaleMirror("G 指纹丢失但字节仍是插件那份",
+		(store, homeDir) => {
+			delete store.configMirrorHash;
+			fs.writeFileSync(path.join(homeDir, "status-rotator", "config.json"), JSON.stringify(store, null, 2) + "\n");
+		},
+		(mirrorPath, pristineDir) => fs.copyFileSync(path.join(pristineDir, "config.example.json"), mirrorPath));
+	// 最接近报告人机型的一条:包目录那份文件是**随包默认**(enabled=true),而且字节与
+	// 插件写下的镜像不同(宿主重装 / zip 解压 / 别的工具重排都会这样)—— 指纹对不上,
+	// 于是吸收层真的跑起来了。此刻护住用户设置的是第 ③ 层:文件与内置默认一致 → 差异为空。
+	// 注意断言落在 ④(重启后仍为「关」):③ 只说明"此刻文件里是 true",那不是缺陷。
+	const staleSnapshot = await scenarioStaleMirror("H 陈旧文件指纹不匹配(随包默认)",
+		() => {},
+		(mirrorPath) => {
+			const doc = JSON.parse(fs.readFileSync(mirrorPath, "utf8"));
+			doc.config = { ...doc.config, intervalMs: 12345, danmaku: { ...doc.config.danmaku, enabled: true } };
+			fs.writeFileSync(mirrorPath, JSON.stringify(doc, null, 2) + "\n");   // 2 空格:与库存镜像字节不同
+		});
+
+	console.log("\n──── 结论 ────");
+	console.log(`场景 A(没用过设置页,只手改 config.json):${fileOnly ? "设置保住了" : "**设置丢了(弹幕被打开)**"}`);
+	console.log(`场景 B(用过设置页,再手改 config.json):${fileAfterPage ? "两项都保住了" : "**手改的那项丢了**"}`);
+	console.log(`场景 C(设置页保存,老宿主替身):${storedOnly ? "设置保住了" : "设置也丢了"}`);
+	console.log(`场景 D(设置页保存,真机形状宿主 + 改回默认值):${realHost ? "设置保住了,改回默认值也没被焊死" : "**设置回退(issue #51 复现)**"}`);
+	console.log(`场景 E(存储里带词库包墓碑):${poisonedStore ? "启动即恢复完整词库,存储被治好" : "**词库仍是 0 个包**"}`);
+	console.log(`场景 F(包目录残留陈旧 config.json,指纹完整):${mirrorIntact ? "用户关掉的开关保住了" : "**弹幕被文件层重新打开**"}`);
+	console.log(`场景 G(指纹丢失但字节未变):${hashLost ? "用户关掉的开关保住了" : "**弹幕被文件层重新打开**"}`);
+	console.log(`场景 H(陈旧文件指纹不匹配(随包默认)):${staleSnapshot ? "用户关掉的开关保住了" : "**弹幕被文件层重新打开**"}`);
+
+	fs.rmSync(WORK, { recursive: true, force: true });
+	process.exit(failures === 0 ? 0 : 1);
+})().catch((error) => {
+	console.error(error);
+	fs.rmSync(WORK, { recursive: true, force: true });
+	process.exit(1);
+});

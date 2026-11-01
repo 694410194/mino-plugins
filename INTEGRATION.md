@@ -13,6 +13,22 @@
 | mino-pet | fork dsh-dafeiyu | 推荐位 | Python + PySide6；鲸鱼素材保留可切换，默认 Mino 帧 |
 | mino-superagent | fork 官方 superagent 原型 + im-watch 源 | 实验向推荐位 | SETUP 向导：bot 账号+准入名单+stateDir；源码在本仓用 tsdown 构建 |
 | mino-tavern | fork KamishiroRei/dsh-sillytavern | 推荐位 | 无（预设选“酒馆跑团”）；ST V2/V3/PNG 卡+世界书+MVU |
+| mino-market | fork dshmarket | 推荐位强推 | 无；官方市场可视化装全部社区插件（生态自助入口） |
+| mino-aurabot | fork dsh-aurabot-qq | 推荐位 | OneBot/NapCat 个人号；QQ 鱼本体（聊天/表情/语音/记事/空间/B站/唱歌，模块化） |
+| mino-qq-link | fork Yuuyuko-uu/dsh-qq-link（插件许可 1.2） | 推荐位 | OneBot 11/NapCat；QQ 双向桥 |
+| mino-speak-up | fork Yuuyuko-uu/dsh-speak-up（同上许可） | 推荐位 | 无；主动搭话（本地掷骰子触发） |
+| mino-mood | fork Yuuyuko-uu/dsh-feiyu-mood（同上） | 推荐位 | 无；心情系统+右下角挂饰 |
+| mino-fish-memory | fork Yuuyuko-uu/dsh-fish-memory（同上） | 推荐位 | 无；会淡忘的带时间戳长期记忆 |
+| mino-balance | fork dsh-whale-widget | 推荐位 | 无；鲸鱼娘余额挂件（余额/峰谷/飘字） |
+| mino-status | fork dsh-status-rotator | 推荐位 | 无；状态栏梗+鲸尾动作 |
+| mino-bili-scroll | fork dsh-bili-scroll | 推荐位 | B站 cookie；每日刷B站挑片写日报 |
+| mino-bili-humanism | fork dsh-bili-humanism | 推荐位 | B站 cookie；人类世界内容养人格（human-world.md） |
+| mino-meme | fork dsh-meme | 推荐位 | 无；表情包斗图+图库市场 |
+| mino-bridge | fork @wenbin_wb/dsh-bridge | 推荐位 | 远程通道配置；扫码直连/隧道/多IM机器人+安全认证 |
+| mino-browser | fork @yuxianglin/dsh-bridge-browser | 进阶推荐位 | 需装配套 Chrome 扩展；源码 tsc+tsdown 在本仓构建 |
+| mino-pilot | fork @momasiku/dsh-pilot | 进阶推荐位 | Windows 桌面自动化；能力边界大先看说明 |
+| mino-open-sea | fork open-sea-skin | 推荐位 | 无；海洋主题皮肤 |
+| mino-whale-musume | fork dsh-whale-musume | 推荐位（与 pet 二选一） | 无；鲸鱼娘桌宠 45 成就+3 小游戏 |
 
 > 已否决：dsh-super-code（dsh-xray C3 级：patch 运行时/改写系统提示/起网络服务/读凭据环境变量；21★ 单人作者、无第三方验证）。不并入推荐，避免品牌背书风险。
 | mino-qqbot | 腾讯官方 fork | 推荐位 | QQBOT_APPID/SECRET 环境变量 |
@@ -44,8 +60,8 @@
 
 ### 补全（superagent 养鱼向）
 - [x] im-watch source：src/sources/im.ts 消费 mino-im dshIm 独占接收契约（consumeInbound/replyChecked/historyChecked），已构建进包，默认 disabled
-- [ ] non-code prompts：prompts/ 目前全是编码语境；先调研社区值守/陪伴向 prompt 包再决定写不写
-- [ ] persona 接线：worker preset 的 dsh-persona prefix 是 coding agent 文案，换 Mino 人设
+- [x] non-code prompts：社区调研完成——养鱼向已由社区覆盖（aurabot personas/、speak-up、fish-memory、bili-humanism），不再自写
+- [x] persona 接线：核实为分层设计——人设卡全局注入叠加 worker 职位 prompt，prefix 不动；work 卡已用社区家规语料
 - [ ] mino-im 侧 QQ/微信渠道的 exclusive-text-consumer 能力（上游契约目前只实现飞书/Lark）
 
 ### 候选评估

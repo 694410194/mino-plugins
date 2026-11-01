@@ -1,0 +1,123 @@
+{
+  "name": "mino-bridge",
+  "version": "2.17.5",
+  "description": "DSH 远程连接/远程控制插件（remote control）：手机扫码即可在移动端/公网继续用 DeepSeek Harness，人不在电脑前也能接着干。一键局域网二维码、Cloudflare 公网隧道、自建隧道与微信 / QQ / 飞书 / Telegram Bot（多工作区/会话持久化/媒体/卡片审批/流式输出），无需自己搭公网服务器。",
+  "releaseNotes": "【v2.17.5】\n• 修复「本轮改动」摘要从未显示（读取时机竞态）\n• 修复按钮点击后误弹「请勿重复操作」提示\n• 平台面板：QQ 调整为第一位，推荐标记移到 QQ\n• 按钮交互与卡片渲染已通过真机验证",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": "./client/client.js",
+    "./locale/*": "./locale/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "client",
+    "locale",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "llms.txt"
+  ],
+  "scripts": {
+    "build:client": "node client/build.mjs",
+    "build:lark": "node scripts/bundle-lark.mjs",
+    "build:qq": "node scripts/bundle-qq.mjs",
+    "build:banner": "node scripts/generate-banner.mjs",
+    "prepack": "npm run build:client && npm run build:qq",
+    "release:github": "node scripts/create-github-release.mjs",
+    "lint": "eslint .",
+    "test": "node --test test/*.test.mjs",
+    "verify:mobile-ui": "node test/browser/run-all.mjs"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.3",
+    "ws": "^8.18.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-llm": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "license": "MIT",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "remote",
+    "remote-access",
+    "tunnel",
+    "cloudflare",
+    "mobile",
+    "smartphone",
+    "tablet",
+    "qr-code",
+    "qrcode",
+    "websocket",
+    "bot",
+    "wechat",
+    "qq",
+    "feishu",
+    "telegram",
+    "remote-control",
+    "remote-development",
+    "remote-ui",
+    "mobile-access",
+    "dsh-remote",
+    "dsh-bridge",
+    "dsh-mobile",
+    "dsh-remote-control",
+    "dsh-remote-access",
+    "mobile-remote",
+    "mobile-control",
+    "phone-remote",
+    "pwa",
+    "android",
+    "ios",
+    "public-tunnel",
+    "lan-access",
+    "远程连接",
+    "远程控制",
+    "远程访问",
+    "移动端",
+    "dsh移动端",
+    "手机远程"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-connection",
+        "@deepseek-ai/dsh-client-ui-slots",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-locale"
+      ],
+      "platform": "web"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wenbin-wb/dsh-bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wenbin-wb/dsh-bridge/issues"
+  },
+  "homepage": "https://github.com/wenbin-wb/dsh-bridge",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "optionalDependencies": {
+    "@tencent-connect/qqbot-connector": "^1.2.0"
+  }
+}

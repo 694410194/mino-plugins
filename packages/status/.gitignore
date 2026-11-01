@@ -1,0 +1,21 @@
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# 本地个性化配置(由 gen-config.cjs 从 lib/client.js 生成,不入库)
+config.json
+
+# QQ 群成员文案配置(scripts/fetch-qq-group.cjs 生成,不入库;模板在 *.example.json)
+config.qq*.json
+!config.qq*.example.json
+config.backup-*.json
+
+# 发布打包产物(scripts/package-release.cjs 生成)
+dist-release/
+
+# 演示壁纸(不入库)
+demo-wallpapers/
+
+# web 重启监督脚本与运行日志(不入库)
+.dsh-web-restart/

@@ -1,0 +1,211 @@
+/**
+ * 真浏览器跑弹幕挂载回归页(dev-only,不随 npm 包发布)。
+ *
+ * scripts/danmaku-mount-test.html 需要 Chromium 内核浏览器;这个脚本用 CDP
+ * 无头驱动它,把几档时序各跑一遍,读回 <title> 里的断言结果。
+ *
+ * 用法:
+ *   node scripts/run-danmaku-mount-test.cjs [--browser=<path>] [--wait=3500]
+ */
+const { spawn } = require("node:child_process");
+const os = require("node:os");
+const path = require("node:path");
+const fs = require("node:fs");
+const { pathToFileURL } = require("node:url");
+
+const args = process.argv.slice(2);
+const waitMs = Number((args.find((a) => a.startsWith("--wait=")) || "--wait=3500").slice(7));
+const browser = (args.find((a) => a.startsWith("--browser=")) || "").slice(10)
+	|| [
+		"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+		"C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
+		"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+		"/usr/bin/google-chrome",
+		"/usr/bin/chromium",
+		"/usr/bin/chromium-browser",
+		// Playwright 缓存里的 Chromium(本机 / CI 常备,不必系统级安装)
+		...(process.env.HOME ? [
+			path.join(process.env.HOME, ".cache/ms-playwright/chromium-1243/chrome-linux64/chrome"),
+			path.join(process.env.HOME, ".cache/ms-playwright/chromium-1243/chrome-linux/chrome"),
+		] : []),
+	].find((p) => fs.existsSync(p));
+if (!browser) {
+	console.error("no chromium browser found; pass --browser=<path>");
+	process.exit(2);
+}
+
+/** --page=danmaku(默认)| label | pending */
+const pages = {
+	danmaku: {
+		file: "danmaku-mount-test.html",
+		scenarios: [
+			{ label: "外壳与面板同步出现", query: "?frameDelay=0&panelDelay=0" },
+			{ label: "面板晚于外壳出现(升级重试)", query: "?frameDelay=1200&panelDelay=600" },
+			{ label: "外壳不画底色面板(退回主框架)", query: "?frameDelay=1200&panel=0" },
+			{ label: "外壳永不出现(body 兜底层)", query: "?frameDelay=-1" },
+			{ label: "顶部 / 底部弹幕:居中 + 堆叠方向/间距 + 停留时长 + 与滚动共存", query: "?modes=1", waitMs: 7000 },
+			{ label: "顶部 / 底部弹幕炫彩(与滚动弹幕共用色板)", query: "?modes=1&rainbow=1", waitMs: 7000 },
+			// issue #60:宿主全屏 backdrop-filter 遮罩(设置弹窗)出现 → 弹幕停摆,遮罩关掉 → 恢复
+			{ label: "宿主全屏模糊遮罩:弹幕暂停 / 关闭后恢复(issue #60)", query: "?mask=1", waitMs: 5200 },
+			// 反向对照:关掉 danmaku.pauseBehindMask 后遮罩不再影响弹幕(证明暂停来自这个开关)
+			{ label: "关掉 pauseBehindMask:遮罩期间弹幕照跑(反向对照)", query: "?mask=1&pause=0", waitMs: 5200 },
+			// 代码块回归:大代码块又居中时,弹幕层必须挂进底色面板,不能挂进代码块自己的
+			// <pre> —— 宿主代码块复制按钮读 pre.textContent,挂进去会把弹幕文案一起复制走。
+			{ label: "代码块又大又居中:弹幕层不挂进 <pre>,复制内容不被弹幕污染", query: "?codeBlock=1", waitMs: 5000 },
+		]
+	},
+	label: {
+		file: "label-layout-test.html",
+		scenarios: [
+			{ label: "渐变生效 + 打字机锁宽", query: "?case=gradient" },
+			{ label: "配色非法 → 回退宿主 shimmer", query: "?case=inject" },
+			{ label: "超长文案 → 收窄 + 淡出", query: "?case=overflow" },
+			// 设置页「行为」页:标签页标题是设置页里的可配置项(开关 / 模板 / 空闲标题 / 间隔)
+			{ label: "设置页「行为」页:标签页标题可配置", query: "?case=gradient" },
+		]
+	},
+	settings: {
+		file: "settings-save-test.html",
+		scenarios: [
+			// 0.27.1 的回归:设置页**保存路径**(点开关 → 整份文档 PUT)以前完全没测到
+			{ label: "设置页保存:点开关 → 真的写盘且写整份文档", query: "", waitMs: 36000 },
+		]
+	},
+	pending: {
+		file: "live-pending-test.html",
+		waitMs: 6000,
+		scenarios: [
+			{ label: "{pending} 随待作答交互实时刷新", query: "?case=live" },
+			{ label: "无 uiSession 服务(旧版 dsh)静默为 0", query: "?case=noservice" },
+		]
+	},
+	// 对外注册接口:一个真的第三方站在宿主上下文上(ctx.provide)接入。
+	// 页面刻意清空随包词库 —— 状态行能出文案就只可能来自第三方。
+	external: {
+		file: "external-api-test.html",
+		waitMs: 8000,
+		scenarios: [
+			{ label: "第三方接入:注册包 / 占位符 / provider,失败显式", query: "" }
+		]
+	},
+	// 外观(视觉主题化)+ 弹幕增强:类名 / ::before / 指针交互 / 按相位分色 / 自己发一条,
+	// 这些只有真浏览器 + 真 CSS 才成立。
+	appearance: {
+		file: "appearance-danmaku-test.html",
+		waitMs: 2500,
+		scenarios: [
+			{ label: "默认值 = 什么都不改", query: "?case=default" },
+			{ label: "主题包:字体 / 字号 / 发光 / 呼吸 / 环形指示 + 渐变色板", query: "?case=theme" },
+			{ label: "交互:悬停冻结 / 点击复制 / 按相位分色", query: "?case=interact" },
+			{ label: "自己发一条(api.sendDanmaku)", query: "?case=send" }
+		]
+	},
+	// 标题所有权共存:插件(真实 lib/client.js)vs oh-my-dsh 的品牌名替换(真实代码)
+	// 见 title-coexistence-test.html 头部注释;omd=before/after 是两种装载顺序
+	title: {
+		file: "title-coexistence-test.html",
+		scenarios: [
+			{ label: "原生宿主:关着标题功能时插件不抢标题", query: "?omd=off&title=0" },
+			{ label: "OMD 后装(报告人的顺序):不与其品牌替换互撞", query: "?omd=after&title=0" },
+			{ label: "OMD 先装:会话标题不被插件顶掉", query: "?omd=before&title=0" },
+			{ label: "开着标题功能:插件标题生效且不闪(OMD 在装)", query: "?omd=after&title=1" },
+			{ label: "开着标题功能→中途关掉:只交还一次", query: "?omd=after&title=1&flip=1", waitMs: 5000 },
+		]
+	}
+};
+const pageName = (args.find((a) => a.startsWith("--page=")) || "--page=danmaku").slice(7);
+const page = pages[pageName] || pages.danmaku;
+const scenarios = page.scenarios;
+const pageUrl = pathToFileURL(path.join(__dirname, page.file)).href;
+
+// 让浏览器自己挑端口(--remote-debugging-port=0),再从 DevToolsActivePort 读回:
+// 固定区间(如 9800-9950)在部分 Windows 上落在 Hyper-V 保留端口里,bind() 会直接失败。
+const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "dsh-mount-test-"));
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+(async () => {
+	const logFd = fs.openSync(path.join(userDataDir, "browser.log"), "a");
+	const child = spawn(browser, ["--headless=new", "--disable-gpu", "--no-sandbox", "--no-first-run",
+		"--remote-debugging-port=0", `--user-data-dir=${userDataDir}`, "--window-size=1280,800", "about:blank"],
+	{ stdio: ["ignore", logFd, logFd] });
+	const cleanup = () => { try { child.kill(); } catch (error) { /* ignore */ } try { fs.rmSync(userDataDir, { recursive: true, force: true }); } catch (error) { /* ignore */ } };
+	process.on("exit", cleanup);
+
+	let port = 0;
+	for (let i = 0; i < 80; i++) {
+		const portFile = path.join(userDataDir, "DevToolsActivePort");
+		if (fs.existsSync(portFile)) {
+			const first = fs.readFileSync(portFile, "utf8").split("\n")[0].trim();
+			if (first) { port = Number(first); break; }
+		}
+		await sleep(250);
+	}
+	if (port > 0) {
+		try { await fetch(`http://127.0.0.1:${port}/json/version`); } catch (error) { port = 0; }
+	}
+	if (!port) {
+		console.error("browser did not expose CDP; log tail:");
+		try { console.error(fs.readFileSync(path.join(userDataDir, "browser.log"), "utf8").split("\n").slice(-12).join("\n")); } catch (error) { /* ignore */ }
+		process.exit(3);
+	}
+
+	let failed = 0;
+	for (const scenario of scenarios) {
+		const created = await (await fetch(`http://127.0.0.1:${port}/json/new?${encodeURIComponent("about:blank")}`, { method: "PUT" })).json();
+		const ws = new WebSocket(created.webSocketDebuggerUrl);
+		let id = 0;
+		const pending = new Map();
+		ws.addEventListener("message", (event) => {
+			const msg = JSON.parse(event.data);
+			if (msg.id && pending.has(msg.id)) { pending.get(msg.id)(msg); pending.delete(msg.id); }
+		});
+		await new Promise((res, rej) => { ws.addEventListener("open", res, { once: true }); ws.addEventListener("error", rej, { once: true }); });
+		const send = (method, params) => new Promise((res) => {
+			const i = ++id;
+			pending.set(i, (msg) => res(msg.result ?? msg.error));
+			ws.send(JSON.stringify({ id: i, method, params: params || {} }));
+		});
+		await send("Page.enable");
+		await send("Page.navigate", { url: pageUrl + scenario.query });
+		await sleep(scenario.waitMs || waitMs);
+		// 页面可以自己宣告「断言跑完了」:window.__RESULTS_DONE__ = true。
+		// 无头下页面可能被判为后台、定时器被降频,固定等待时长会读到一份**被截断但全过**的
+		// 清单 —— 那是最危险的假阳性。设了这个标记就一直等到它,等不到按失败处理;
+		// 没设标记的页面(其余各页)保持原有行为不变。
+		const doneExpr = "String(typeof window.__RESULTS_DONE__)";
+		const opted = (await send("Runtime.evaluate", { expression: doneExpr, returnByValue: true })).result?.value;
+		let timedOut = false;
+		if (opted === "boolean") {
+			const deadline = Date.now() + (scenario.doneTimeoutMs || 30000);
+			for (;;) {
+				const done = (await send("Runtime.evaluate", { expression: "window.__RESULTS_DONE__ === true", returnByValue: true })).result?.value;
+				if (done === true) break;
+				if (Date.now() > deadline) { timedOut = true; break; }
+				await sleep(250);
+			}
+		}
+		// 结果以 window.__RESULTS__ 为准:插件的「标题」功能会在 title 被改后
+		// 把 document.title 还原成原值(它把页面标题当作自己的地盘),所以
+		// title 只作参考,断言用页面里的数组(#verdict 与之一致)。
+		const results = (await send("Runtime.evaluate", { expression: "JSON.stringify(window.__RESULTS__ || null)", returnByValue: true })).result?.value;
+		let parsed = null;
+		try { parsed = JSON.parse(results); } catch (error) { /* ignore */ }
+		if (timedOut) {
+			parsed = (Array.isArray(parsed) ? parsed : []).concat([{ name: "断言清单在超时前跑完(截断 = 失败)", pass: false, extra: "done flag 未置位" }]);
+		}
+		const pass = Array.isArray(parsed) && parsed.length > 0 && parsed.every((r) => r.pass);
+		if (!pass) {
+			failed++;
+			const verdict = (await send("Runtime.evaluate", { expression: "(document.getElementById('verdict')||{}).textContent || document.title", returnByValue: true })).result?.value;
+			console.log("      diag: " + (results || "(no results)") + " | verdict=" + verdict);
+		}
+		console.log((pass ? "PASS " : "FAIL ") + scenario.label);
+		for (const r of parsed || []) console.log("      " + (r.pass ? "✓ " : "✗ ") + r.name + (r.extra ? " [" + r.extra + "]" : ""));
+		await send("Target.closeTarget", { targetId: created.id });
+		ws.close();
+	}
+
+	cleanup();
+	console.log(failed === 0 ? "\n全部通过" : `\n${failed} 档失败`);
+	process.exit(failed === 0 ? 0 : 1);
+})().catch((error) => { console.error(error); process.exit(1); });

@@ -1,0 +1,111 @@
+#!/usr/bin/env node
+/**
+ * 词库质检(开发期工具,不进 npm 发布集):
+ * 统计各分组规模、检测组内/跨组重复、超长告警、缺「…」结尾、系列占比。
+ * 用法: node scripts/check-bank-memes.mjs [config-path]
+ *   默认检查 config.example.json;传入第二个参数为候选文件(JSON:
+ *   { zh: { phase: [...], ... }, en: { ... } })时,额外检测候选与现有词库的重复。
+ */
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const here = path.dirname(fileURLToPath(import.meta.url));
+const bankPath = process.argv[2] || path.join(here, "..", "config.example.json");
+const candidatePath = process.argv[3] || null;
+
+const PHASES = ["thinking", "running", "long"];
+const entryText = (e) => (typeof e === "string" ? e : e && typeof e.text === "string" ? e.text : null);
+
+const doc = JSON.parse(fs.readFileSync(bankPath, "utf8"));
+const bank = doc.phrases;
+const packs = Array.isArray(doc.packs) ? doc.packs : [];
+
+const stats = {};
+const seen = new Map(); // text -> first location
+const problems = [];
+/**
+ * 名字来自 GitHub login(数据驱动),不套用人工文案的长度上限:
+ * 「正在路由 <login> 写代码…」在 20 字以内放不下 20 字符的 login。
+ * 这类包的长度由 CSS 侧的溢出淡出兜底,不在这里报错。
+ */
+const LENGTH_EXEMPT = new Set(["pack:star-route"]);
+const walkTable = (table, label) => {
+	for (const lang of ["zh", "en"]) {
+		stats[label] = stats[label] || {};
+		for (const phase of PHASES) {
+			const list = table && table[lang] && Array.isArray(table[lang][phase]) ? table[lang][phase] : [];
+			const texts = list.map(entryText).filter((t) => t !== null);
+			const avg = texts.length ? Math.round(texts.reduce((a, b) => a + b.length, 0) / texts.length) : 0;
+			stats[label][lang + "." + phase] = { count: list.length, avg };
+			for (const t of texts) {
+				const key = `${t}`;
+				if (seen.has(key)) problems.push(`重复:「${key}」(${seen.get(key)} 与 ${label}.${lang}.${phase})`);
+				else seen.set(key, `${label}.${lang}.${phase}`);
+				if (!t.endsWith("\u2026")) problems.push(`缺省略号:${label}.${lang}.${phase} 「${t}」`);
+				const exempt = LENGTH_EXEMPT.has(label);
+				const limit = lang === "zh" ? (exempt ? 40 : 20) : (exempt ? 60 : 45);
+				if (t.length > limit) problems.push(`超长(${t.length}>${limit}):${label}.${lang}.${phase} 「${t}」`);
+			}
+		}
+	}
+};
+walkTable(bank, "core");
+for (const pack of packs) {
+	if (pack && pack.phrases && typeof pack.phrases === "object") walkTable(pack.phrases, `pack:${pack.id}`);
+}
+
+console.log("== 分组规模 ==");
+for (const [label, rows] of Object.entries(stats)) {
+	for (const key of Object.keys(rows).sort()) {
+		const s = rows[key];
+		console.log(`  ${label}.${key}: ${s.count} 条(平均 ${s.avg})`);
+	}
+}
+
+// 系列占比监控:反代 / 路由 / 正在黑入 / 思考
+// 注:v0.14.0 起词条全部住在 packs 里,核心 phrases 可能为空 —— 统一汇总核心 + 全部词库包再统计
+const zhAll = [];
+const collectZh = (table) => {
+	if (!table || typeof table !== "object") return;
+	for (const phase of PHASES) {
+		const list = table.zh && Array.isArray(table.zh[phase]) ? table.zh[phase] : [];
+		for (const e of list) {
+			const t = entryText(e);
+			if (t) zhAll.push(t);
+		}
+	}
+};
+collectZh(bank);
+for (const pack of packs) collectZh(pack && pack.phrases);
+for (const series of ["反代", "路由", "黑入", "思考", "正在正在", "极其"]) {
+	const n = zhAll.filter((t) => t.includes(series)).length;
+	if (n > 0) console.log(`  系列「${series}」: ${n} 条`);
+}
+
+console.log("== 问题列表 ==");
+for (const p of problems) console.log("  " + p);
+if (problems.length === 0) console.log("  (无)");
+
+if (candidatePath) {
+	console.log("== 候选 vs 现有词库 ==");
+	const cand = JSON.parse(fs.readFileSync(candidatePath, "utf8"));
+	let dup = 0;
+	let len = 0;
+	for (const lang of ["zh", "en"]) {
+		for (const phase of PHASES) {
+			const list = cand[lang]?.[phase] || [];
+			for (const e of list) {
+				const t = entryText(e);
+				if (!t) { console.log(`  非法候选:${lang}.${phase} ${JSON.stringify(e)}`); continue; }
+				len++;
+				if (seen.has(t)) { dup++; console.log(`  与现有重复:${lang}.${phase} 「${t}」`); }
+				if (!t.endsWith("\u2026")) console.log(`  候选缺省略号:${lang}.${phase} 「${t}」`);
+			}
+		}
+	}
+	console.log(`  候选共 ${len} 条,重复 ${dup} 条`);
+}
+
+const exitCode = problems.length > 0 ? 1 : 0;
+process.exit(exitCode);

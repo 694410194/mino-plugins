@@ -1,0 +1,268 @@
+// Load-time smoke test for the plugin's host half.
+//
+// Imports the real @deepseek-ai/dsh-tools + schemastery from the DSH app
+// checkout, then drives apply() with a stub context. This catches schema-DSL
+// violations, missing services, render-block mistakes, and — via the validator
+// below — tool results whose shape does not match the closed output schema the
+// runtime enforces. That last check exists because a result carrying an
+// undeclared key is rejected only after the side effect already happened.
+//
+// Usage: node tools/smoke.mjs "D:\\AGAENT\\DSH Desktop\\resources\\app"
+
+const appRoot = process.argv[2];
+if (appRoot === undefined) {
+	console.error('usage: node tools/smoke.mjs <app-root>');
+	process.exit(2);
+}
+
+const appBase = `file:///${appRoot.replaceAll('\\', '/')}/`;
+await import(new URL('node_modules/@deepseek-ai/dsh-tools/lib/index.js', appBase).href);
+// The runtime's own predicate for "survives a JSON round trip without loss".
+const { isJsonValue } = await import(new URL('node_modules/@deepseek-ai/dsh-util-values/lib/index.js', appBase).href);
+const { Config, apply, inject, name, pruneAbsent, windowInfoOf } = await import(new URL('../lib/index.js', import.meta.url).href);
+
+console.log(`plugin name: ${name}`);
+console.log(`inject: ${JSON.stringify(inject)}`);
+
+const registered = new Map();
+const ctx = {
+	tools: {
+		register(tool) {
+			if (registered.has(tool.name)) throw new Error(`duplicate tool ${tool.name}`);
+			registered.set(tool.name, tool);
+		}
+	},
+	get(service) {
+		if (service === 'attachments') {
+			return {
+				imageLimits: { maxImageBytes: 8 * 1024 * 1024, maxMessageImageBytes: 8 * 1024 * 1024, mediaTypes: ['image/png', 'image/jpeg', 'image/webp', 'image/gif'], maxImagesPerMessage: 8, maxImageDimension: 8192, maxImagePixels: 50_000_000 },
+				async saveImage(input) {
+					return { attachmentId: 'sha256:stub', mediaType: input.mediaType, bytes: input.data.byteLength, width: 100, height: 100, name: input.name };
+				}
+			};
+		}
+		if (service === 'llm') {
+			return { async resolveModelInfo() { return { inputModalities: ['text', 'image'] }; } };
+		}
+		return undefined;
+	}
+};
+
+const config = new Config({});
+apply(ctx, config);
+console.log(`config: ${JSON.stringify(config)}`);
+console.log(`tools: ${[...registered.keys()].join(', ')}`);
+
+for (const [toolName, tool] of registered) {
+	console.log(`\n--- ${toolName} ---`);
+	console.log(`description: ${tool.description.length} chars`);
+	console.log(`parameters: ${JSON.stringify(Object.keys(tool.parameters.properties ?? {}))}`);
+	console.log(`required: ${JSON.stringify(tool.parameters.required ?? [])}`);
+	console.log(`output schema root: ${tool.output.schema.type}${tool.output.schema.additionalProperties === false ? ' (closed)' : ''}`);
+	if (typeof tool.output.render !== 'function') throw new Error(`${toolName} has no render`);
+}
+
+/**
+ * Validate a candidate value against a compiled raw JSON Schema (the subset the
+ * harness emits: type/required/additionalProperties/items/enum/properties).
+ * @param schema - compiled schema node.
+ * @param value - candidate value.
+ * @param path - dotted path used in violations.
+ * @returns the list of violations; empty means valid.
+ */
+function validate(schema, value, path) {
+	const violations = [];
+	if (schema === undefined || schema === null) return violations;
+	// An explicitly undefined field is absent as far as JSON serialization and
+	// the harness's validator are concerned, so it constrains nothing.
+	if (value === undefined) return violations;
+	const type = schema.type;
+	if (type !== undefined) {
+		const actual = value === null ? 'null' : Array.isArray(value) ? 'array' : typeof value;
+		const ok = type === 'integer'
+			? Number.isInteger(value)
+			: type === 'number' ? typeof value === 'number'
+				: type === 'array' ? Array.isArray(value)
+					: type === 'object' ? (typeof value === 'object' && value !== null && !Array.isArray(value))
+						: actual === type;
+		if (!ok) {
+			violations.push(`${path} should be ${type} but is ${actual}`);
+			return violations;
+		}
+	}
+	if (schema.enum !== undefined && !schema.enum.includes(value)) violations.push(`${path} is not one of ${JSON.stringify(schema.enum)}`);
+	if (Array.isArray(value) && schema.items !== undefined) {
+		value.forEach((entry, index) => violations.push(...validate(schema.items, entry, `${path}[${index}]`)));
+	}
+	if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+		for (const key of schema.required ?? []) {
+			if (!Object.hasOwn(value, key)) violations.push(`${path}.${key} is required but missing`);
+		}
+		for (const [key, entry] of Object.entries(value)) {
+			const property = schema.properties?.[key];
+			if (property === undefined) {
+				if (schema.additionalProperties === false) violations.push(`${path}.${key} is not a declared property`);
+				continue;
+			}
+			violations.push(...validate(property, entry, `${path}.${key}`));
+		}
+	}
+	return violations;
+}
+
+/** Assert one value satisfies one tool's output schema. */
+function assertOutput(toolName, value) {
+	const tool = registered.get(toolName);
+	const violations = validate(tool.output.schema, value, 'value');
+	if (violations.length > 0) throw new Error(`${toolName} output rejected: ${violations.join('; ')}`);
+}
+
+// --- a frame captured with an attachment attached -----------------------------
+const capture = {
+	path: 'E:\\work\\.dsh-pilot\\screen-1.png',
+	kind: 'primary',
+	imageWidth: 2560,
+	imageHeight: 1600,
+	originX: 0,
+	originY: 0,
+	scale: 1,
+	screens: [{ device: '\\\\.\\DISPLAY1', primary: true, bounds: '0,0,2560,1600' }],
+	cursor: { x: 10, y: 20, screen: '\\\\.\\DISPLAY1' },
+	foregroundWindow: { handle: '0x1', title: 'Notepad', class: 'Notepad', process: 'notepad', pid: 42, bounds: '0,0,800,600' },
+	image: { attachmentId: 'sha256:stub', mediaType: 'image/png', bytes: 1234, width: 2560, height: 1600, name: 'screen-1.png' },
+	capturedAt: '2026-09-21T22:00:00.0000000+08:00'
+};
+
+const screenView = registered.get('screen_view');
+assertOutput('screen_view', capture);
+const viewBlocks = screenView.output.render({}, capture);
+console.log(`\nscreen_view render blocks: ${viewBlocks.map((block) => block.type).join(', ')}`);
+console.log(viewBlocks[0].text);
+
+// --- the shape desktop_control actually returns -------------------------------
+// IMPORTANT: this mirrors what execute() copies out of the helper result. The
+// helper's own `ok` key must NOT appear here: the runtime enforces
+// additionalProperties:false on this object, and an undeclared key is rejected
+// after the action has already been performed.
+const controlResult = {
+	action: 'move',
+	cursor: { x: 100, y: 200 },
+	foregroundTitle: 'Notepad',
+	foregroundProcess: 'notepad',
+	foregroundClass: 'Notepad',
+	notes: ['a note'],
+	actedAt: '2026-09-21T22:00:00.0000000+08:00',
+	capturePath: capture.path,
+	capture
+};
+
+const control = registered.get('desktop_control');
+assertOutput('desktop_control', controlResult);
+const controlBlocks = control.output.render({}, controlResult);
+console.log(`\ndesktop_control render blocks: ${controlBlocks.map((block) => block.type).join(', ')}`);
+console.log(controlBlocks[0].text);
+
+// --- the two window shapes, through the projection that handles both -----------
+// The enumeration script (_dsh-action.ps1) reports handle/title/process/pid/bounds/
+// visible/minimized/foreground and NO `class`. The capture script additionally
+// reports `class`, for the foreground window. Both go through windowInfoOf(), so
+// both are driven through it here instead of being described: a sample written from
+// the schema is what let `visible` ship, and the same mistake shipped `class` as
+// `class: undefined` on every listed window, which the runtime refuses as
+// non-lossless JSON *after* the action already happened.
+const windowItemSchema = control.output.schema.properties.windows.items;
+
+const listed = windowInfoOf({ handle: '0x1', title: 'Notepad', process: 'notepad', pid: 42, bounds: '0,0,800,600', visible: true, minimized: false, foreground: true });
+if ('class' in listed) throw new Error(`a listed window carried a class key, and the enumeration script reports none — it would arrive as class: undefined (keys: ${Object.keys(listed).join(', ')})`);
+if (!isJsonValue(listed)) throw new Error(`a listed window is not lossless JSON: ${JSON.stringify(listed)}`);
+const listedProblems = validate(windowItemSchema, listed, 'entry');
+if (listedProblems.length > 0) throw new Error(`a listed window violates the item schema: ${listedProblems.join('; ')}`);
+
+assertOutput('desktop_control', {
+	action: 'windows',
+	cursor: { x: 1, y: 2 },
+	foregroundTitle: 'Notepad',
+	windows: [listed],
+	windowCount: 1,
+	notes: [],
+	actedAt: '2026-09-21T22:00:00.0000000+08:00'
+});
+console.log(`\nlisted windows project without class: ${JSON.stringify(listed)}`);
+
+// The capture path does report a class, and the projection keeps it.
+const projectedForeground = windowInfoOf({ handle: '0x1', title: 'Notepad', class: 'Notepad', process: 'notepad', pid: 42, bounds: '0,0,800,600', visible: true, minimized: false, foreground: true });
+if (projectedForeground.class !== 'Notepad') throw new Error('the capture path\'s window class was dropped by the projection');
+console.log(`captured foreground keeps its class: ${JSON.stringify(projectedForeground)}`);
+
+// A window entry may only carry declared fields: anything else the sensor reports
+// has to be dropped by windowInfoOf() before the result leaves execute().
+const undeclaredEntry = validate(windowItemSchema, { handle: '0x3', title: 'x', visible: true, bookkeeping: 1 }, 'entry');
+if (undeclaredEntry.length === 0) throw new Error('a windows entry accepted an undeclared sensor key; the closed schema is not closed');
+console.log(`windows entries reject undeclared sensor keys: ${undeclaredEntry.join('; ')}`);
+
+// The boundary prune. One absent property anywhere in a result refuses the whole
+// call after the fact, so every tool returns through this pass rather than trusting
+// each projection to remember — which is how `visible`, `{ path: undefined }`,
+// `class` and `foregroundProcess: null` each reached a release.
+const pruned = pruneAbsent({ a: 1, b: undefined, c: { d: undefined, e: [1, undefined, { f: undefined, g: 2 }] }, h: null, i: { j: null } });
+if ('b' in pruned) throw new Error('pruneAbsent left a top-level undefined property');
+if ('d' in pruned.c) throw new Error('pruneAbsent left a nested undefined property');
+if (pruned.c.e[1] !== null) throw new Error(`an array hole should become null, got ${JSON.stringify(pruned.c.e[1])}`);
+if ('f' in pruned.c.e[2]) throw new Error('pruneAbsent left an undefined property inside an array item');
+if ('h' in pruned) throw new Error('pruneAbsent left a null property; the validator rejects null for a declared string too');
+if ('j' in pruned.i) throw new Error('pruneAbsent left a nested null property');
+if (!isJsonValue(pruned)) throw new Error('the pruned value is still not lossless JSON');
+if (isJsonValue({ class: undefined })) throw new Error('the lossless predicate accepts { class: undefined }; the prune above proves nothing');
+// A null array item stays: JSON uses null for a hole, and renumbering would be worse.
+if (pruneAbsent({ k: [null, 1] }).k[0] !== null) throw new Error('a null array item must survive the prune');
+console.log(`boundary prune drops absent properties at every depth: ${JSON.stringify(pruned)}`);
+
+// Why `null` is pruned with `undefined`: the runtime rejects both against a
+// declared `string`, and the sensor encodes "no process name" as $null.
+const nullViolations = validate(control.output.schema, { action: 'move', foregroundProcess: null }, 'value');
+if (nullViolations.length === 0) throw new Error('the output schema accepts a null string; pruning null would be pointless');
+console.log(`a null string is refused by the schema too: ${nullViolations.join('; ')}`);
+
+// The sensor's own `foregroundWindow` entry must project onto the same schema.
+assertOutput('screen_view', {
+	...capture,
+	foregroundWindow: { handle: '0x1', title: 'Notepad', class: 'Notepad', process: 'notepad', pid: 42, bounds: '0,0,800,600', minimized: false, foreground: true }
+});
+
+// A result without an image must still render (the no-attachment-store case).
+const bareCapture = { ...capture, image: undefined, imageError: 'no store' };
+const bare = screenView.output.render({}, bareCapture);
+assertOutput('screen_view', bareCapture);
+console.log(`\nbare render blocks: ${bare.map((block) => block.type).join(', ')}`);
+
+// --- the regression that shipped: undeclared helper keys ----------------------
+const leaky = { ...controlResult, ok: true };
+const leakViolations = validate(control.output.schema, leaky, 'value');
+if (leakViolations.length === 0) throw new Error('validator failed to catch an undeclared key; the guard is useless');
+console.log(`\nvalidator catches undeclared keys: ${leakViolations.join('; ')}`);
+
+// --- the presentation projection must be lossless for every shape it can see ---
+// A projector emitting `{ path: undefined }` is refused by the runtime as
+// "output.presentationMeta returned non-lossless JSON" — after the tool body ran.
+// desktop_sequence has no capturePath for a dry run, for capture:'none', and for an
+// end capture that failed, so those are the shapes that decide this.
+const sequence = registered.get('desktop_sequence');
+if (typeof sequence.output.presentationMeta !== 'function') throw new Error('desktop_sequence declares no presentationMeta');
+const sequenceShapes = [
+	['with an end frame', { capturePath: 'E:\\work\\.dsh-pilot\\sequence-1.png' }],
+	['no frame at all (capture: none)', {}],
+	['the end capture failed', { captureError: 'no image-capable route' }],
+	['the dry run', { planned: true, executed: 0, steps: [] }]
+];
+for (const [label, value] of sequenceShapes) {
+	const meta = sequence.output.presentationMeta({}, value);
+	if (!isJsonValue(meta)) throw new Error(`desktop_sequence presentationMeta is not lossless JSON for ${label}: ${JSON.stringify(meta)}`);
+}
+console.log(`\ndesktop_sequence presentationMeta is lossless for ${sequenceShapes.length} shapes (frame, no frame, failed capture, dry run)`);
+
+// The predicate itself has to catch the shipped shape, or the check above proves
+// nothing: `{ path: undefined }` is precisely what the runtime refuses.
+if (isJsonValue({ path: undefined })) throw new Error('the lossless predicate accepts { path: undefined }; the guard above is useless');
+console.log('lossless predicate rejects { path: undefined } as the runtime does');
+
+console.log('\nSMOKE OK');

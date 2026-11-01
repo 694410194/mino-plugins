@@ -1,0 +1,40 @@
+node_modules/
+*.zip
+*.log
+.env
+*.db
+*.exe
+*.msi
+target/
+releases/
+.toolchain/
+.edge-qa-profile/
+_dsh-copies/
+backup/
+backups/
+dist/
+output/
+.DS_Store
+Thumbs.db
+
+# 桌面端适配期的一次性运行产物（隔离 QA home / 打包 tarball / 抓取快照）
+.qa/
+*.tgz
+
+# 从桌面端 app.asar 解出的参考包（含厂商 .d.ts 与构建产物，不入库）
+# 需要长期保存的结论已沉淀到 docs/desktop-0.2.0-rc.2-*.md
+_reference/
+
+dist/
+
+# ---- 本地工作区物料：不属于插件本体，也不随 Release 分发 ----
+# 历史动画素材（.webm）：presenter 从未引用，tools/build-release-zip.mjs 已明确不打包
+/assets/anim/
+# 关联工程：各自独立维护，不并入插件仓库
+/dsh-whale-guild-extension/
+/dsh-whale-moe-theme-extension/
+# 姿势图预览包 / 宣传物料：走各自的 Release 与设计稿
+/poses/
+/promo/
+# 本机项目汇总迁移简报（项目目录管理文档，非插件产物）
+/MIGRATION_BRIEF.md
