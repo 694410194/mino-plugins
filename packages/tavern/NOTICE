@@ -1,0 +1,9 @@
+mino-tavern
+===========
+
+Fork of dsh-sillytavern (https://github.com/KamishiroRei/dsh-sillytavern),
+MIT License (declared in upstream package.json).
+
+SillyTavern-compatible preset engine: V1/V2/PNG character cards,
+worldbooks, preset macros, regex rules, MVU variables. Ships as an
+opt-in agent preset; does not inject globally.
