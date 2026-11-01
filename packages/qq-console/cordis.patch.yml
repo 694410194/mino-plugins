@@ -5,4 +5,4 @@
 # 不写本文件，也不写 DSH 凭据存储。
 - insert:
     - id: qq-console-v2
-      name: dsh-qq-console-v2
+      name: mino-qq-console

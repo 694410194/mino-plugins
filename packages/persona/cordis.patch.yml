@@ -5,4 +5,4 @@
 # mounts it without manual cordis.patch.yml edits.
 - insert:
     - id: soul-md
-      name: 'dsh-soul-md'
+      name: 'mino-persona'
