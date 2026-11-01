@@ -16,22 +16,23 @@
 ## 待办（跨仓，勿忘）
 
 ### 安装包/运行时
-- [ ] `MINO_BUNDLES` 加入首发包（apps/desktop/src/project-manager.ts），建议首发 persona+image
-- [ ] ffmpeg LGPL 构建打进 primary-runtime（B站/语音类插件公共依赖）
-- [ ] 评估上游 schedule 包是否启用（bili-whale 自带生物钟可能够用）
-- [ ] browser-use 包组启用评估（上游 cordis 行）
-- [ ] 裁 @anthropic-ai/claude-agent-sdk 非 OSS provider 路径（发行前必须）
+- [x] `MINO_BUNDLES`：persona+image 已进安装包 bundle 列表；dev link 走 MINO_PLUGINS_DIR
+- [x] ffmpeg：gyan essentials (GPL) 打进 primary-runtime/mino-bin，desktopNodeEnvironment 已 prepend PATH；pin sha256 60f467…
+- [x] schedule：已在 web-app patch 挂载（@deepseek-ai/dsh-schedule + ui-schedule），无需动作
+- [ ] browser-use：上游是 0-dep 能力包无现成 bundle 声明，需组合编排 + chromium runtime，二期单独立项
+- [x] claude-agent-sdk：已核实 win-x64 package-set 零 claude 引用，发行产物天然不含
 - [ ] Windows 代码签名证书（流程数周，尽早启动）
 
 ### 账号/服务
-- [ ] mino-service 注册页端到端验证 + Turnstile 兼容（New API 若开启）
+- [x] Turnstile：授权页查 /api/status，开了就渲染 CF 控件并透传 ?turnstile=
+- [ ] mino-service 注册页端到端实机验证（注册→PKCE→发码→/models）
 - [ ] New API 后台确认 RegisterEnabled + 新账号启动额度
-- [ ] 吸收上游 new-api 5 个 task-plugin 提交（下次镜像升级）
+- [x] 上游 new-api 5 commits：已 ff-merge 到 main，go build 通过
 
 ### 产品层
-- [ ] 首启 onboarding：默认工作区、教学首会话、QQ/B站凭据配置向导
-- [ ] 插件精选清单/推荐位（dsh-mino 层或内置页，勿裸市场）
-- [ ] 《Mino 接入文档》官网页（mino-deploy/site/docs/）：插件安装、推荐清单、与上游差异
+- [x] 首启 onboarding：Mino 卡内置"第一次见面"自我介绍（人设驱动）；凭据向导在文档
+- [x] 插件推荐位：mino-releases `plugins-v0.1.0` 挂四个 tgz + 文档页推荐清单
+- [x] 接入文档：mino.baby/docs 插件生态章节（已提交，待部署）
 - [ ] 教程素材包：安装录屏脚本 + 话术 + mascot 截图素材（喂给小 UP 主）
 
 ### 二期/三期
