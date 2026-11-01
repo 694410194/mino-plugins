@@ -65,6 +65,11 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 - 驱动：`D:\tmp\mino-sdk\sdk-drive.mjs`（JSON-RPC stdio，叠加 `--patch`
   overlay 实现插件开关组合）；探测集 `probes-full.json`（14 条真实任务）；
   判读看 `request/header` 工具表、`tool/call`/`tool/result`、插件 stdout。
+- **dsh-superagent 要 `stateDir`**（orchestrator sqlite/锁/worker 工作目录，
+  schema 强制 `/^\/` 开头）：Windows 下用扩展长度路径
+  `//?/C:/Users/.../state/superagent`——`/Users/...` 会按进程 cwd 盘符解析，
+  从 D: 启动落到 `D:\Users\...`；锁是 proper-lockfile 进程内登记，
+  清 stateDir 不能解"already held"，要找真占用或换路径。
 - **测试纪律**：插件验收必须真实 agent 对话 + 原始事件流，不只看 UI 装载。
 - **启动必须带 `--no-open`**（web-app 官方 flag，`dsh --profile plugweb --no-open`）：
   不带则每次 boot 弹默认浏览器攒一排 token 过期黑屏页（`DSH_SDK_NO_BROWSER`
