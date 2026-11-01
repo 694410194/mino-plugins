@@ -8,6 +8,8 @@
 |---|---|---|---|
 | mino-image | 自研 (Apache-2.0) | 是 | 无（走账户额度） |
 | mino-persona | fork dsh-soul-md | 是 | 无（Mino 卡已预置为默认） |
+| mino-im | fork @xmanrui/dsh-im | 推荐位首选 | 扫码即建机器人；微信/QQ/飞书/钉钉/企微/TG/Discord/Slack/WhatsApp 9 渠道 |
+| mino-voice | fork dsh-voice | 推荐位 | TTS 零配置；STT 需 ASR key（Groq 免费档可用） |
 | mino-qqbot | 腾讯官方 fork | 推荐位 | QQBOT_APPID/SECRET 环境变量 |
 | mino-qq-console | fork | 推荐位 | 设置卡片填 AppID/Secret |
 | mino-bili-whale | fork | 推荐位 | B站 cookie（插件引导） |

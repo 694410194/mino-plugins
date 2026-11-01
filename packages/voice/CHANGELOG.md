@@ -1,0 +1,81 @@
+# 更新记录
+
+## 0.5.4 (2026-10-30)
+
+- 重整中英文首页：用途、三步流程图、安装入口与操作示例；详细配置与边界集中到完整说明。
+- 保留下载统计、独立更新选择、问题反馈和贡献入口；原封面与运行功能保留。
+- Refresh bilingual landing pages, workflow artwork, quick starts and reference navigation.
+
+
+## 0.5.3 (2026-10-30)
+
+- 原生插件列表与详情新增专门生成的鲸鱼娘图标：大头像、独立功能符号、透明留白，适合 30 / 36 px 显示；原封面保留。
+- Add purpose-made whale-girl artwork with a distinct function emblem, transparent padding and small-size readability; preserve the original cover.
+
+
+[返回简介](README.md) · [使用说明](docs/USAGE.md) · [验证记录](docs/VALIDATION.md)
+
+[历史英文记录](docs/CHANGELOG.en.md)
+
+## 0.5.2 (2026-10-29)
+
+- 补齐中英文使用流程：准备、入口、具体操作与结果核对；新增累计 npm 下载徽章并保留月统计。
+- Add practical getting-started workflows and lifetime npm download badges alongside monthly counts.
+
+## 0.5.1 (2026-10-29)
+
+- 同步仓库与 npm 的简明介绍、中英文 README 和反馈入口；本次为文档与包元数据更新。
+- Sync npm descriptions and both README guides with the repository, including issue and pull-request links.
+
+## 0.5.0 (2026-10-28)
+
+- 跟进 edge-tts 7.3.1 的 v2 令牌与 Cookie 协议，恢复真实 Edge 在线语音；独立模块保留上游 LGPLv3 许可与源码，主体仍为 MIT。
+
+- ASR 不再跟随重定向上传音频；请将 asrBaseUrl 直接设为可信的最终接口。直连和插件代理均适用。
+- 修复同名音频并发生成时的覆盖问题，转写和试听也返回实际保存的独立文件名。
+- 显式覆盖只允许没有硬链接的普通文件，保留工作区和链接边界检查。
+
+## 0.4.3 (2026-10-27)
+
+- 修复分批更新时的新旧更新控件混用：保留原页面、草稿与安装保护，空闲后接管旧控制器，兼容旧入口。
+
+## 0.4.2 (2026-10-27)
+
+- 更新控件移至原有工作台或原生插件详情页底部；更新记录与选项原地展开，移除独立更新菜单与页面。
+- 保留原页面操作与草稿，自动安装默认关闭；安装前确认，遇到未保存修改或运行任务时暂停。
+
+## 0.4.1 (2026-10-27)
+
+- Keep this component's own update entry visible when installed transitively through Suite. Confirm whole-Suite update scope before opening its controls.
+- Keep automatic installation off by default and preserve independent installation behavior.
+
+## 0.4.0 (2026-10-26)
+
+- Add this plugin’s own update controls and independent preferences. Automatic installation stays off until explicitly enabled.
+- Confirm manual installs, preserve local sources and disabled state, pause for tasks or unsaved changes, and use native DSH recovery without forced restarts.
+- Require the public DSH 0.2.1-rc.3 update APIs; Suite components remain managed through Suite.
+
+## 0.3.7 (2026-10-20)
+
+- 修复 voice_stt 的引擎/地址错配：openai、groq 分支不再写死厂商地址，一律使用配置 `asrBaseUrl`；模型传的 `engine` 与配置 `asrEngine` 不一致时直接报错，避免把 groq 的密钥发给 OpenAI 或把自建服务的密钥发给厂商
+- 修复读写越界：`audio` 与 `output`/`outputDir` 解析后必须落在会话工作区内（含符号链接解析），工作区外的文件不再被整份上传给 ASR，也不再在工作区外创建文件
+- 拒绝跟随符号链接写入（含悬空链接），新建文件用 `O_EXCL`；转写文本改为 0600
+- `voice_preview` 复用 `resolveOutputPath`：`overwrite=false` 时同名样例加序号，不再直接覆盖
+- 音频大小按实际读到的字节数复查，`stat` 报 0 字节的伪文件不再绕过 25MB 预检
+- 新增 8 项回归测试（工作区越界、私钥不被上传、符号链接、engine 错配、自定义网关、preview 不覆盖）
+
+## 0.3.6 (2026-10-05)
+
+- ASR 网络与响应体读取均受超时和取消控制；保留用户取消原因，空白或缺失识别结果明确报错，不伪造成功文本文件。
+
+## 0.3.5 (2026-09-28)
+
+- 更新官方 Harness 0.2.0-rc.1 的兼容声明和共同加载验证；运行时代码未变。验证范围见[验证记录](docs/VALIDATION.md)。
+
+## 0.3.4 (2026-09-19)
+
+- 修复代理路径 STT 上传 `[object FormData]`、25MB 校验在读入之后、输出目录不存在白烧一次合成、默认输出落宿主 cwd；`exec.signal` 全程透传、preview 改 3 路并发。测试 55 项。
+
+## 更早的改动
+
+完整历史可查阅 [GitHub 提交记录](https://github.com/STARDUSTLC666/dsh-voice/commits/master)。

@@ -1,0 +1,78 @@
+{
+  "name": "mino-voice",
+  "version": "0.5.4",
+  "description": "把文字变成声音，把录音变成文字。 Edge 朗读需要联网 欢迎提交 issues 和 PR。",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json",
+    "./client": "./lib/update-client.js"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "docs",
+    "CHANGELOG.md",
+    "src/edge-drm-v2.ts",
+    "LICENSES",
+    "THIRD_PARTY_NOTICES.md",
+    "assets/plugin-icon.webp"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/build-updates.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm run build && node --test \"test/*.test.mjs\"",
+    "test:integration": "pnpm run build && node --test \"integration/*.test.mjs\"",
+    "prepublishOnly": "pnpm run build"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
+    }
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "tts",
+    "stt",
+    "whisper",
+    "voice",
+    "dsh-plugin"
+  ],
+  "license": "MIT AND LGPL-3.0-only",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "dependencies": {
+    "https-proxy-agent": "^9.1.0",
+    "undici": "^8.10.0",
+    "ws": "^8.21.3",
+    "@stardustlc/dsh-updates": "0.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/voice"
+  },
+  "author": "stardustlc",
+  "packageManager": "pnpm@11.7.0",
+  "icon": "./assets/plugin-icon.webp",
+  "private": true
+}
