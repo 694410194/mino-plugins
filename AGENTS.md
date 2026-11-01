@@ -62,9 +62,26 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 - **dsh-mino 是账号层**：platformOrigin `platform.mino.baby`、inference
   `api.mino.baby/v1`、关上游遥测。profile 的 bundles 声明必须在 dependencies
   里有对应 file: 依赖，否则 `cannot resolve profile bundle` 静默跳过该层。
-- 驱动：`D:\tmp\mino-sdk\sdk-drive.mjs`（JSON-RPC stdio，叠加 `--patch`
-  overlay 实现插件开关组合）；探测集 `probes-full.json`（14 条真实任务）；
-  判读看 `request/header` 工具表、`tool/call`/`tool/result`、插件 stdout。
+- 驱动：`D:\tmp\mino-sdk\sdk-drive.mjs`（JSON-RPC stdio，spawn 自带
+  `--no-open`；叠加 `--patch` overlay 实现插件开关组合）；探测集
+  `probes-full.json`（14 条真实任务）；判读看 `request/header` 工具表、
+  `tool/call`/`tool/result`、插件 stdout。
+- **stdio 探针桥**：`sdk-jsonrpc-server` 只 inject `agents`+`workingDirectory`，
+  可插进任意 profile（web 档共存无冲突）——给 plugweb patch 插
+  `sdk-app-startup`(`profile: sdk`)+`sdk-jsonrpc-server`(`inject:
+  [sdkAppStartup, loader]`) 两行即可对全插件树跑 JSON-RPC。`plugtest` 档只有
+  `dsh-base` 没有 sdk-app → `initialize` 永不响应（timeout initialize）。
+- **宿主机服务边界**：superagent/comma 依赖 `sessionController`/
+  `workspaceRegistry`/`agentPresets`/`webServer`——这些只有 web/desktop 档
+  的 `dsh-web-app` bundle 提供；纯 stdio 档它们 pending 不激活是**设计使然**
+  不是插件缺陷（待办：comma/superagent 的 README 应写明宿主档位要求）。
+- **会话持久路由**：session.header 记创建时刻的 provider/model；上游 provider
+  没了后**每次 turn 都报 `NO_ADAPTER`**（comma-router 实测踩中）。修法：删掉
+  旧 session 让插件按当前默认重建；长期应让 comma 支持 pin routerModel。
+- **`~/.dsh/sessions/<workspace>/` 下不能有非 session 目录**：扫描器校验
+  header id vs 目录名，改名/杂物目录=「corrupt session log」→ dsh-workspace
+  插件报错 → workspaceRegistry 永不 provide → sessionController 及全部下游
+  （superagent/comma/bridge/speak-up…）连锁 pending。备份移出 sessions 树。
 - **dsh-superagent 要 `stateDir`**（orchestrator sqlite/锁/worker 工作目录，
   schema 强制 `/^\/` 开头）：Windows 下用扩展长度路径
   `//?/C:/Users/.../state/superagent`——`/Users/...` 会按进程 cwd 盘符解析，
