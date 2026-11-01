@@ -86,5 +86,6 @@
     "@deepseek-ai/schemastery": {
       "optional": true
     }
-  }
+  },
+  "private": true
 }

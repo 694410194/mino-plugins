@@ -5,7 +5,6 @@
   "type": "module",
   "author": "Mino",
   "license": "Apache-2.0",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/694410194/mino-plugins.git",

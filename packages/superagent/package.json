@@ -3,7 +3,6 @@
   "author": "DeepSeek Harness Team <team@dsh.dev>",
   "license": "MIT",
   "version": "0.1.1",
-  "private": true,
   "description": "Mino proactive companion agent (fork of dsh-superagent)",
   "type": "module",
   "main": "lib/index.js",
