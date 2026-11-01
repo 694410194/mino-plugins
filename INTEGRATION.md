@@ -11,7 +11,7 @@
 | mino-im | fork @xmanrui/dsh-im | 推荐位首选 | 扫码即建机器人；微信/QQ/飞书/钉钉/企微/TG/Discord/Slack/WhatsApp 9 渠道 |
 | mino-voice | fork dsh-voice | 推荐位 | TTS 零配置；STT 需 ASR key（Groq 免费档可用） |
 | mino-pet | fork dsh-dafeiyu | 推荐位 | Python + PySide6；鲸鱼素材保留可切换，默认 Mino 帧 |
-| mino-superagent | fork 官方 superagent 原型 | 实验向推荐位 | SETUP 向导：bot 账号+准入名单+stateDir；源码在本仓用 tsdown 构建 |
+| mino-superagent | fork 官方 superagent 原型 + im-watch 源 | 实验向推荐位 | SETUP 向导：bot 账号+准入名单+stateDir；源码在本仓用 tsdown 构建 |
 
 > 已否决：dsh-super-code（dsh-xray C3 级：patch 运行时/改写系统提示/起网络服务/读凭据环境变量；21★ 单人作者、无第三方验证）。不并入推荐，避免品牌背书风险。
 | mino-qqbot | 腾讯官方 fork | 推荐位 | QQBOT_APPID/SECRET 环境变量 |
@@ -40,6 +40,12 @@
 - [x] 插件推荐位：mino-releases `plugins-v0.1.0` 挂 8 个 tgz + 文档页推荐清单
 - [x] 接入文档：mino.baby/docs 插件生态章节（已提交，待部署）
 - [ ] 教程素材包：安装录屏脚本 + 话术 + mascot 截图素材（喂给小 UP 主）
+
+### 补全（superagent 养鱼向）
+- [x] im-watch source：src/sources/im.ts 消费 mino-im dshIm 独占接收契约（consumeInbound/replyChecked/historyChecked），已构建进包，默认 disabled
+- [ ] non-code prompts：prompts/ 目前全是编码语境，需养鱼值守语态版本
+- [ ] persona 接线：worker preset 的 dsh-persona prefix 是 coding agent 文案，换 Mino 人设
+- [ ] mino-im 侧 QQ/微信渠道的 exclusive-text-consumer 能力（上游契约目前只实现飞书/Lark）
 
 ### 二期/三期
 - [ ] relay + 配对码（手机连回用户自己桌面 host，proto 已铺好）
