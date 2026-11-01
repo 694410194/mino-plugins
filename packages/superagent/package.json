@@ -1,0 +1,75 @@
+{
+  "name": "mino-superagent",
+  "author": "DeepSeek Harness Team <team@dsh.dev>",
+  "license": "MIT",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mino proactive companion agent (fork of dsh-superagent)",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": "./lib/client.js",
+    "./github-watch": "./lib/github-watch.js",
+    "./feishu-watch": "./lib/feishu-watch.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "README.md",
+    "prompts",
+    "skills"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-workspace"
+      ]
+    },
+    "manifestVersion": 1
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "check": "pnpm typecheck && pnpm test && pnpm build"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": "^0.2.1-alpha.2"
+  },
+  "packageManager": "pnpm@11.7.0",
+  "dependencies": {
+    "proper-lockfile": "4.1.2",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/jsdom": "28.0.3",
+    "@types/node": "22.20.0",
+    "@types/proper-lockfile": "4.1.4",
+    "@types/react": "18.3.28",
+    "jsdom": "29.1.1",
+    "react": "18.3.1",
+    "tsdown": "0.22.14",
+    "typescript": "6.0.3",
+    "vitest": "4.1.8",
+    "react-dom": "18.3.1",
+    "@types/react-dom": "18.3.7"
+  }
+}

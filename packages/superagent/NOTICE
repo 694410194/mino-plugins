@@ -1,0 +1,12 @@
+mino-superagent
+===============
+
+Fork of deepseek-ai/dsh-superagent-prototype
+(https://github.com/deepseek-ai/dsh-superagent-prototype),
+Copyright (c) 2026 DeepSeek Harness Team, MIT License. See LICENSE.
+
+Upstream marks this as research code, not production-ready; we ship
+it as an optional plugin for users who want to experiment.
+
+Built with dts disabled: @deepseek-ai/* types are never bundled and
+are injected by the DSH host at runtime.
