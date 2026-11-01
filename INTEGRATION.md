@@ -43,9 +43,12 @@
 
 ### 补全（superagent 养鱼向）
 - [x] im-watch source：src/sources/im.ts 消费 mino-im dshIm 独占接收契约（consumeInbound/replyChecked/historyChecked），已构建进包，默认 disabled
-- [ ] non-code prompts：prompts/ 目前全是编码语境，需养鱼值守语态版本
+- [ ] non-code prompts：prompts/ 目前全是编码语境；先调研社区值守/陪伴向 prompt 包再决定写不写
 - [ ] persona 接线：worker preset 的 dsh-persona prefix 是 coding agent 文案，换 Mino 人设
 - [ ] mino-im 侧 QQ/微信渠道的 exclusive-text-consumer 能力（上游契约目前只实现飞书/Lark）
+
+### 候选评估
+- [ ] SillyTavern 卡导入通道：dsh-sillytavern-presets 或 dsh-tavern 全家桶，实机验证后进推荐位
 
 ### 二期/三期
 - [ ] relay + 配对码（手机连回用户自己桌面 host，proto 已铺好）
