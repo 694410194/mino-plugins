@@ -1,0 +1,15 @@
+{
+  "suite": "eval/suites/core.jsonl",
+  "profile": "plugweb",
+  "patch": null,
+  "runtag": "yeqz3",
+  "startedAt": "2026-11-02T07:45:07.620Z",
+  "probes": [],
+  "stats": {
+    "probes": 0,
+    "passAll": 0,
+    "fail": 0,
+    "flaky": 0
+  },
+  "fatal": "Error: dsh exited 1"
+}

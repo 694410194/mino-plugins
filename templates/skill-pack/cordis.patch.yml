@@ -1,0 +1,5 @@
+# skill pack bundle patch：挂载一行 provider 插件，把随包 skills/ 目录注册进 ctx.skills。
+# 复制时只需改 id 与 name（保持与 package.json name 一致）。
+- insert:
+    - id: skill-template
+      name: "mino-skill-template"

@@ -1,0 +1,16 @@
+{
+  "name": "mino-skill-template",
+  "version": "0.0.0",
+  "private": true,
+  "description": "skill pack 模板：复制本目录 → 改包名 → 填 skills/ 即得新的市场 skill 包。private，不进索引。",
+  "type": "module",
+  "main": "index.js",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.2.3"
+  }
+}

@@ -1,6 +1,6 @@
 // mino-skill-pack runtime —— 把随包 skills/ 目录注册为 ctx.skills provider。
 // 只依赖官方公开契约（ctx.skills.registerProvider / SkillProvider 接口），零内核改动。
-// 本文件在所有 skill-* 包之间保持逐字一致；改动请同步 packages/skill-template（模板源）。
+// 本文件在所有 skill-* 包之间保持逐字一致；改动请同步 templates/skill-pack（模板源）。
 import { readFileSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'

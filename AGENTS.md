@@ -30,7 +30,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 - **`ctx.skills.registerProvider(create)`**：打包 skill 的公开缝。provider
   `{name, list→candidates, get→definition}` 同步注册即进 catalog；candidate 需
   `rank`+`locator`+`resourceBase`，`get` 每次实时重读文件。`skill-*` pack
-  （模板 `packages/skill-template`）rank 650 低于 bundled(600)，同名永远被
+  （模板 `templates/skill-pack`）rank 650 低于 bundled(600)，同名永远被
   用户/项目 skill 覆盖；provider 名取 package.json `name` 保证 per-layer 唯一。
 
 ## 插件市场与分发
