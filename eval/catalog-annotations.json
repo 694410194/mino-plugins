@@ -528,6 +528,36 @@
         "verified",
         "needs-config"
       ]
+    },
+    "mino-creative-studio": {
+      "score": 64,
+      "category": "skills",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-scholar-suite": {
+      "score": 70,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-humanizer-zh": {
+      "score": 58,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-social-card": {
+      "score": 66,
+      "category": "skills",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
     }
   }
 }

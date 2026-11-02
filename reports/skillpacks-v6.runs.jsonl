@@ -1,0 +1,14 @@
+{"id":"drama-orchestrator","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"screenwriting-workflow","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"duanju-craft","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"script-review","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"academic-deep-research","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"nature-paper-card","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"cnki-search","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"paperjury","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"academic-humanizer","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"paper-search-skill","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"humanizer-zh","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"social-card","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"image-studio","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}
+{"id":"scholar-figures","i":0,"run":{"i":0,"error":"Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}","pass":false}}

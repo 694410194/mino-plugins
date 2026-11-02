@@ -1,0 +1,231 @@
+{
+  "suite": "eval/suites/skillpacks.jsonl",
+  "profile": "plugweb",
+  "patch": null,
+  "runtag": "4umyp",
+  "startedAt": "2026-11-02T10:45:26.610Z",
+  "probes": [
+    {
+      "id": "drama-orchestrator",
+      "session": "drama-orchestrator-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "screenwriting-workflow",
+      "session": "screenwriting-workflow-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "duanju-craft",
+      "session": "duanju-craft-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "script-review",
+      "session": "script-review-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "academic-deep-research",
+      "session": "academic-deep-research-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "nature-paper-card",
+      "session": "nature-paper-card-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "cnki-search",
+      "session": "cnki-search-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "paperjury",
+      "session": "paperjury-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "academic-humanizer",
+      "session": "academic-humanizer-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "paper-search-skill",
+      "session": "paper-search-skill-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "humanizer-zh",
+      "session": "humanizer-zh-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "social-card",
+      "session": "social-card-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "image-studio",
+      "session": "image-studio-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "scholar-figures",
+      "session": "scholar-figures-4umyp",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "error": "Error: {\"code\":-32603,\"message\":\"tool \\\"spawn_teammate\\\" is already registered in this scope\"}",
+          "pass": false
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    }
+  ],
+  "stats": {
+    "probes": 14,
+    "passAll": 0,
+    "fail": 14,
+    "flaky": 0,
+    "bootMs": 5917
+  },
+  "bootMs": 5917,
+  "serverInfo": {
+    "name": "deepseek-harness-sdk-runtime",
+    "version": "0.0.1"
+  }
+}

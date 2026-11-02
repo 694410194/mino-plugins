@@ -8,6 +8,7 @@ https://mino.baby/git/bridge
 https://mino.baby/git/browser
 https://mino.baby/git/chat-import
 https://mino.baby/git/comma
+https://mino.baby/git/creative-studio
 https://mino.baby/git/damage-pulse
 https://mino.baby/git/drawio
 https://mino.baby/git/fish-memory
@@ -34,6 +35,7 @@ https://mino.baby/git/qq-link
 https://mino.baby/git/qqbot
 https://mino.baby/git/rewind
 https://mino.baby/git/safety-net
+https://mino.baby/git/scholar-suite
 https://mino.baby/git/skill-academic
 https://mino.baby/git/skill-cnki
 https://mino.baby/git/skill-commit

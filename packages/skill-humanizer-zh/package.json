@@ -1,0 +1,45 @@
+{
+  "name": "mino-skill-humanizer-zh",
+  "version": "0.1.0",
+  "description": "中文去 AI 味编辑技能包（vendored fork op7418/dsh-guizang-design skills/humanizer-zh，MIT）",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-skill",
+    "skills",
+    "git-commit"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "skills",
+    "README.md",
+    "LICENSE",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/694410194/mino-plugins",
+    "directory": "packages/skill-commit"
+  },
+  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/skill-commit#readme",
+  "icon": "icon.svg",
+  "mino": {
+    "upstream": "op7418/dsh-guizang-design@d16cea6"
+  }
+}

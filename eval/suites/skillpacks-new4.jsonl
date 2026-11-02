@@ -1,0 +1,4 @@
+{"id": "humanizer-zh", "text": "调用 skill 工具使用 humanizer-zh 技能：帮我润色这段中文，去掉AI腔：「在当今数字化时代，人工智能技术正在深刻地改变着我们的生活方式。」", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 15}, "timeoutMs": 300000}
+{"id": "social-card", "text": "调用 skill 工具使用 guizang-social-card-skill 技能：给我讲一下你能做什么类型的社交卡片。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 15}, "timeoutMs": 300000}
+{"id": "image-studio", "text": "调用 skill 工具使用 image-studio 技能：列出你支持哪些图像处理操作。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 15}, "timeoutMs": 300000}
+{"id": "scholar-figures", "text": "调用 skill 工具使用 academic-figures 技能：我要画一张科研论文插图，你能做什么？", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 15}, "timeoutMs": 300000}

@@ -1,0 +1,58 @@
+{"t":1793616332512,"msg":{"jsonrpc":"2.0","id":1,"result":{"serverInfo":{"name":"deepseek-harness-sdk-runtime","version":"0.0.1"}}}}
+{"t":1793616333431,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"drama-orchestrator-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616333430,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616333433,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"drama-orchestrator-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616333432,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616333433,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"drama-orchestrator-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616333433,"data":{"policy":"ask"}}}}}
+{"t":1793616333862,"msg":{"jsonrpc":"2.0","id":2,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616333870,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"screenwriting-workflow-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616333870,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616333871,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"screenwriting-workflow-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616333870,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616333871,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"screenwriting-workflow-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616333871,"data":{"policy":"ask"}}}}}
+{"t":1793616333947,"msg":{"jsonrpc":"2.0","id":3,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616333955,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"duanju-craft-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616333954,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616333955,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"duanju-craft-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616333955,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616333956,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"duanju-craft-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616333955,"data":{"policy":"ask"}}}}}
+{"t":1793616334029,"msg":{"jsonrpc":"2.0","id":4,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334035,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"script-review-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334035,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334035,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"script-review-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334035,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334036,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"script-review-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334035,"data":{"policy":"ask"}}}}}
+{"t":1793616334112,"msg":{"jsonrpc":"2.0","id":5,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334118,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"academic-deep-research-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334118,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334119,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"academic-deep-research-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334118,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334119,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"academic-deep-research-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334118,"data":{"policy":"ask"}}}}}
+{"t":1793616334192,"msg":{"jsonrpc":"2.0","id":6,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334199,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"nature-paper-card-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334199,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334200,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"nature-paper-card-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334199,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334200,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"nature-paper-card-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334200,"data":{"policy":"ask"}}}}}
+{"t":1793616334277,"msg":{"jsonrpc":"2.0","id":7,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334283,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"cnki-search-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334283,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334284,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"cnki-search-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334283,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334284,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"cnki-search-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334284,"data":{"policy":"ask"}}}}}
+{"t":1793616334360,"msg":{"jsonrpc":"2.0","id":8,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334366,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"paperjury-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334366,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334367,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"paperjury-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334366,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334367,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"paperjury-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334366,"data":{"policy":"ask"}}}}}
+{"t":1793616334439,"msg":{"jsonrpc":"2.0","id":9,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334446,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"academic-humanizer-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334445,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334446,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"academic-humanizer-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334446,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334446,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"academic-humanizer-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334446,"data":{"policy":"ask"}}}}}
+{"t":1793616334518,"msg":{"jsonrpc":"2.0","id":10,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334526,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"paper-search-skill-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334525,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334526,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"paper-search-skill-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334526,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334527,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"paper-search-skill-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334526,"data":{"policy":"ask"}}}}}
+{"t":1793616334599,"msg":{"jsonrpc":"2.0","id":11,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334605,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"humanizer-zh-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334605,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334606,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"humanizer-zh-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334605,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334606,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"humanizer-zh-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334605,"data":{"policy":"ask"}}}}}
+{"t":1793616334680,"msg":{"jsonrpc":"2.0","id":12,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334687,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"social-card-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334686,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334687,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"social-card-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334687,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334688,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"social-card-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334687,"data":{"policy":"ask"}}}}}
+{"t":1793616334758,"msg":{"jsonrpc":"2.0","id":13,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334764,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"image-studio-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334764,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334765,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"image-studio-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334764,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334765,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"image-studio-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334765,"data":{"policy":"ask"}}}}}
+{"t":1793616334838,"msg":{"jsonrpc":"2.0","id":14,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334845,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"scholar-figures-4umyp","event":{"type":"permission/preset","seq":0,"time":1793616334844,"data":{"preset":"workspace-write"}}}}}
+{"t":1793616334845,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"scholar-figures-4umyp","event":{"type":"sandbox/mode","seq":1,"time":1793616334845,"data":{"mode":"workspace-write"}}}}}
+{"t":1793616334846,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"scholar-figures-4umyp","event":{"type":"approval/policy","seq":2,"time":1793616334845,"data":{"policy":"ask"}}}}}
+{"t":1793616334917,"msg":{"jsonrpc":"2.0","id":15,"error":{"code":-32603,"message":"tool \"spawn_teammate\" is already registered in this scope"}}}
+{"t":1793616334920,"msg":{"jsonrpc":"2.0","id":16,"result":{}}}
