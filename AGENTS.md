@@ -28,7 +28,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 官方栈：`plugin-market`（索引读取+兼容标注，服务无 HTTP 面，`detail-file`
 是唯一路由）+ `ui-plugin-market`（Plugins 页 Discover 标签）+ `plugin-manager`
 （`installBundle` 实际执行）+ `plugin_market` 工具（仅 Creator preset 子树注册）。
-**mino-market 保留**：官方栈索引只列 Mino 精选 27 个包，社区全量目录
+**mino-market 保留**：官方栈索引只列 Mino 精选 40 个包，社区全量目录
 （awesome-dsh-plugin 注册表，非 format-1）只有它能读——两者互补并存：
 「发现」= 自有精选（mino.baby 通道），「插件市场」= 社区入口。
 其附带的 backup（profile 配置导出）/drain/channels 为额外功能。
