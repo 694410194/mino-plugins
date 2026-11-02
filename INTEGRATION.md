@@ -32,6 +32,16 @@
 | mino-oh-story | fork zenstory-ai/oh-story-dsh（npm @oh-story/dsh 官方包改名） | 推荐位 | 无；小说/短剧/游戏改编/视频解说四工作台，知识库已内置（21MB） |
 
 > 已否决：dsh-super-code（dsh-xray C3 级：patch 运行时/改写系统提示/起网络服务/读凭据环境变量；21★ 单人作者、无第三方验证）。不并入推荐，避免品牌背书风险。
+>
+> **红线类（永不进精选，不管热度多高）**：改写压缩/上下文核心循环的（billion-context：空转扣费恶评，且其机制是禁用宿主 compaction 换自家层——核心手术位故障=烧 token）；以 order/无条件服从注入改写系统提示的"破甲"类（dsh-infinite-gen-4）；一切 C3 级运行时 patch。评判看**机制**不看出身：热度只证明装机量，代码扫描（缺 engines/直读 env/console.log）才是质量信号。
+>
+> **已验收外部件**：`cc-safety-net`（npm 直装，非本仓 vendored）——执行前守卫：拦 git reset --hard/push --force/越界 rm -rf/.env·SSH key 读取；实测 plugweb 内 .env 读取被 `secret.basename.env` 拦下、`explain` 裁决 git.reset-hard 与 powershell.remove-item-recursive-force-outside-cwd 均 blocked，命名目录删除正常放行，粒度正确。建议并入推荐位为 pilot/文件工具的高危面兜底。
+>
+> **社区候选（已调研未装）**：dsh-our-free-model（55.9k★ 免费模型车道，与 Magpie 同位竞争，评估备选）；dsh-pocket（2.2k★ 手机扫码远程，对比 mino-bridge）；hindsight/MemOS/OpenViking 等重型记忆系统（桥薄服务重，fish-memory 轻量原生召回够用则不动）。
+>
+> **版本掉队待 bump**：meme 0.1.72→0.1.76、speak-up 0.2.8→0.2.9、qq-link 1.4.7→1.5.0、mood 0.8.4→0.8.5。tavern 上游 dsh-tavern 已 2.7.x 但系 MUV 引擎另一血缘（我们有跑团/地图/战斗它没有），换不换看特性对比，不算掉队。
+>
+> **互斥/高危标注（Discover 元数据待办）**：QQ 三路（qqbot/im-QQ/qq-link+aurabot）同号互踢应标互斥；tavern ~58 工具与 bili 系 ~43 工具全量进每轮 schema 是实打实的 token 前缀成本，应标"重场景包"；pilot 真实输入控制+截图上云，应标"高危，先读说明"。
 | mino-qqbot | 腾讯官方 fork | 推荐位 | QQBOT_APPID/SECRET 环境变量 |
 | mino-qq-console | fork | 推荐位 | 设置卡片填 AppID/Secret |
 | mino-bili-whale | fork | 推荐位 | B站 cookie（插件引导） |
