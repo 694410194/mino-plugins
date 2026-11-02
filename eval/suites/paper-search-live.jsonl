@@ -1,0 +1,1 @@
+{"id": "paper-search-live", "text": "用 mcp__paper-search__search_papers 工具搜 2 篇 diffusion model 相关论文，列出标题。", "assert": {"tools.called": ["mcp__paper-search__search_papers"], "reply.match": ".", "modelCalls.max": 15}, "timeoutMs": 300000}

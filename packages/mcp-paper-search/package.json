@@ -1,6 +1,6 @@
 {
   "name": "mino-mcp-paper-search",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP 接入包（上游 openags/paper-search-mcp 官方 dsh bundle）：拉起 paper-search-mcp 服务器，mcp__paper-search__* 工具覆盖 arXiv/PubMed/Semantic Scholar/Crossref/OpenAlex 等 15+ 源检索下载；随包附 paper-search 使用技能。需本机 uv/uvx。",
   "keywords": [
     "deepseek-harness",

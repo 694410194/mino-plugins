@@ -30,5 +30,7 @@
         serverName: paper-search
         transport: stdio
         command: uvx
-        args: ['paper-search-mcp']
+        # upstream pins `mcp` unbounded; mcp 2.x renamed FastMCP -> MCPServer,
+        # so pin mcp<2 at launch until upstream constrains the dependency.
+        args: ['--with', 'mcp<2', 'paper-search-mcp']
         toolCallTimeoutMs: 120000
