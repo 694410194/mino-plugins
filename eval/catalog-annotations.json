@@ -303,6 +303,15 @@
         "verified"
       ]
     },
+    "mino-comma": {
+      "score": 55,
+      "category": "agent",
+      "labels": [
+        "verified",
+        "needs-config",
+        "official"
+      ]
+    },
     "mino-drawio": {
       "score": 68,
       "category": "media",

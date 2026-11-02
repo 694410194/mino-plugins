@@ -19,6 +19,7 @@
 | 目录 | 包 | 说明 |
 |---|---|---|
 | superagent | mino-superagent | 主动陪伴 agent（fork dsh-superagent 原型） |
+| comma | mino-comma | Sessionless 主动陪伴：事项归并/紧急度判断/推送预算/Notebook |
 | knowledge-studio | mino-knowledge-studio | 工作区资料→报告/PPT/表格/导图/音视频 |
 | task-board | mino-task-board | 侧边栏多列任务看板（卡片=真实会话） |
 | pilot | mino-pilot | Windows 桌面自动化（高危面） |
@@ -116,5 +117,4 @@
 
 | 目录 | 包 | 说明 |
 |---|---|---|
-| comma | mino-comma | WIP 主动陪伴 agent（搭手脚手架） |
 | market | mino-market | 退出索引分发；仍预装，社区插件目录入口 |

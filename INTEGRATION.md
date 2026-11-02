@@ -12,6 +12,7 @@
 | mino-voice | fork dsh-voice | 推荐位 | TTS 零配置；STT 需 ASR key（Groq 免费档可用） |
 | mino-pet | fork dsh-dafeiyu | 推荐位 | Python + PySide6；鲸鱼素材保留可切换，默认 Mino 帧 |
 | mino-superagent | fork 官方 superagent 原型 + im-watch 源 | 实验向推荐位 | SETUP 向导：bot 账号+准入名单+stateDir；源码在本仓用 tsdown 构建 |
+| mino-comma | 自研 sessionless 主动陪伴（AFK-surf/Comma 启发） | 已实测（plugweb 常驻运行，router 会话+事项域起） | 零配置可跑；接源需 mino-im botId（external-consumer 独占），推送出口需 notify.botId+targetId；worker 委派未落地 |
 | mino-tavern | fork KamishiroRei/dsh-sillytavern | 推荐位 | 无（预设选“酒馆跑团”）；ST V2/V3/PNG 卡+世界书+MVU |
 | mino-market | fork dshmarket | 推荐位强推 | 无；官方市场可视化装全部社区插件（生态自助入口） |
 | mino-aurabot | fork dsh-aurabot-qq | 推荐位 | OneBot/NapCat 个人号；QQ 鱼本体（聊天/表情/语音/记事/空间/B站/唱歌，模块化） |
