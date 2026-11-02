@@ -2,6 +2,8 @@
 import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import type { Context } from '@deepseek-ai/cordis'
+import type {} from '@deepseek-ai/dsh-api-session-controller'
+import type { WorkspaceRegistry } from '@deepseek-ai/dsh-workspace'
 import type { SessionId } from '@deepseek-ai/dsh-session'
 import type { Domain } from '@deepseek-ai/dsh-storage-domain'
 import { freezeMessage, MessageId, type UserMessage } from '@deepseek-ai/dsh-llm'
@@ -12,6 +14,7 @@ import {
   NOTIFY_URGENCIES, type DecideModel, type NotifyBudget,
 } from './decide.ts'
 import { renderNotebook } from './notebook.ts'
+import { resolveBot, resolveNotifyTarget, type BotResolution } from './resolve.ts'
 
 export const ROUTER_SESSION_ID = 'comma-router' as SessionId
 export const ROUTER_PRESET = 'mino-comma-router'
@@ -31,6 +34,8 @@ interface DshImSend {
 
 export interface RuntimeOptions {
   workspaceRoot?: string
+  /** Configured sources.im.botId; empty opts into pairing auto-resolution. */
+  sourceBotId: string
   decideModel?: DecideModel
   decideIntervalMinutes: number
   notify: { botId: string; targetId: string }
@@ -49,6 +54,8 @@ export class Runtime implements SourceHost {
   private fibers: Promise<void>[] = []
   private notebookDirty = true
   private renderTimer?: ReturnType<typeof setTimeout>
+  /** The bot the IM source is bound to once pairing resolves; the notify default falls back to it. */
+  private sourceBotId?: string
 
   constructor(
     private readonly ctx: Context,
@@ -146,13 +153,20 @@ export class Runtime implements SourceHost {
     resolved.agent.followup(message)
   }
 
+  /** Explicit pairing step for the IM source; also records the bot the notify default falls back to. */
+  async resolveBot(): Promise<BotResolution> {
+    const resolution = await resolveBot(this.ctx, this.domain, this.options.sourceBotId)
+    if (resolution.kind === 'resolved') this.sourceBotId = resolution.botId
+    return resolution
+  }
+
   private async notifyIm(text: string): Promise<void> {
-    const { botId, targetId } = this.options.notify
-    if (botId === '' || targetId === '') return
+    const resolution = await resolveNotifyTarget(this.ctx, this.domain, this.options.notify, this.sourceBotId)
+    if (resolution.kind !== 'resolved') return
     const dshim = this.ctx.get('dshIm') as DshImSend | undefined
     if (!dshim?.send) return
     try {
-      await dshim.send(botId, targetId, text)
+      await dshim.send(resolution.botId, resolution.targetId, text)
     } catch (error) {
       this.logger.warn('mino-comma: im notify failed: %s', String(error))
     }

@@ -1,6 +1,7 @@
 /** IM source: consumes inbound messages through the mino-im `dshIm` exclusive-consumer contract. */
 import type { Context } from '@deepseek-ai/cordis'
 import { z } from 'zod'
+import type { BotResolution } from '../resolve.ts'
 import type { Source, SourceHost } from '../source.ts'
 
 export const IM_SOURCE = 'im'
@@ -43,11 +44,16 @@ const groupKeyOf = (event: z.infer<typeof EventSchema>): string =>
     : `im:${event.conversation.id}:${event.reply.rootId ?? event.messageId}`
 
 export interface ImSourceConfig {
+  /** Empty means auto-pair: resolve through config → durable selection → dshIm.listBots(). */
   botId: string
 }
 
 /** Requires mino-im with the account in external-consumer exclusive mode. */
-export function imSource(ctx: Context, config: ImSourceConfig): Source {
+export function imSource(
+  ctx: Context,
+  config: ImSourceConfig,
+  resolveBot: () => Promise<BotResolution>,
+): Source {
   return {
     kind: IM_SOURCE,
     async run(host, signal) {
@@ -58,10 +64,23 @@ export function imSource(ctx: Context, config: ImSourceConfig): Source {
           await pause(RETRY_MS, signal)
           continue
         }
+        const resolution = await resolveBot()
+        if (resolution.kind === 'none') {
+          host.logger.info('mino-comma im: no bot to consume; retrying')
+          await pause(RETRY_MS, signal)
+          continue
+        }
+        if (resolution.kind === 'ambiguous') {
+          host.logger.warn('mino-comma im: multiple bots (%s); set sources.im.botId', resolution.candidates.join(', '))
+          await pause(RETRY_MS, signal)
+          continue
+        }
+        const botId = resolution.botId
+        if (resolution.origin === 'auto') host.logger.info('mino-comma im: auto-paired bot %s', botId)
         try {
-          const { account } = await dshim.describeBot(config.botId)
-          const selfIds = new Set([config.botId, account.id ?? ''])
-          const release = await dshim.consumeInbound(config.botId, {
+          const { account } = await dshim.describeBot(botId)
+          const selfIds = new Set([botId, account.id ?? ''])
+          const release = await dshim.consumeInbound(botId, {
             expectedFingerprint: account.fingerprint,
             signal,
             async onEvent(raw, { signal: eventSignal }) {
@@ -82,7 +101,7 @@ export function imSource(ctx: Context, config: ImSourceConfig): Source {
               return { accepted: true }
             },
           })
-          host.logger.info('mino-comma im: consuming bot %s', config.botId)
+          host.logger.info('mino-comma im: consuming bot %s', botId)
           await new Promise<void>(resolve => {
             if (signal.aborted) return resolve()
             signal.addEventListener('abort', () => resolve(), { once: true })

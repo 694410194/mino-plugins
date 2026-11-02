@@ -20,8 +20,12 @@ export const Config = z.object({
   /** Directory the router Workspace owns; defaults to the profile's working directory. */
   workspaceRoot: z.string().optional(),
   sources: z.object({
-    /** mino-im bot id in external-consumer exclusive mode; the source stays off while empty. */
-    im: z.object({ botId: z.string().default('') }).prefault({}),
+    im: z.object({
+      /** Explicit off switch; when on, an empty botId auto-pairs through listBots(). */
+      enabled: z.boolean().default(true),
+      /** mino-im bot id in external-consumer exclusive mode; empty resolves config→state→listBots. */
+      botId: z.string().default(''),
+    }).prefault({}),
   }).prefault({}),
   proactive: z.object({
     /** Minutes between attention sweeps. */
@@ -57,10 +61,14 @@ export const Config = z.object({
 export type CommaConfig = z.infer<typeof Config>
 
 export async function apply(ctx: Context, config: CommaConfig): Promise<void> {
+  let runtime!: Runtime
   const sources: Source[] = []
-  if (config.sources.im.botId !== '') sources.push(imSource(ctx, config.sources.im))
-  const runtime = new Runtime(ctx, sources, {
+  if (config.sources.im.enabled) {
+    sources.push(imSource(ctx, config.sources.im, () => runtime.resolveBot()))
+  }
+  runtime = new Runtime(ctx, sources, {
     workspaceRoot: config.workspaceRoot,
+    sourceBotId: config.sources.im.botId,
     decideModel: config.proactive.decideModel,
     decideIntervalMinutes: config.proactive.intervalMinutes,
     notify: config.notify,
