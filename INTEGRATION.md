@@ -142,6 +142,6 @@
 - 产品仓 mino-releases 的 Latest 必须是 `v<semver>` 产品安装包：服务器 cron 会镜像它并清理旧文件（2026-11-01 插件 release 被标成 Latest 导致官网安装包被删）。
 - CI（.github/workflows/ci.yml）每次推送跑 verify-all；mino-deploy 的 uptime 工作流每 30 分钟巡检线上入口，失败开 issue。
 | mino-creative-studio | vendored fork Ylight-cpu/dsh-creative-studio@5d3e733（图像/视频工作室 2 skill + toolkit/cs.py） | 已实测（agent 真处理图片落盘 + rembg 抠图直测） | 宿主需 python+Pillow/rembg/onnxruntime/imageio-ffmpeg |
-| mino-scholar-suite | vendored fork docsor1212/dsh-scholar-suite@cd87473（学术工具链 8 skill：图表/去AI味/润色/引文核验 + 斜杠命令） | 已实测（plugweb skill 通路，engines 已放宽） |
+| mino-scholar-suite | vendored fork docsor1212/dsh-scholar-suite@cd87473（学术工具链 8 skill：图表/去AI味/润色/引文核验 + 斜杠命令） | 已实测（skill 通路 + 600DPI 科研图直出验证） | 宿主需 python+matplotlib/scipy/pillow |
 | mino-skill-humanizer-zh | vendored fork op7418/dsh-guizang-design@d16cea6 提取 skills/humanizer-zh（上游仓 AGPL-3.0+商业授权条款，**暂缓上架索引**） | 已实测（plugweb skill 通路） |
 | mino-skill-social-card | vendored fork op7418/dsh-guizang-design@d16cea6 提取 skills/guizang-social-card-skill（上游仓 AGPL-3.0+COMMERCIAL_LICENSING 商业授权条款，**暂缓上架索引**） | 已实测（plugweb skill 通路） |
