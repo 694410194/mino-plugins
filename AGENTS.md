@@ -82,6 +82,16 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
   header id vs 目录名，改名/杂物目录=「corrupt session log」→ dsh-workspace
   插件报错 → workspaceRegistry 永不 provide → sessionController 及全部下游
   （superagent/comma/bridge/speak-up…）连锁 pending。备份移出 sessions 树。
+  同样地，删 session 目录不解 `storages/workspace.json` 的归属账——一个
+  session 被两个 workspace 同时认领会让 dsh-workspace 报
+  `workspace domain is inconsistent` 并同样连环 pending。
+- **SDK 会话只读全局工具层**（sdk server 不走 preset 组合）；web-app bundle
+  里 `tool-fs`/`tool-fs-search`/`tool-bash`/`tool-pwsh`/`tool-skill` 等
+  host-plane 行默认 `disabled: true`（preset realm 负责模型面）。要给探针
+  会话文件/shell 工具，在 patch 里 `disabled: false` 放开即可——preset
+  注册按对象遮蔽全局注册，web 会话不受影响。spawn env 另需
+  `SSH_CONNECTION`（官方"远端启动"判据，禁开浏览器）和 `DSH_PRIMARY_RUNTIME`
+  （`<install>/resources/runtime/primary-runtime`，供 workspace-dependencies）。
 - **dsh-superagent 要 `stateDir`**（orchestrator sqlite/锁/worker 工作目录，
   schema 强制 `/^\/` 开头）：Windows 下用扩展长度路径
   `//?/C:/Users/.../state/superagent`——`/Users/...` 会按进程 cwd 盘符解析，
