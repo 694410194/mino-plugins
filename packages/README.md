@@ -22,7 +22,6 @@
 | knowledge-studio | mino-knowledge-studio | 工作区资料→报告/PPT/表格/导图/音视频 |
 | task-board | mino-task-board | 侧边栏多列任务看板（卡片=真实会话） |
 | pilot | mino-pilot | Windows 桌面自动化（高危面） |
-| skillhub | mino-skillhub | SkillHub 技能浏览/安装/管理（运行时注册表通道） |
 
 ## 记忆 memory
 
@@ -49,7 +48,6 @@
 | voice | mino-voice | TTS/STT 语音 |
 | meme | mino-meme | 表情包斗图 + 图库市场 |
 | drawio | mino-drawio | draw.io 图表 + 侧边栏 |
-| open-sea | mino-open-sea | 海洋主题皮肤 |
 | visualize | mino-visualize | 对话内交互 HTML 卡片 |
 
 ## 角色扮演 roleplay
@@ -75,6 +73,7 @@
 | pet | mino-pet | Mino 桌宠（fork dsh-dafeiyu） |
 | whale-musume | mino-whale-musume | 鲸鱼娘桌宠（45 成就+小游戏） |
 | skin-market | mino-skin-market | 皮肤发现/一键安装/生命周期 |
+| open-sea | mino-open-sea | 实时海洋主题皮肤 |
 
 ## 工具 utility
 
@@ -90,6 +89,7 @@
 | notes | mino-notes | 对话导出 PNG 便签/云便签 |
 | safety-net | mino-safety-net | 执行前守卫（拦 rm -rf/.env/SSH key 读取） |
 | skill-explorer | mino-skill-explorer | 技能中心 GUI：浏览/启停/新建/回收站 |
+| skillhub | mino-skillhub | SkillHub 技能浏览/安装/管理（运行时注册表通道） |
 
 ## MCP 接入 mcp（纯配置 bundle，插官方 dsh-mcp-client 行）
 
