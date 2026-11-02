@@ -15,6 +15,7 @@ import {
 } from './decide.ts'
 import { renderNotebook } from './notebook.ts'
 import { resolveBot, resolveNotifyTarget, type BotResolution } from './resolve.ts'
+import { PAIRING_NAG_KEY, registerRouterTools } from './tools.ts'
 
 export const ROUTER_SESSION_ID = 'comma-router' as SessionId
 export const ROUTER_PRESET = 'mino-comma-router'
@@ -58,6 +59,8 @@ export class Runtime implements SourceHost {
   private renderTimer?: ReturnType<typeof setTimeout>
   /** The bot the IM source is bound to once pairing resolves; the notify default falls back to it. */
   private sourceBotId?: string
+  /** Tool registration disposers keyed by agent id; agent disposal already rolls the scope back. */
+  private readonly mountedTools = new Map<string, () => void>()
 
   constructor(
     private readonly ctx: Context,
@@ -81,10 +84,11 @@ export class Runtime implements SourceHost {
       this.ctx.logger.info('mino-comma router session created: %s', ROUTER_SESSION_ID)
     }
     await this.domain.table('state').put(ROUTER_STATE_KEY, { key: ROUTER_STATE_KEY, value: ROUTER_SESSION_ID })
-    if (this.domain.table('state').get(ROUTER_TITLE_KEY) === undefined) {
-      const agent = (await this.ctx.sessionController.resolveAgent(ROUTER_SESSION_ID))
-      if (!('error' in agent)) {
-        agent.agent.session.append('session/title', { title: ROUTER_TITLE, messageSeqs: [], source: { kind: 'user' } })
+    const router = await this.ctx.sessionController.resolveAgent(ROUTER_SESSION_ID)
+    if (!('error' in router)) {
+      this.decorateRouter(router.agent)
+      if (this.domain.table('state').get(ROUTER_TITLE_KEY) === undefined) {
+        router.agent.session.append('session/title', { title: ROUTER_TITLE, messageSeqs: [], source: { kind: 'user' } })
         await this.domain.table('state').put(ROUTER_TITLE_KEY, { key: ROUTER_TITLE_KEY, value: ROUTER_TITLE })
       }
     }
@@ -165,8 +169,44 @@ export class Runtime implements SourceHost {
   /** Explicit pairing step for the IM source; also records the bot the notify default falls back to. */
   async resolveBot(): Promise<BotResolution> {
     const resolution = await resolveBot(this.ctx, this.domain, this.options.sourceBotId)
-    if (resolution.kind === 'resolved') this.sourceBotId = resolution.botId
+    if (resolution.kind === 'resolved') {
+      this.sourceBotId = resolution.botId
+      const state = this.domain.table('state')
+      if (state.get(PAIRING_NAG_KEY)?.value !== 'resolved') {
+        await state.put(PAIRING_NAG_KEY, { key: PAIRING_NAG_KEY, value: 'resolved' })
+      }
+    }
     return resolution
+  }
+
+  /** Surface a pairing blockage on the router session once per state fingerprint. */
+  async pairingStatus(status: 'unavailable' | 'none' | 'ambiguous', candidates: string[] = []): Promise<void> {
+    const fingerprint = candidates.length ? `${status}:${[...candidates].sort().join(',')}` : status
+    const state = this.domain.table('state')
+    if (state.get(PAIRING_NAG_KEY)?.value === fingerprint) return
+    await state.put(PAIRING_NAG_KEY, { key: PAIRING_NAG_KEY, value: fingerprint })
+    const text = status === 'unavailable'
+      ? '[comma pairing] 还没有接入消息渠道（mino-im 未安装或没有可用 bot）。如果你想让我帮你盯消息，请提醒用户先装好并配好 IM 渠道，然后用 comma_im_pair 工具完成接管。'
+      : status === 'none'
+        ? '[comma pairing] IM 渠道已就绪但还没有可接管的 bot。请在 mino-im 里配好一个 bot（external-consumer 模式），然后用 comma_im_pair 完成接管。'
+        : `[comma pairing] 检测到多个可接管的 IM 账号：${candidates.join('、')}。请询问用户想让你盯哪一个，然后用 comma_im_pair 工具完成配对。`
+    await this.routerMessage(text)
+  }
+
+  /** Attach the router tool surface to the materialized router agent; idempotent per agent id. */
+  decorateRouter(agent: { id: SessionId; ctx: Context }): void {
+    if (agent.id !== ROUTER_SESSION_ID || this.mountedTools.has(agent.id)) return
+    this.mountedTools.set(agent.id, registerRouterTools(agent.ctx, {
+      ctx: this.ctx,
+      domain: () => this.domain,
+      ready: () => this.ready,
+      onChanged: () => this.scheduleRender(),
+    }))
+  }
+
+  /** Forget a disposed router agent; its scoped registrations rolled back with the agent ctx. */
+  dropRouter(agent: { id: SessionId }): void {
+    this.mountedTools.delete(agent.id)
   }
 
   private async notifyIm(text: string): Promise<void> {
@@ -186,6 +226,18 @@ export class Runtime implements SourceHost {
     const matters = this.domain.table('matters')
     const state = this.domain.table('state')
     const now = Date.now()
+
+    for (const [key, matter] of matters.entries()) {
+      if (matter.status === 'snoozed' && (matter.snoozedUntil ?? Number.POSITIVE_INFINITY) <= now) {
+        await matters.update(key, m => {
+          const next = { ...m, status: 'open' as const, updatedAt: now }
+          delete next.snoozedUntil
+          delete next.decision
+          delete next.decidedAt
+          return next
+        })
+      }
+    }
 
     const pending: { key: string; matter: Matter; items: SourceItem[] }[] = []
     const undelivered: { key: string; matter: Matter }[] = []
@@ -294,6 +346,8 @@ export class Runtime implements SourceHost {
 
   async stop(): Promise<void> {
     this.controller.abort()
+    for (const dispose of this.mountedTools.values()) dispose()
+    this.mountedTools.clear()
     if (this.renderTimer !== undefined) clearTimeout(this.renderTimer)
     await Promise.allSettled(this.fibers)
     if (this.notebookDirty) await this.renderNotebook().catch(() => {})

@@ -21,8 +21,8 @@ export type TargetResolution =
   | { kind: 'none' }
   | { kind: 'ambiguous'; botId: string; candidates: string[] }
 
-const SELECTED_BOT_KEY = 'selected_bot'
-const NOTIFY_TARGET_KEY = 'notify_target'
+export const SELECTED_BOT_KEY = 'selected_bot'
+export const NOTIFY_TARGET_KEY = 'notify_target'
 
 const dshimOf = (ctx: Context): DshImDiscovery | undefined =>
   ctx.get('dshIm') as DshImDiscovery | undefined
@@ -30,10 +30,16 @@ const dshimOf = (ctx: Context): DshImDiscovery | undefined =>
 export async function resolveBot(ctx: Context, domain: CommaDomain, configured: string): Promise<BotResolution> {
   if (configured !== '') return { kind: 'resolved', botId: configured, origin: 'config' }
   const remembered = domain.table('state').get(SELECTED_BOT_KEY)?.value
-  if (remembered !== undefined && remembered !== '') return { kind: 'resolved', botId: remembered, origin: 'state' }
   const dshim = dshimOf(ctx)
-  if (dshim?.listBots === undefined) return { kind: 'none' }
-  const candidates = await dshim.listBots()
+  const candidates = dshim?.listBots !== undefined ? await dshim.listBots() : undefined
+  if (remembered !== undefined && remembered !== '') {
+    // A remembered bot that vanished from discovery is cleared and re-resolved; an empty list is transient.
+    if (candidates === undefined || candidates.length === 0 || candidates.includes(remembered)) {
+      return { kind: 'resolved', botId: remembered, origin: 'state' }
+    }
+    await domain.table('state').put(SELECTED_BOT_KEY, { key: SELECTED_BOT_KEY, value: '' })
+  }
+  if (candidates === undefined) return { kind: 'none' }
   if (candidates.length === 0) return { kind: 'none' }
   if (candidates.length > 1) return { kind: 'ambiguous', candidates }
   const botId = candidates[0]!

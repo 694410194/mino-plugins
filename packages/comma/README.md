@@ -18,7 +18,26 @@ Notebook 里。灵感来自 AFK-surf/Comma。
 ## 形态
 
 bundle 自带两行：插件本体 + `mino-comma-router` 专用 preset（triage/委派
-prompt 的 Router Session，不带工具面）。装即挂载，卸即干净。
+prompt 的 Router Session）。装即挂载，卸即干净。会话在列表里显示为
+**Mino 陪伴**（标题以用户改名语义永久固定）。
+
+## 对话面：事项管理 + 配对
+
+Router Session 上挂了 4 个 agent 作用域工具（`agent.ctx.tools.register`，
+随 agent 销毁自动回滚，插件卸载时按账清理）——事项生命周期和配对全部
+可以对话完成，不需要 UI 面板也不需要改 YAML：
+
+- `comma_matters`：按状态列事项（counts + 标题 + 最新条目摘要）
+- `comma_matter_done`：把事项标为已处理（接受 id 或唯一标题子串）
+- `comma_matter_snooze`：推迟事项（`minutes` 或 ISO `until`），到点由
+  注意力扫描自动唤醒并重新判级
+- `comma_im_pair`：查看/选择 comma 接管的 IM bot；配对写 `state` 表
+  持久化，未接管的源在下一次重试（~15s）生效
+
+配对受阻时（mino-im 未装、没有可用 bot、多候选歧义）不再只写日志：
+按状态指纹**去重后**往 Router Session 注入一条提示消息，由陪伴人格
+向用户解释并引导用 `comma_im_pair` 完成选择；成功配对后指纹复位，
+再次受阻会重新提示。
 
 ## 配置
 
@@ -26,7 +45,8 @@ prompt 的 Router Session，不带工具面）。装即挂载，卸即干净。
 
 - `sources.im.botId`：留空 → `config → 持久选择 → dshIm.listBots()` 显式
   解析；恰好一个可接管 bot 就自动用它并把选择写进 `state` 表（重启沿用），
-  多个候选则保持关闭并在日志中列出候选（配一个 id 即解除歧义）。
+  多个候选则保持关闭并经 Router 会话引导选择。持久选择里的 bot 若已从
+  发现列表消失会被清除并重新解析。
   `sources.im.enabled: false` 显式关闭该源
 - `notify.botId` + `notify.targetId`：推送出口。留空 → 同源 bot 上
   `listTargets()` 恰好一个目标就自动用它，同样落 `state`；无目标/多目标

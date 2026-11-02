@@ -1,7 +1,9 @@
 /** mino-comma: a sessionless proactive companion agent for Mino. */
 import type { Context } from '@deepseek-ai/cordis'
 import type {} from '@deepseek-ai/dsh-api-session-controller'
+import type {} from '@deepseek-ai/dsh-agent'
 import type {} from '@deepseek-ai/dsh-storage-domain'
+import type {} from '@deepseek-ai/dsh-tools'
 import type {} from '@deepseek-ai/dsh-workspace'
 import { z } from 'zod'
 import { Runtime } from './runtime.ts'
@@ -62,6 +64,9 @@ export type CommaConfig = z.infer<typeof Config>
 
 export async function apply(ctx: Context, config: CommaConfig): Promise<void> {
   let runtime!: Runtime
+  // Registered before Runtime construction so the router's own materialization is caught.
+  ctx.on('agent/created', ({ agent }) => { runtime?.decorateRouter(agent) })
+  ctx.on('agent/disposed', ({ agent }) => { runtime?.dropRouter(agent) })
   const sources: Source[] = []
   if (config.sources.im.enabled) {
     sources.push(imSource(ctx, config.sources.im, () => runtime.resolveBot()))

@@ -61,17 +61,20 @@ export function imSource(
         const dshim = ctx.get('dshIm') as DshIm | undefined
         if (!dshim?.consumeInbound) {
           host.logger.info('mino-comma im: mino-im not installed; retrying')
+          await host.pairingStatus('unavailable')
           await pause(RETRY_MS, signal)
           continue
         }
         const resolution = await resolveBot()
         if (resolution.kind === 'none') {
           host.logger.info('mino-comma im: no bot to consume; retrying')
+          await host.pairingStatus('none')
           await pause(RETRY_MS, signal)
           continue
         }
         if (resolution.kind === 'ambiguous') {
           host.logger.warn('mino-comma im: multiple bots (%s); set sources.im.botId', resolution.candidates.join(', '))
+          await host.pairingStatus('ambiguous', resolution.candidates)
           await pause(RETRY_MS, signal)
           continue
         }
