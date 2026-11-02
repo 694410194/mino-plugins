@@ -39,7 +39,15 @@
 >
 > **社区候选（已调研未装）**：dsh-our-free-model（55.9k★ 免费模型车道，与 Magpie 同位竞争，评估备选）；dsh-pocket（2.2k★ 手机扫码远程，对比 mino-bridge）；hindsight/MemOS/OpenViking 等重型记忆系统（桥薄服务重，fish-memory 轻量原生召回够用则不动）。
 >
-> **版本掉队待 bump**：meme 0.1.72→0.1.76、speak-up 0.2.8→0.2.9、qq-link 1.4.7→1.5.0、mood 0.8.4→0.8.5。tavern 上游 dsh-tavern 已 2.7.x 但系 MUV 引擎另一血缘（我们有跑团/地图/战斗它没有），换不换看特性对比，不算掉队。
+> **版本 bump 已完成（2026-11 实测零报错）**：
+> - meme 0.1.72→**0.1.76**（lib 与上游一致，仅 package.json 补 peerDep）
+> - speak-up 0.2.8→**0.2.9**（移植上游 issue #8 两修：触发文案带「现在几点」行防白天当凌晨；
+>   冷却按 assistant/message 真说了话记账，投递不算开口）
+> - qq-link 1.4.7→**1.5.0**（移植：source 双形状读取修复；轮来源只认首次+跳过 runtime-context/
+>   time-context 等搭车注入，修「窗口自聊误推 QQ」；管理接口 只认本人 包装防局域网 CSRF；
+>   /notice 上报端点收戳一戳；client.js 换上游 1.5.0 六页签版仅保留 mino- 前缀 id）
+> - mood 0.8.4→**0.8.5**（移植：判定提示词分三档防小情绪全判 0；mood 顶 ≥85/底 ≤40 半幅阻尼）
+> tavern 上游 dsh-tavern 已 2.7.x 但系 MUV 引擎另一血缘（我们有跑团/地图/战斗它没有），换不换看特性对比，不算掉队。
 >
 > **互斥/高危标注（Discover 元数据待办）**：QQ 三路（qqbot/im-QQ/qq-link+aurabot）同号互踢应标互斥；tavern ~58 工具与 bili 系 ~43 工具全量进每轮 schema 是实打实的 token 前缀成本，应标"重场景包"；pilot 真实输入控制+截图上云，应标"高危，先读说明"。
 | mino-qqbot | 腾讯官方 fork | 推荐位 | QQBOT_APPID/SECRET 环境变量 |

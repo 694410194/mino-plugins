@@ -28,6 +28,14 @@ const 配置文件 = join(目录, 'qq-bridge-config.json')
 const 路由前缀 = '/dsh-qq-bridge'
 const 日志上限 = 60
 
+const 搭车注入 = new Set(['runtime-context', 'time-context', 'skill-catalog', 'compact-checkpoint', 'model-selection', 'her-words', 'memory'])
+function 是搭车注入(类) {
+  const k = String(类 || '')
+  if (!k) return false
+  if (搭车注入.has(k)) return true
+  return k.startsWith('repeat-tool-reminder') || k.startsWith('plugin:')
+}
+
 const 默认配置 = {
   总开关: false, // 关着 = 一句都不发（安全默认）
   试运行: true, // 开着 = 只记账、不真发到 QQ
@@ -38,6 +46,8 @@ const 默认配置 = {
   群号: '', // 发到哪个群（可空）
   转私聊: true,
   转群: false,
+  收通知: false,
+  通知口令: '', // 非空时，上报地址必须带 ?token=xxx（防止局域网里别人乱推）
   NapCat: 'http://127.0.0.1:3000', // OneBot HTTP 接口
   令牌: '', // ⭐ access_token（2026-10-25）：NapCat / SnowLuma 开了鉴权就填这里，留空 = 不鉴权
   // ⭐ 2026-10-22：图片两个方向
@@ -449,6 +459,8 @@ function 归一化(原始) {
     只回QQ唤醒: 布(混.只回QQ唤醒, 默认配置.只回QQ唤醒),
     // ⭐ 1.4.4：自动触发的轮次（主动搭话、定时任务）也推到手机
     自动触发也发: 布(混.自动触发也发, 默认配置.自动触发也发),
+    收通知: 布(混.收通知, 默认配置.收通知),
+    通知口令: 字(混.通知口令).slice(0, 200),
     语音转写: 布(混.语音转写, 默认配置.语音转写),
     转写命令: 字(混.转写命令).slice(0, 400),
     语音模型目录: 字(混.语音模型目录).slice(0, 400),
@@ -992,7 +1004,27 @@ export function 抠QQ标记(文字, 只发标记内) {
 }
 export function apply(ctx) {
   // ⭐ 设置页那个「检查更新」：查这个插件自己的仓库
-  createSelfUpdate({ packageRoot: 包根, diag: 记账 }).register(ctx, 路由前缀)
+  // ⭐ 1.5.0：管理类接口默认只认本人 —— 挂在 webServer 上的地址不带登录校验，
+  //   随便一个网页都能 POST 改配置。「失败就放行」：拿不到 connection 服务或它没这接口就放过去，
+  //   只有宿主明确 401/403 才拒（单机「能用」优先，每拒一次记日志）。
+  const 只认本人 = (handler) => async (req, res) => {
+    try {
+      const 连接 = ctx.get('connection')
+      const 拒 = 连接 && typeof 连接.requestRejection === 'function' ? 连接.requestRejection(req) : undefined
+      if (拒 === 401 || 拒 === 403) {
+        记账('管理接口拒了一次外来请求（' + 拒 + '）：' + String((req && req.url) || ''))
+        回(res, { ok: false, 说: 拒 === 401 ? 'authentication_required' : 'management_forbidden' })
+        return
+      }
+    } catch (error) {
+    }
+    return handler(req, res)
+  }
+
+  createSelfUpdate({ packageRoot: 包根, diag: 记账 }).register({
+    effect: (fn) => ctx.effect(fn),
+    webServer: { register: (o) => ctx.webServer.register({ ...o, handler: (req, res) => 只认本人(o.handler)(req, res) }) },
+  }, 路由前缀)
   // ---------- 状态 ----------
 
   const 日志 = []
@@ -1423,20 +1455,16 @@ export function apply(ctx) {
     // ⭐ 1.0.1：她自己在这间会话里打了字（source 不是 qq）→ 尾巴立刻清掉，
     //   不然「QQ 叫醒一次」会把后面她自己聊的几轮也推去手机（老坑）。
     if (event && event.type === 'user/message') {
-      const 源 = event.data && event.data.message && event.data.message.source
+      const 源 = (event.data && (event.data.source || (event.data.message && event.data.message.source))) || null
       const 类 = String((源 && 源.kind) || '')
       if (!类 || 类 === 'user') 尾巴.delete(键)
       // ⭐ 1.4.4：把「这一轮是谁起的头」记下来 —— turn/end 判定要不要推到手机时用
-      // ⚠⚠ 1.4.7：以前是 `轮来源.set(键, 类 || 'user')` —— **无条件覆盖**。而同一轮里 DSH 还会再插
-      //   一条没有 source.kind 的注入（每轮的 runtime context 就是独立的一条 user/message），
-      //   于是「QQ 叫醒的那一轮」被改判成「你在窗口里自己打的」，「只回 QQ 唤醒」开着时整轮被丢掉。
-      //   现在：**带 kind 才覆盖**；没有 kind 的只在「这一轮什么来源都还没记过」时才当成本地手打。
-      if (类) {
-        轮来源.set(键, 类)
-        if (类 === 'qq') 本轮有QQ.set(键, true)
-      } else if (!轮来源.has(键)) {
-        轮来源.set(键, 'user')
-      }
+      // ⚠⚠ 1.5.0（上游 1.4.8+1.4.9 两连修）：
+      //   · source 两种事件形状都读（user/message 不包 data.message，读不到会判成手打）
+      //   · **只认第一次，而且跳过「搭车的注入」**——宿主会在她那句话后面再塞 runtime-context /
+      //     time-context，后者会把她标成「不是她打的」，配上「自动触发也发」⇒ 窗口里自己聊的话被推到 QQ。
+      if (类 === 'qq') 本轮有QQ.set(键, true)
+      if (!轮来源.has(键) && !是搭车注入(类)) 轮来源.set(键, 类 || 'user')
       return
     }
 
@@ -1865,14 +1893,16 @@ export function apply(ctx) {
     return '"' + ASRpython + '" "' + 脚本 + '" "{file}"' + (模 ? ' --模型目录 "' + 模 + '"' : '')
   }
 
-  const 路线 = (路径, handler) =>
+  const 路线 = (路径, handler, 选项 = {}) =>
     ctx.effect(() =>
       ctx.webServer.register({
         kind: 'exact',
         path: 路径,
         handler: async (req, res) => {
           try {
-            await handler(req, res)
+            // /receive、/notice 是「外面往插件里推」的数据口，不走这道门
+            const 跑 = 选项.公开 ? handler : 只认本人(handler)
+            await 跑(req, res)
           } catch (error) {
             回(res, { ok: false, 说: String((error && error.message) || error) })
           }
@@ -3578,12 +3608,54 @@ export function apply(ctx) {
     存水位()
   }
 
+  // ⚠ `公开: true` —— 外面往插件里推消息的数据口，不是管理接口，不走登录校验。
   路线(`${路由前缀}/receive`, async (req, res) => {
     const 来 = await 读体(req)
     const 文字 = typeof 来.text === 'string' ? 来.text.trim() : ''
     if (!文字) return 回(res, { ok: false, 说: '没有文字（body 里给 text）' })
     回(res, await 转入文字(文字))
-  })
+  }, { 公开: true })
+
+  // ⭐ 1.5.0（上游 issue #29）：收**通知类事件**（戳一戳）。轮询历史永远拉不到 notice，
+  //   OneBot 只通过 HTTP 上报推出来。把 NapCat 上报地址指到 <前缀>/notice
+  //   （口令非空时带 ?token=xxx）。只认 notice，其它一律忽略（消息交给轮询，不重复）。
+  const 通知去重 = new Map()   // 事件指纹 -> 时间（只留最近 200 条）
+  路线(`${路由前缀}/notice`, async (req, res) => {
+    const 配置 = 读配置()
+    if (!配置.收通知) return 回(res, { ok: false, 说: '「收通知」关着，先在设置里打开' })
+    const 口令 = String(配置.通知口令 || '').trim()
+    if (口令) {
+      let 给 = String((((req && req.url) || '').match(/[?&]token=([^&]*)/) || [])[1] || (req && req.headers && req.headers['x-token']) || '')
+      try { 给 = decodeURIComponent(给) } catch (error) {}
+      if (给 !== 口令) return 回(res, { ok: false, 说: '口令不对' })
+    }
+    const 来 = await 读体(req)
+    if (!来 || 来.post_type !== 'notice') {
+      return 回(res, { ok: true, 说: '只转 notice 类事件；其它（消息）交给轮询，不重复转' })
+    }
+    const 类 = String(来.notice_type || '')
+    const 群号 = Number(来.group_id) || 0
+    const 谁 = Number(来.user_id) || 0
+    const 指纹 = 类 + ':' + 群号 + ':' + 谁 + ':' + Number(来.time || 0)
+    const 现 = Date.now()
+    if (通知去重.has(指纹)) return 回(res, { ok: true, 说: '这条刚收过，跳过' })
+    通知去重.set(指纹, 现)
+    if (通知去重.size > 200) for (const [k, t] of 通知去重) if (现 - t > 600000) 通知去重.delete(k)
+
+    if (类 !== 'poke') return 回(res, { ok: true, 说: `「${类}」这类通知暂时不转（现在只转戳一戳）` })
+
+    const 这条 = (配置.绑定 || []).find((b) => (群号
+      ? b.类型 === '群' && Number(b.号码) === 群号
+      : b.类型 === '私聊' && Number(b.号码) === 谁)) || null
+    if (!这条 || 这条.开 === false) return 回(res, { ok: false, 说: '这个聊天没绑定（或者那一行关着）' })
+
+    const 来源 = 群号 ? 'QQ群 ' + 群号 + '·戳一戳' : 'QQ私聊·戳一戳'
+    const 正文 = 群号 ? '（戳一戳）群里有人戳了你一下' : '（戳一戳）对方戳了你一下'
+    const 结果 = await 转入一条(正文, [], 来.time || 现, 这条, { 昵称: '', 号码: 谁 },
+      false, undefined, undefined, 来源)
+    记账('收到 ' + 来源 + ' → ' + (结果 && 结果.ok ? '转进会话了' : String((结果 && 结果.说) || '没转成')))
+    回(res, 结果)
+  }, { 公开: true })
 
   // 手动试一发：**真发**（绕过试运行），只发一条固定测试句，动不了已发轮
   路线(`${路由前缀}/test-send`, async (req, res) => {
