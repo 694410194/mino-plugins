@@ -1,0 +1,4 @@
+# mino-skill-cnki bundle patch：挂载 skill pack provider 行。
+- insert:
+    - id: skill-cnki
+      name: "mino-skill-cnki"

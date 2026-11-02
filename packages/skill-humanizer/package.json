@@ -1,0 +1,47 @@
+{
+  "name": "mino-skill-humanizer",
+  "version": "0.1.0",
+  "description": "Mino 精选 skill 包（上游 AIScientists-Dev/academic-humanizer）：剥离 AI 写作痕迹——保留学术惯例与作者声纹，对齐声明与证据；不改数字/结果/引用，不用于规避 AI 使用披露。",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-skill",
+    "skills",
+    "academic",
+    "humanize",
+    "writing",
+    "ai-detection"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "skills",
+    "README.md",
+    "LICENSE",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AIScientists-Dev/academic-humanizer"
+  },
+  "homepage": "https://github.com/AIScientists-Dev/academic-humanizer",
+  "mino": {
+    "upstream": "AIScientists-Dev/academic-humanizer@94b88b2"
+  },
+  "author": "AIScientists-Dev"
+}

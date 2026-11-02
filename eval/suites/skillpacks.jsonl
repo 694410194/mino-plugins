@@ -2,3 +2,9 @@
 {"id": "screenwriting-workflow", "text": "调用 skill 工具使用 sw-workflow 技能：我要开始一个新剧本项目，告诉我阶段划分。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 15}, "timeoutMs": 240000}
 {"id": "duanju-craft", "text": "调用 skill 工具使用 duanju-craft 技能：帮我出一个微短剧选题方案。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 25}, "timeoutMs": 240000}
 {"id": "script-review", "text": "调用 skill 工具使用 script-review 技能：审一下这段剧本——女主发现丈夫出轨当场掀桌。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 8}, "timeoutMs": 240000}
+{"id": "academic-deep-research", "text": "调用 skill 工具使用 deep-research 技能：帮我做一个关于大语言模型 Agent 记忆机制的小型文献调研。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 15}, "timeoutMs": 240000}
+{"id": "nature-paper-card", "text": "调用 skill 工具使用 nature-paper-card 技能：给我讲讲这个技能怎么把一篇论文做成精读卡。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 8}, "timeoutMs": 240000}
+{"id": "cnki-search", "text": "调用 skill 工具使用 cnki-search 技能：我想在知网搜『短剧编剧』相关论文，告诉我流程。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 8}, "timeoutMs": 240000}
+{"id": "paperjury", "text": "调用 skill 工具使用 paperjury 技能：投前审稿能帮我做什么？", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 8}, "timeoutMs": 240000}
+{"id": "academic-humanizer", "text": "调用 skill 工具使用 academic-humanizer 技能：这段 AI 写的摘要怎么改得更像人写的？", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 8}, "timeoutMs": 240000}
+{"id": "paper-search-skill", "text": "调用 skill 工具使用 paper-search 技能：怎么用这个技能查 arXiv 论文？", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 8}, "timeoutMs": 240000}

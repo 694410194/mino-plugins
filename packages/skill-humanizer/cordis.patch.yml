@@ -1,0 +1,4 @@
+# mino-skill-humanizer bundle patch：挂载 skill pack provider 行。
+- insert:
+    - id: skill-humanizer
+      name: "mino-skill-humanizer"

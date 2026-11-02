@@ -484,6 +484,50 @@
       "labels": [
         "verified"
       ]
+    },
+    "mino-skill-academic": {
+      "score": 74,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-nature": {
+      "score": 72,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-cnki": {
+      "score": 66,
+      "category": "skills",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-skill-paperjury": {
+      "score": 62,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-humanizer": {
+      "score": 60,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-mcp-paper-search": {
+      "score": 70,
+      "category": "mcp",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
     }
   }
 }

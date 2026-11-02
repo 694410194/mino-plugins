@@ -1,0 +1,47 @@
+{
+  "name": "mino-skill-paperjury",
+  "version": "0.1.0",
+  "description": "Mino 精选 skill 包（上游 Spark-To-Paper-Skills/paperjury）：投稿前 AI 审稿压力测试——多视角审稿人模拟、三模式（CVPR/ICCV/ECCV 等 CS 会议取向）、审稿台账与再审流程。",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-skill",
+    "skills",
+    "academic",
+    "peer-review",
+    "paper",
+    "review"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "skills",
+    "README.md",
+    "LICENSE",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Spark-To-Paper-Skills/paperjury"
+  },
+  "homepage": "https://github.com/Spark-To-Paper-Skills/paperjury",
+  "mino": {
+    "upstream": "Spark-To-Paper-Skills/paperjury@53c75e8"
+  },
+  "author": "Spark-To-Paper-Skills"
+}

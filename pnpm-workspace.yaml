@@ -46,6 +46,12 @@ packages:
   - "!packages/skill-script-review"
   - "!packages/skill-commit"
   - "!packages/skill-mino-release"
+  - "!packages/skill-academic"
+  - "!packages/skill-nature"
+  - "!packages/skill-cnki"
+  - "!packages/skill-paperjury"
+  - "!packages/skill-humanizer"
+  - "!packages/mcp-paper-search"
 allowBuilds:
   '@deepseek-ai/dsh-subprocess-local': false
   '@google/genai': false

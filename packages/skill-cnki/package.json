@@ -1,0 +1,48 @@
+{
+  "name": "mino-skill-cnki",
+  "version": "0.1.0",
+  "description": "Mino 精选 skill 包（上游 cookjohn/cnki-skills）：知网 CNKI 浏览器操作技能 10 件——基础/高级检索、结果解析、翻页、详情、期刊检索/目录/索引、PDF/CAJ 下载、导出 Zotero/RIS。需配合 mcp-chrome-devtools 浏览器工具使用。",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-skill",
+    "skills",
+    "cnki",
+    "academic",
+    "paper-search",
+    "zotero",
+    "chrome"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "skills",
+    "README.md",
+    "LICENSE",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cookjohn/cnki-skills"
+  },
+  "homepage": "https://github.com/cookjohn/cnki-skills",
+  "mino": {
+    "upstream": "cookjohn/cnki-skills@20d65f6"
+  },
+  "author": "cookjohn"
+}

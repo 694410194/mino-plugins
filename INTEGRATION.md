@@ -53,6 +53,12 @@
 | mino-skill-screenwriting | vendored fork jtydhr88/screenwriting-skills@51115f1 | 已实测（同上） | 26 个 sw-* 编剧技能（47 本工艺书蒸馏），sw-workflow 编排 |
 | mino-skill-duanju | vendored fork 0xsline/short-drama@8979a42 | 已实测（同上） | duanju-craft + 8 工艺参考（钩子/卡点/爽感矩阵/合规）；上游名撞 zenstory 编排器已改 |
 | mino-skill-script-review | vendored fork Vi7QY/screenwriter-skill@cf22b23 | 已实测（同上） | 红果 Top100 审稿方法论；上游中文名已改 script-review |
+| mino-skill-academic | vendored fork Imbad0202/academic-research-skills@2e02041（skill pack） | 已实测（plugweb skill 调用 PASS） | 5 技能学术全链：深研/写作/审稿/编排/综述筛选（上游 Method-1 布局，shared 支撑树未随包） |
+| mino-skill-nature | vendored fork Yuan1z0825/nature-skills@69817e4（skill pack） | 已实测（plugweb skill 调用 PASS） | 24 技能：检索/引用/精读卡/科研绘图/翻译/审稿/润色等；5 文件 frontmatter 已折行，researchwrite 名保留 |
+| mino-skill-cnki | vendored fork cookjohn/cnki-skills@20d65f6（skill pack） | 已实测（plugweb skill 调用 PASS） | 10 技能知网操作链；驱动 mcp__chrome-devtools__* 需装 mino-mcp-chrome-devtools |
+| mino-skill-paperjury | vendored fork Spark-To-Paper-Skills/paperjury@53c75e8（skill pack） | 已实测（plugweb skill 调用 PASS） | 投稿前 AI 审稿压力测试（含 references/configs/scripts） |
+| mino-skill-humanizer | vendored fork AIScientists-Dev/academic-humanizer@94b88b2（skill pack） | 已实测（plugweb skill 调用 PASS） | 学术去 AI 痕迹；frontmatter description 已折行 |
+| mino-mcp-paper-search | vendored fork openags/paper-search-mcp@cab1b5c（dsh 官方 bundle） | 已实测（plugweb skill 调用 PASS） | uvx 拉起 paper-search-mcp，15+ 源检索；附 paper-search 技能 |
 | mino-skill-commit | 自研 skill pack（ctx.skills provider） | 已实测（provider 注册+list/get 冒烟通过） | 无；commit-message 技能，rank 650 可被同名覆盖 |
 | mino-skill-mino-release | 自研 skill pack | 已实测（同上） | 无；mino-release 部署发布速查技能 |
 
