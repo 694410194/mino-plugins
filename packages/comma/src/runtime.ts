@@ -18,7 +18,9 @@ import { resolveBot, resolveNotifyTarget, type BotResolution } from './resolve.t
 
 export const ROUTER_SESSION_ID = 'comma-router' as SessionId
 export const ROUTER_PRESET = 'mino-comma-router'
+export const ROUTER_TITLE = 'Mino 陪伴'
 const ROUTER_STATE_KEY = 'router_session'
+const ROUTER_TITLE_KEY = 'router_title'
 const BUDGET_KEY = 'notify_budget'
 const BRIEFING_KEY = 'briefing_last'
 const MATTER_TITLE_MAX = 60
@@ -79,6 +81,13 @@ export class Runtime implements SourceHost {
       this.ctx.logger.info('mino-comma router session created: %s', ROUTER_SESSION_ID)
     }
     await this.domain.table('state').put(ROUTER_STATE_KEY, { key: ROUTER_STATE_KEY, value: ROUTER_SESSION_ID })
+    if (this.domain.table('state').get(ROUTER_TITLE_KEY) === undefined) {
+      const agent = (await this.ctx.sessionController.resolveAgent(ROUTER_SESSION_ID))
+      if (!('error' in agent)) {
+        agent.agent.session.append('session/title', { title: ROUTER_TITLE, messageSeqs: [], source: { kind: 'user' } })
+        await this.domain.table('state').put(ROUTER_TITLE_KEY, { key: ROUTER_TITLE_KEY, value: ROUTER_TITLE })
+      }
+    }
     await this.seedLoops(this.options.seedLoops)
 
     const signal = this.controller.signal
