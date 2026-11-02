@@ -1,0 +1,3 @@
+{"id": "prod-init", "text": "调用 skill 工具使用 short-drama 技能：在 D:/tmp/mino-sdk/prod-e2e 新建短剧项目《闪婚后傅总马甲藏不住了》，女频甜宠+马甲打脸题材，60集竖屏微短剧，单集目标90秒。完成项目初始化，并产出前5集的分集大纲。", "assert": {"tools.called": ["skill"], "reply.match": "EP0*1|第.?一.?集|分集地图|episode-map", "modelCalls.max": 60}, "timeoutMs": 900000}
+{"id": "prod-ep1-script", "sameSession": "prod-init", "text": "继续：写第1集完整剧本，落到项目标准位置（剧集/EP01/剧本.md）。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 60}, "timeoutMs": 900000}
+{"id": "prod-ep1-blueprint", "sameSession": "prod-init", "text": "继续：为第1集产出完整施工图纸——视觉设定.md、分镜.md、图片提示词.md、视频提示词.md 四份文档，落到剧集/EP01/下。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 90}, "timeoutMs": 1200000}
