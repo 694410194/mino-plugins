@@ -1,0 +1,66 @@
+id: caoyiwei850.dsh-client-ui-skins
+name:
+  zh: dsh-client-ui-skins
+  en: dsh-client-ui-skins
+author: caoyiwei850
+description: DSH Web 换肤插件：4 套内置皮肤 + 自定义图片皮肤，图片作为全界面背景，配色自动跟随图片主色调。
+repo: https://github.com/caoyiwei850/dsh-client-ui-skins
+package: dsh-client-ui-skins
+rowId: ui-skins
+category: skin
+tags:
+  - wallpaper
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:caoyiwei850/dsh-client-ui-skins#f4bc4ef36a04751aca7404d7c0e3275dea31764f
+  version: 0.1.16
+  commit: f4bc4ef36a04751aca7404d7c0e3275dea31764f
+  desktop:
+    mode: manual-only
+    reason: npm-repository-mismatch
+compatibility:
+  dsh: ">=0.1.0-rc.8"
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/caoyiwei850/dsh-client-ui-skins/cc5b092f1ecc8f9810d83aa2aabb6f70007570bb/assets/screenshots/mint-forest-dsh.jpg
+  - https://raw.githubusercontent.com/caoyiwei850/dsh-client-ui-skins/cc5b092f1ecc8f9810d83aa2aabb6f70007570bb/assets/screenshots/ocean-guardian-dsh.jpg
+  - https://raw.githubusercontent.com/caoyiwei850/dsh-client-ui-skins/cc5b092f1ecc8f9810d83aa2aabb6f70007570bb/assets/screenshots/crimson-moon-dsh.jpg
+  - https://raw.githubusercontent.com/caoyiwei850/dsh-client-ui-skins/2d6d60b2f7c28312149db9507f2bd3ee8acadfdb/assets/screenshots/mint-forest-dsh.jpg
+  - https://raw.githubusercontent.com/caoyiwei850/dsh-client-ui-skins/2d6d60b2f7c28312149db9507f2bd3ee8acadfdb/assets/screenshots/ocean-guardian-dsh.jpg
+  - https://raw.githubusercontent.com/caoyiwei850/dsh-client-ui-skins/2d6d60b2f7c28312149db9507f2bd3ee8acadfdb/assets/screenshots/crimson-moon-dsh.jpg
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: improve
+    topic: pass
+  suggestions:
+    - 建议在 README 中补充可复制的 DSH 安装命令，方便用户直接使用。
+  scan:
+    commit: f4bc4ef36a04751aca7404d7c0e3275dea31764f
+    packageVersion: 0.1.16
+    scannerVersion: static-v2
+    dshVersion: ">=0.1.0-rc.8"
+    mode: static
+    result: pass
+    checkedAt: 2026-08-30T01:19:29.372Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 9
+starsSnapshot: 14
+releaseUpdatedAt: 2026-08-30T01:19:29.479Z
+metadataUpdatedAt: 2026-08-30T01:19:29.479Z
+starsUpdatedAt: 2026-10-20T22:15:22.268Z
+updatedAt: 2026-10-20T22:15:22.268Z

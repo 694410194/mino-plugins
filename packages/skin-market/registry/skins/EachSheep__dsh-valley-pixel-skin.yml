@@ -1,0 +1,65 @@
+id: eachsheep.dsh-valley-pixel-skin
+name:
+  zh: dsh-valley-pixel-skin
+  en: dsh-valley-pixel-skin
+author: EachSheep
+description: 给 DSH Desktop 和 Web UI 用的田园像素皮肤。春日农场铺在背景里，侧栏改成木质面板，主要工作区使用羊皮纸色半透明表面；默认增加 7px 背景模糊，让景色能看见，正文仍然清楚。
+repo: https://github.com/EachSheep/dsh-valley-pixel-skin
+package: dsh-client-ui-skin-valley-spring
+rowId: ui-skin-valley-spring
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:EachSheep/dsh-valley-pixel-skin#b0193fc279936f2229933555a9d9b70bc2e69afa
+  version: 0.1.0
+  commit: b0193fc279936f2229933555a9d9b70bc2e69afa
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/EachSheep/dsh-valley-pixel-skin/b0193fc279936f2229933555a9d9b70bc2e69afa/preview/valley-spring-main.png
+  - https://raw.githubusercontent.com/EachSheep/dsh-valley-pixel-skin/23e0460d221a09deeb9e7fd3f7bbb438bc441b4c/preview/valley-spring-main.png
+  - https://raw.githubusercontent.com/EachSheep/dsh-valley-pixel-skin/f6f4f7b0adb3b52620ceb0b7ea419d80b969b588/preview/valley-spring-main.png
+  - https://raw.githubusercontent.com/EachSheep/dsh-valley-pixel-skin/e746c941ffba2dd11ead96b50bc8c2964e9fef8b/preview/valley-spring-main.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: b0193fc279936f2229933555a9d9b70bc2e69afa
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:33:22.354Z
+    findings: []
+license:
+  code: BSD-3-Clause
+  commercialUse: true
+featuredRank: 175
+starsSnapshot: 0
+releaseUpdatedAt: 2026-08-23T05:33:22.449Z
+metadataUpdatedAt: 2026-08-23T05:33:22.449Z
+starsUpdatedAt: 2026-08-18T15:44:34.423Z
+updatedAt: 2026-08-23T05:33:22.449Z

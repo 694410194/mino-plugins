@@ -1,0 +1,75 @@
+id: nagi-ovo.dsh-ads
+name:
+  zh: dsh-ads
+  en: dsh-ads
+author: Nagi-ovo
+description: 把 DeepSeek Harness 变成 2005 年门户网站：在侧栏、对话和推理过程中加入虚构广告、假游戏与弹窗，支持中英文切换。
+repo: https://github.com/Nagi-ovo/dsh-ads
+package: "@nagi-ovo/dsh-ads"
+rowId: dsh-ads
+category: skin
+tags:
+  - retro
+  - motion
+  - utility
+modes:
+  - light
+  - dark
+install:
+  target: github:Nagi-ovo/dsh-ads#a5854a37bbe24078878740ae4567e59cc75c29ec
+  version: 0.1.3
+  commit: a5854a37bbe24078878740ae4567e59cc75c29ec
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+  npm:
+    name: "@nagi-ovo/dsh-ads"
+    version: 0.1.3
+    integrity: sha512-7RMKGii5av9fUu9/bYSHyIRFwNjnApNVI64mtfy5B2Buu3aUoQrk4Y2BDJ+9BtfZTnw1O6Fhfb9UwmvoTqIc4Q==
+    repository: https://github.com/Nagi-ovo/dsh-ads
+    gitHead: a5854a37bbe24078878740ae4567e59cc75c29ec
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/Nagi-ovo/dsh-ads/aa752ed8d24d0a4b5ce1fde4b99b0d9d7f5a1e22/assets/screenshot.webp
+  - https://raw.githubusercontent.com/Nagi-ovo/dsh-ads/aa752ed8d24d0a4b5ce1fde4b99b0d9d7f5a1e22/assets/english-mode.png
+  - https://raw.githubusercontent.com/Nagi-ovo/dsh-ads/aa752ed8d24d0a4b5ce1fde4b99b0d9d7f5a1e22/assets/settings.webp
+  - https://raw.githubusercontent.com/Nagi-ovo/dsh-ads/aa752ed8d24d0a4b5ce1fde4b99b0d9d7f5a1e22/assets/social-preview.jpg
+  - https://dshfind.com/api/card/Nagi-ovo/dsh-ads?lang=zh
+  - https://raw.githubusercontent.com/Nagi-ovo/dsh-ads/aa752ed8d24d0a4b5ce1fde4b99b0d9d7f5a1e22/assets/reward-gate.png
+  - https://raw.githubusercontent.com/Nagi-ovo/dsh-ads/3a2ba704bc383099c686d3288ff6e0d61fc391e5/assets/screenshot.webp
+  - https://raw.githubusercontent.com/Nagi-ovo/dsh-ads/3a2ba704bc383099c686d3288ff6e0d61fc391e5/assets/english-mode.png
+listScreenshot: https://raw.githubusercontent.com/Nagi-ovo/dsh-ads/7cbc5e5c937a8eb22c6e0169b61ff3298ab0fb58/assets/social-preview.jpg
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: a5854a37bbe24078878740ae4567e59cc75c29ec
+    packageVersion: 0.1.3
+    scannerVersion: static-v2
+    dshVersion: ^0.1.0-rc.6 || ^0.2.0-rc.1 || ^0.2.1-0
+    mode: static
+    result: pass
+    checkedAt: 2026-10-20T22:15:00.987Z
+    findings: []
+license:
+  code: BSD-3-Clause
+  commercialUse: true
+featuredRank: 142
+starsSnapshot: 697
+releaseUpdatedAt: 2026-10-21T22:16:55.918Z
+metadataUpdatedAt: 2026-10-20T22:15:03.327Z
+starsUpdatedAt: 2026-10-27T23:00:30.470Z
+updatedAt: 2026-10-27T23:00:30.470Z

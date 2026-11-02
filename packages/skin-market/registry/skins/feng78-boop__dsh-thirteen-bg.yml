@@ -1,0 +1,70 @@
+id: feng78-boop.dsh-thirteen-bg
+name:
+  zh: dsh-thirteen-bg
+  en: dsh-thirteen-bg
+author: feng78-boop
+description: DeepSeek Harness Web GUI 动态背景插件（live wallpaper），by 十三 / thirteen。
+repo: https://github.com/feng78-boop/dsh-thirteen-bg
+package: dsh-thirteen-bg
+rowId: thirteen-bg
+category: skin
+tags:
+  - wallpaper
+  - motion
+modes:
+  - dark
+install:
+  target: github:feng78-boop/dsh-thirteen-bg#a11e0d90eb0b81f3d880fd6bfd9d792d5101b15e
+  version: 0.5.2
+  commit: a11e0d90eb0b81f3d880fd6bfd9d792d5101b15e
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-thirteen-bg
+    packageVersion: 0.5.2
+    integrity: sha512-ByWnQPKVUkaN7DQPSr14FB99o7phAbAV7D0IKStbY1V0YRP9Oqd60k7saCncpbkr21jPhQ5jSC3deIobxDZnsA==
+  npm:
+    name: dsh-thirteen-bg
+    version: 0.5.2
+    integrity: sha512-ByWnQPKVUkaN7DQPSr14FB99o7phAbAV7D0IKStbY1V0YRP9Oqd60k7saCncpbkr21jPhQ5jSC3deIobxDZnsA==
+    repository: https://github.com/feng78-boop/dsh-thirteen-bg
+    gitHead: a11e0d90eb0b81f3d880fd6bfd9d792d5101b15e
+compatibility:
+  dsh: ">=0.1.0-rc.1 <0.1.0 || >=0.1.0-rc.1 <0.2.0-0"
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/feng78-boop/dsh-thirteen-bg/a11e0d90eb0b81f3d880fd6bfd9d792d5101b15e/assets/demo-poster.jpg
+  - https://raw.githubusercontent.com/feng78-boop/dsh-thirteen-bg/a11e0d90eb0b81f3d880fd6bfd9d792d5101b15e/assets/demo-shot-2.jpg
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+  scan:
+    commit: a11e0d90eb0b81f3d880fd6bfd9d792d5101b15e
+    packageVersion: 0.5.2
+    scannerVersion: static-v2
+    dshVersion: ">=0.1.0-rc.1 <0.1.0 || >=0.1.0-rc.1 <0.2.0-0"
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:33:26.730Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 208
+starsSnapshot: 2
+releaseUpdatedAt: 2026-08-23T05:33:26.802Z
+metadataUpdatedAt: 2026-08-23T05:33:26.802Z
+starsUpdatedAt: 2026-10-03T22:08:51.416Z
+updatedAt: 2026-10-03T22:08:51.416Z

@@ -1,0 +1,69 @@
+id: chouxiaohuai.uiskin-theme
+name:
+  zh: uiskin-theme
+  en: uiskin-theme
+author: chouxiaohuai
+description: "Blue Glass Theme (ocean fantasy) for DeepSeek Harness Web — static profile bundle. 海洋幻想主题:海洋背景、玻璃气泡、海洋侧边栏、鲸鱼设置按钮、炫彩模型文字。安装: dsh plugin --profile web add github:chouxiaohuai/uiskin-theme"
+repo: https://github.com/chouxiaohuai/uiskin-theme
+package: uiskin-theme
+rowId: uiskin-theme
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - motion
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:chouxiaohuai/uiskin-theme#a355a9b16ba692b7551ffac0a6a6a9fea1149e49
+  version: 1.1.0
+  commit: a355a9b16ba692b7551ffac0a6a6a9fea1149e49
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/chouxiaohuai/uiskin-theme/ca84c53f2447a6d9b67454967763e55e39a7e373/assets/preview_light.jpg
+  - https://raw.githubusercontent.com/chouxiaohuai/uiskin-theme/ca84c53f2447a6d9b67454967763e55e39a7e373/assets/preview_dark.jpg
+  - https://raw.githubusercontent.com/chouxiaohuai/uiskin-theme/1090305bfa94b9772460b5382ab82751055692bb/assets/preview.jpg
+  - https://raw.githubusercontent.com/chouxiaohuai/uiskin-theme/ab0b2d4977f47a388c7e60f892d26f3142854e9f/assets/preview.jpg
+  - https://raw.githubusercontent.com/chouxiaohuai/uiskin-theme/ca545b30b09000fc0980d86ab58f8f360dc80792/assets/preview.jpg
+  - https://raw.githubusercontent.com/chouxiaohuai/uiskin-theme/50f6ee04073d7609ebaffaa563ebba3487c9a2d7/assets/preview.jpg
+  - https://raw.githubusercontent.com/chouxiaohuai/uiskin-theme/c049c384087a797689d0d82e79bb047b9e4236f4/assets/preview.jpg
+listScreenshot: https://raw.githubusercontent.com/chouxiaohuai/uiskin-theme/7c1cd308f8979d59999b9cf0ed1ffc128548a52f/assets/preview_light.jpg
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: a355a9b16ba692b7551ffac0a6a6a9fea1149e49
+    packageVersion: 1.1.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-09-15T22:05:25.129Z
+    findings: []
+license:
+  code: UNLICENSED
+  commercialUse: false
+featuredRank: 159
+starsSnapshot: 44
+releaseUpdatedAt: 2026-09-15T22:05:27.350Z
+metadataUpdatedAt: 2026-09-15T22:05:27.350Z
+starsUpdatedAt: 2026-10-23T22:01:15.266Z
+updatedAt: 2026-10-23T22:01:15.266Z

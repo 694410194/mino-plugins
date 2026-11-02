@@ -1,0 +1,63 @@
+id: respawn.id.dsh.rhine.splash
+name:
+  zh: 莱茵生命主题
+  en: Rhine Lab Theme
+author: Respawn-ID
+description: 莱茵生命风格的开屏动画、界面配色和品牌标志，另带即答与立即回答、推理强度滑块、莱茵通知、待办中心、费用页面与账户余额、归档对话管理。
+repo: https://github.com/Respawn-ID/dsh-rhine-splash
+package: dsh-rhine-splash
+rowId: rhine-splash
+category: skin
+tags:
+  - appearance
+modes:
+  - light
+  - dark
+install:
+  target: github:Respawn-ID/dsh-rhine-splash#100f67eae68f6ba997fe91a325b10ed64351ecde
+  version: 0.2.6
+  commit: 100f67eae68f6ba997fe91a325b10ed64351ecde
+  npm:
+    name: dsh-rhine-splash
+    version: 0.2.6
+    integrity: sha512-hMyza3MgMZdDFezu9qoJulmAnzXpLSq8J/k+TCv8IxysLQsQkyCIObg/N2Pwll905MfTk6rYVWN897bXrJB6vw==
+    repository: https://github.com/Respawn-ID/dsh-rhine-splash
+    gitHead: 100f67eae68f6ba997fe91a325b10ed64351ecde
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-rhine-splash
+    packageVersion: 0.2.6
+    integrity: sha512-hMyza3MgMZdDFezu9qoJulmAnzXpLSq8J/k+TCv8IxysLQsQkyCIObg/N2Pwll905MfTk6rYVWN897bXrJB6vw==
+compatibility:
+  dsh: 0.2.1-rc.2
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/Respawn-ID/dsh-rhine-splash/100f67eae68f6ba997fe91a325b10ed64351ecde/screenshots/splash-light.png
+  - https://raw.githubusercontent.com/Respawn-ID/dsh-rhine-splash/100f67eae68f6ba997fe91a325b10ed64351ecde/screenshots/splash-dark.png
+  - https://raw.githubusercontent.com/Respawn-ID/dsh-rhine-splash/100f67eae68f6ba997fe91a325b10ed64351ecde/screenshots/home-light.png
+  - https://raw.githubusercontent.com/Respawn-ID/dsh-rhine-splash/100f67eae68f6ba997fe91a325b10ed64351ecde/screenshots/home-dark.png
+listScreenshot: https://raw.githubusercontent.com/Respawn-ID/dsh-rhine-splash/100f67eae68f6ba997fe91a325b10ed64351ecde/screenshots/splash-light.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1000
+starsSnapshot: 3
+releaseUpdatedAt: 2026-10-23T18:07:31.000Z
+metadataUpdatedAt: 2026-10-23T18:07:31.000Z
+starsUpdatedAt: 2026-10-18T21:26:30.671Z
+updatedAt: 2026-10-23T18:07:31.000Z

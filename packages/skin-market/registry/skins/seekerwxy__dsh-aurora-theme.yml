@@ -1,0 +1,68 @@
+id: seekerwxy.dsh-aurora-theme
+name:
+  zh: dsh-aurora-theme
+  en: dsh-aurora-theme
+author: seekerwxy
+description: DeepSeek Harness（DSH）Web 界面的深黑冷色调主题插件：深邃蓝黑底、电光青强调色，配上星网 + 极光 + 细网格背景，并在设置面板内置「主题设置」页——可一键 开启/关闭 主题，也可切换背景模式（动态 / 静态）。
+repo: https://github.com/seekerwxy/dsh-aurora-theme
+package: dsh-aurora-theme
+rowId: aurora-theme
+category: skin
+tags:
+  - wallpaper
+  - motion
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:seekerwxy/dsh-aurora-theme#3b220e179812a81e60f2d32259bde9262808cd09
+  version: 1.1.0
+  commit: 3b220e179812a81e60f2d32259bde9262808cd09
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - skin-screenshots/seekerwxy__dsh-aurora-theme/3b220e179812a81e60f2d32259bde9262808cd09/home.gif
+review:
+  compatibility: unverified
+  preview: repository-card
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: improve
+    installation: pass
+    installCommand: improve
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+    - 建议在 README 中补充可复制的 DSH 安装命令，方便用户直接使用。
+  scan:
+    commit: 3b220e179812a81e60f2d32259bde9262808cd09
+    packageVersion: 1.1.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:34:52.219Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 119
+starsSnapshot: 0
+releaseUpdatedAt: 2026-08-23T05:34:52.309Z
+metadataUpdatedAt: 2026-08-23T05:34:52.309Z
+starsUpdatedAt: 2026-09-09T21:41:09.890Z
+updatedAt: 2026-09-09T21:41:09.890Z
+
+marketScreenshots:
+  - skin-screenshots/seekerwxy__dsh-aurora-theme/3b220e179812a81e60f2d32259bde9262808cd09/home.png
+  - skin-screenshots/seekerwxy__dsh-aurora-theme/3b220e179812a81e60f2d32259bde9262808cd09/conversation.png
+  - skin-screenshots/seekerwxy__dsh-aurora-theme/3b220e179812a81e60f2d32259bde9262808cd09/settings.png

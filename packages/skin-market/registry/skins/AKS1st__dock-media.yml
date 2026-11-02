@@ -1,0 +1,67 @@
+id: aks1st.dock-media
+name:
+  zh: dock-media
+  en: dock-media
+author: AKS1st
+description: DSH 生态中最好用的媒体播放插件 —— 没有之一。 MP3、WAV、FLAC、M4A 等纯音频用音乐播放器呈现；MP4、WebM、MOV 等视频支持全屏播放。播放不走整文件 base64，而是流式（HTTP Range / 206 分片）读取，大文件也能秒开、随时拖动进度条。
+repo: https://github.com/AKS1st/dock-media
+package: dock-media
+rowId: dock-media
+category: player
+tags:
+  - player
+modes:
+  - light
+  - dark
+install:
+  target: github:AKS1st/dock-media#5eb1ece47eb9aed7bbd96e9a7536f716be8186c0
+  version: 0.1.2
+  commit: 5eb1ece47eb9aed7bbd96e9a7536f716be8186c0
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+  npm:
+    name: dock-media
+    version: 0.1.2
+    integrity: sha512-eO35BsBnEwC+/ipc1IxeSaEjr6yA6DDKom0nrjhy+s0jik9t0xZvWBnEKyr+FHmnp3DjVz7FjYu7BGJiYVZ6vA==
+    repository: https://github.com/AKS1st/dock-media
+    gitHead: 5eb1ece47eb9aed7bbd96e9a7536f716be8186c0
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/AKS1st/dock-media/5eb1ece47eb9aed7bbd96e9a7536f716be8186c0/assets/preview-music.png
+  - https://raw.githubusercontent.com/AKS1st/dock-media/5eb1ece47eb9aed7bbd96e9a7536f716be8186c0/assets/preview-video.png
+listScreenshot: https://raw.githubusercontent.com/AKS1st/dock-media/5eb1ece47eb9aed7bbd96e9a7536f716be8186c0/assets/preview-music.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 5eb1ece47eb9aed7bbd96e9a7536f716be8186c0
+    packageVersion: 0.1.2
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-26T09:09:38.607Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+starsSnapshot: 0
+featuredRank: 0
+releaseUpdatedAt: 2026-10-27T23:00:28.784Z
+metadataUpdatedAt: 2026-10-27T23:00:28.784Z
+starsUpdatedAt: 2026-10-27T05:10:00.000Z
+updatedAt: 2026-10-27T23:00:28.784Z

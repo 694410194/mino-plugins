@@ -1,0 +1,73 @@
+id: berhbro.dsh-cyrene-theme
+name:
+  zh: dsh-cyrene-theme
+  en: dsh-cyrene-theme
+author: berhbro
+description: dsh-cyrene-theme · 昔涟主题
+repo: https://github.com/berhbro/dsh-cyrene-theme
+package: dsh-cyrene-theme
+rowId: ui-cyrene-theme
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - pastel
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:berhbro/dsh-cyrene-theme#7dfe9637cb0bfa65712d1ec435292a365b499753
+  version: 0.2.0
+  commit: 7dfe9637cb0bfa65712d1ec435292a365b499753
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+marketScreenshots:
+  - skin-screenshots/berhbro__dsh-cyrene-theme/7dfe9637cb0bfa65712d1ec435292a365b499753/home.png
+  - skin-screenshots/berhbro__dsh-cyrene-theme/7dfe9637cb0bfa65712d1ec435292a365b499753/conversation.png
+  - skin-screenshots/berhbro__dsh-cyrene-theme/7dfe9637cb0bfa65712d1ec435292a365b499753/settings.png
+screenshots:
+  - https://raw.githubusercontent.com/berhbro/dsh-cyrene-theme/6f2e3ad4b4a28379b1d1932feb330f79213273cd/docs/screenshots/DarkTheme.png
+  - https://raw.githubusercontent.com/berhbro/dsh-cyrene-theme/6f2e3ad4b4a28379b1d1932feb330f79213273cd/docs/screenshots/LightTheme.png
+  - https://raw.githubusercontent.com/berhbro/dsh-cyrene-theme/6f2e3ad4b4a28379b1d1932feb330f79213273cd/docs/screenshots/PersonalityManager.png
+  - https://raw.githubusercontent.com/berhbro/dsh-cyrene-theme/6f2e3ad4b4a28379b1d1932feb330f79213273cd/docs/screenshots/BackgroundPanel.png
+  - skin-screenshots/berhbro__dsh-cyrene-theme/7dfe9637cb0bfa65712d1ec435292a365b499753/home.gif
+listScreenshot: https://raw.githubusercontent.com/berhbro/dsh-cyrene-theme/6f2e3ad4b4a28379b1d1932feb330f79213273cd/docs/screenshots/DarkTheme.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 7dfe9637cb0bfa65712d1ec435292a365b499753
+    packageVersion: 0.2.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-23T22:01:18.666Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1109
+starsSnapshot: 44
+releaseUpdatedAt: 2026-10-23T22:01:20.439Z
+metadataUpdatedAt: 2026-10-23T22:01:20.439Z
+starsUpdatedAt: 2026-10-27T23:00:36.830Z
+updatedAt: 2026-10-27T23:00:36.830Z

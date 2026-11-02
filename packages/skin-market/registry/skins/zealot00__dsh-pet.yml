@@ -1,0 +1,61 @@
+id: zealot00.dsh-pet
+name:
+  zh: dsh-pet
+  en: dsh-pet
+author: zealot00
+description: dsh-pet — 桌面宠物插件（宠物 + 实用工具）
+repo: https://github.com/zealot00/dsh-pet
+package: "@dsh-local/dsh-pet"
+rowId: dsh-pet
+category: pet
+tags:
+  - glass
+  - motion
+modes:
+  - light
+  - dark
+install:
+  target: github:zealot00/dsh-pet#cb31dd4474f655e1caa87ed10d4403ba46a3f8b5
+  version: 0.2.0
+  commit: cb31dd4474f655e1caa87ed10d4403ba46a3f8b5
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/zealot00/dsh-pet/cb31dd4474f655e1caa87ed10d4403ba46a3f8b5/docs/screenshot-states.png
+  - https://raw.githubusercontent.com/zealot00/dsh-pet/cb31dd4474f655e1caa87ed10d4403ba46a3f8b5/docs/screenshot-scene.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: cb31dd4474f655e1caa87ed10d4403ba46a3f8b5
+    packageVersion: 0.2.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:29:42.838Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 73
+starsSnapshot: 4
+releaseUpdatedAt: 2026-08-23T05:29:42.888Z
+metadataUpdatedAt: 2026-08-23T05:29:42.888Z
+starsUpdatedAt: 2026-10-08T23:45:30.953Z
+updatedAt: 2026-10-08T23:45:30.953Z

@@ -1,0 +1,64 @@
+id: hachimi-ai.dsh-aemeath
+name:
+  zh: dsh-aemeath
+  en: dsh-aemeath
+author: hachimi-ai
+description: 爱弥斯主题皮肤 + 像素桌宠（鸣潮 Aemeath）：4K 壁纸背景、冰蓝紫罗兰配色、精灵动画桌宠。独立双端插件，不依赖 web-ui 家族。
+repo: https://github.com/hachimi-ai/dsh-aemeath
+package: dsh-aemeath
+rowId: aemeath
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - pet
+  - animated
+modes:
+  - light
+  - dark
+install:
+  target: github:hachimi-ai/dsh-aemeath#f58eef75dcadb5aeaee9e78542e7e1d9ba43f821
+  version: 0.1.0
+  commit: f58eef75dcadb5aeaee9e78542e7e1d9ba43f821
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://github.com/user-attachments/assets/da2c1a8e-5ea8-4e1c-81d4-4c3f5cfffc83
+  - https://raw.githubusercontent.com/hachimi-ai/dsh-aemeath/f58eef75dcadb5aeaee9e78542e7e1d9ba43f821/image/image1.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: f58eef75dcadb5aeaee9e78542e7e1d9ba43f821
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    dshVersion: ^0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:28:43.883Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+  notice: 插件代码声明为 MIT；壁纸与精灵表为第三方《鸣潮》爱弥斯素材，仓库说明仅供个人学习交流使用，版权归原权利人所有。
+featuredRank: 134
+starsSnapshot: 14
+releaseUpdatedAt: 2026-08-23T05:28:43.968Z
+metadataUpdatedAt: 2026-08-25T07:09:09.562Z
+starsUpdatedAt: 2026-10-26T01:51:02.307Z
+updatedAt: 2026-10-26T01:51:02.307Z

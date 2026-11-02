@@ -1,0 +1,65 @@
+id: small-tailqwq.dsh-deepcel
+name:
+  zh: dsh-deepcel
+  en: dsh-deepcel
+author: Small-tailqwq
+description: Deepcel 工作簿
+repo: https://github.com/Small-tailqwq/dsh-deepcel
+subpath: deepcel
+package: "@dsh-external/dsh-client-ui-skin-deepcel"
+rowId: ui-skin-deepcel
+category: skin
+tags:
+  - wallpaper
+modes:
+  - light
+  - dark
+install:
+  target: github:Small-tailqwq/dsh-deepcel#d2af0efa1c1c8d68ee1cd5d99ac776426f9fb142&path:/deepcel
+  version: 0.0.1
+  commit: d2af0efa1c1c8d68ee1cd5d99ac776426f9fb142
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+marketScreenshots:
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/Small-tailqwq__dsh-deepcel--deepcel/d2af0efa1c1c8d68ee1cd5d99ac776426f9fb142/home.png
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/Small-tailqwq__dsh-deepcel--deepcel/d2af0efa1c1c8d68ee1cd5d99ac776426f9fb142/conversation.png
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/Small-tailqwq__dsh-deepcel--deepcel/d2af0efa1c1c8d68ee1cd5d99ac776426f9fb142/settings.png
+screenshots:
+  - https://raw.githubusercontent.com/Small-tailqwq/dsh-deepcel/d2af0efa1c1c8d68ee1cd5d99ac776426f9fb142/deepcel/preview/light.webp
+  - https://raw.githubusercontent.com/Small-tailqwq/dsh-deepcel/d2af0efa1c1c8d68ee1cd5d99ac776426f9fb142/deepcel/preview/dark.webp
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: d2af0efa1c1c8d68ee1cd5d99ac776426f9fb142
+    packageVersion: 0.0.1
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T10:13:28.349Z
+    findings: []
+license:
+  code: BSD-3-Clause
+  commercialUse: true
+featuredRank: 986
+starsSnapshot: 15
+releaseUpdatedAt: 2026-08-23T10:13:28.821Z
+metadataUpdatedAt: 2026-08-25T07:08:36.343Z
+starsUpdatedAt: 2026-08-28T04:08:35.466Z
+updatedAt: 2026-08-28T04:08:35.466Z

@@ -1,0 +1,65 @@
+id: makuralymi.dsh-webui-glass-theme
+name:
+  zh: dsh-webUI-Glass-Theme
+  en: dsh-webUI-Glass-Theme
+author: makuralymi
+description: 为 dsh Web UI 提供的全局毛玻璃（frosted glass / backdrop blur）主题插件。它不改变现有浅色/深色偏好，而是在任意主题之上叠加一层半透明表面 token 覆盖与全局 backdrop-filter 模糊，让整个界面呈现 iOS/macOS 风格的磨砂玻璃质感。
+repo: https://github.com/makuralymi/dsh-webUI-Glass-Theme
+package: dsh-client-ui-frosted-glass
+rowId: ui-frosted-glass
+category: skin
+tags:
+  - glass
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:makuralymi/dsh-webUI-Glass-Theme#c2be1d9d171c533da441d560dc3411344dfc6ea4
+  version: 0.5.0
+  commit: c2be1d9d171c533da441d560dc3411344dfc6ea4
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/makuralymi/dsh-webUI-Glass-Theme/c2be1d9d171c533da441d560dc3411344dfc6ea4/assets/sc.png
+  - https://raw.githubusercontent.com/makuralymi/dsh-webUI-Glass-Theme/c2be1d9d171c533da441d560dc3411344dfc6ea4/assets/sc2.png
+  - https://raw.githubusercontent.com/makuralymi/dsh-webUI-Glass-Theme/b76db9b1a96074a44eef0e87c2346a528065f1fe/assets/sc.png
+  - https://raw.githubusercontent.com/makuralymi/dsh-webUI-Glass-Theme/b76db9b1a96074a44eef0e87c2346a528065f1fe/assets/sc2.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: c2be1d9d171c533da441d560dc3411344dfc6ea4
+    packageVersion: 0.5.0
+    scannerVersion: static-v2
+    dshVersion: ^0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:29:08.802Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 53
+starsSnapshot: 4
+releaseUpdatedAt: 2026-08-23T05:29:08.874Z
+metadataUpdatedAt: 2026-08-23T05:29:08.874Z
+starsUpdatedAt: 2026-10-21T22:17:35.837Z
+updatedAt: 2026-10-21T22:17:35.837Z

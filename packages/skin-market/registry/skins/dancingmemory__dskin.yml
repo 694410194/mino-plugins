@@ -1,0 +1,69 @@
+id: dancingmemory.dskin
+name:
+  zh: dskin
+  en: dskin
+author: dancingmemory
+description: DSKIN · DeepSeek Harness（DSH）卡通像素皮肤插件 / Cartoon pixel skin plugin for DSH Web GUI — 原始界面不动，像素宠物会散步、眨眼、跳跃 / living pixel pets that stroll, blink and hop
+repo: https://github.com/dancingmemory/dskin
+package: dskin
+rowId: ui-skin-dskin
+category: pet
+tags:
+  - wallpaper
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:dancingmemory/dskin#d09469471b1fbe07a3696225505001ec97347796
+  version: 1.0.17
+  commit: d09469471b1fbe07a3696225505001ec97347796
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+  allowBuild: dskin@https://codeload.github.com/dancingmemory/dskin/tar.gz/d09469471b1fbe07a3696225505001ec97347796
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/dancingmemory/dskin/3ed971ae31802861a5dfd8349ba7a2fbf611a3e1/assets/shot-bigorange.png
+  - https://raw.githubusercontent.com/dancingmemory/dskin/3ed971ae31802861a5dfd8349ba7a2fbf611a3e1/assets/shot-white.png
+  - https://raw.githubusercontent.com/dancingmemory/dskin/3ed971ae31802861a5dfd8349ba7a2fbf611a3e1/assets/shot-black.png
+  - https://raw.githubusercontent.com/dancingmemory/dskin/3ed971ae31802861a5dfd8349ba7a2fbf611a3e1/assets/shot-tuxedo.png
+  - https://raw.githubusercontent.com/dancingmemory/dskin/3ed971ae31802861a5dfd8349ba7a2fbf611a3e1/assets/banner.jpg
+  - https://raw.githubusercontent.com/dancingmemory/dskin/792064e6dbb022c5f9ce3529b9cf66efba2863c1/assets/banner.jpg
+  - https://raw.githubusercontent.com/dancingmemory/dskin/792064e6dbb022c5f9ce3529b9cf66efba2863c1/assets/shot-bigorange.png
+  - https://raw.githubusercontent.com/dancingmemory/dskin/792064e6dbb022c5f9ce3529b9cf66efba2863c1/assets/shot-white.png
+listScreenshot: https://raw.githubusercontent.com/dancingmemory/dskin/d09469471b1fbe07a3696225505001ec97347796/assets/shot-bigorange.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: d09469471b1fbe07a3696225505001ec97347796
+    packageVersion: 1.0.17
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-09-12T21:23:49.909Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 38
+starsSnapshot: 6
+releaseUpdatedAt: 2026-09-12T21:23:53.631Z
+metadataUpdatedAt: 2026-09-12T21:23:53.631Z
+starsUpdatedAt: 2026-09-12T21:23:53.631Z
+updatedAt: 2026-09-12T21:23:53.631Z

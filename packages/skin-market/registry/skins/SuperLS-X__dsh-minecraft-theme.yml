@@ -1,0 +1,67 @@
+id: superls-x.dsh-minecraft-theme
+name:
+  zh: dsh-minecraft-theme
+  en: dsh-minecraft-theme
+author: SuperLS-X
+description: Minecraft 主题插件 for DeepSeek Harness (DSH)
+repo: https://github.com/SuperLS-X/dsh-minecraft-theme
+package: "@superls-x/dsh-minecraft-theme"
+rowId: mc-theme
+category: skin
+tags:
+  - wallpaper
+  - retro
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:SuperLS-X/dsh-minecraft-theme#496d2377791368b0aebce6a6f06471e49b9f7597
+  version: 0.1.2
+  commit: 496d2377791368b0aebce6a6f06471e49b9f7597
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/SuperLS-X/dsh-minecraft-theme/496d2377791368b0aebce6a6f06471e49b9f7597/screenshots/theme.png
+  - https://raw.githubusercontent.com/SuperLS-X/dsh-minecraft-theme/496d2377791368b0aebce6a6f06471e49b9f7597/screenshots/texture.png
+  - https://raw.githubusercontent.com/SuperLS-X/dsh-minecraft-theme/496d2377791368b0aebce6a6f06471e49b9f7597/screenshots/music.png
+  - https://raw.githubusercontent.com/SuperLS-X/dsh-minecraft-theme/4915a6a16b66e004142c5bde42db968c201e1beb/screenshots/theme.png
+  - https://raw.githubusercontent.com/SuperLS-X/dsh-minecraft-theme/4915a6a16b66e004142c5bde42db968c201e1beb/screenshots/texture.png
+  - https://raw.githubusercontent.com/SuperLS-X/dsh-minecraft-theme/4915a6a16b66e004142c5bde42db968c201e1beb/screenshots/music.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: improve
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+    - 建议在 README 中补充可复制的 DSH 安装命令，方便用户直接使用。
+  scan:
+    commit: 496d2377791368b0aebce6a6f06471e49b9f7597
+    packageVersion: 0.1.2
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:28:50.268Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1008
+starsSnapshot: 5
+releaseUpdatedAt: 2026-08-23T05:28:50.316Z
+metadataUpdatedAt: 2026-08-23T05:28:50.316Z
+starsUpdatedAt: 2026-09-12T21:24:01.812Z
+updatedAt: 2026-09-12T21:24:01.812Z

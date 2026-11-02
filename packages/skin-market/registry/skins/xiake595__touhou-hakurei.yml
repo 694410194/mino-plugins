@@ -1,0 +1,70 @@
+id: xiake595.touhou-hakurei
+name:
+  zh: touhou-hakurei
+  en: touhou-hakurei
+author: xiake595
+description: 灵梦（Reimu）·博丽神社（东方Project）美化版皮肤：神社昼夜实景背景、灵梦立绘、画框侧边栏与输入框、纸白透明界面 — DeepSeek Harness Web GUI skin
+repo: https://github.com/xiake595/touhou-hakurei
+package: "@dsh-external/dsh-client-ui-skin-hakurei-shrine"
+rowId: ui-skin-hakurei
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - anime
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:xiake595/touhou-hakurei#74ff7d05cd86425502176399c60ea7dbcad5333f
+  version: 0.1.0
+  commit: 74ff7d05cd86425502176399c60ea7dbcad5333f
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/xiake595/touhou-hakurei/dae71e3b063f2051c590abbabaa1462cf2cd54ea/preview/light.webp
+  - https://raw.githubusercontent.com/xiake595/touhou-hakurei/dae71e3b063f2051c590abbabaa1462cf2cd54ea/preview/dark.webp
+  - https://raw.githubusercontent.com/xiake595/touhou-hakurei/dae71e3b063f2051c590abbabaa1462cf2cd54ea/screenshots/shot-dark-1.webp
+  - https://raw.githubusercontent.com/xiake595/touhou-hakurei/dae71e3b063f2051c590abbabaa1462cf2cd54ea/screenshots/shot-dark-2.webp
+  - https://raw.githubusercontent.com/xiake595/touhou-hakurei/dae71e3b063f2051c590abbabaa1462cf2cd54ea/screenshots/shot-light-1.webp
+  - https://raw.githubusercontent.com/xiake595/touhou-hakurei/dae71e3b063f2051c590abbabaa1462cf2cd54ea/screenshots/shot-light-2.webp
+listScreenshot: https://raw.githubusercontent.com/xiake595/touhou-hakurei/74ff7d05cd86425502176399c60ea7dbcad5333f/preview/light.webp
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 74ff7d05cd86425502176399c60ea7dbcad5333f
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-09-13T21:23:42.814Z
+    findings: []
+license:
+  code: CC-BY-NC-SA-4.0
+  commercialUse: false
+featuredRank: 39
+starsSnapshot: 23
+releaseUpdatedAt: 2026-09-13T21:23:44.308Z
+metadataUpdatedAt: 2026-09-13T21:23:44.308Z
+starsUpdatedAt: 2026-10-21T22:17:10.126Z
+updatedAt: 2026-10-21T22:17:10.126Z

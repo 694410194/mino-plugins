@@ -1,0 +1,72 @@
+id: nlqh7.dsh-beautify
+name:
+  zh: dsh-beautify
+  en: dsh-beautify
+author: nlqh7
+description: DeepSeek Harness 完整美化包：本地主题换肤（不联网）+ Wallpaper Engine 动态壁纸 + 自定义主题，一个插件搞定，设置页统一管理。
+repo: https://github.com/nlqh7/dsh-beautify
+package: "@nlqh/dsh-beautify"
+rowId: dsh-beautify
+category: skin
+tags:
+  - wallpaper
+  - anime
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:nlqh7/dsh-beautify#7899cc77dd3d05b22d9b66fc20ce1d7e3f903508
+  version: 0.5.4
+  commit: 7899cc77dd3d05b22d9b66fc20ce1d7e3f903508
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/nlqh7/dsh-beautify/e44bcc71f06c9fe54e8b4d4f26ecaa1e05c43d5e/docs/screenshots/01-three-babies.png
+  - https://raw.githubusercontent.com/nlqh7/dsh-beautify/e44bcc71f06c9fe54e8b4d4f26ecaa1e05c43d5e/docs/screenshots/04-five-babies.png
+  - https://raw.githubusercontent.com/nlqh7/dsh-beautify/e44bcc71f06c9fe54e8b4d4f26ecaa1e05c43d5e/docs/screenshots/05-we-wallpaper.png
+  - https://raw.githubusercontent.com/nlqh7/dsh-beautify/e44bcc71f06c9fe54e8b4d4f26ecaa1e05c43d5e/docs/screenshots/06-we-picker.png
+  - https://raw.githubusercontent.com/nlqh7/dsh-beautify/e44bcc71f06c9fe54e8b4d4f26ecaa1e05c43d5e/docs/screenshots/07-maid-atelier.png
+  - https://raw.githubusercontent.com/nlqh7/dsh-beautify/7d82c8338a04a37f543d401386efb63293e19c54/docs/screenshots/01-three-babies.png
+  - https://raw.githubusercontent.com/nlqh7/dsh-beautify/7d82c8338a04a37f543d401386efb63293e19c54/docs/screenshots/04-five-babies.png
+  - https://raw.githubusercontent.com/nlqh7/dsh-beautify/7d82c8338a04a37f543d401386efb63293e19c54/docs/screenshots/05-we-wallpaper.png
+listScreenshot: https://raw.githubusercontent.com/nlqh7/dsh-beautify/c7a215c98977454d92414a789b958d6b8077c667/docs/screenshots/01-three-babies.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: improve
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+    - 建议在 README 中补充可复制的 DSH 安装命令，方便用户直接使用。
+  scan:
+    commit: 7899cc77dd3d05b22d9b66fc20ce1d7e3f903508
+    packageVersion: 0.5.4
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-18T09:46:39.575Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 184
+starsSnapshot: 2
+releaseUpdatedAt: 2026-10-18T09:46:43.816Z
+metadataUpdatedAt: 2026-10-18T09:46:43.816Z
+starsUpdatedAt: 2026-09-21T22:35:47.902Z
+updatedAt: 2026-10-18T09:46:43.816Z

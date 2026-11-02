@@ -1,0 +1,609 @@
+{
+  "schemaVersion": 1,
+  "version": "4.3.2",
+  "core": [
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-background-card-alert-rotated-left.png",
+      "size": 48751,
+      "sha256": "b6c60e994f7323a9574e3cc053b798e15e526fdd9b0bd07a116bfa3ed2130bb4"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-background-card-alert.png",
+      "size": 42865,
+      "sha256": "1845c7255307265d147810e1afb74353d7d3fa21f012b6b75f2116142cd8c53b"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-background-card-blue-rotated-left.png",
+      "size": 49043,
+      "sha256": "c46d25847c3d12d5a24ba937f01038778955147b60674f4f80d7728fc82600ae"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-background-card-blue.png",
+      "size": 42957,
+      "sha256": "54b715ab3002072f905f5a8c7795a57bd92cd6e9cff4a2bcc937f7b9966434fd"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-background-card-neutral-rotated-left.png",
+      "size": 30558,
+      "sha256": "d0908bf5532be5c180240eaec1e7c1e39eea07fcd8bd3fdebc83d0add8c43265"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-background-card-neutral.png",
+      "size": 28336,
+      "sha256": "c20fa5503f3f9ad815f9b9c741c07d89fe3574bf6770b8a39659703226a7b633"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-background-card-success-rotated-left.png",
+      "size": 54022,
+      "sha256": "a50e482953901226607accd3e751f823049415df5904272a3a25e9e98eb4949b"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-background-card-success.png",
+      "size": 45355,
+      "sha256": "97651b8ed569e38b4941c7e740cce6b598f423193029805bf1c273234291ef55"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-decoration-lace-divider.png",
+      "size": 12595,
+      "sha256": "d382f2c88e6ca05ce33b3f432c91ee9627238ec6da68b28732679d4699aa9bee"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-decoration-pearl-sparkle.png",
+      "size": 27193,
+      "sha256": "703a24526b74740d8e3cd2c9c773c4625b7f4446b3ef04b932121cfa7964093a"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-decoration-ribbon.png",
+      "size": 43685,
+      "sha256": "8efc6c5824f722aa9bdb5c75667b7b559211779e1ef62e4dac4e95ea172d7eb6"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-account-balance.png",
+      "size": 19672,
+      "sha256": "0a4423a35e2ae79bd291f350e5613a6b5294774e7c8f96859fc9942e02dd3e09"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-budget.png",
+      "size": 17859,
+      "sha256": "b68e7dc8ddd2789f834a717dbe336ae689d4454a649e450bbdffd9764447d5e2"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-chat.png",
+      "size": 17853,
+      "sha256": "0b38281b01f38054245ca250e41936ad692f31b0a9d9818a6ba1a93a731cff09"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-chevron-right.png",
+      "size": 12158,
+      "sha256": "5b5cbe169a970e2abf1a67e113d0322da9dbb568d26c37cc2ea5dd29ff699236"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-close.png",
+      "size": 19138,
+      "sha256": "d8b09ccc724a322565d57306c539c610bcbfbf383906fa3b0fd95bf3f25cb613"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-drag-handle.png",
+      "size": 16558,
+      "sha256": "374847d9d874316f2da6edd56fc45f6a6c1508bd27f023c38502ba8097b7df8c"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-eligibility.png",
+      "size": 18171,
+      "sha256": "dc90620a83d1912b828be51cc8e5828fb58bb58fbfdc7346d9d934fe76e4a5c2"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-info.png",
+      "size": 17888,
+      "sha256": "71324575e450d8138990a7ee0acb4dd5e315923b19ebd3f276be936da9610c96"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-notification.png",
+      "size": 18054,
+      "sha256": "0759390aa9995131d69241c64258dbaa716b65bae5d8fe31943be51d6d5f57b6"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-peak-valley.png",
+      "size": 18088,
+      "sha256": "59b7c4579aa8b52f195836a31dc2a7c49d7699ce4e28cf030bd5a4af22b2e60a"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-restore-default.png",
+      "size": 19336,
+      "sha256": "126fe010aadfb5a81af914b38d500cb78b92c06489a2b1e20834e08b55878f4f"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-save.png",
+      "size": 19734,
+      "sha256": "0a1b2bcb264d6fb4e75b8a0e56fa9b0095cc1e8e814679fcc5245a85417c8041"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-send-test.png",
+      "size": 16385,
+      "sha256": "84f1b83cd350f4fe920bd45c19b45ed73d3c8d3319bd80350e1156776225312b"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-settings.png",
+      "size": 19752,
+      "sha256": "ec696061bd76f9864bbdc6d21d330c0ac6e16362f2fcb8116233ebdfc538041d"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-today-spend.png",
+      "size": 12222,
+      "sha256": "46506c9d2d474f5becde88c738c9d4ee799375009f4386ee586ff395c4d7e73e"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-visibility.png",
+      "size": 15162,
+      "sha256": "f118911f3c4ab9ecf704939ff24aa276c78730d9565d7394875f8870f92ee996"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-warning.png",
+      "size": 17936,
+      "sha256": "296a060ba83babb437e97a50e0c6b31cbcb7098b575a0e99ad9e23c6fe72fe1f"
+    },
+    {
+      "root": "assets",
+      "path": "settings-ui/cute/cute-icon-whale-toggle.png",
+      "size": 20272,
+      "sha256": "b22c523504f146bd47e11f1a5966d9d20794ace876fcf4e0b8b4081eb5d7efc1"
+    },
+    {
+      "root": "client",
+      "path": "client.js",
+      "size": 5013867,
+      "sha256": "2ff1efc73af261fe9f0e70ebb64dd6cb1a7509303a2c5f458942c3c5048b7397"
+    },
+    {
+      "root": "client",
+      "path": "client.js.map",
+      "size": 12396566,
+      "sha256": "68acc6c9843e81a1c9f2cc9641207b541729089082c39e84a2804d80f9d54143"
+    },
+    {
+      "root": "host",
+      "path": "core.mjs",
+      "size": 330280,
+      "sha256": "1ee0602ecf2953470dce4829ced773718b0071553b034c431a145fdcdd82d0be"
+    },
+    {
+      "root": "host",
+      "path": "manager.mjs",
+      "size": 49736,
+      "sha256": "b48cf7c4a560a0f6ab52fc00e45bf121078d28eef01b49a79349a6fdb4bee113"
+    }
+  ],
+  "modules": [
+    {
+      "id": "pet",
+      "files": [
+        {
+          "root": "assets",
+          "path": "whale-girl/critical-combo-pain-v2.png",
+          "size": 1070640,
+          "sha256": "2ecdfb45ec0b9a184c95b5ea8da1217768452538f4093c7ea6f50e1a0d7d6cbb"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/critical-pain-hands.png",
+          "size": 320749,
+          "sha256": "5c7723794890164a880d4ed6c06dfe0c6ef6345e912661515c5baee595574b76"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/critical-pain.png",
+          "size": 322434,
+          "sha256": "851ebb7358bedeb0bab15e4dda1e07b0121175ea8c20df30e0a667d74c98304d"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/death-stranded-v6-trim.png",
+          "size": 902514,
+          "sha256": "ba93a8bf5dba45ca84c2e0c088b14d54cd965bdddf1e823bb89fa81e8aeef617"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r4-model/frames/critical-close.png",
+          "size": 178860,
+          "sha256": "60b55be634a3a6423e31147ac26275c359f796555825138cae10ca7d443ef3c1"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r4-model/frames/critical-half.png",
+          "size": 178735,
+          "sha256": "79ba0b4983c1fbbd9dc121c14e55e63796e10ec56128777c58e32994a68961a5"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r4-model/frames/critical-reopen.png",
+          "size": 180402,
+          "sha256": "502ae98814776525610ce5f427de1bc803c69e7c1adf32e8a21e25aad69dca41"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r4-model/frames/normal-close.png",
+          "size": 179560,
+          "sha256": "f5575589845252847f069a23066a7681fa397ef997761ee6371c59194f1338db"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r4-model/frames/normal-half.png",
+          "size": 179201,
+          "sha256": "01bf728228907250e6d86828a66b65dba497540cf2d414511dd7b1763c1319b7"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r4-model/frames/normal-reopen.png",
+          "size": 180114,
+          "sha256": "f1be3ad7e6d61f90043b56a6e6a62b5b62e6a1b91bafbd77240ca26bd33ea63d"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r4-model/frames/weak-close.png",
+          "size": 177710,
+          "sha256": "1f8420761c1e686b3360a00095f1e3c7b74710fdfc18a0053527c019df71ff2a"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r4-model/frames/weak-half.png",
+          "size": 180779,
+          "sha256": "a1367d76b306745e6227e380c65e659df55e60a6f86bc9462e1f7e5b3e7c4389"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r4-model/frames/weak-reopen.png",
+          "size": 182093,
+          "sha256": "48fb3e271c50c3b06615a83dfb732b423477a349de8ff3d07ed86236f66bc2b1"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r5-critical-model/frames/critical-brace.png",
+          "size": 178695,
+          "sha256": "c6b84389e12b6f667fd49bbe47703fa28b16732bf933599aee72f09941e55e63"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r5-critical-model/frames/critical-comfort.png",
+          "size": 180372,
+          "sha256": "df5ef3dd798e4bf6daa03134f58103c65b639caa9c56a83b7cacf861653fba66"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r5-critical-model/frames/critical-notice.png",
+          "size": 179949,
+          "sha256": "4c3a83f73953a3e0be483c9989b04f9e44299d3c767466cdbe8f955e8b07675b"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r5-critical-model/frames/critical-overflow.png",
+          "size": 179570,
+          "sha256": "9a671a5d30d5b90135de7a2158bc4b94d5c4d0bd11b8c4117e86b517a8fe51ce"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r5-critical-model/frames/critical-peak.png",
+          "size": 179717,
+          "sha256": "caaca27410e408ccc655a3cb0821d27a9a49346ee0105f27f3350e4dcc7a077c"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-expression-v4-r5-critical-model/frames/critical-recover.png",
+          "size": 179314,
+          "sha256": "79a67d9f3b57a0ba7e52477b49cbdf91ef41c1764d3ddbc57f1736781ef92de0"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-normalized/critical-combo.png",
+          "size": 205137,
+          "sha256": "bcc042fa51f3d76b4b51e4cf772b3d10ceb63d570e89ca35a194b682a34f17db"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-normalized/critical-pain.png",
+          "size": 181253,
+          "sha256": "77ffff104f2136e2e4387d800553fd676d4e71f747f2ce15dd4d85be91a912e4"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-normalized/heal-happy.png",
+          "size": 184229,
+          "sha256": "0612d0524eebaf59528587fb7c8229b2bb5c366360f6804f6e3534e7471a3679"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-normalized/normal-pain.png",
+          "size": 185096,
+          "sha256": "23a57b8eb34475b04d32264698cc9e5f2c116085e92484ee0d00189cac39cee3"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/feedback-normalized/weak-pain.png",
+          "size": 185176,
+          "sha256": "d872685668d5912b53875ea7adee3c5378bae9e4f444f4350d34a426ee23a567"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/heal-happy-hands.png",
+          "size": 326048,
+          "sha256": "21dca7e9bfcf1fa2246c8e89106bac259b4387d69fc615e4f5d2aa2395fe6f49"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/heal-happy.png",
+          "size": 325920,
+          "sha256": "3eac64ab592dbbadb726b06e75498377628d78607c7ddb8fb77668ceaba4f8bc"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-hands.png",
+          "size": 319389,
+          "sha256": "58637b790c902efe72eb2c48181c6130937bd61e859512fd55ce8419c4a0c5e4"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/acting-01.png",
+          "size": 209559,
+          "sha256": "01a7d8e8f31a72288f653e7c3fbe8087db0f24e7deb19c872c80b7d3134e6558"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/acting-02.png",
+          "size": 198720,
+          "sha256": "438b2c411257e78a20ec8d9d4e28544cc95b131812d2939b7b101363d43e1d27"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/acting-03.png",
+          "size": 196975,
+          "sha256": "ba0f8356cc0d61dc4151ddf111b05d30438f1d9921f3b2cba27e5a7f89c7af30"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/acting-04.png",
+          "size": 200092,
+          "sha256": "99e1a3b555d1c16b2248e10d29d206f5ba24e1f90d49f69b8d38124949b64881"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/acting-05.png",
+          "size": 185888,
+          "sha256": "02e8b44ca61bac1a670afcb634a44d71ea4291ca76642df7620646e0d486c97a"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/acting-06.png",
+          "size": 150574,
+          "sha256": "62bdca06dbb5515be52598189ecf06196a8f1b4c42fccd9b3bdfeb525e6cb3cc"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/acting-07.png",
+          "size": 181851,
+          "sha256": "ee67c6b3471bf4b06b3ccde0f089ae5935f492494a408a913c82ce9fe80c992c"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/acting-08.png",
+          "size": 198281,
+          "sha256": "19f7a0a84979c76ebf21686cad37d67f617c6a0c80cffb716c4ce353f78ca470"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/blink-half-close.png",
+          "size": 188155,
+          "sha256": "5be23e34c1f087300dcdba4442b2abc7b7721aeb0874ca386d5dd114d3d847b1"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/blink-reopen.png",
+          "size": 187984,
+          "sha256": "0e0485ded8e87fb160a9d0692528e087fe15abbcf1ee5b71cf8188f3cb6cddb7"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/blink-soft.png",
+          "size": 189346,
+          "sha256": "8044da8bf00d9aa4678cac154d2de9eb9497b94f4ff9ec87da2a035962dcfa1b"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/idle-01.png",
+          "size": 192231,
+          "sha256": "da9547ead84b12eec35a12b7326d922395d3c543ff676c25c48574e5322dcc5d"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/idle-02.png",
+          "size": 192775,
+          "sha256": "e06006c8d6aed9bf63109efe28663c29142c1650b2394867ca1776c0c72d5d63"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/idle-03.png",
+          "size": 190172,
+          "sha256": "f4d2a135011e5e997bd1e480b968ed2cf38c733f4250ec4cdf1b6dc22bd9dd83"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/idle-04.png",
+          "size": 187153,
+          "sha256": "1bfe40ee82152d937af3e1971b25cc1b35cc38da83e65fad0968500add31772b"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/idle-05.png",
+          "size": 186331,
+          "sha256": "cf4ca5eb20b5cbc9877baeccc6aaf3a4ffc1db43b068cebad40c2e09992a82fc"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/idle-06.png",
+          "size": 185492,
+          "sha256": "03fa084ba56bf914e720dae73782d02c6b7d1d2f117e7f793979e6509015ad7b"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/idle-07.png",
+          "size": 184529,
+          "sha256": "64b11e8efbbd9ca52a676dbdca63553ca5dfefc9298711932f6cc6275ed31d0f"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle-v4-r2/idle-08.png",
+          "size": 182007,
+          "sha256": "4f88b49ea544482872c25ce8a5da26a100e459adb7036911f372ca4068c0610d"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/idle.png",
+          "size": 319527,
+          "sha256": "a44fffce9c86de493aa3e8d46b4baf010de025bae44f6c7d89bc7c1159aee025"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/normal-pain-hands.png",
+          "size": 327531,
+          "sha256": "101309695c10959cacee087b7d44dc345f33f6ad8fa47c88b3e6e0d36a0ad906"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/normal-pain.png",
+          "size": 327582,
+          "sha256": "c67c7a7fbd269070e0a7f287d3ac00e86d0797dea658507c81a925e858a4fa15"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/revive-recharge-v1/frames/revive-death-start.png",
+          "size": 139800,
+          "sha256": "37c368f8cf96e1f3c3bdf3f567cff6fc8c1d984762f362b3dc52be502f65aaf0"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/revive-recharge-v1/frames/revive-hop.png",
+          "size": 181758,
+          "sha256": "e2fa8fc88f7600e97cc73a6895f59ba23dff1dde5fc5e5f93c54e315a7cee94f"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/revive-recharge-v1/frames/revive-lift.png",
+          "size": 189897,
+          "sha256": "d123d45a36fcbd699252e450e582c3a048e1de8ac4b56ce8ec7afc16ed74f336"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/revive-recharge-v1/frames/revive-relief.png",
+          "size": 188633,
+          "sha256": "b8b23096ee6a9ecaa5fc54112dd891f577fb98d3a129c924b2383728fdfbac0e"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/revive-recharge-v1/frames/revive-reopen.png",
+          "size": 183217,
+          "sha256": "7508eb4dfcfdc8b1a7c16ffe2ead02d08c8d39569b93103b4f04508d0a66cb8a"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/revive-recharge-v1/frames/revive-settle.png",
+          "size": 175150,
+          "sha256": "2e243446a5baac764dca392489058130763cb99224cc92eba4a655e434b11003"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/revive-recharge-v1/frames/revive-wake.png",
+          "size": 175275,
+          "sha256": "7e1890b5c1ede92052d3e2cbb19ff7cc40f82c8d66ebc0b0c3098a57e64703a5"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/weak-pain-hands.png",
+          "size": 327272,
+          "sha256": "10b85ba02e4e8d5f718c2dbc1304ffa6c6d3f803ccc5475a7d444f61cb7deaf3"
+        },
+        {
+          "root": "assets",
+          "path": "whale-girl/weak-pain.png",
+          "size": 327258,
+          "sha256": "74258163a270bcd24a9fb7d525e496d9f5cb68e869d1f347134bbeb79c951c6f"
+        },
+        {
+          "root": "host",
+          "path": "pet.mjs",
+          "size": 122,
+          "sha256": "2ce74cf61649d5088646314330f47948bb54c196641ea455e55fd55e68b6d4cf"
+        }
+      ]
+    },
+    {
+      "id": "overview",
+      "files": [
+        {
+          "root": "host",
+          "path": "overview.mjs",
+          "size": 19592,
+          "sha256": "fbf1d07e1f4aa3fac1b7151eeaf2e2746c7b726f5f50baa9abb17e9f4cd29f25"
+        }
+      ]
+    },
+    {
+      "id": "notify",
+      "files": [
+        {
+          "root": "host",
+          "path": "notify.mjs",
+          "size": 29982,
+          "sha256": "b0f00ef5f0e1631269e38d28419f627738cc300d4ce06e006387e955ca677b8b"
+        }
+      ]
+    },
+    {
+      "id": "billing",
+      "files": [
+        {
+          "root": "host",
+          "path": "billing.mjs",
+          "size": 141538,
+          "sha256": "ecbfdb012062aa888ec3c89d3a85558c0a01463fa0b7442a0649a3d1eb090f0b"
+        }
+      ]
+    },
+    {
+      "id": "wechat",
+      "files": [
+        {
+          "root": "host",
+          "path": "wechat.mjs",
+          "size": 32941,
+          "sha256": "4fb7a053158742c9bb93b5d0d574e2836321b45a8fe09d7f4117343f591de374"
+        }
+      ]
+    }
+  ]
+}

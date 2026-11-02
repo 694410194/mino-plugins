@@ -1,0 +1,75 @@
+id: alexyin-tongji.dsh-ui-enhancer
+name:
+  zh: dsh-ui-enhancer
+  en: dsh-ui-enhancer
+author: AlexYin-Tongji
+description: 面向 DeepSeek Harness Web 的桌面体验增强插件。它保留官方 UI 的会话和槽位契约，在其上组合成熟社区能力，并补充统一的个性化和文件引用体验。
+repo: https://github.com/AlexYin-Tongji/dsh-ui-enhancer
+package: dsh-ui-enhancer
+rowId: ui-enhancer-web-ui-settings
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - motion
+modes:
+  - light
+  - dark
+install:
+  target: github:AlexYin-Tongji/dsh-ui-enhancer#87f17fe74076570023e01e5d0fc55c21affd2c23
+  version: 0.2.0
+  commit: 87f17fe74076570023e01e5d0fc55c21affd2c23
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-ui-enhancer
+    packageVersion: 0.2.0
+    integrity: sha512-fKABrDkQtWXYSEyhb2EWNshf8z8BBRVZlS4x2KAaFVoph9M0NRo3u45fvtHtXPy/PZEGKi3nvnAWNEYI1Zfltg==
+  npm:
+    name: dsh-ui-enhancer
+    version: 0.2.0
+    integrity: sha512-fKABrDkQtWXYSEyhb2EWNshf8z8BBRVZlS4x2KAaFVoph9M0NRo3u45fvtHtXPy/PZEGKi3nvnAWNEYI1Zfltg==
+    repository: https://github.com/AlexYin-Tongji/dsh-ui-enhancer
+    gitHead: 87f17fe74076570023e01e5d0fc55c21affd2c23
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://opengraph.githubassets.com/045ec1f007e277c8b87bac8dad3d3afe02b95156/AlexYin-Tongji/dsh-ui-enhancer
+review:
+  compatibility: verified
+  preview: repository-card
+  installation: manual-only
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: pass
+    installation: improve
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+    - 建议补全稳定的 package 名称、dsh.client Web 声明、row ID 和已构建客户端入口，以符合 dsh 插件要求并获得更顺畅的一键安装体验。
+    - 固定版本静态扫描无法完成，市场暂不提供该版本的一键安装。
+  scan:
+    commit: 87f17fe74076570023e01e5d0fc55c21affd2c23
+    packageVersion: 0.2.0
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: unknown
+    checkedAt: 2026-08-23T15:32:42.316Z
+    findings:
+      - code: client-source-unavailable
+        message: 无法读取固定版本的 client 入口，静态扫描结果未知。
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 207
+starsSnapshot: 1
+releaseUpdatedAt: 2026-09-15T03:04:43.290Z
+metadataUpdatedAt: 2026-08-23T15:32:42.387Z
+starsUpdatedAt: 2026-09-12T21:25:01.019Z
+updatedAt: 2026-09-15T03:04:43.290Z

@@ -1,0 +1,62 @@
+id: a1swg1159-pixel.dsh-arcaea-theme
+name:
+  zh: dsh-arcaea-theme
+  en: dsh-arcaea-theme
+author: a1swg1159-pixel
+description: dsh-arcaea-theme 是面向 DeepSeek Harness Web UI 的原创高曝光棱镜记忆主题。主题以本地视觉研究为参考，用纯 CSS 与内联 SVG 重新设计，不包含游戏图片、角色、商标、谱面或其他官方资源。
+repo: https://github.com/a1swg1159-pixel/dsh-arcaea-theme
+package: dsh-arcaea-theme
+rowId: arcaea-theme
+category: skin
+tags:
+  - retro
+  - token-theme
+  - light-dark
+modes:
+  - light
+install:
+  target: github:a1swg1159-pixel/dsh-arcaea-theme#d7249dbdb19fdb2d1f22b96a3aad6578b029e914
+  version: 0.7.1
+  commit: d7249dbdb19fdb2d1f22b96a3aad6578b029e914
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: ">=0.1.0-rc.5 <0.2.0"
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/a1swg1159-pixel/dsh-arcaea-theme/7cbd4a03df2430ac39c32470cf0e4c7e93dc5918/assets/repository-banner.png
+  - https://raw.githubusercontent.com/a1swg1159-pixel/dsh-arcaea-theme/7cbd4a03df2430ac39c32470cf0e4c7e93dc5918/preview.png
+listScreenshot: https://raw.githubusercontent.com/a1swg1159-pixel/dsh-arcaea-theme/d7249dbdb19fdb2d1f22b96a3aad6578b029e914/assets/repository-banner.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: d7249dbdb19fdb2d1f22b96a3aad6578b029e914
+    packageVersion: 0.7.1
+    scannerVersion: static-v2
+    dshVersion: ">=0.1.0-rc.5 <0.2.0 || >=0.2.1-rc.3 <0.3.0"
+    mode: static
+    result: pass
+    checkedAt: 2026-10-24T21:31:57.800Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 75
+starsSnapshot: 2
+releaseUpdatedAt: 2026-10-24T21:31:58.583Z
+metadataUpdatedAt: 2026-10-24T21:31:58.583Z
+starsUpdatedAt: 2026-09-18T21:37:39.329Z
+updatedAt: 2026-10-24T21:31:58.583Z

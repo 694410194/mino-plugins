@@ -1,0 +1,65 @@
+id: zhaoziyangshaanxi.dsh.netease.music
+name:
+  zh: dsh-netease-music
+  en: dsh-netease-music
+author: ZhaoZiyangShaanxi
+description: 仅 Windows，需本机装有网易云音乐客户端。DSH Web 的网易云音乐播放器：收起是迷你播放条，点开是液态玻璃卡片（搜索 / 歌词 / 音量），点封面区切换成旋转黑胶视图；自动使用本机网易云客户端账号登录（cookie 仅在本机解密），VIP 曲目可播，并可把客户端正在播放的歌一键拉进来。
+repo: https://github.com/ZhaoZiyangShaanxi/dsh-netease-music
+package: dsh-netease-music
+rowId: dsh-netease-music
+category: player
+tags:
+  - player
+modes:
+  - light
+  - dark
+install:
+  target: github:ZhaoZiyangShaanxi/dsh-netease-music#42a34e8281c76baadc173e4f2b8f1f66fda6c870
+  version: 0.3.0
+  commit: 42a34e8281c76baadc173e4f2b8f1f66fda6c870
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - skin-screenshots/ZhaoZiyangShaanxi__dsh-netease-music/42a34e8281c76baadc173e4f2b8f1f66fda6c870/home.gif
+review:
+  compatibility: unverified
+  preview: repository-card
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 42a34e8281c76baadc173e4f2b8f1f66fda6c870
+    packageVersion: 0.3.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-26T09:10:41.277Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+starsSnapshot: 0
+featuredRank: 0
+releaseUpdatedAt: 2026-10-27T05:10:00.000Z
+metadataUpdatedAt: 2026-10-27T23:00:28.784Z
+starsUpdatedAt: 2026-10-27T05:10:00.000Z
+updatedAt: 2026-10-27T23:00:28.784Z
+
+marketScreenshots:
+  - skin-screenshots/ZhaoZiyangShaanxi__dsh-netease-music/42a34e8281c76baadc173e4f2b8f1f66fda6c870/home.png
+  - skin-screenshots/ZhaoZiyangShaanxi__dsh-netease-music/42a34e8281c76baadc173e4f2b8f1f66fda6c870/conversation.png
+  - skin-screenshots/ZhaoZiyangShaanxi__dsh-netease-music/42a34e8281c76baadc173e4f2b8f1f66fda6c870/settings.png

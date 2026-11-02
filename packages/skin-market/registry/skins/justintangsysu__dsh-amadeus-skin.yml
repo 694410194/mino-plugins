@@ -1,0 +1,60 @@
+id: justintangsysu.dsh-amadeus-skin
+name:
+  zh: dsh-amadeus-skin
+  en: dsh-amadeus-skin
+author: justintangsysu
+description: DeepSeek Harness Web 的 Steins;Gate 0 / Amadeus 风格主题皮肤。
+repo: https://github.com/justintangsysu/dsh-amadeus-skin
+package: "@dsh-external/dsh-client-ui-skin-amadeus"
+rowId: ui-skin-amadeus
+category: skin
+tags:
+  - wallpaper
+  - token-theme
+  - light-dark
+modes:
+  - dark
+install:
+  target: github:justintangsysu/dsh-amadeus-skin#7f074e5d54b60fbfb423d11d096c5b054607c026
+  version: 0.1.0
+  commit: 7f074e5d54b60fbfb423d11d096c5b054607c026
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/justintangsysu/dsh-amadeus-skin/7f074e5d54b60fbfb423d11d096c5b054607c026/preview/preview.webp
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 7f074e5d54b60fbfb423d11d096c5b054607c026
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:33:57.211Z
+    findings: []
+license:
+  code: UNLICENSED
+  commercialUse: false
+featuredRank: 181
+starsSnapshot: 0
+releaseUpdatedAt: 2026-08-23T05:33:57.271Z
+metadataUpdatedAt: 2026-08-23T05:33:57.271Z
+starsUpdatedAt: 2026-09-09T21:40:59.583Z
+updatedAt: 2026-09-09T21:40:59.583Z

@@ -1,0 +1,66 @@
+id: lisongxuan.ds-hentai
+name:
+  zh: ds-hentai
+  en: ds-hentai
+author: lisongxuan
+description: ExHentai.org 皮肤 for DeepSeek Harness。深炭底、浅灰文字、灰色边框；会话列表像画廊索引，发送框像搜索栏。
+repo: https://github.com/lisongxuan/ds-hentai
+package: ds-hentai
+rowId: ds-hentai
+category: skin
+tags:
+  - light-dark
+modes:
+  - light
+install:
+  target: github:lisongxuan/ds-hentai#20ad36877f5862630857584cfb59158c699a94d8
+  version: 0.7.1
+  commit: 20ad36877f5862630857584cfb59158c699a94d8
+  desktop:
+    mode: manual-only
+    reason: npm-source-unverified
+  npm:
+    name: ds-hentai
+    version: 0.7.1
+    integrity: sha512-Tap6tt84fB91b1iGg751F8XMfm4xGdbZF78TAmgxesI25hJSVOziB9Aiy6RcOwZo5vmjOJPKWiUjmN3FLoevMQ==
+    repository: https://github.com/lisongxuan/ds-hentai
+    gitHead: 20ad36877f5862630857584cfb59158c699a94d8
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/lisongxuan/ds-hentai/ce8442c8c113a3dcebe80449628724799fba2e1c/docs/preview.png
+  - https://raw.githubusercontent.com/lisongxuan/ds-hentai/ce8442c8c113a3dcebe80449628724799fba2e1c/docs/preview-session.png
+listScreenshot: https://raw.githubusercontent.com/lisongxuan/ds-hentai/ce8442c8c113a3dcebe80449628724799fba2e1c/docs/preview.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: 20ad36877f5862630857584cfb59158c699a94d8
+    packageVersion: 0.7.1
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-10-19T22:56:33.603Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1095
+starsSnapshot: 2
+releaseUpdatedAt: 2026-10-19T22:56:34.531Z
+metadataUpdatedAt: 2026-10-19T22:56:34.531Z
+starsUpdatedAt: 2026-10-20T22:16:40.555Z
+updatedAt: 2026-10-20T22:16:40.555Z

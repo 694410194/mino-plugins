@@ -1,0 +1,68 @@
+id: longyu065.dsh-theme-ti
+name:
+  zh: dsh-theme-ti
+  en: dsh-theme-ti
+author: longyu065
+description: 正值 Dota 2 The International 赛季，给 dsh Web 界面做的一款 TI6 皮肤： 深空蓝黑 + TI6 红飘带能量色 + 不朽盾金（gold），主面板带矢量翅膀 + 星空背景图。
+repo: https://github.com/longyu065/dsh-theme-ti
+package: "@dsh-theme/ti"
+rowId: theme-ti
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - retro
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:longyu065/dsh-theme-ti#62ae2e761f045387617e28828e4b533626b3156e
+  version: 1.0.0
+  commit: 62ae2e761f045387617e28828e4b533626b3156e
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots: []
+review:
+  compatibility: unverified
+  preview: repository-card
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 62ae2e761f045387617e28828e4b533626b3156e
+    packageVersion: 1.0.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:31:48.305Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 84
+starsSnapshot: 1
+releaseUpdatedAt: 2026-08-23T05:31:48.352Z
+metadataUpdatedAt: 2026-09-08T09:45:47.382Z
+starsUpdatedAt: 2026-09-09T21:40:26.497Z
+updatedAt: 2026-09-09T21:40:26.497Z
+
+marketScreenshots:
+  - skin-screenshots/longyu065__dsh-theme-ti/62ae2e761f045387617e28828e4b533626b3156e/home.png
+  - skin-screenshots/longyu065__dsh-theme-ti/62ae2e761f045387617e28828e4b533626b3156e/conversation.png
+  - skin-screenshots/longyu065__dsh-theme-ti/62ae2e761f045387617e28828e4b533626b3156e/settings.png

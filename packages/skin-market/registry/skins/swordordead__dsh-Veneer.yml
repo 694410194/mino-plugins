@@ -1,0 +1,66 @@
+id: swordordead.dsh-veneer
+name:
+  zh: dsh-Veneer
+  en: dsh-Veneer
+author: swordordead
+description: ✨ Veneer：给 DeepSeek Harness 换一套你喜欢的界面
+repo: https://github.com/swordordead/dsh-Veneer
+package: dsh-veneer
+rowId: dsh-veneer
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - retro
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:swordordead/dsh-Veneer#6d34f651d0aa06c514d253f5ec32bc965bb90c88
+  version: 0.8.1
+  commit: 6d34f651d0aa06c514d253f5ec32bc965bb90c88
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: ">=0.1.0 <0.2.0"
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/swordordead/dsh-Veneer/ad6f6d68b513399103e885863c21546860cd0152/docs/images/veneer-overview.png
+  - https://raw.githubusercontent.com/swordordead/dsh-Veneer/ad6f6d68b513399103e885863c21546860cd0152/docs/images/veneer-editor.png
+listScreenshot: https://raw.githubusercontent.com/swordordead/dsh-Veneer/ad6f6d68b513399103e885863c21546860cd0152/docs/images/veneer-overview.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: 6d34f651d0aa06c514d253f5ec32bc965bb90c88
+    packageVersion: 0.8.1
+    scannerVersion: static-v2
+    dshVersion: ">=0.1.0 <0.2.0"
+    mode: static
+    result: pass
+    checkedAt: 2026-09-21T22:35:50.948Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1065
+starsSnapshot: 2
+releaseUpdatedAt: 2026-09-21T22:35:51.991Z
+metadataUpdatedAt: 2026-09-21T22:35:51.991Z
+starsUpdatedAt: 2026-09-07T21:58:37.821Z
+updatedAt: 2026-09-21T22:35:51.991Z

@@ -1,0 +1,65 @@
+id: dataizu.dsh-whale-aqua-theme
+name:
+  zh: dsh-whale-aqua-theme
+  en: dsh-whale-aqua-theme
+author: dataizu
+description: 🐋 鲸蓝戏水 · DSH Whale Aqua Theme
+repo: https://github.com/dataizu/dsh-whale-aqua-theme
+package: dsh-whale-aqua-theme
+rowId: dsh-whale-aqua
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:dataizu/dsh-whale-aqua-theme#24d1c796ab2e9a6c353f9c1ce238ff0a074b1946
+  version: 2.2.0
+  commit: 24d1c796ab2e9a6c353f9c1ce238ff0a074b1946
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/dataizu/dsh-whale-aqua-theme/8f4abbbde43710b26755e192e4b935cfba4fc37a/screenshots/whale-animation.gif
+  - https://raw.githubusercontent.com/dataizu/dsh-whale-aqua-theme/8f4abbbde43710b26755e192e4b935cfba4fc37a/screenshots/light.png
+listScreenshot: https://raw.githubusercontent.com/dataizu/dsh-whale-aqua-theme/8f4abbbde43710b26755e192e4b935cfba4fc37a/screenshots/whale-animation.gif
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 24d1c796ab2e9a6c353f9c1ce238ff0a074b1946
+    packageVersion: 2.2.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-19T22:55:45.759Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1042
+starsSnapshot: 2
+releaseUpdatedAt: 2026-10-19T22:55:47.464Z
+metadataUpdatedAt: 2026-10-19T22:55:47.464Z
+starsUpdatedAt: 2026-09-09T21:39:33.222Z
+updatedAt: 2026-10-19T22:55:47.464Z

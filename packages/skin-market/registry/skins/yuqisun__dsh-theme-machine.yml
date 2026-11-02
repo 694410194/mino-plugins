@@ -1,0 +1,75 @@
+id: yuqisun.dsh-theme-machine
+name:
+  zh: dsh-theme-machine
+  en: dsh-theme-machine
+author: yuqisun
+description: 《疑犯追踪》（Person of Interest）「机器」风格的 DeepSeek Harness（dsh）皮肤——为 Web UI 打造的 THE MACHINE 监视式 HUD 主题：深空蓝黑底色、机器青点缀、扫描线与网格氛围层，以及一个接入真实会话遥测的悬浮面板，让界面看起来像是有一台超级智能在背后驱动。
+repo: https://github.com/yuqisun/dsh-theme-machine
+package: dsh-theme-machine
+rowId: theme-machine
+category: skin
+tags:
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:yuqisun/dsh-theme-machine#e7e7762e16ff6469fe9153e5d75bac1b37b0ef13
+  version: 0.1.3
+  commit: e7e7762e16ff6469fe9153e5d75bac1b37b0ef13
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-theme-machine
+    packageVersion: 0.1.3
+    integrity: sha512-07xUJMSAuhHWuYEYbRN7kCX2R4eVUHjhNQpSM3lQozwJLV2g2bXX2QPOsfsgeSBLSDeH3fJXbXbEW0vVC+l00A==
+  allowBuild: dsh-theme-machine@https://codeload.github.com/yuqisun/dsh-theme-machine/tar.gz/e7e7762e16ff6469fe9153e5d75bac1b37b0ef13
+  npm:
+    name: dsh-theme-machine
+    version: 0.1.3
+    integrity: sha512-07xUJMSAuhHWuYEYbRN7kCX2R4eVUHjhNQpSM3lQozwJLV2g2bXX2QPOsfsgeSBLSDeH3fJXbXbEW0vVC+l00A==
+    repository: https://github.com/yuqisun/dsh-theme-machine
+    gitHead: e7e7762e16ff6469fe9153e5d75bac1b37b0ef13
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/yuqisun/dsh-theme-machine/e7e7762e16ff6469fe9153e5d75bac1b37b0ef13/screenshots/demo1.png
+  - https://raw.githubusercontent.com/yuqisun/dsh-theme-machine/e7e7762e16ff6469fe9153e5d75bac1b37b0ef13/screenshots/demo2.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: manual-only
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: improve
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+    - 建议补全稳定的 package 名称、dsh.client Web 声明、row ID 和已构建客户端入口，以符合 dsh 插件要求并获得更顺畅的一键安装体验。
+    - 固定版本静态扫描无法完成，市场暂不提供该版本的一键安装。
+  scan:
+    commit: e7e7762e16ff6469fe9153e5d75bac1b37b0ef13
+    packageVersion: 0.1.3
+    scannerVersion: static-v2
+    mode: static
+    result: unknown
+    checkedAt: 2026-08-23T05:35:33.444Z
+    findings:
+      - code: client-source-unavailable
+        message: 无法读取固定版本的 client 入口，静态扫描结果未知。
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 128
+starsSnapshot: 0
+releaseUpdatedAt: 2026-10-18T09:49:18.278Z
+metadataUpdatedAt: 2026-08-23T05:35:33.513Z
+starsUpdatedAt: 2026-09-09T21:41:23.633Z
+updatedAt: 2026-10-18T09:49:18.278Z

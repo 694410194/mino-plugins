@@ -1,0 +1,68 @@
+id: bilbillm.deepseek-harness-angelina-themes
+name:
+  zh: deepseek-harness-angelina-themes
+  en: deepseek-harness-angelina-themes
+author: bilbillm
+description: 把 Codex 的安洁莉娜亮色、暗色主题移植到 DeepSeek Harness 的独立 dsh-plugin。它保留 Harness 原生的对话布局和控件行为，只把视觉层替换成安洁莉娜主题：背景图、视差、磨砂玻璃、清晰的文字层级，以及在低性能或移动环境下的优雅降级。
+repo: https://github.com/bilbillm/deepseek-harness-angelina-themes
+package: dsh-angelina-themes
+rowId: dsh-angelina-themes
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:bilbillm/deepseek-harness-angelina-themes#ee74b2d6852173c0c1de39f6973685255de7229b
+  version: 0.1.0
+  commit: ee74b2d6852173c0c1de39f6973685255de7229b
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/bilbillm/deepseek-harness-angelina-themes/ee74b2d6852173c0c1de39f6973685255de7229b/src/assets/angelina-light-hero.webp
+  - https://raw.githubusercontent.com/bilbillm/deepseek-harness-angelina-themes/ee74b2d6852173c0c1de39f6973685255de7229b/src/assets/angelina-dark-hero.webp
+  - https://raw.githubusercontent.com/bilbillm/deepseek-harness-angelina-themes/ee74b2d6852173c0c1de39f6973685255de7229b/src/assets/angelina-light-parallax-background.webp
+  - https://raw.githubusercontent.com/bilbillm/deepseek-harness-angelina-themes/ee74b2d6852173c0c1de39f6973685255de7229b/src/assets/angelina-light-parallax-foreground.webp
+  - https://raw.githubusercontent.com/bilbillm/deepseek-harness-angelina-themes/ee74b2d6852173c0c1de39f6973685255de7229b/docs/screenshots/glass-actions-menu.png
+  - https://raw.githubusercontent.com/bilbillm/deepseek-harness-angelina-themes/ee74b2d6852173c0c1de39f6973685255de7229b/docs/screenshots/glass-sort-menu.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: ee74b2d6852173c0c1de39f6973685255de7229b
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:28:55.150Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 58
+starsSnapshot: 7
+releaseUpdatedAt: 2026-08-23T05:28:55.234Z
+metadataUpdatedAt: 2026-08-23T05:28:55.234Z
+starsUpdatedAt: 2026-10-02T10:29:36.969Z
+updatedAt: 2026-10-02T10:29:36.969Z

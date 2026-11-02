@@ -1,0 +1,66 @@
+id: king-of-soy-sauce.musk-intensity
+name:
+  zh: 马斯克强度
+  en: Musk Intensity Skin
+author: kingOfSoySauce
+description: 滑动变祖 · 马圣 · DeepSeek Harness 皮肤
+repo: https://github.com/kingOfSoySauce/dsh-elon-skin
+package: dsh-client-musk-intensity-skin
+rowId: musk-intensity-skin
+category: skin
+tags:
+  - mars-red
+  - musk
+  - reasoning-slider
+  - motion
+  - composer
+modes:
+  - light
+  - dark
+install:
+  target: github:kingOfSoySauce/dsh-elon-skin#bccc746872cf8caa4005c9b144bcd1497717537a
+  version: 0.1.4
+  commit: bccc746872cf8caa4005c9b144bcd1497717537a
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/kingOfSoySauce/dsh-elon-skin/bccc746872cf8caa4005c9b144bcd1497717537a/assets/readme-preview.png
+  - https://raw.githubusercontent.com/kingOfSoySauce/dsh-elon-skin/bccc746872cf8caa4005c9b144bcd1497717537a/docs/musk-skin-demo.gif
+  - https://raw.githubusercontent.com/kingOfSoySauce/dsh-elon-skin/bccc746872cf8caa4005c9b144bcd1497717537a/docs/preview.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: bccc746872cf8caa4005c9b144bcd1497717537a
+    packageVersion: 0.1.4
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:31:38.022Z
+    findings: []
+license:
+  code: NOASSERTION
+  commercialUse: false
+  notice: 仓库当前未声明许可证；安装和再分发前请向作者确认授权。
+featuredRank: 2
+starsSnapshot: 1
+releaseUpdatedAt: 2026-08-23T05:31:38.093Z
+metadataUpdatedAt: 2026-08-23T05:31:38.093Z
+starsUpdatedAt: 2026-09-09T21:40:24.052Z
+updatedAt: 2026-09-09T21:40:24.052Z

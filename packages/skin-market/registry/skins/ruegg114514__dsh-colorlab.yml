@@ -1,0 +1,62 @@
+id: ruegg114514.dsh-colorlab
+name:
+  zh: dsh-colorlab
+  en: dsh-colorlab
+author: ruegg114514
+description: "Chat UI colour theme plugin for DeepSeek Harness. Ships the Mariana palette as its default preset and adds a colour engine: 18 adjustable colour slots, 9 Markdown prose roles, saved presets, WCAG contrast hints and light/dark modes."
+repo: https://github.com/ruegg114514/dsh-colorlab
+package: dsh-colorlab
+rowId: mariana-theme
+category: skin
+tags:
+  - appearance
+modes:
+  - light
+  - dark
+install:
+  target: github:ruegg114514/dsh-colorlab#7c6a857da5d44a36c3b5b484c44a7b5fb5a63e48
+  version: 1.1.14
+  commit: 7c6a857da5d44a36c3b5b484c44a7b5fb5a63e48
+  desktop:
+    mode: manual-only
+    reason: 尚无与此固定版本对应的经验证npm安装包，请使用项目说明中的安装方式。
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/ruegg114514/dsh-colorlab/c4cf9481910c326ac7278ded2986f8d6c7e71634/assets/screenshot-chat.png
+  - https://raw.githubusercontent.com/ruegg114514/dsh-colorlab/c4cf9481910c326ac7278ded2986f8d6c7e71634/assets/screenshot-glass.png
+listScreenshot: https://raw.githubusercontent.com/ruegg114514/dsh-colorlab/c4cf9481910c326ac7278ded2986f8d6c7e71634/assets/screenshot-chat.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 7c6a857da5d44a36c3b5b484c44a7b5fb5a63e48
+    packageVersion: 1.1.14
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-27T23:01:17.607Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+  notice: 代码MIT；字体、图标及各主题来源按随包第三方声明保留。
+featuredRank: 999
+starsSnapshot: 1
+releaseUpdatedAt: 2026-10-27T23:01:19.155Z
+metadataUpdatedAt: 2026-10-27T23:01:19.155Z
+starsUpdatedAt: 2026-10-24T21:34:17.947Z
+updatedAt: 2026-10-27T23:01:19.155Z

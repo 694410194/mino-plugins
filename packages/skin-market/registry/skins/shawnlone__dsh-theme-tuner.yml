@@ -1,0 +1,69 @@
+id: shawnlone.dsh-theme-tuner
+name:
+  zh: dsh-theme-tuner
+  en: dsh-theme-tuner
+author: shawnlone
+description: 在 DeepSeek Harness (DSH) 的「通用设置 → 外观」下方直接调整界面主题——强调色 / 背景 / 前景 / 对比度 / 渐变度，实时生效。
+repo: https://github.com/shawnlone/dsh-theme-tuner
+package: dsh-theme-tuner
+rowId: theme-tuner
+category: skin
+tags:
+  - wallpaper
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:shawnlone/dsh-theme-tuner#c0dd8333b6e25eded1c3221529707929228da5c8
+  version: 0.1.4
+  commit: c0dd8333b6e25eded1c3221529707929228da5c8
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+  npm:
+    name: dsh-theme-tuner
+    version: 0.1.4
+    integrity: sha512-20lqRM2RhS3PargdBOQ5aYEHRkRnZvLqXFdaIbXooWzJ1i8marCBHkaGi/0OWh+MXcjkH65zMPqKPd2jJuSS0Q==
+    repository: https://github.com/shawnlone/dsh-theme-tuner
+    gitHead: c0dd8333b6e25eded1c3221529707929228da5c8
+compatibility:
+  dsh: ">=0.1.1-rc.2 <=0.1.2-rc.1"
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/shawnlone/dsh-theme-tuner/2901caaec7a33b48c9bad4aa286765bc6f456b71/assets/screenshot_01.png
+  - https://raw.githubusercontent.com/shawnlone/dsh-theme-tuner/2901caaec7a33b48c9bad4aa286765bc6f456b71/assets/screenshot_02.png
+listScreenshot: https://raw.githubusercontent.com/shawnlone/dsh-theme-tuner/2901caaec7a33b48c9bad4aa286765bc6f456b71/assets/screenshot_01.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - DSH 兼容范围待核对：保留的市场范围 >=0.1.1-rc.2 <=0.1.2-rc.1 未被本次检测范围 >=0.1.1-rc.2 <0.3.0 完全覆盖（固定版本 c0dd8333b6e25eded1c3221529707929228da5c8）。已保留原字段，请人工核对；此项是声明冲突，不代表已验证运行失败。
+  scan:
+    commit: c0dd8333b6e25eded1c3221529707929228da5c8
+    packageVersion: 0.1.4
+    scannerVersion: static-v2
+    dshVersion: ">=0.1.1-rc.2 <0.3.0"
+    mode: static
+    result: pass
+    checkedAt: 2026-10-13T01:17:55.926Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1064
+starsSnapshot: 3
+releaseUpdatedAt: 2026-10-21T22:17:47.638Z
+metadataUpdatedAt: 2026-10-13T01:17:57.860Z
+starsUpdatedAt: 2026-10-15T22:09:24.184Z
+updatedAt: 2026-10-21T22:17:47.638Z

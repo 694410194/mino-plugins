@@ -1,0 +1,67 @@
+id: gptsapp.dsh-stylevault
+name:
+  zh: dsh-stylevault
+  en: dsh-stylevault
+author: GptsApp
+description: DeepSeek Harness 的经典主题合集：30 套开源配色、完整的 Style Settings 面板、配置可以导出分享。
+repo: https://github.com/GptsApp/dsh-stylevault
+package: dsh-stylevault
+rowId: stylevault
+category: skin
+tags:
+  - wallpaper
+  - retro
+  - pastel
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:GptsApp/dsh-stylevault#b627f3a40c86cee9016d3749368479c08b5443b9
+  version: 0.3.0
+  commit: b627f3a40c86cee9016d3749368479c08b5443b9
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/GptsApp/dsh-stylevault/b627f3a40c86cee9016d3749368479c08b5443b9/docs/screenshots/preview-dark-nord.png
+  - https://raw.githubusercontent.com/GptsApp/dsh-stylevault/b627f3a40c86cee9016d3749368479c08b5443b9/docs/screenshots/preview-light-nord.png
+  - https://raw.githubusercontent.com/GptsApp/dsh-stylevault/b627f3a40c86cee9016d3749368479c08b5443b9/docs/screenshots/settings-1.png
+  - https://raw.githubusercontent.com/GptsApp/dsh-stylevault/b627f3a40c86cee9016d3749368479c08b5443b9/docs/screenshots/settings-2.png
+  - https://raw.githubusercontent.com/GptsApp/dsh-stylevault/b627f3a40c86cee9016d3749368479c08b5443b9/docs/screenshots/settings-3.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: b627f3a40c86cee9016d3749368479c08b5443b9
+    packageVersion: 0.3.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:33:35.953Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 105
+starsSnapshot: 3
+releaseUpdatedAt: 2026-08-23T05:33:36.035Z
+metadataUpdatedAt: 2026-09-08T09:45:47.382Z
+starsUpdatedAt: 2026-10-26T01:51:43.114Z
+updatedAt: 2026-10-26T01:51:43.114Z

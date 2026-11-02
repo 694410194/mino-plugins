@@ -1,0 +1,63 @@
+id: jayliu2025-vip.dsh-fate-twin-contract
+name:
+  zh: dsh-fate-twin-contract
+  en: dsh-fate-twin-contract
+author: Jayliu2025-vip
+description: Fate / Twin Contract · 赤钢契约
+repo: https://github.com/Jayliu2025-vip/dsh-fate-twin-contract
+package: dsh-fate-twin-contract
+rowId: ui-skin-fate-twin-contract
+category: skin
+tags:
+  - wallpaper
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:Jayliu2025-vip/dsh-fate-twin-contract#2564a25d0bb7a5ba88414075d4c8aa8f4a95cc87
+  version: 0.1.0
+  commit: 2564a25d0bb7a5ba88414075d4c8aa8f4a95cc87
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/Jayliu2025-vip/dsh-fate-twin-contract/2564a25d0bb7a5ba88414075d4c8aa8f4a95cc87/assets/preview/light.webp
+  - https://raw.githubusercontent.com/Jayliu2025-vip/dsh-fate-twin-contract/2564a25d0bb7a5ba88414075d4c8aa8f4a95cc87/assets/preview/dark.webp
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 2564a25d0bb7a5ba88414075d4c8aa8f4a95cc87
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:33:46.592Z
+    findings: []
+license:
+  code: SEE LICENSE IN NOTICE.md
+  commercialUse: false
+featuredRank: 108
+starsSnapshot: 0
+releaseUpdatedAt: 2026-08-23T05:33:46.677Z
+metadataUpdatedAt: 2026-08-23T05:33:46.677Z
+starsUpdatedAt: 2026-09-09T21:40:58.163Z
+updatedAt: 2026-09-09T21:40:58.163Z

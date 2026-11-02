@@ -1,0 +1,61 @@
+id: le-soleil-se-couche.dsh-skin-claude-code
+name:
+  zh: dsh-skin-claude-code
+  en: dsh-skin-claude-code
+author: le-soleil-se-couche
+description: 完美复刻 Claude Code 皮肤，纪念我的 Vibe Coding 白月光。
+repo: https://github.com/le-soleil-se-couche/dsh-skin-claude-code
+package: "@deepseek-ai/dsh-client-ui-skin-claude-code"
+rowId: ui-skin-claude-code
+category: skin
+tags:
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:le-soleil-se-couche/dsh-skin-claude-code#8590170e1c37eca3176469ade61998fd3d5088d4
+  version: 0.0.1
+  commit: 8590170e1c37eca3176469ade61998fd3d5088d4
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+  allowBuild: "@deepseek-ai/dsh-client-ui-skin-claude-code@https://codeload.github.com/le-soleil-se-couche/dsh-skin-claude-code/tar.gz/8590170e1c37eca3176469ade61998fd3d5088d4"
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/le-soleil-se-couche/dsh-skin-claude-code/8590170e1c37eca3176469ade61998fd3d5088d4/docs/codex-config.png
+  - https://raw.githubusercontent.com/le-soleil-se-couche/dsh-skin-claude-code/8590170e1c37eca3176469ade61998fd3d5088d4/preview/light.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 8590170e1c37eca3176469ade61998fd3d5088d4
+    packageVersion: 0.0.1
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:29:04.549Z
+    findings: []
+license:
+  code: BSD-3-Clause
+  commercialUse: true
+featuredRank: 50
+starsSnapshot: 4
+releaseUpdatedAt: 2026-08-23T05:29:04.597Z
+metadataUpdatedAt: 2026-08-23T05:29:04.597Z
+starsUpdatedAt: 2026-09-18T21:37:23.225Z
+updatedAt: 2026-09-18T21:37:23.225Z

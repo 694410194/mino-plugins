@@ -1,0 +1,78 @@
+id: johnnyting.dsh-official-homepage-theme
+name:
+  zh: dsh-official-homepage-theme
+  en: dsh-official-homepage-theme
+author: JohnnyTing
+description: dsh-official-homepage-theme 是一个面向DSH Web的DeepSeek Harness官方首页主题插件，在不改变DSH页面结构与交互的前提下，提供流体背景、鼠标弹性网格和双小鱼动态效果。
+repo: https://github.com/JohnnyTing/dsh-official-homepage-theme
+package: dsh-official-homepage-theme
+rowId: dsh-official-homepage-theme
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - motion
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:JohnnyTing/dsh-official-homepage-theme#29384e9f968abdfc10ab60d681930c00250bd438
+  version: 1.0.11
+  commit: 29384e9f968abdfc10ab60d681930c00250bd438
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-official-homepage-theme
+    packageVersion: 1.0.11
+    integrity: sha512-fGVB2DXpiFoaY1uYH9+td6sFngarlRmWhyGVCaSTcdJcZ4cBHm2C+rKDtdKSu7iM0uT6toh+tO9H0guA3zUWwg==
+  npm:
+    name: dsh-official-homepage-theme
+    version: 1.0.11
+    integrity: sha512-fGVB2DXpiFoaY1uYH9+td6sFngarlRmWhyGVCaSTcdJcZ4cBHm2C+rKDtdKSu7iM0uT6toh+tO9H0guA3zUWwg==
+    repository: https://github.com/JohnnyTing/dsh-official-homepage-theme
+    gitHead: 29384e9f968abdfc10ab60d681930c00250bd438
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+marketScreenshots:
+  - skin-screenshots/JohnnyTing__dsh-official-homepage-theme/29384e9f968abdfc10ab60d681930c00250bd438/home.png
+  - skin-screenshots/JohnnyTing__dsh-official-homepage-theme/29384e9f968abdfc10ab60d681930c00250bd438/conversation.png
+  - skin-screenshots/JohnnyTing__dsh-official-homepage-theme/29384e9f968abdfc10ab60d681930c00250bd438/settings.png
+screenshots:
+  - https://raw.githubusercontent.com/JohnnyTing/dsh-official-homepage-theme/3dc1ee72510db857257ff292d7f3aca1d3f46bb8/static/preview.gif
+  - https://raw.githubusercontent.com/JohnnyTing/dsh-official-homepage-theme/3dc1ee72510db857257ff292d7f3aca1d3f46bb8/static/preview.png
+  - skin-screenshots/JohnnyTing__dsh-official-homepage-theme/29384e9f968abdfc10ab60d681930c00250bd438/home.gif
+listScreenshot: https://raw.githubusercontent.com/JohnnyTing/dsh-official-homepage-theme/3dc1ee72510db857257ff292d7f3aca1d3f46bb8/static/preview.gif
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 29384e9f968abdfc10ab60d681930c00250bd438
+    packageVersion: 1.0.11
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-18T09:45:27.933Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1035
+starsSnapshot: 20
+releaseUpdatedAt: 2026-10-18T09:45:29.705Z
+metadataUpdatedAt: 2026-10-18T09:45:29.705Z
+starsUpdatedAt: 2026-10-27T23:00:46.306Z
+updatedAt: 2026-10-27T23:00:46.306Z

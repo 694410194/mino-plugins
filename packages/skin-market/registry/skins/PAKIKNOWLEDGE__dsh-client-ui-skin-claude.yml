@@ -1,0 +1,73 @@
+id: pakiknowledge.dsh-client-ui-skin-claude
+name:
+  zh: dsh-client-ui-skin-claude
+  en: dsh-client-ui-skin-claude
+author: PAKIKNOWLEDGE
+description: Claude 风格皮肤：暖黑画布、陶橙点缀、衬线 UI，跟随原生亮/暗主题。
+repo: https://github.com/PAKIKNOWLEDGE/dsh-client-ui-skin-claude
+package: "@pakiknowledge/dsh-client-ui-skin-claude"
+rowId: ui-skin-claude
+category: skin
+tags:
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:PAKIKNOWLEDGE/dsh-client-ui-skin-claude#a240ab43bd15fd4b2cc853d20bee2c749299134a
+  version: 0.2.1
+  commit: a240ab43bd15fd4b2cc853d20bee2c749299134a
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: "@pakiknowledge/dsh-client-ui-skin-claude"
+    packageVersion: 0.2.1
+    integrity: sha512-EAsMW/XQ2TSqevzCdrF7M9e9DwmNMUqrEO/rqld9QLYizh2sJuEoV4nHqtviZTftsALNNL8aXj2cmN3/ppSyYg==
+  npm:
+    name: "@pakiknowledge/dsh-client-ui-skin-claude"
+    version: 0.2.1
+    integrity: sha512-EAsMW/XQ2TSqevzCdrF7M9e9DwmNMUqrEO/rqld9QLYizh2sJuEoV4nHqtviZTftsALNNL8aXj2cmN3/ppSyYg==
+    repository: https://github.com/PAKIKNOWLEDGE/dsh-client-ui-skin-claude
+    gitHead: a240ab43bd15fd4b2cc853d20bee2c749299134a
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/PAKIKNOWLEDGE/dsh-client-ui-skin-claude/4d8fe6cfbff245b44bb8e0effc296ad2b513c9c5/docs/dark.png
+  - https://raw.githubusercontent.com/PAKIKNOWLEDGE/dsh-client-ui-skin-claude/4d8fe6cfbff245b44bb8e0effc296ad2b513c9c5/docs/light.png
+  - https://raw.githubusercontent.com/PAKIKNOWLEDGE/dsh-client-ui-skin-claude/78690f8449b61c0ea00e827c7427934810b9c554/docs/dark.png
+  - https://raw.githubusercontent.com/PAKIKNOWLEDGE/dsh-client-ui-skin-claude/78690f8449b61c0ea00e827c7427934810b9c554/docs/light.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: a240ab43bd15fd4b2cc853d20bee2c749299134a
+    packageVersion: 0.2.1
+    scannerVersion: static-v2
+    dshVersion: ^0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-09-01T21:42:04.254Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 23
+starsSnapshot: 17
+releaseUpdatedAt: 2026-09-01T21:42:04.438Z
+metadataUpdatedAt: 2026-09-01T21:42:04.438Z
+starsUpdatedAt: 2026-10-26T01:51:01.150Z
+updatedAt: 2026-10-26T01:51:01.150Z

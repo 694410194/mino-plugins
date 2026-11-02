@@ -1,0 +1,64 @@
+id: xiaoqiezi.china.dsh.music.player
+name:
+  zh: dsh-music-player-xiaoqiez
+  en: dsh-music-player-xiaoqiez
+author: xiaoqiezi-china
+description: DSH 简约在线音乐播放器:支持网易云/本地音乐源;完整 Agent SKILL(AI 自定义播放器风格/控制播放/播完通知);队列与搜索集成在官方设置页。
+repo: https://github.com/xiaoqiezi-china/dsh-music-player
+package: dsh-music-player
+rowId: dsh-music
+category: player
+tags:
+  - player
+modes:
+  - light
+  - dark
+install:
+  target: github:xiaoqiezi-china/dsh-music-player#6213deadd7323647dd32134d8fe67c520d1c171b
+  version: 0.1.0
+  commit: 6213deadd7323647dd32134d8fe67c520d1c171b
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots: []
+review:
+  compatibility: unverified
+  preview: repository-card
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 6213deadd7323647dd32134d8fe67c520d1c171b
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-26T09:10:34.514Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+starsSnapshot: 0
+featuredRank: 0
+releaseUpdatedAt: 2026-10-27T05:10:00.000Z
+metadataUpdatedAt: 2026-10-27T23:00:28.784Z
+starsUpdatedAt: 2026-10-27T05:10:00.000Z
+updatedAt: 2026-10-27T23:00:28.784Z
+
+marketScreenshots:
+  - skin-screenshots/xiaoqiezi-china__dsh-music-player/6213deadd7323647dd32134d8fe67c520d1c171b/home.png
+  - skin-screenshots/xiaoqiezi-china__dsh-music-player/6213deadd7323647dd32134d8fe67c520d1c171b/conversation.png
+  - skin-screenshots/xiaoqiezi-china__dsh-music-player/6213deadd7323647dd32134d8fe67c520d1c171b/settings.png

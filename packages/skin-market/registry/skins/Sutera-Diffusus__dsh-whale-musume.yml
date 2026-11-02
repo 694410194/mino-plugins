@@ -1,0 +1,67 @@
+id: sutera-diffusus.dsh-whale-musume
+name:
+  zh: dsh-whale-musume
+  en: dsh-whale-musume
+author: Sutera-Diffusus
+description: 为 DeepSeek Harness 打造的桌面看板娘插件。 一只会陪你写代码的鲸鱼娘：待机安静陪伴，工作开始就抱起笔记本陪你干活； 可以摸头养成、解锁成就，也可以拖着她到处走。所有资源本地运行，无遥测、无外部请求。
+repo: https://github.com/Sutera-Diffusus/dsh-whale-musume
+package: dsh-whale-musume
+rowId: dsh-whale-musume
+category: pet
+tags:
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - dark
+install:
+  target: github:Sutera-Diffusus/dsh-whale-musume#e6394df50539cbd143a5e838d4e9901d007be3de
+  version: 2.5.0
+  commit: e6394df50539cbd143a5e838d4e9901d007be3de
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+marketScreenshots:
+  - skin-screenshots/Sutera-Diffusus__dsh-whale-musume/e6394df50539cbd143a5e838d4e9901d007be3de/home.png
+  - skin-screenshots/Sutera-Diffusus__dsh-whale-musume/e6394df50539cbd143a5e838d4e9901d007be3de/conversation.png
+  - skin-screenshots/Sutera-Diffusus__dsh-whale-musume/e6394df50539cbd143a5e838d4e9901d007be3de/settings.png
+screenshots:
+  - https://raw.githubusercontent.com/Sutera-Diffusus/dsh-whale-musume/ba9c69480ec4e606ff654160348eb3682a483dd7/docs/images/homepage-promo.png
+  - https://raw.githubusercontent.com/Sutera-Diffusus/dsh-whale-musume/ba9c69480ec4e606ff654160348eb3682a483dd7/docs/images/preview-idle-coffee.png
+  - skin-screenshots/Sutera-Diffusus__dsh-whale-musume/e6394df50539cbd143a5e838d4e9901d007be3de/home.gif
+listScreenshot: https://raw.githubusercontent.com/Sutera-Diffusus/dsh-whale-musume/ba9c69480ec4e606ff654160348eb3682a483dd7/docs/images/homepage-promo.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: e6394df50539cbd143a5e838d4e9901d007be3de
+    packageVersion: 2.5.0
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-10-27T23:00:32.869Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1033
+starsSnapshot: 177
+releaseUpdatedAt: 2026-10-27T23:00:34.204Z
+metadataUpdatedAt: 2026-10-27T23:00:34.204Z
+starsUpdatedAt: 2026-10-27T23:00:34.204Z
+updatedAt: 2026-10-27T23:00:34.204Z

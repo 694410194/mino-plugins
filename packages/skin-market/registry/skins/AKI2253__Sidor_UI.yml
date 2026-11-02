@@ -1,0 +1,68 @@
+id: aki2253.sidor-ui
+name:
+  zh: Sidor_UI
+  en: Sidor_UI
+author: AKI2253
+description: SidorUI · SIDOR 星野控制台皮肤
+repo: https://github.com/AKI2253/Sidor_UI
+package: sidor-ui
+rowId: sidor-ui
+category: skin
+tags:
+  - motion
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:AKI2253/Sidor_UI#96d315f19681960f8d9febf1a826e80014ff0948
+  version: 1.2.0
+  commit: 96d315f19681960f8d9febf1a826e80014ff0948
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/AKI2253/Sidor_UI/399e620a82b119ddaf38036e1a914d03fb669921/preview/hero.png
+  - https://raw.githubusercontent.com/AKI2253/Sidor_UI/399e620a82b119ddaf38036e1a914d03fb669921/preview/setting.png
+  - https://raw.githubusercontent.com/AKI2253/Sidor_UI/399e620a82b119ddaf38036e1a914d03fb669921/preview/warning.png
+  - https://raw.githubusercontent.com/AKI2253/Sidor_UI/7aa8e7c4571b376df3c20a162e6dfd05609e6093/preview/hero.png
+  - https://raw.githubusercontent.com/AKI2253/Sidor_UI/7aa8e7c4571b376df3c20a162e6dfd05609e6093/preview/setting.png
+  - https://raw.githubusercontent.com/AKI2253/Sidor_UI/7aa8e7c4571b376df3c20a162e6dfd05609e6093/preview/warning.png
+  - https://raw.githubusercontent.com/AKI2253/Sidor_UI/7a6a4a0dacd1aacb037dea42b16d1e5a9086daa9/preview/hero.png
+  - https://raw.githubusercontent.com/AKI2253/Sidor_UI/7a6a4a0dacd1aacb037dea42b16d1e5a9086daa9/preview/setting.png
+listScreenshot: https://raw.githubusercontent.com/AKI2253/Sidor_UI/ebf17cd8bfa1f4df788f54f383224896a3dbaabc/preview/hero.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 96d315f19681960f8d9febf1a826e80014ff0948
+    packageVersion: 1.2.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-15T22:08:42.596Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1016
+starsSnapshot: 4
+releaseUpdatedAt: 2026-10-15T22:08:44.747Z
+metadataUpdatedAt: 2026-10-15T22:08:44.747Z
+starsUpdatedAt: 2026-10-26T23:11:28.108Z
+updatedAt: 2026-10-26T23:11:28.108Z

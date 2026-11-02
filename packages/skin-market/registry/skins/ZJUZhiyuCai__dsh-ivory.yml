@@ -1,0 +1,79 @@
+id: zjuzhiyucai.dsh-ivory
+name:
+  zh: dsh-ivory
+  en: dsh-ivory
+author: ZJUZhiyuCai
+description: DSH Web 暖中性色明暗主题，支持响应式布局、双语设置、安全 Markdown 预览、内容块复制与无遥测运行。
+repo: https://github.com/ZJUZhiyuCai/dsh-ivory
+package: dsh-ivory
+rowId: dsh-ivory
+category: skin
+tags:
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:ZJUZhiyuCai/dsh-ivory#b44a2bd545da6ce3a5744a77e02e3362f16b6ed1
+  version: 0.2.17
+  commit: b44a2bd545da6ce3a5744a77e02e3362f16b6ed1
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-ivory
+    packageVersion: 0.2.17
+    integrity: sha512-j/fJboMMwV6o4VZLRp5PZcwqNDUTJmqdhjadrCfZLgJQRYpSUGI8YeVsXhg9XgQqzOINUJgq87u2lIHHy+sTbg==
+  npm:
+    name: dsh-ivory
+    version: 0.2.17
+    integrity: sha512-j/fJboMMwV6o4VZLRp5PZcwqNDUTJmqdhjadrCfZLgJQRYpSUGI8YeVsXhg9XgQqzOINUJgq87u2lIHHy+sTbg==
+    repository: https://github.com/ZJUZhiyuCai/dsh-ivory
+    gitHead: b44a2bd545da6ce3a5744a77e02e3362f16b6ed1
+compatibility:
+  dsh: ">=0.1.0-rc.6 <0.2.0"
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/ZJUZhiyuCai/dsh-ivory/88e3cdca0b9eb0f328974dd55359aa63e064948d/assets/hero-light.png
+  - https://raw.githubusercontent.com/ZJUZhiyuCai/dsh-ivory/88e3cdca0b9eb0f328974dd55359aa63e064948d/assets/hero-dark.png
+  - https://raw.githubusercontent.com/ZJUZhiyuCai/dsh-ivory/88e3cdca0b9eb0f328974dd55359aa63e064948d/assets/conversation-light.png
+  - https://raw.githubusercontent.com/ZJUZhiyuCai/dsh-ivory/88e3cdca0b9eb0f328974dd55359aa63e064948d/assets/mobile-light.png
+  - https://raw.githubusercontent.com/ZJUZhiyuCai/dsh-ivory/ac0c8d8f2b9734670ffe7acd891a4cb8f5325741/assets/hero-light.png
+  - https://raw.githubusercontent.com/ZJUZhiyuCai/dsh-ivory/ac0c8d8f2b9734670ffe7acd891a4cb8f5325741/assets/hero-dark.png
+  - https://raw.githubusercontent.com/ZJUZhiyuCai/dsh-ivory/ac0c8d8f2b9734670ffe7acd891a4cb8f5325741/assets/conversation-light.png
+  - https://raw.githubusercontent.com/ZJUZhiyuCai/dsh-ivory/ac0c8d8f2b9734670ffe7acd891a4cb8f5325741/assets/mobile-light.png
+listScreenshot: https://raw.githubusercontent.com/ZJUZhiyuCai/dsh-ivory/1613f0dc4bf91bf25d5d138899fd03609c78953e/assets/hero-dark.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - DSH 兼容范围待核对：保留的市场范围 >=0.1.0-rc.6 <0.2.0 未被本次检测范围 >=0.1.2-rc.1 <0.3.0 || ^0.1.5-rc.1 || ^0.2.0-rc.2 || ^0.2.1-rc.1 完全覆盖（固定版本 b44a2bd545da6ce3a5744a77e02e3362f16b6ed1）。已保留原字段，请人工核对；此项是声明冲突，不代表已验证运行失败。
+  scan:
+    commit: b44a2bd545da6ce3a5744a77e02e3362f16b6ed1
+    packageVersion: 0.2.17
+    scannerVersion: static-v2
+    dshVersion: ">=0.1.2-rc.1 <0.3.0 || ^0.1.5-rc.1 || ^0.2.0-rc.2 || ^0.2.1-rc.1"
+    mode: static
+    result: pass
+    checkedAt: 2026-10-21T22:18:53.315Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 129
+starsSnapshot: 1
+releaseUpdatedAt: 2026-10-21T22:18:54.893Z
+metadataUpdatedAt: 2026-10-21T22:18:54.893Z
+starsUpdatedAt: 2026-10-08T23:46:25.353Z
+updatedAt: 2026-10-21T22:18:54.893Z

@@ -1,0 +1,71 @@
+id: lan-tina-ws.dsh-gui-customization
+name:
+  zh: dsh-gui-customization
+  en: dsh-gui-customization
+author: LAN-TINA-WS
+description: dsh-gui-customization — 组合插件（发布轨）
+repo: https://github.com/LAN-TINA-WS/dsh-gui-customization
+subpath: packages/dsh-gui-customization
+package: dsh-gui-customization
+rowId: ui-gui-customization
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:LAN-TINA-WS/dsh-gui-customization#ddfa614695b4b5d5eb49dbb832134048162318c1&path:/packages/dsh-gui-customization
+  version: 0.6.5
+  commit: ddfa614695b4b5d5eb49dbb832134048162318c1
+  desktop:
+    mode: manual-only
+    reason: npm-lifecycle-scripts:prepublishOnly
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+marketScreenshots:
+  - skin-screenshots/LAN-TINA-WS__dsh-gui-customization--packages--dsh-gui-customization/ddfa614695b4b5d5eb49dbb832134048162318c1/home.png
+  - skin-screenshots/LAN-TINA-WS__dsh-gui-customization--packages--dsh-gui-customization/ddfa614695b4b5d5eb49dbb832134048162318c1/conversation.png
+  - skin-screenshots/LAN-TINA-WS__dsh-gui-customization--packages--dsh-gui-customization/ddfa614695b4b5d5eb49dbb832134048162318c1/settings.png
+screenshots:
+  - https://raw.githubusercontent.com/LAN-TINA-WS/dsh-gui-customization/9945cdb96449deafc764016a032b878299264872/docs/screenshots/dsgirl-fashion-workshop.jpg
+  - https://raw.githubusercontent.com/LAN-TINA-WS/dsh-gui-customization/9945cdb96449deafc764016a032b878299264872/docs/screenshots/gui-customization.png
+  - skin-screenshots/LAN-TINA-WS__dsh-gui-customization--packages--dsh-gui-customization/ddfa614695b4b5d5eb49dbb832134048162318c1/home.gif
+listScreenshot: https://raw.githubusercontent.com/LAN-TINA-WS/dsh-gui-customization/11918fdb89b796b12d92c9a09e79dbf9d413df9a/docs/screenshots/dsgirl-fashion-workshop.jpg
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: ddfa614695b4b5d5eb49dbb832134048162318c1
+    packageVersion: 0.6.5
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-02T10:29:24.227Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 985
+starsSnapshot: 18
+releaseUpdatedAt: 2026-10-02T10:29:25.232Z
+metadataUpdatedAt: 2026-10-02T10:29:25.232Z
+starsUpdatedAt: 2026-10-23T22:01:25.105Z
+updatedAt: 2026-10-23T22:01:25.105Z

@@ -1,0 +1,67 @@
+id: wangxilhy23.dsh-wx-skin
+name:
+  zh: dsh-wx-skin
+  en: dsh-wx-skin
+author: wangxilhy23
+description: DeepSeek Harness（DSH）Web GUI 皮肤插件 —— 侧栏「皮肤」面板，自选本地图片或图片 URL 作为全屏磨砂背景，支持预设、暗化、模糊与透出调节，明暗主题自动适配，跨刷新持久化。
+repo: https://github.com/wangxilhy23/dsh-wx-skin
+package: dsh-wx-skin
+rowId: ui-dsh-wx-skin
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - token-theme
+  - light-dark
+modes:
+  - dark
+install:
+  target: github:wangxilhy23/dsh-wx-skin#272bbecdefb0364a49e4df226748148056b85f59
+  version: 0.2.1
+  commit: 272bbecdefb0364a49e4df226748148056b85f59
+  desktop:
+    mode: manual-only
+    reason: npm-repository-mismatch
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/wangxilhy23/dsh-wx-skin/5351f776e73331ed70f5b656c8373c83b7a559a9/assets/demo1.png
+  - https://raw.githubusercontent.com/wangxilhy23/dsh-wx-skin/1dce62c660fbc2525e1358f864dba797d2f9d5c3/assets/demo1.png
+listScreenshot: https://raw.githubusercontent.com/wangxilhy23/dsh-wx-skin/3f5bfd304c9f6ed887bcc13ff6d855fd2595a02c/assets/demo1.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: manual-only
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: improve
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+    - 建议补全稳定的 package 名称、dsh.client Web 声明、row ID 和已构建客户端入口，以符合 dsh 插件要求并获得更顺畅的一键安装体验。
+    - 固定版本静态扫描无法完成，市场暂不提供该版本的一键安装。
+  scan:
+    commit: 272bbecdefb0364a49e4df226748148056b85f59
+    packageVersion: 0.2.1
+    scannerVersion: static-v2
+    mode: static
+    result: unknown
+    checkedAt: 2026-09-28T23:50:43.893Z
+    findings:
+      - code: client-source-unavailable
+        message: 无法读取固定版本的 client 入口，静态扫描结果未知。
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 68
+starsSnapshot: 3
+releaseUpdatedAt: 2026-09-28T23:50:44.629Z
+metadataUpdatedAt: 2026-09-28T23:50:44.629Z
+starsUpdatedAt: 2026-09-18T21:37:37.651Z
+updatedAt: 2026-09-28T23:50:44.629Z

@@ -1,0 +1,66 @@
+id: estellalee.dsh-outdoor-theme
+name:
+  zh: dsh-outdoor-theme
+  en: dsh-outdoor-theme
+author: Estellalee
+description: DSH 户外皮肤 · 山野向导（Trail Guide）
+repo: https://github.com/Estellalee/dsh-outdoor-theme
+package: dsh-outdoor-theme
+rowId: ui-outdoor-theme
+category: skin
+tags:
+  - wallpaper
+  - retro
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:Estellalee/dsh-outdoor-theme#236e5426f9a833191dd57758caef1fcd076d51ad
+  version: 2.0.0
+  commit: 236e5426f9a833191dd57758caef1fcd076d51ad
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/Estellalee/dsh-outdoor-theme/236e5426f9a833191dd57758caef1fcd076d51ad/screenshots/light-sunset.png
+  - https://raw.githubusercontent.com/Estellalee/dsh-outdoor-theme/236e5426f9a833191dd57758caef1fcd076d51ad/screenshots/light-moonrise.png
+  - https://raw.githubusercontent.com/Estellalee/dsh-outdoor-theme/236e5426f9a833191dd57758caef1fcd076d51ad/screenshots/dark-mode.png
+  - https://raw.githubusercontent.com/Estellalee/dsh-outdoor-theme/236e5426f9a833191dd57758caef1fcd076d51ad/screenshots/waypoints-panel.png
+  - https://raw.githubusercontent.com/Estellalee/dsh-outdoor-theme/236e5426f9a833191dd57758caef1fcd076d51ad/screenshots/waypoints-expanded.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: 236e5426f9a833191dd57758caef1fcd076d51ad
+    packageVersion: 2.0.0
+    scannerVersion: static-v2
+    dshVersion: ^0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:29:00.881Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 49
+starsSnapshot: 4
+releaseUpdatedAt: 2026-08-23T05:29:00.959Z
+metadataUpdatedAt: 2026-08-23T05:29:00.959Z
+starsUpdatedAt: 2026-09-12T21:24:06.586Z
+updatedAt: 2026-09-12T21:24:06.586Z

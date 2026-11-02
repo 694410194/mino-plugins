@@ -1,0 +1,65 @@
+id: llylab.dsh.bgm.service
+name:
+  zh: DBS
+  en: DBS
+author: LLYlab
+description: DBS (DSH BGM service) — 独立于 DET 的 DeepSeek Harness 音乐播放器插件：本地音乐库 + 浮动播放器 + AI 依据任务控制播放(模型工具 + 自动联动) + 网络下载入库 + 乐评爬取(尽力而为)。
+repo: https://github.com/LLYlab/DBS
+package: dsh-bgm-service
+rowId: dbs
+category: player
+tags:
+  - player
+modes:
+  - light
+  - dark
+install:
+  target: github:LLYlab/DBS#8e3bdf82af7d180eecabe4065f675222b3f54b98
+  version: 0.1.1
+  commit: 8e3bdf82af7d180eecabe4065f675222b3f54b98
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: ^0.1.7-rc.2
+  platform:
+    - web
+screenshots: []
+review:
+  compatibility: verified
+  preview: repository-card
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: pass
+    installation: pass
+    installCommand: improve
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+    - 建议在 README 中补充可复制的 DSH 安装命令，方便用户直接使用。
+  scan:
+    commit: 8e3bdf82af7d180eecabe4065f675222b3f54b98
+    packageVersion: 0.1.1
+    scannerVersion: static-v2
+    dshVersion: ^0.1.7-rc.2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-26T09:10:06.599Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+starsSnapshot: 0
+featuredRank: 0
+releaseUpdatedAt: 2026-10-27T05:10:00.000Z
+metadataUpdatedAt: 2026-10-27T23:00:28.784Z
+starsUpdatedAt: 2026-10-27T05:10:00.000Z
+updatedAt: 2026-10-27T23:00:28.784Z
+
+marketScreenshots:
+  - skin-screenshots/LLYlab__DBS/8e3bdf82af7d180eecabe4065f675222b3f54b98/home.png
+  - skin-screenshots/LLYlab__DBS/8e3bdf82af7d180eecabe4065f675222b3f54b98/conversation.png
+  - skin-screenshots/LLYlab__DBS/8e3bdf82af7d180eecabe4065f675222b3f54b98/settings.png

@@ -1,0 +1,67 @@
+id: leemancheung.dsh-qq2007-skin
+name:
+  zh: dsh-qq2007-skin
+  en: dsh-qq2007-skin
+author: LeemanCheung
+description: DSH Web GUI 的 QQ 2007 风格皮肤：72 个原生主题 token、作用域三栏窗框、原创离线素材与像素伙伴、可选合成发送提示音、响应式/无障碍回退和可恢复设置开关。
+repo: https://github.com/LeemanCheung/dsh-qq2007-skin
+package: dsh-qq2007-skin
+rowId: qq2007-skin
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - retro
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:LeemanCheung/dsh-qq2007-skin#e7c61af021dab1d387566a07d3528dc563e4f070
+  version: 0.3.0
+  commit: e7c61af021dab1d387566a07d3528dc563e4f070
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/LeemanCheung/dsh-qq2007-skin/e7c61af021dab1d387566a07d3528dc563e4f070/docs/screenshot.png
+  - https://raw.githubusercontent.com/LeemanCheung/dsh-qq2007-skin/e7c61af021dab1d387566a07d3528dc563e4f070/assets/runtime/retro-buddy-stage.webp
+  - https://raw.githubusercontent.com/LeemanCheung/dsh-qq2007-skin/e7c61af021dab1d387566a07d3528dc563e4f070/assets/runtime/blue-glass-chrome.webp
+  - https://raw.githubusercontent.com/LeemanCheung/dsh-qq2007-skin/e7c61af021dab1d387566a07d3528dc563e4f070/assets/runtime/retro-toolbar-icons.webp
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: e7c61af021dab1d387566a07d3528dc563e4f070
+    packageVersion: 0.3.0
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:29:26.465Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 14
+starsSnapshot: 4
+releaseUpdatedAt: 2026-08-23T05:29:26.544Z
+metadataUpdatedAt: 2026-08-23T15:28:41.498Z
+starsUpdatedAt: 2026-08-28T04:08:43.393Z
+updatedAt: 2026-08-28T04:08:43.393Z

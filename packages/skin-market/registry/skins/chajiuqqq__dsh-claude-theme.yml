@@ -1,0 +1,66 @@
+id: chajiuqqq.dsh-claude-theme
+name:
+  zh: dsh-claude-theme
+  en: dsh-claude-theme
+author: chajiuqqq
+description: dsh的claude风格界面
+repo: https://github.com/chajiuqqq/dsh-claude-theme
+package: dsh-claude-theme
+rowId: claude-theme
+category: skin
+tags:
+  - wallpaper
+  - retro
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:chajiuqqq/dsh-claude-theme#976b65da11bd0e23d77aac9cbadd466fea51eb1b
+  version: 1.0.0
+  commit: 976b65da11bd0e23d77aac9cbadd466fea51eb1b
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+marketScreenshots:
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/chajiuqqq__dsh-claude-theme/976b65da11bd0e23d77aac9cbadd466fea51eb1b/home.png
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/chajiuqqq__dsh-claude-theme/976b65da11bd0e23d77aac9cbadd466fea51eb1b/conversation.png
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/chajiuqqq__dsh-claude-theme/976b65da11bd0e23d77aac9cbadd466fea51eb1b/settings.png
+screenshots: []
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 976b65da11bd0e23d77aac9cbadd466fea51eb1b
+    packageVersion: 1.0.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:30:02.468Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 61
+starsSnapshot: 1
+releaseUpdatedAt: 2026-08-23T05:30:02.557Z
+metadataUpdatedAt: 2026-08-23T05:30:02.557Z
+starsUpdatedAt: 2026-09-12T21:25:05.685Z
+updatedAt: 2026-09-12T21:25:05.685Z

@@ -1,0 +1,59 @@
+id: kinmat-a.dsh-theme-switch
+name:
+  zh: dsh-theme-switch
+  en: dsh-theme-switch
+author: kinmat-A
+description: DSH 主题切换：自动检测已安装的皮肤/主题，在设置页一键互斥切换，全部停用时回退官方默认外观，切换即时生效并跨重启保留。
+repo: https://github.com/kinmat-A/dsh-theme-switch
+package: "@dsh-external/dsh-theme-switch"
+rowId: ui-theme-switch
+category: skin
+tags:
+  - token-theme
+modes:
+  - dark
+install:
+  target: github:kinmat-A/dsh-theme-switch#320edb2601e4ff1d62ea8bb7bf14bb3a8d2c4d67
+  version: 0.0.1
+  commit: 320edb2601e4ff1d62ea8bb7bf14bb3a8d2c4d67
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: ">=0.0.1-rc <2"
+  platform:
+    - web
+screenshots:
+  - https://cdn.jsdelivr.net/gh/kinmat-A/dsh-theme-switch@main/docs/screenshot-zh.png
+listScreenshot: https://cdn.jsdelivr.net/gh/kinmat-A/dsh-theme-switch@main/docs/screenshot-zh.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: 320edb2601e4ff1d62ea8bb7bf14bb3a8d2c4d67
+    packageVersion: 0.0.1
+    scannerVersion: static-v2
+    dshVersion: ">=0.0.1-rc <2"
+    mode: static
+    result: pass
+    checkedAt: 2026-09-08T21:47:59.528Z
+    findings: []
+license:
+  code: BSD-3-Clause
+  commercialUse: true
+featuredRank: 13
+starsSnapshot: 1
+releaseUpdatedAt: 2026-09-08T21:47:59.938Z
+metadataUpdatedAt: 2026-09-08T21:47:59.938Z
+starsUpdatedAt: 2026-09-12T21:25:20.213Z
+updatedAt: 2026-09-12T21:25:20.213Z

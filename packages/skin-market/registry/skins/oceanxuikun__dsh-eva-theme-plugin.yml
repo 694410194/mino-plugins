@@ -1,0 +1,65 @@
+id: oceanxuikun.dsh-eva-theme-plugin
+name:
+  zh: dsh-eva-theme-plugin
+  en: dsh-eva-theme-plugin
+author: oceanxuikun
+description: 一个用户级客户端插件，为 DeepSeek Harness Web GUI 提供三套《新世纪福音战士》(EVA) 机体主题——初号機 (Unit-01)、零号機 (Unit-00)、弐号機 (Unit-02)——每套都会重新着色所有页面元素，并在侧边栏展示当前机体的图片。完全以插件方式实现：不修改任何 harness 源代码。
+repo: https://github.com/oceanxuikun/dsh-eva-theme-plugin
+package: dsh-eva-theme-plugin
+rowId: dsh-eva-theme-plugin
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - retro
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:oceanxuikun/dsh-eva-theme-plugin#dcdf404b83b0c49ccc16a9389222ec513ae3b81d
+  version: 0.1.0
+  commit: dcdf404b83b0c49ccc16a9389222ec513ae3b81d
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/oceanxuikun/dsh-eva-theme-plugin/dcdf404b83b0c49ccc16a9389222ec513ae3b81d/assets/screenshot01.png
+  - https://raw.githubusercontent.com/oceanxuikun/dsh-eva-theme-plugin/dcdf404b83b0c49ccc16a9389222ec513ae3b81d/assets/screenshot00.png
+  - https://raw.githubusercontent.com/oceanxuikun/dsh-eva-theme-plugin/dcdf404b83b0c49ccc16a9389222ec513ae3b81d/assets/screenshot02.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: dcdf404b83b0c49ccc16a9389222ec513ae3b81d
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:30:31.834Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 89
+starsSnapshot: 4
+releaseUpdatedAt: 2026-08-23T05:30:31.940Z
+metadataUpdatedAt: 2026-09-08T09:45:47.382Z
+starsUpdatedAt: 2026-09-18T21:37:23.870Z
+updatedAt: 2026-09-18T21:37:23.870Z

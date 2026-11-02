@@ -1,0 +1,67 @@
+id: kingao294.dsh-skin
+name:
+  zh: dsh-skin
+  en: dsh-skin
+author: KinGao294
+description: Codex 风格皮肤切换器 + 自定义壁纸层，可调透明度与模糊。
+repo: https://github.com/KinGao294/dsh-skin
+package: dsh-skin
+rowId: skin
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - retro
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:KinGao294/dsh-skin#0a571a27adcc5f780b7b72386c9c294243eec5b3
+  version: 0.4.0
+  commit: 0a571a27adcc5f780b7b72386c9c294243eec5b3
+  desktop:
+    mode: manual-only
+    reason: npm-repository-mismatch
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+marketScreenshots:
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/KinGao294__dsh-skin/65c79b09d4c5f23e72076ff6b6b6b26c883f935c/home.png
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/KinGao294__dsh-skin/65c79b09d4c5f23e72076ff6b6b6b26c883f935c/conversation.png
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/KinGao294__dsh-skin/65c79b09d4c5f23e72076ff6b6b6b26c883f935c/settings.png
+screenshots: []
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+  scan:
+    commit: 0a571a27adcc5f780b7b72386c9c294243eec5b3
+    packageVersion: 0.4.0
+    scannerVersion: static-v2
+    dshVersion: ^0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:27:32.722Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 18
+starsSnapshot: 17
+releaseUpdatedAt: 2026-08-23T05:27:32.810Z
+metadataUpdatedAt: 2026-08-23T05:27:32.810Z
+starsUpdatedAt: 2026-10-15T22:08:22.070Z
+updatedAt: 2026-10-15T22:08:22.070Z

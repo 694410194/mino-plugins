@@ -1,0 +1,79 @@
+id: lhy723.dsh-neu-theme
+name:
+  zh: dsh-neu-theme
+  en: dsh-neu-theme
+author: Lhy723
+description: DSH Web 轻拟物主题：提供浅色与深色配色、环境光影、材质阴影、纹理、磨砂玻璃表面与微交互。
+repo: https://github.com/Lhy723/dsh-neu-theme
+package: dsh-neu-theme
+rowId: neu-theme
+category: skin
+tags:
+  - glass
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:Lhy723/dsh-neu-theme#218f4f7896637dc33ed691d15c5c8ccc568fca6a
+  version: 0.1.2
+  commit: 218f4f7896637dc33ed691d15c5c8ccc568fca6a
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-neu-theme
+    packageVersion: 0.1.2
+    integrity: sha512-nkR0gAv/ez4LtXFwKDLvU8It6eGTRrqzdpaxAFqEhaP7GbriqaAmPF7bnZhlym+UWwuYNw3SRA/VJ/k2G3wkwQ==
+  npm:
+    name: dsh-neu-theme
+    version: 0.1.2
+    integrity: sha512-nkR0gAv/ez4LtXFwKDLvU8It6eGTRrqzdpaxAFqEhaP7GbriqaAmPF7bnZhlym+UWwuYNw3SRA/VJ/k2G3wkwQ==
+    repository: https://github.com/Lhy723/dsh-neu-theme
+    gitHead: 218f4f7896637dc33ed691d15c5c8ccc568fca6a
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/Lhy723/dsh-neu-theme/54f4a07c0364f9f9d571a1384471e3825e1c14a4/.github/asset/dsh-neu-theme-hero.png
+  - https://raw.githubusercontent.com/Lhy723/dsh-neu-theme/54f4a07c0364f9f9d571a1384471e3825e1c14a4/.github/asset/light.webp
+  - https://raw.githubusercontent.com/Lhy723/dsh-neu-theme/54f4a07c0364f9f9d571a1384471e3825e1c14a4/.github/asset/dark.webp
+listScreenshot: https://raw.githubusercontent.com/Lhy723/dsh-neu-theme/218f4f7896637dc33ed691d15c5c8ccc568fca6a/.github/asset/dsh-neu-theme-hero.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: manual-only
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: improve
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议补全稳定的 package 名称、dsh.client Web 声明、row ID 和已构建客户端入口，以符合 dsh 插件要求并获得更顺畅的一键安装体验。
+    - 固定版本静态扫描无法完成，市场暂不提供该版本的一键安装。
+    - DSH 兼容范围待核对：保留的市场范围 ^0.1.0-rc.6 未被本次检测范围 ^0.1.1-rc.2 完全覆盖（固定版本 218f4f7896637dc33ed691d15c5c8ccc568fca6a）。已保留原字段，请人工核对；此项是声明冲突，不代表已验证运行失败。
+  scan:
+    commit: 218f4f7896637dc33ed691d15c5c8ccc568fca6a
+    packageVersion: 0.1.2
+    scannerVersion: static-v2
+    dshVersion: ^0.1.1-rc.2
+    mode: static
+    result: unknown
+    checkedAt: 2026-09-15T03:03:58.981Z
+    findings:
+      - code: client-source-unavailable
+        message: 无法读取固定版本的 client 入口，静态扫描结果未知。
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 11
+starsSnapshot: 8
+releaseUpdatedAt: 2026-09-15T03:04:00.417Z
+metadataUpdatedAt: 2026-09-15T03:04:00.417Z
+starsUpdatedAt: 2026-10-20T22:15:32.351Z
+updatedAt: 2026-10-20T22:15:32.351Z

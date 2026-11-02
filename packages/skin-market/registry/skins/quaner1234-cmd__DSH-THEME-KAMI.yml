@@ -1,0 +1,61 @@
+id: quaner1234.cmd.dsh.theme.kami
+name:
+  zh: dsh-kami-theme
+  en: dsh-kami-theme
+author: quaner1234-cmd
+description: Kami 风格（纸媒/editorial）DeepSeek Harness WebUI 主题 —— 暖羊皮纸画布、墨蓝强调色、衬线排版与发丝线边框，浅色/深色双模式。
+repo: https://github.com/quaner1234-cmd/DSH-THEME-KAMI
+package: dsh-kami-theme
+rowId: dsh-kami-theme
+category: skin
+tags:
+  - appearance
+modes:
+  - light
+  - dark
+install:
+  target: github:quaner1234-cmd/DSH-THEME-KAMI#12f2976fde989da578d362a1f038281c214cf3b2
+  version: 0.1.0
+  commit: 12f2976fde989da578d362a1f038281c214cf3b2
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/quaner1234-cmd/DSH-THEME-KAMI/1fb0d23fe019eac6fb03cc3eb2f1b51c35790459/assets/preview-light.png
+  - https://raw.githubusercontent.com/quaner1234-cmd/DSH-THEME-KAMI/1fb0d23fe019eac6fb03cc3eb2f1b51c35790459/assets/preview-dark.png
+listScreenshot: https://raw.githubusercontent.com/quaner1234-cmd/DSH-THEME-KAMI/f45d8b53f0119220f8b1544321d51f5385d5440d/assets/preview-light.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: 12f2976fde989da578d362a1f038281c214cf3b2
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-09-23T22:15:04.286Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1000
+starsSnapshot: 2
+releaseUpdatedAt: 2026-09-23T22:15:04.997Z
+metadataUpdatedAt: 2026-09-23T22:15:04.997Z
+starsUpdatedAt: 2026-09-28T23:51:01.523Z
+updatedAt: 2026-09-28T23:51:01.523Z

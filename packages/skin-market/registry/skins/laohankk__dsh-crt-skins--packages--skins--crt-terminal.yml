@@ -1,0 +1,61 @@
+id: laohankk.crt.terminal
+name:
+  zh: CRT 终端（琥珀）
+  en: CRT Terminal
+author: laohankk
+description: 琥珀磷光 CRT 终端主题：琥珀配色、磷光泛光、扫描线、曲面暗角、方角面板与角标，外加合成的终端音效。纯 CSS + Web Audio，无字体无音频文件。
+repo: https://github.com/laohankk/dsh-crt-skins
+subpath: packages/skins/crt-terminal
+package: dsh-crt-terminal
+rowId: crt-terminal
+category: skin
+tags:
+  - appearance
+modes:
+  - light
+  - dark
+install:
+  target: github:laohankk/dsh-crt-skins#fef62785ee0a42ecd23ed6c4dd82879cf45ffb3f&path:/packages/skins/crt-terminal
+  version: 1.0.1
+  commit: fef62785ee0a42ecd23ed6c4dd82879cf45ffb3f
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/laohankk/dsh-crt-skins/60a8bc681342b2676af620d44119167fec6a1d37/packages/skins/crt-terminal/preview/preview.png
+listScreenshot: https://raw.githubusercontent.com/laohankk/dsh-crt-skins/60a8bc681342b2676af620d44119167fec6a1d37/packages/skins/crt-terminal/preview/preview.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: fef62785ee0a42ecd23ed6c4dd82879cf45ffb3f
+    packageVersion: 1.0.1
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-09-26T21:58:10.739Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1000
+starsSnapshot: 1
+releaseUpdatedAt: 2026-09-26T21:58:11.169Z
+metadataUpdatedAt: 2026-09-26T21:58:11.169Z
+starsUpdatedAt: 2026-10-22T22:18:53.607Z
+updatedAt: 2026-10-22T22:18:53.607Z

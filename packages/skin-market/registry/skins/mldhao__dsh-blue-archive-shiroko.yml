@@ -1,0 +1,67 @@
+id: mldhao.dsh-blue-archive-shiroko
+name:
+  zh: dsh-blue-archive-shiroko
+  en: dsh-blue-archive-shiroko
+author: mldhao
+description: 一个面向 DeepSeek Harness（dsh）Web 客户端的非官方同人主题插件。它为 DSH 提供蔚蓝档案风格的学院蓝 UI，并加入一个可拖动、可抚摸、可同步当前助手回复和安全查询 DeepSeek API 余额的白子桌宠。
+repo: https://github.com/mldhao/dsh-blue-archive-shiroko
+package: dsh-blue-archive-shiroko
+rowId: blue-archive-shiroko
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - motion
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:mldhao/dsh-blue-archive-shiroko#313f6c5bc89b00b18dc2baa9f719e8a3f12e0a72
+  version: 0.6.0
+  commit: 313f6c5bc89b00b18dc2baa9f719e8a3f12e0a72
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - skin-screenshots/mldhao__dsh-blue-archive-shiroko/313f6c5bc89b00b18dc2baa9f719e8a3f12e0a72/home.gif
+review:
+  compatibility: unverified
+  preview: repository-card
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 313f6c5bc89b00b18dc2baa9f719e8a3f12e0a72
+    packageVersion: 0.6.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-28T04:08:55.024Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 86
+starsSnapshot: 1
+releaseUpdatedAt: 2026-08-28T04:08:55.138Z
+metadataUpdatedAt: 2026-09-08T09:45:47.382Z
+starsUpdatedAt: 2026-09-18T21:38:37.248Z
+updatedAt: 2026-09-18T21:38:37.248Z
+
+marketScreenshots:
+  - skin-screenshots/mldhao__dsh-blue-archive-shiroko/313f6c5bc89b00b18dc2baa9f719e8a3f12e0a72/home.png
+  - skin-screenshots/mldhao__dsh-blue-archive-shiroko/313f6c5bc89b00b18dc2baa9f719e8a3f12e0a72/conversation.png
+  - skin-screenshots/mldhao__dsh-blue-archive-shiroko/313f6c5bc89b00b18dc2baa9f719e8a3f12e0a72/settings.png

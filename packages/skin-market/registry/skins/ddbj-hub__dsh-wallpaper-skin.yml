@@ -1,0 +1,76 @@
+id: ddbj-hub.dsh-wallpaper-skin
+name:
+  zh: dsh-wallpaper-skin
+  en: dsh-wallpaper-skin
+author: ddbj-hub
+description: dsh Web 界面的持久化壁纸皮肤：静态图片或静音循环视频作为应用背景，面板半透明化，右下角悬浮面板一键换壁纸。
+repo: https://github.com/ddbj-hub/dsh-wallpaper-skin
+package: dsh-wallpaper-skin
+rowId: dsh-wallpaper-skin
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - retro
+  - motion
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:ddbj-hub/dsh-wallpaper-skin#75bd37fe0846a676b05d0cf0d816cf7f9b04c3c7
+  version: 1.4.1
+  commit: 75bd37fe0846a676b05d0cf0d816cf7f9b04c3c7
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-wallpaper-skin
+    packageVersion: 1.4.1
+    integrity: sha512-poQt1pnObgmPHubQSM9PaKj2p+blyQRhrsAB26p9qnkaKpRHUz1Or11m+7Idr+b4x+UhoKXpYQCd5ic6dEGdPg==
+  npm:
+    name: dsh-wallpaper-skin
+    version: 1.4.1
+    integrity: sha512-poQt1pnObgmPHubQSM9PaKj2p+blyQRhrsAB26p9qnkaKpRHUz1Or11m+7Idr+b4x+UhoKXpYQCd5ic6dEGdPg==
+    repository: https://github.com/ddbj-hub/dsh-wallpaper-skin
+    gitHead: 75bd37fe0846a676b05d0cf0d816cf7f9b04c3c7
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+marketScreenshots:
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/ddbj-hub__dsh-wallpaper-skin/75bd37fe0846a676b05d0cf0d816cf7f9b04c3c7/home.png
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/ddbj-hub__dsh-wallpaper-skin/75bd37fe0846a676b05d0cf0d816cf7f9b04c3c7/conversation.png
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/ddbj-hub__dsh-wallpaper-skin/75bd37fe0846a676b05d0cf0d816cf7f9b04c3c7/settings.png
+screenshots: []
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+  scan:
+    commit: 75bd37fe0846a676b05d0cf0d816cf7f9b04c3c7
+    packageVersion: 1.4.1
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:31:07.070Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 152
+starsSnapshot: 1
+releaseUpdatedAt: 2026-08-23T05:31:07.142Z
+metadataUpdatedAt: 2026-08-23T05:31:07.142Z
+starsUpdatedAt: 2026-09-09T21:39:46.084Z
+updatedAt: 2026-09-09T21:39:46.084Z

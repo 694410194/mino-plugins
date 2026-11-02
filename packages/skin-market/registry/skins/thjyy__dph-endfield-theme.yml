@@ -1,0 +1,69 @@
+id: thjyy.dph-endfield-theme
+name:
+  zh: dph-endfield-theme
+  en: dph-endfield-theme
+author: thjyy
+description: 为 DeepSeek Harness（DSH）Web 界面制作的非官方联动主题。它保留 DSH 原有功能与文案，只改变界面配色、面板结构、交互动效，并在输入框左侧加入会随会话状态切换的角色动画。
+repo: https://github.com/thjyy/dph-endfield-theme
+package: dph-endfield-theme
+rowId: dph-endfield-theme
+category: skin
+tags:
+  - glass
+  - retro
+  - motion
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:thjyy/dph-endfield-theme#a7d7467ed14db2504ab860073800244e4521d177
+  version: 1.2.0
+  commit: a7d7467ed14db2504ab860073800244e4521d177
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/thjyy/dph-endfield-theme/a7d7467ed14db2504ab860073800244e4521d177/docs/images/preview-home.png
+  - https://raw.githubusercontent.com/thjyy/dph-endfield-theme/a7d7467ed14db2504ab860073800244e4521d177/docs/images/preview-conversation.png
+  - https://raw.githubusercontent.com/thjyy/dph-endfield-theme/a7d7467ed14db2504ab860073800244e4521d177/docs/images/state-idle.gif
+  - https://raw.githubusercontent.com/thjyy/dph-endfield-theme/a7d7467ed14db2504ab860073800244e4521d177/docs/images/state-typing.gif
+  - https://raw.githubusercontent.com/thjyy/dph-endfield-theme/a7d7467ed14db2504ab860073800244e4521d177/docs/images/state-thinking.gif
+  - https://raw.githubusercontent.com/thjyy/dph-endfield-theme/223a27aefedd1ad221083d065754614401eade80/docs/images/preview-home.png
+  - https://raw.githubusercontent.com/thjyy/dph-endfield-theme/223a27aefedd1ad221083d065754614401eade80/docs/images/preview-conversation.png
+  - https://raw.githubusercontent.com/thjyy/dph-endfield-theme/223a27aefedd1ad221083d065754614401eade80/docs/images/state-idle.gif
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: a7d7467ed14db2504ab860073800244e4521d177
+    packageVersion: 1.2.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:30:42.420Z
+    findings: []
+license:
+  code: SEE LICENSE IN LICENSE
+  commercialUse: false
+featuredRank: 121
+starsSnapshot: 5
+releaseUpdatedAt: 2026-08-23T05:30:42.527Z
+metadataUpdatedAt: 2026-08-23T05:30:42.527Z
+starsUpdatedAt: 2026-10-08T23:45:25.961Z
+updatedAt: 2026-10-08T23:45:25.961Z

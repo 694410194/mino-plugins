@@ -1,0 +1,74 @@
+id: tfboy1.dsh-minecraft-ui
+name:
+  zh: dsh-minecraft-ui
+  en: dsh-minecraft-ui
+author: TFboy1
+description: "[](https://github.com/TFboy1/dsh-minecraft-ui/actions/workflows/ci.yml) [](https://www.npmjs.com/package/dsh-minecraft-ui) [](#项目介绍) [](https://threejs.org/) [](https://react.dev/) [](https://nodejs.org/)"
+repo: https://github.com/TFboy1/dsh-minecraft-ui
+package: dsh-minecraft-ui
+rowId: minecraft-ui
+category: skin
+tags:
+  - appearance
+modes:
+  - light
+  - dark
+install:
+  target: github:TFboy1/dsh-minecraft-ui#ec5313b87f8688b82421f124cc2f3887c84b3a8c
+  version: 0.3.0
+  commit: ec5313b87f8688b82421f124cc2f3887c84b3a8c
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-minecraft-ui
+    packageVersion: 0.3.0
+    integrity: sha512-lIc2gsdnoCZrNn7C1bWqJ9aarP+yWnFB/+6aTiorqcoC2siqFnxVs5f/KN0WjGK4kR2TbTZ/6bevlYkfULvcww==
+  allowBuild: dsh-minecraft-ui@https://codeload.github.com/TFboy1/dsh-minecraft-ui/tar.gz/ec5313b87f8688b82421f124cc2f3887c84b3a8c
+  npm:
+    name: dsh-minecraft-ui
+    version: 0.3.0
+    integrity: sha512-lIc2gsdnoCZrNn7C1bWqJ9aarP+yWnFB/+6aTiorqcoC2siqFnxVs5f/KN0WjGK4kR2TbTZ/6bevlYkfULvcww==
+    repository: https://github.com/TFboy1/dsh-minecraft-ui
+    gitHead: ec5313b87f8688b82421f124cc2f3887c84b3a8c
+compatibility:
+  dsh: ">=0.1.0-rc.8 <0.2.0"
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/TFboy1/dsh-minecraft-ui/ec5313b87f8688b82421f124cc2f3887c84b3a8c/docs/banner.png
+  - https://raw.githubusercontent.com/TFboy1/dsh-minecraft-ui/ec5313b87f8688b82421f124cc2f3887c84b3a8c/docs/screenshots/voxel-world.png
+  - https://raw.githubusercontent.com/TFboy1/dsh-minecraft-ui/ec5313b87f8688b82421f124cc2f3887c84b3a8c/docs/screenshots/inventory-crafting.png
+  - https://raw.githubusercontent.com/TFboy1/dsh-minecraft-ui/ec5313b87f8688b82421f124cc2f3887c84b3a8c/docs/screenshots/agent-plugin-chest.png
+  - https://raw.githubusercontent.com/TFboy1/dsh-minecraft-ui/ec5313b87f8688b82421f124cc2f3887c84b3a8c/docs/screenshots/model-chest.png
+  - https://raw.githubusercontent.com/TFboy1/dsh-minecraft-ui/ec5313b87f8688b82421f124cc2f3887c84b3a8c/docs/screenshots/reasoning-enchantment.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: ec5313b87f8688b82421f124cc2f3887c84b3a8c
+    packageVersion: 0.3.0
+    scannerVersion: static-v2
+    dshVersion: ">=0.1.0-rc.8 <0.2.0"
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:29:31.186Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1023
+starsSnapshot: 21
+releaseUpdatedAt: 2026-09-15T03:03:43.311Z
+metadataUpdatedAt: 2026-08-23T05:29:31.272Z
+starsUpdatedAt: 2026-10-19T22:54:42.735Z
+updatedAt: 2026-10-19T22:54:42.735Z

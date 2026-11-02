@@ -1,0 +1,72 @@
+id: lkdxzhxi.dsh-glass-ui-theme
+name:
+  zh: dsh-glass-ui-theme
+  en: dsh-glass-ui-theme
+author: lkdxzhxi
+description: 为 DeepSeek Harness 打造的液态玻璃主题 — 磨砂质感、可调色调、动态壁纸，视频背景，让 DSH 界面焕然一新。
+repo: https://github.com/lkdxzhxi/dsh-glass-ui-theme
+package: dsh-glass-ui-theme
+rowId: dsh-glass-ui-theme
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - motion
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:lkdxzhxi/dsh-glass-ui-theme#940c4495db199365fa788d47112ff858d66ce0ec
+  version: 0.2.6
+  commit: 940c4495db199365fa788d47112ff858d66ce0ec
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-glass-ui-theme
+    packageVersion: 0.2.6
+    integrity: sha512-i2yQELyMJxrvoR4tKqAx+LJxEwUJNXOmNYdy8D8O8GFxwNpNuCvEH0P9zFcJqKWH0lQTRytOSnU4Q5WMfU5KSg==
+  npm:
+    name: dsh-glass-ui-theme
+    version: 0.2.6
+    integrity: sha512-i2yQELyMJxrvoR4tKqAx+LJxEwUJNXOmNYdy8D8O8GFxwNpNuCvEH0P9zFcJqKWH0lQTRytOSnU4Q5WMfU5KSg==
+    repository: https://github.com/lkdxzhxi/dsh-glass-ui-theme
+    gitHead: 940c4495db199365fa788d47112ff858d66ce0ec
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/lkdxzhxi/dsh-glass-ui-theme/ef35fd6ed5c8821c1e79ee804e7384a206915c3f/docs/screenshot.png
+listScreenshot: https://raw.githubusercontent.com/lkdxzhxi/dsh-glass-ui-theme/ef35fd6ed5c8821c1e79ee804e7384a206915c3f/docs/screenshot.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: 940c4495db199365fa788d47112ff858d66ce0ec
+    packageVersion: 0.2.6
+    scannerVersion: static-v2
+    dshVersion: ^0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-09-12T21:26:21.888Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1096
+starsSnapshot: 0
+releaseUpdatedAt: 2026-09-12T21:26:22.808Z
+metadataUpdatedAt: 2026-09-12T21:26:22.808Z
+starsUpdatedAt: 2026-09-19T21:26:36.461Z
+updatedAt: 2026-09-19T21:26:36.461Z

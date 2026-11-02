@@ -1,0 +1,66 @@
+id: xxxrickymorty-dev.dsh-rick
+name:
+  zh: dsh-rick
+  en: dsh-rick
+author: xxxrickymorty-dev
+description: DeepSeek Harness 的 C-137 皮肤：28 张目录海报、自定义场景、霓虹外观，以及叠加层宠物（Rick、Morty、传送枪）。
+repo: https://github.com/xxxrickymorty-dev/dsh-rick
+package: dsh-rick
+rowId: dsh-rick
+category: skin
+tags:
+  - glass
+  - light-dark
+modes:
+  - dark
+install:
+  target: github:xxxrickymorty-dev/dsh-rick#91105ecd4d9f476cca06dfc7db769b2871f5c450
+  version: 0.2.0
+  commit: 91105ecd4d9f476cca06dfc7db769b2871f5c450
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: ">=0.0.1-rc.1 <0.1.0 || >=0.1.0-rc.1 <0.2.0-0"
+  platform:
+    - web
+screenshots:
+  - skin-screenshots/xxxrickymorty-dev__dsh-rick/91105ecd4d9f476cca06dfc7db769b2871f5c450/home.gif
+listScreenshot: https://raw.githubusercontent.com/xxxrickymorty-dev/dsh-rick/91105ecd4d9f476cca06dfc7db769b2871f5c450/docs/preview.png
+review:
+  compatibility: unverified
+  preview: repository-card
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - DSH 兼容范围待核对：保留的市场范围 >=0.0.1-rc.1 <0.1.0 || >=0.1.0-rc.1 <0.2.0-0 未被本次检测范围 >=0.2.0-rc.1 <0.3.0-0 完全覆盖（固定版本 91105ecd4d9f476cca06dfc7db769b2871f5c450）。已保留原字段，请人工核对；此项是声明冲突，不代表已验证运行失败。
+  scan:
+    commit: 91105ecd4d9f476cca06dfc7db769b2871f5c450
+    packageVersion: 0.2.0
+    scannerVersion: static-v2
+    dshVersion: ">=0.2.0-rc.1 <0.3.0-0"
+    mode: static
+    result: pass
+    checkedAt: 2026-10-14T22:17:32.092Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 196
+starsSnapshot: 0
+releaseUpdatedAt: 2026-10-14T22:17:33.631Z
+metadataUpdatedAt: 2026-10-14T22:17:33.631Z
+starsUpdatedAt: 2026-08-18 15:46:32.876000+00:00
+updatedAt: 2026-10-14T22:17:33.631Z
+
+marketScreenshots:
+  - skin-screenshots/xxxrickymorty-dev__dsh-rick/91105ecd4d9f476cca06dfc7db769b2871f5c450/home.png
+  - skin-screenshots/xxxrickymorty-dev__dsh-rick/91105ecd4d9f476cca06dfc7db769b2871f5c450/conversation.png
+  - skin-screenshots/xxxrickymorty-dev__dsh-rick/91105ecd4d9f476cca06dfc7db769b2871f5c450/settings.png

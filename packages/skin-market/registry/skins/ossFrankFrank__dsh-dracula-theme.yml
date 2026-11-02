@@ -1,0 +1,72 @@
+id: ossfrankfrank.dsh-dracula-theme
+name:
+  zh: dsh-dracula-theme
+  en: dsh-dracula-theme
+author: ossFrankFrank
+description: DSH Web GUI 的德古拉主题插件：经典暗色配色与 Soft 变体接入原生主题系统，一键切换并记住选择。
+repo: https://github.com/ossFrankFrank/dsh-dracula-theme
+package: dsh-dracula-theme
+rowId: dracula
+category: skin
+tags:
+  - wallpaper
+  - pastel
+  - token-theme
+  - light-dark
+modes:
+  - dark
+install:
+  target: github:ossFrankFrank/dsh-dracula-theme#28e4621866680a241467fb7249bc07231afb8459
+  version: 1.1.0
+  commit: 28e4621866680a241467fb7249bc07231afb8459
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-dracula-theme
+    packageVersion: 1.1.0
+    integrity: sha512-R2biqmAXf/reh7AvQPtX2ixx0gfqDAw+yoMAofpwdNAjmIRZ8uZrQ3tQq9vpll5suiRRckemBP1ujJcVXA1aUw==
+  npm:
+    name: dsh-dracula-theme
+    version: 1.1.0
+    integrity: sha512-R2biqmAXf/reh7AvQPtX2ixx0gfqDAw+yoMAofpwdNAjmIRZ8uZrQ3tQq9vpll5suiRRckemBP1ujJcVXA1aUw==
+    repository: https://github.com/ossFrankFrank/dsh-dracula-theme
+    gitHead: 28e4621866680a241467fb7249bc07231afb8459
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/ossFrankFrank/dsh-dracula-theme/b8c7e809043296485ebff870a4c705e9139b3d5f/assets/preview.png
+  - https://raw.githubusercontent.com/ossFrankFrank/dsh-dracula-theme/684d09a59a62e4180ac087918cb4f6d5aeffef9f/assets/preview.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - DSH 兼容范围待核对：保留的市场范围 ^0.1.0-rc.6 未被本次检测范围 ^0.1.2-alpha.1 完全覆盖（固定版本 28e4621866680a241467fb7249bc07231afb8459）。已保留原字段，请人工核对；此项是声明冲突，不代表已验证运行失败。
+  scan:
+    commit: 28e4621866680a241467fb7249bc07231afb8459
+    packageVersion: 1.1.0
+    scannerVersion: static-v2
+    dshVersion: ^0.1.2-alpha.1
+    mode: static
+    result: pass
+    checkedAt: 2026-08-31T23:12:03.533Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 186
+starsSnapshot: 2
+releaseUpdatedAt: 2026-10-18T09:46:40.073Z
+metadataUpdatedAt: 2026-09-08T21:47:42.220Z
+starsUpdatedAt: 2026-09-09T21:39:38.096Z
+updatedAt: 2026-10-18T09:46:40.073Z

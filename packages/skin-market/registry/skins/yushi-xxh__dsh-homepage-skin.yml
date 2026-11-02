@@ -1,0 +1,74 @@
+id: yushi-xxh.dsh-homepage-skin
+name:
+  zh: dsh-homepage-skin
+  en: dsh-homepage-skin
+author: yushi-xxh
+description: 给 dsh web 铺上 DeepSeek Harness 首页同款背景：WebGL 流体光效、点线网格与数字点云鲸鱼，深色/亮色两套配色。
+repo: https://github.com/yushi-xxh/dsh-homepage-skin
+package: dsh-homepage-skin
+rowId: homepage-skin
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:yushi-xxh/dsh-homepage-skin#329f9e0b12cab223b00b3e75e2f73453d9a46ed5
+  version: 0.1.13
+  commit: 329f9e0b12cab223b00b3e75e2f73453d9a46ed5
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-homepage-skin
+    packageVersion: 0.1.13
+    integrity: sha512-VCXbd8IlI/r1Yfs3B1u5G8q+kqgubZfW1ERgrn9Q61DiMG09eafH0vFTe1yglF99k69Ny0S8yGHRq7goz3IRVg==
+  npm:
+    name: dsh-homepage-skin
+    version: 0.1.13
+    integrity: sha512-VCXbd8IlI/r1Yfs3B1u5G8q+kqgubZfW1ERgrn9Q61DiMG09eafH0vFTe1yglF99k69Ny0S8yGHRq7goz3IRVg==
+    repository: https://github.com/yushi-xxh/dsh-homepage-skin
+    gitHead: 329f9e0b12cab223b00b3e75e2f73453d9a46ed5
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/yushi-xxh/dsh-homepage-skin/44933213da11f82caefd609ad1bdfe84ac95b3e0/docs/compare-dark.png
+  - https://raw.githubusercontent.com/yushi-xxh/dsh-homepage-skin/44933213da11f82caefd609ad1bdfe84ac95b3e0/docs/compare-light.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - DSH 兼容范围待核对：保留的市场范围 ^0.1.0-rc.6 未被本次检测范围 ^0.1.2-rc.1 完全覆盖（固定版本 329f9e0b12cab223b00b3e75e2f73453d9a46ed5）。已保留原字段，请人工核对；此项是声明冲突，不代表已验证运行失败。
+  scan:
+    commit: 329f9e0b12cab223b00b3e75e2f73453d9a46ed5
+    packageVersion: 0.1.13
+    scannerVersion: static-v2
+    dshVersion: ^0.1.2-rc.1
+    mode: static
+    result: pass
+    checkedAt: 2026-09-06T21:12:32.230Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 15
+starsSnapshot: 3
+releaseUpdatedAt: 2026-09-06T21:12:32.355Z
+metadataUpdatedAt: 2026-09-08T21:47:33.291Z
+starsUpdatedAt: 2026-09-09T21:39:30.629Z
+updatedAt: 2026-09-09T21:39:30.629Z

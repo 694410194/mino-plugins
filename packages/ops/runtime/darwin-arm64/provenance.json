@@ -1,0 +1,7 @@
+{
+  "version": "0.4.4",
+  "target": "darwin-arm64",
+  "executable": "dsh-ops-worker",
+  "sha256": "0188cd2ff565aefba670c2f7706c1a9aa3f3d2115032fda1460a13ad2eda1c5e",
+  "source": "native/Cargo.lock + native/src + native/windows-metadata; original MIT Rust core"
+}

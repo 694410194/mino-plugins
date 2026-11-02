@@ -1,0 +1,67 @@
+id: carpon39038.dsh-image-theme
+name:
+  zh: dsh-image-theme
+  en: dsh-image-theme
+author: Carpon39038
+description: "Warp-inspired image-to-theme plugin for DeepSeek Harness: upload a background, extract a palette, and apply a glass UI."
+repo: https://github.com/Carpon39038/dsh-image-theme
+package: "@cabeta/dsh-image-theme"
+rowId: image-theme
+category: skin
+tags:
+  - glass
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:Carpon39038/dsh-image-theme#25c70fcd31b0cf36f8a0ff57b0413223daaf5d27
+  version: 0.1.1
+  commit: 25c70fcd31b0cf36f8a0ff57b0413223daaf5d27
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: 0.1.2-rc.1
+  platform:
+    - web
+screenshots: []
+review:
+  compatibility: verified
+  preview: repository-card
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - README 的 docs/preview.png 与 playground 演示界面一致，尚不能作为 DSH Web 实机截图；请补充该固定版本在 DSH 0.1.2-rc.1 中运行的截图。
+  scan:
+    commit: 25c70fcd31b0cf36f8a0ff57b0413223daaf5d27
+    packageVersion: 0.1.1
+    scannerVersion: static-v2
+    dshVersion: ^0.1.2-rc.1
+    mode: static
+    result: pass
+    checkedAt: 2026-09-07T21:58:29.407Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 60
+starsSnapshot: 1
+releaseUpdatedAt: 2026-09-07T21:58:29.457Z
+metadataUpdatedAt: 2026-09-08T02:11:50.874Z
+starsUpdatedAt: 2026-09-12T21:25:05.195Z
+updatedAt: 2026-09-12T21:25:05.195Z
+
+marketScreenshots:
+  - skin-screenshots/Carpon39038__dsh-image-theme/25c70fcd31b0cf36f8a0ff57b0413223daaf5d27/home.png
+  - skin-screenshots/Carpon39038__dsh-image-theme/25c70fcd31b0cf36f8a0ff57b0413223daaf5d27/conversation.png
+  - skin-screenshots/Carpon39038__dsh-image-theme/25c70fcd31b0cf36f8a0ff57b0413223daaf5d27/settings.png

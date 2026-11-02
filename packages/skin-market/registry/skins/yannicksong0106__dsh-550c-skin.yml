@@ -1,0 +1,70 @@
+id: yannicksong0106.dsh-550c-skin
+name:
+  zh: 550C
+  en: 550C
+author: yannicksong0106
+description: 把 DSH 界面换成 550C 控制台：四套磷光配色、扫描线、等宽字体和机器读数栏。与 dsh-550c-boot 是一套视觉、两个独立插件。
+repo: https://github.com/yannicksong0106/dsh-550c-skin
+package: dsh-550c-skin
+rowId: dsh-550c-skin
+category: skin
+tags:
+  - appearance
+  - retro
+  - token-theme
+modes:
+  - dark
+install:
+  target: github:yannicksong0106/dsh-550c-skin#4819c84c67192d0c59b7036e786852649e6fa491
+  version: 0.1.0-beta.3
+  commit: 4819c84c67192d0c59b7036e786852649e6fa491
+  desktop:
+    mode: manual-only
+    reason: published-npm-gitHead-differs-from-pin
+  npm:
+    name: dsh-550c-skin
+    version: 0.1.0-beta.3
+    integrity: sha512-kd7jdYlgNxwybOpUm4XS4ApFirHdSTLxv9hRjt3geiRlMID9k8KcWnFCvuQKsvpvvdtn2DhxfZpBG9gzBtOJzQ==
+    repository: https://github.com/yannicksong0106/dsh-550c-skin
+    gitHead: 4819c84c67192d0c59b7036e786852649e6fa491
+compatibility:
+  dsh: ">=0.2.0-rc.1"
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/yannicksong0106/dsh-550c-skin/b568ad529cceda4ae57be6f07b722a2d4cd82e20/docs/preview-amber.png
+  - https://raw.githubusercontent.com/yannicksong0106/dsh-550c-skin/b568ad529cceda4ae57be6f07b722a2d4cd82e20/docs/preview-cyan.png
+listScreenshot: https://raw.githubusercontent.com/yannicksong0106/dsh-550c-skin/b568ad529cceda4ae57be6f07b722a2d4cd82e20/docs/preview-amber.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: improve
+    topic: improve
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+    - 建议在 README 中补充可复制的 DSH 安装命令，方便用户直接使用。
+    - 建议为仓库添加 dsh-plugin Topic，方便用户和 DSH 皮肤市场发现它。
+  scan:
+    commit: 4819c84c67192d0c59b7036e786852649e6fa491
+    packageVersion: 0.1.0-beta.3
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-24T21:32:16.114Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1107
+starsSnapshot: 4
+releaseUpdatedAt: 2026-10-24T21:32:16.883Z
+metadataUpdatedAt: 2026-10-24T21:32:16.883Z
+starsUpdatedAt: 2026-10-27T23:01:00.537Z
+updatedAt: 2026-10-27T23:01:00.537Z

@@ -1,0 +1,71 @@
+id: starslittle.dsh-blue-whale
+name:
+  zh: dsh-blue-whale
+  en: dsh-blue-whale
+author: starslittle
+description: 复刻 DeepSeek Chat 蓝鲸配色的皮肤，亮色/深色跟随系统外观。
+repo: https://github.com/starslittle/dsh-blue-whale
+package: dsh-blue-whale
+rowId: blue-whale
+category: skin
+tags:
+  - retro
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:starslittle/dsh-blue-whale#e18aa1e27e98df98c478b8d24076a94e64d43ed5
+  version: 0.1.0
+  commit: e18aa1e27e98df98c478b8d24076a94e64d43ed5
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-blue-whale
+    packageVersion: 0.1.0
+    integrity: sha512-fQRkkY86lygqGKCjbW1qMQGU+sso854vJM8WiG36G6f+izejnT48y0qWqshMAIleZatRzcEYPJFZrziRtuxJdA==
+  npm:
+    name: dsh-blue-whale
+    version: 0.1.0
+    integrity: sha512-fQRkkY86lygqGKCjbW1qMQGU+sso854vJM8WiG36G6f+izejnT48y0qWqshMAIleZatRzcEYPJFZrziRtuxJdA==
+    repository: https://github.com/starslittle/dsh-blue-whale
+    gitHead: e18aa1e27e98df98c478b8d24076a94e64d43ed5
+compatibility:
+  dsh: ^0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/starslittle/dsh-blue-whale/e18aa1e27e98df98c478b8d24076a94e64d43ed5/docs/compare-home.png
+  - https://raw.githubusercontent.com/starslittle/dsh-blue-whale/e18aa1e27e98df98c478b8d24076a94e64d43ed5/docs/compare-brand.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: e18aa1e27e98df98c478b8d24076a94e64d43ed5
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    dshVersion: ^0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:28:24.222Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 6
+starsSnapshot: 6
+releaseUpdatedAt: 2026-09-15T03:03:54.597Z
+metadataUpdatedAt: 2026-08-23T05:28:24.292Z
+starsUpdatedAt: 2026-10-20T22:15:41.482Z
+updatedAt: 2026-10-20T22:15:41.482Z

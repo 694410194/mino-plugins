@@ -1,0 +1,64 @@
+id: zenghuizhu69-hub.dsh-skin-blue-whale
+name:
+  zh: dsh-skin-blue-whale
+  en: dsh-skin-blue-whale
+author: zenghuizhu69-hub
+description: 为 dsh Web UI 打造的「蓝鲸跃海」皮肤插件 —— 极简、高级，像桌面壁纸一样安静地铺在界面后面。
+repo: https://github.com/zenghuizhu69-hub/dsh-skin-blue-whale
+package: dsh-skin-blue-whale
+rowId: blue-whale-skin
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:zenghuizhu69-hub/dsh-skin-blue-whale#6cf1b2125b01ec9180a7e65b7d707b53f5119334
+  version: 1.0.0
+  commit: 6cf1b2125b01ec9180a7e65b7d707b53f5119334
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/zenghuizhu69-hub/dsh-skin-blue-whale/6cf1b2125b01ec9180a7e65b7d707b53f5119334/screenshots/hero.png
+  - https://raw.githubusercontent.com/zenghuizhu69-hub/dsh-skin-blue-whale/6cf1b2125b01ec9180a7e65b7d707b53f5119334/screenshots/work.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: 6cf1b2125b01ec9180a7e65b7d707b53f5119334
+    packageVersion: 1.0.0
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:29:44.613Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 56
+starsSnapshot: 2
+releaseUpdatedAt: 2026-08-23T05:29:44.695Z
+metadataUpdatedAt: 2026-08-23T05:29:44.695Z
+starsUpdatedAt: 2026-08-26T03:27:55.632Z
+updatedAt: 2026-08-26T03:27:55.632Z

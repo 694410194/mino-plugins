@@ -1,0 +1,71 @@
+id: yunxiiqwq.maid-whale-webui
+name:
+  zh: maid-whale-webui
+  en: maid-whale-webui
+author: yunxiiQwQ
+description: DSH Web UI 鲸鱼女仆纸面主题：亮暗配色、海洋插画、手绘边框、装饰素材与常驻桌宠。
+repo: https://github.com/yunxiiQwQ/dsh-maid-whale-webUI
+subpath: maid-whale-webui
+package: "@yunxii/dsh-client-ui-skin-maid-whale-webui"
+rowId: ui-skin-maid-whale-webui
+category: skin
+tags:
+  - wallpaper
+  - anime
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:yunxiiQwQ/dsh-maid-whale-webUI#34c09d7bfbed9b36b3b23f1f72a733ed310265cd&path:/maid-whale-webui
+  version: 0.1.1
+  commit: 34c09d7bfbed9b36b3b23f1f72a733ed310265cd
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/yunxiiQwQ/dsh-maid-whale-webUI/fabd96163a86c403820ab594ec0bdd1e8fab1fd7/maid-whale-webui/preview/light.webp
+  - https://raw.githubusercontent.com/yunxiiQwQ/dsh-maid-whale-webUI/fabd96163a86c403820ab594ec0bdd1e8fab1fd7/maid-whale-webui/preview/dark.webp
+  - https://raw.githubusercontent.com/yunxiiQwQ/dsh-maid-whale-webUI/fabd96163a86c403820ab594ec0bdd1e8fab1fd7/maid-whale-webui/preview/pet-working.png
+  - https://raw.githubusercontent.com/yunxiiQwQ/dsh-maid-whale-webUI/4b46791a2eb868b8e081aab896d34dab124d4b62/maid-whale-webui/preview/light.webp
+  - https://raw.githubusercontent.com/yunxiiQwQ/dsh-maid-whale-webUI/4b46791a2eb868b8e081aab896d34dab124d4b62/maid-whale-webui/preview/dark.webp
+  - https://raw.githubusercontent.com/yunxiiQwQ/dsh-maid-whale-webUI/4b46791a2eb868b8e081aab896d34dab124d4b62/maid-whale-webui/preview/pet-working.png
+  - https://raw.githubusercontent.com/yunxiiQwQ/dsh-maid-whale-webUI/6ab5e7499ddf76c4fcf6d83421c08e967db1c2bc/maid-whale-webui/preview/light.webp
+  - https://raw.githubusercontent.com/yunxiiQwQ/dsh-maid-whale-webUI/6ab5e7499ddf76c4fcf6d83421c08e967db1c2bc/maid-whale-webui/preview/dark.webp
+listScreenshot: https://raw.githubusercontent.com/yunxiiQwQ/dsh-maid-whale-webUI/5162a73c2b1e066a095c4bf218a1c305ee467cfb/maid-whale-webui/preview/theme-light.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 34c09d7bfbed9b36b3b23f1f72a733ed310265cd
+    packageVersion: 0.1.1
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-02T10:29:19.175Z
+    findings: []
+license:
+  code: BSD-3-Clause
+  commercialUse: true
+featuredRank: 22
+starsSnapshot: 46
+releaseUpdatedAt: 2026-10-02T10:29:22.220Z
+metadataUpdatedAt: 2026-10-02T10:29:22.220Z
+starsUpdatedAt: 2026-10-27T23:00:36.692Z
+updatedAt: 2026-10-27T23:00:36.692Z

@@ -1,0 +1,64 @@
+id: lesliechowsh.dsh-weniger-theme
+name:
+  zh: dsh-weniger-theme
+  en: dsh-weniger-theme
+author: lesliechowsh
+description: „Weniger, aber besser" —— 少，但更好。
+repo: https://github.com/lesliechowsh/dsh-weniger-theme
+package: dsh-weniger-theme
+rowId: weniger-theme
+category: skin
+tags:
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:lesliechowsh/dsh-weniger-theme#51d9f31f7dae3e119b610227b75bea9bd99f6ffa
+  version: 0.1.5
+  commit: 51d9f31f7dae3e119b610227b75bea9bd99f6ffa
+  desktop:
+    mode: manual-only
+    reason: npm-source-unverified
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/lesliechowsh/dsh-weniger-theme/b88ab91040ea396e9c8cff7f13317532711eb2e3/docs/screenshot-hero.png
+  - https://raw.githubusercontent.com/lesliechowsh/dsh-weniger-theme/6b8470905c32c4af50c71258c99e550f0498096a/docs/screenshot-hero.png
+  - https://raw.githubusercontent.com/lesliechowsh/dsh-weniger-theme/f64905000fd727604fe366cd001640406372ea48/docs/screenshot-hero.png
+listScreenshot: https://raw.githubusercontent.com/lesliechowsh/dsh-weniger-theme/51d9f31f7dae3e119b610227b75bea9bd99f6ffa/docs/screenshot-hero.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 51d9f31f7dae3e119b610227b75bea9bd99f6ffa
+    packageVersion: 0.1.5
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-09-12T21:23:59.724Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 209
+starsSnapshot: 4
+releaseUpdatedAt: 2026-09-12T21:24:01.350Z
+metadataUpdatedAt: 2026-09-12T21:24:01.350Z
+starsUpdatedAt: 2026-09-18T21:37:23.390Z
+updatedAt: 2026-09-18T21:37:23.390Z

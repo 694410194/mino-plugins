@@ -1,0 +1,64 @@
+id: xingyingyuzhui.dsh-liquid-glass
+name:
+  zh: dsh-liquid-glass
+  en: dsh-liquid-glass
+author: xingyingyuzhui
+description: DSH Web 液态玻璃皮肤：冰原/深水壁纸、可导入、壁纸透明度，以及叠在官方浅色/深色/跟随系统上的分岛模糊。
+repo: https://github.com/xingyingyuzhui/dsh-liquid-glass
+package: dsh-liquid-glass
+rowId: dsh-liquid-glass
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:xingyingyuzhui/dsh-liquid-glass#573a81d66ddff86216a61ebee4c755ed49ae31de
+  version: 0.12.82
+  commit: 573a81d66ddff86216a61ebee4c755ed49ae31de
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/xingyingyuzhui/dsh-liquid-glass/573a81d66ddff86216a61ebee4c755ed49ae31de/docs/preview/ice-hero.jpg
+  - https://raw.githubusercontent.com/xingyingyuzhui/dsh-liquid-glass/573a81d66ddff86216a61ebee4c755ed49ae31de/docs/preview/deepwater-chat.jpg
+  - https://raw.githubusercontent.com/xingyingyuzhui/dsh-liquid-glass/573a81d66ddff86216a61ebee4c755ed49ae31de/docs/preview/settings.jpg
+  - https://raw.githubusercontent.com/xingyingyuzhui/dsh-liquid-glass/573a81d66ddff86216a61ebee4c755ed49ae31de/docs/preview/custom-wallpaper.jpg
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 573a81d66ddff86216a61ebee4c755ed49ae31de
+    packageVersion: 0.12.82
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:28:00.879Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 21
+starsSnapshot: 14
+releaseUpdatedAt: 2026-08-23T05:28:00.981Z
+metadataUpdatedAt: 2026-08-23T05:28:00.981Z
+starsUpdatedAt: 2026-08-29T04:12:30.911Z
+updatedAt: 2026-08-29T04:12:30.911Z

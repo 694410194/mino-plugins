@@ -1,0 +1,83 @@
+id: d-dev0101.open-sea-skin
+name:
+  zh: Open Sea 海洋皮肤
+  en: Open Sea Skin
+author: d-dev0101
+description: 为 DeepSeek Harness Web UI 提供实时 WebGPU 海洋背景，支持左下角调节波浪、日光、玻璃不透明度和自动昼夜循环。
+repo: https://github.com/d-dev0101/open-sea-skin
+package: open-sea-skin
+rowId: open-sea-skin
+category: skin
+tags:
+  - ocean
+  - webgpu
+  - glass
+  - animated
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:d-dev0101/open-sea-skin#387740c974f3fd47ef22eebd7c20da4645f2f213
+  version: 1.2.6
+  commit: 387740c974f3fd47ef22eebd7c20da4645f2f213
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+  npm:
+    name: open-sea-skin
+    version: 1.2.6
+    integrity: sha512-j0e/MG7vnbPhxGjtqTLeGUj8XQ7jptUuMwYlRNDXRZcc/jxtsmIlldIhORCROqsGX2oLiXJoolTEKu+nr0g7UA==
+    repository: https://github.com/d-dev0101/open-sea-skin
+    gitHead: 387740c974f3fd47ef22eebd7c20da4645f2f213
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+marketScreenshots:
+  - skin-screenshots/d-dev0101__open-sea-skin/387740c974f3fd47ef22eebd7c20da4645f2f213/home.png
+  - skin-screenshots/d-dev0101__open-sea-skin/387740c974f3fd47ef22eebd7c20da4645f2f213/conversation.png
+  - skin-screenshots/d-dev0101__open-sea-skin/387740c974f3fd47ef22eebd7c20da4645f2f213/settings.png
+screenshots:
+  - https://raw.githubusercontent.com/d-dev0101/open-sea-skin/2437d80a96de4124c54fbe89872fa7090103f025/docs/screenshots/harness-dark-overview-40.gif
+  - https://raw.githubusercontent.com/d-dev0101/open-sea-skin/2437d80a96de4124c54fbe89872fa7090103f025/docs/screenshots/harness-light-overview-40.gif
+  - https://raw.githubusercontent.com/d-dev0101/open-sea-skin/2437d80a96de4124c54fbe89872fa7090103f025/docs/screenshots/harness-wave-control-40.gif
+  - https://raw.githubusercontent.com/d-dev0101/open-sea-skin/2437d80a96de4124c54fbe89872fa7090103f025/docs/screenshots/harness-daylight-sunset-40.gif
+  - https://raw.githubusercontent.com/d-dev0101/open-sea-skin/5bc053cb1ff2168695d4d0be710c68f8dd3ff0e2/docs/marketplace/open-sea-harness-cover.png
+  - https://raw.githubusercontent.com/d-dev0101/open-sea-skin/5bc053cb1ff2168695d4d0be710c68f8dd3ff0e2/docs/screenshots/harness-dark-overview-40.gif
+  - https://raw.githubusercontent.com/d-dev0101/open-sea-skin/5bc053cb1ff2168695d4d0be710c68f8dd3ff0e2/docs/screenshots/harness-light-overview-40.gif
+  - skin-screenshots/d-dev0101__open-sea-skin/387740c974f3fd47ef22eebd7c20da4645f2f213/home.gif
+listScreenshot: https://raw.githubusercontent.com/d-dev0101/open-sea-skin/58a1f490ca9af55febcbb5095908d5ca35db4248/docs/marketplace/open-sea-harness-cover.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 387740c974f3fd47ef22eebd7c20da4645f2f213
+    packageVersion: 1.2.6
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-10-20T22:15:00.947Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+  notice: Includes vendored three.js under MIT and Geist fonts under SIL OFL 1.1.
+featuredRank: 0
+starsSnapshot: 385
+releaseUpdatedAt: 2026-10-20T22:15:04.589Z
+metadataUpdatedAt: 2026-10-20T22:15:04.589Z
+starsUpdatedAt: 2026-10-27T23:00:30.475Z
+updatedAt: 2026-10-27T23:00:30.475Z

@@ -1,0 +1,69 @@
+id: 147228.packages-skins-great-wall-sunrise
+name:
+  zh: packages/skins/great-wall-sunrise
+  en: packages/skins/great-wall-sunrise
+author: "147228"
+description: 长城三境的暖色浅色主题。详见仓库根目录 README。
+repo: https://github.com/147228/dsh-xiaoyao-skins
+subpath: packages/skins/great-wall-sunrise
+package: "@xiaoyao-ai/dsh-client-ui-skin-great-wall-sunrise"
+rowId: ui-skin-great-wall-sunrise
+category: skin
+tags:
+  - token-theme
+modes:
+  - light
+install:
+  target: github:147228/dsh-xiaoyao-skins#174f65d9135e932383a8f3a19fa522f16875a139&path:/packages/skins/great-wall-sunrise
+  version: 0.1.1
+  commit: 174f65d9135e932383a8f3a19fa522f16875a139
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+marketScreenshots:
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/147228__dsh-xiaoyao-skins--packages--skins--great-wall-sunrise/174f65d9135e932383a8f3a19fa522f16875a139/home.png
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/147228__dsh-xiaoyao-skins--packages--skins--great-wall-sunrise/174f65d9135e932383a8f3a19fa522f16875a139/conversation.png
+  - https://kingofsoysauce.github.io/dsh-skin-market/skin-screenshots/147228__dsh-xiaoyao-skins--packages--skins--great-wall-sunrise/174f65d9135e932383a8f3a19fa522f16875a139/settings.png
+screenshots:
+  - https://raw.githubusercontent.com/147228/dsh-xiaoyao-skins/174f65d9135e932383a8f3a19fa522f16875a139/packages/skins/black-whale/preview/dark.jpg
+  - https://raw.githubusercontent.com/147228/dsh-xiaoyao-skins/174f65d9135e932383a8f3a19fa522f16875a139/packages/skins/ocean/preview/dark.jpg
+  - https://raw.githubusercontent.com/147228/dsh-xiaoyao-skins/174f65d9135e932383a8f3a19fa522f16875a139/packages/skins/sky-lab/preview/dark.jpg
+  - https://raw.githubusercontent.com/147228/dsh-xiaoyao-skins/174f65d9135e932383a8f3a19fa522f16875a139/packages/skins/great-wall-beacon/preview/dark.jpg
+  - https://raw.githubusercontent.com/147228/dsh-xiaoyao-skins/174f65d9135e932383a8f3a19fa522f16875a139/packages/skins/great-wall-sunrise/preview/dark.jpg
+  - https://raw.githubusercontent.com/147228/dsh-xiaoyao-skins/174f65d9135e932383a8f3a19fa522f16875a139/packages/skins/great-wall-snow/preview/dark.jpg
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: improve
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+    - 建议为仓库添加 dsh-plugin Topic，方便用户和 DSH 皮肤市场发现它。
+  scan:
+    commit: 174f65d9135e932383a8f3a19fa522f16875a139
+    packageVersion: 0.1.1
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T10:12:46.745Z
+    findings: []
+license:
+  code: SEE LICENSE IN LICENSE
+  commercialUse: false
+featuredRank: 976
+starsSnapshot: 23
+releaseUpdatedAt: 2026-08-23T10:12:47.006Z
+metadataUpdatedAt: 2026-08-23T17:17:05.784Z
+starsUpdatedAt: 2026-09-13T21:23:38.315Z
+updatedAt: 2026-09-13T21:23:38.315Z

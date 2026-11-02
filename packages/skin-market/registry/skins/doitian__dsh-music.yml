@@ -1,0 +1,64 @@
+id: doitian.doitian.dsh.music
+name:
+  zh: dsh-music-doitian
+  en: dsh-music-doitian
+author: doitian
+description: "NetEase Cloud Music (music.163.com) player and AI DJ for DeepSeek Harness: a sidebar page with in-app playback, QR sign-in, and agent tools that curate the queue."
+repo: https://github.com/doitian/dsh-music
+package: "@doitian/dsh-music"
+rowId: music
+category: player
+tags:
+  - player
+modes:
+  - light
+  - dark
+install:
+  target: github:doitian/dsh-music#aee0390bd2145f7d55fae684e0fe5f26ddeda4b7
+  version: 1.2.0
+  commit: aee0390bd2145f7d55fae684e0fe5f26ddeda4b7
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots: []
+review:
+  compatibility: unverified
+  preview: repository-card
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: aee0390bd2145f7d55fae684e0fe5f26ddeda4b7
+    packageVersion: 1.2.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-10-26T09:09:49.355Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+starsSnapshot: 0
+featuredRank: 0
+releaseUpdatedAt: 2026-10-27T05:10:00.000Z
+metadataUpdatedAt: 2026-10-27T23:00:28.784Z
+starsUpdatedAt: 2026-10-27T05:10:00.000Z
+updatedAt: 2026-10-27T23:00:28.784Z
+
+marketScreenshots:
+  - skin-screenshots/doitian__dsh-music/aee0390bd2145f7d55fae684e0fe5f26ddeda4b7/home.png
+  - skin-screenshots/doitian__dsh-music/aee0390bd2145f7d55fae684e0fe5f26ddeda4b7/conversation.png
+  - skin-screenshots/doitian__dsh-music/aee0390bd2145f7d55fae684e0fe5f26ddeda4b7/settings.png

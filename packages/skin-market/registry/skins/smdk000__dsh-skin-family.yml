@@ -1,0 +1,73 @@
+id: dsh-skin-family
+name:
+  zh: DSH 皮肤全家桶
+  en: DSH Skin Family
+author: smdk000
+description: 8 个皮肤家族 × 15 套明暗主题 + 设置页皮肤中心;官方 --dsw-* token 机制,一键切换、零源码改动,全部通过 WCAG AA 对比度审计。A family of 8 skins × 15 light/dark themes with a built-in skin-center switcher.
+repo: https://github.com/smdk000/dsh-skin-family
+package: dsh-skin-family
+rowId: dsh-skin-family
+category: skin
+tags:
+  - token-theme
+  - light-dark
+  - multi-skin
+modes:
+  - light
+  - dark
+install:
+  target: github:smdk000/dsh-skin-family#db485bbad5e6139a64834c03a37601bcc690236b
+  version: 0.1.0
+  commit: db485bbad5e6139a64834c03a37601bcc690236b
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/smdk000/dsh-skin-family/db485bbad5e6139a64834c03a37601bcc690236b/docs/preview-all.png
+  - https://raw.githubusercontent.com/smdk000/dsh-skin-family/db485bbad5e6139a64834c03a37601bcc690236b/docs/glass-dark.png
+  - https://raw.githubusercontent.com/smdk000/dsh-skin-family/db485bbad5e6139a64834c03a37601bcc690236b/docs/claude-dark.png
+  - https://raw.githubusercontent.com/smdk000/dsh-skin-family/db485bbad5e6139a64834c03a37601bcc690236b/docs/matrix-dark.png
+  - https://raw.githubusercontent.com/smdk000/dsh-skin-family/db485bbad5e6139a64834c03a37601bcc690236b/docs/sakura-light.png
+  - https://raw.githubusercontent.com/smdk000/dsh-skin-family/db485bbad5e6139a64834c03a37601bcc690236b/docs/glass-light.png
+  - https://raw.githubusercontent.com/smdk000/dsh-skin-family/4e90a84f140eff12aa38e7ff4a9c8f7b69771cab/docs/preview-all.png
+  - https://raw.githubusercontent.com/smdk000/dsh-skin-family/4e90a84f140eff12aa38e7ff4a9c8f7b69771cab/docs/glass-dark.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: manual-only
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: improve
+    installCommand: pass
+    topic: improve
+  suggestions:
+    - 建议补全稳定的 package 名称、dsh.client Web 声明、row ID 和已构建客户端入口，以符合 dsh 插件要求并获得更顺畅的一键安装体验。
+    - 建议为仓库添加 dsh-plugin Topic，方便用户和 DSH 皮肤市场发现它。
+    - 固定版本静态扫描无法完成，市场暂不提供该版本的一键安装。
+  scan:
+    commit: db485bbad5e6139a64834c03a37601bcc690236b
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: unknown
+    checkedAt: 2026-08-23T05:32:22.144Z
+    findings:
+      - code: client-source-unavailable
+        message: 无法读取固定版本的 client 入口，静态扫描结果未知。
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 999
+starsSnapshot: 1
+releaseUpdatedAt: 2026-08-23T05:32:22.254Z
+metadataUpdatedAt: 2026-08-23T05:32:22.254Z
+starsUpdatedAt: 2026-08-20T05:10:31.316Z
+updatedAt: 2026-08-23T05:32:22.254Z

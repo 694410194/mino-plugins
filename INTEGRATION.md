@@ -30,6 +30,19 @@
 | mino-open-sea | fork open-sea-skin | 推荐位 | 无；海洋主题皮肤 |
 | mino-whale-musume | fork dsh-whale-musume | 推荐位（与 pet 二选一） | 无；鲸鱼娘桌宠 45 成就+3 小游戏 |
 | mino-oh-story | fork zenstory-ai/oh-story-dsh（npm @oh-story/dsh 官方包改名） | 推荐位 | 无；小说/短剧/游戏改编/视频解说四工作台，知识库已内置（21MB） |
+| mino-skillhub | fork @astron-team/skillhub-dsh（5.3k★） | 推荐位 | 无；SkillHub 技能浏览/安装/管理，skill 包分发轨 |
+| mino-skill-explorer | fork @linxin666/dsh-client-ui-skill-explorer（9.5k★） | 推荐位 | 无；技能中心 GUI：分级浏览/启停/新建/回收站 |
+| mino-knowledge-studio | fork @eduwork/dsh-knowledge-studio | 推荐位 | 首次使用需明示同意；工作区资料→报告/PPT/表格/导图/音视频 |
+| mino-drawio | fork dsh-drawio | 推荐位 | 无；draw.io 图表（分镜结构/流程图） |
+| mino-notes | fork @zhaoolee/dsh-notes | 推荐位 | 需配置方圆小站账号；对话导出 PNG 便签/云便签（产出→发帖链路，注意内容出域） |
+| mino-ops | fork dsh-ops（5.0k★） | 推荐位 | 无；Windows bash/pwsh 高性能工具省 token，八子模块按 preset 挂 |
+| mino-visualize | fork @nagi-ovo/dsh-visualize | 推荐位 | 无；对话内交互 HTML 卡片（交付物可视化，CDN 渲染外部资源） |
+| mino-damage-pulse | fork dsh-damage-pulse | 推荐位 | 无；token 用量/单次成本/余额动画，可选微信通知（配置后用量数据外发） |
+| mino-safety-net | fork cc-safety-net（npm 直装件收编，已验收） | 推荐位强推 | 无；执行前守卫拦 reset--hard/rm-rf/.env·SSH key 读取，pilot/文件工具高危面兜底 |
+| mino-chat-import | fork dsh-chat-import | 推荐位 | 无；导入 13 家 coding agent 会话历史（迁移钩；功能本体即读其他 agent 本地数据目录） |
+| mino-rewind | fork dsh-rewind-plugin | 推荐位 | 无；会话内原地回退（改稿返工场景） |
+| mino-skin-market | fork dsh-skin-market | 推荐位 | 无；社区皮肤发现/一键安装/生命周期管理 |
+| mino-task-board | fork @linxin666/dsh-client-ui-task-board（9.9k★） | 推荐位 | 无；侧边栏多列任务看板，卡片=真实 agent 会话，支持 cron |
 
 > 已否决：dsh-super-code（dsh-xray C3 级：patch 运行时/改写系统提示/起网络服务/读凭据环境变量；21★ 单人作者、无第三方验证）。不并入推荐，避免品牌背书风险。
 >

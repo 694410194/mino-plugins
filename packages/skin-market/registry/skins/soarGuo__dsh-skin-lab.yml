@@ -1,0 +1,74 @@
+id: soarguo.dsh-skin-lab
+name:
+  zh: dsh-skin-lab
+  en: dsh-skin-lab
+author: soarGuo
+description: Skin Lab（皮肤实验室） — 面向 DSH 皮肤作者的浏览器内开发工具，作为官方形态的动态插件（dsh.bundle）安装，不改 DSH 源码。
+repo: https://github.com/soarGuo/dsh-skin-lab
+package: dsh-skin-lab
+rowId: ui-skin-lab
+category: skin
+tags:
+  - wallpaper
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:soarGuo/dsh-skin-lab#ad32833d069666a19f534715afd2bcd63bb3a80e
+  version: 1.0.4
+  commit: ad32833d069666a19f534715afd2bcd63bb3a80e
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-skin-lab
+    packageVersion: 1.0.4
+    integrity: sha512-oWshicQlWDcTFAcQsXRu/3kpGnyDwv+12m6iyHIgdApwh4glr7MgIOpaKlOsgPz919A1GcKdUpudkIY7B/AtZg==
+  npm:
+    name: dsh-skin-lab
+    version: 1.0.4
+    integrity: sha512-oWshicQlWDcTFAcQsXRu/3kpGnyDwv+12m6iyHIgdApwh4glr7MgIOpaKlOsgPz919A1GcKdUpudkIY7B/AtZg==
+    repository: https://github.com/soarGuo/dsh-skin-lab
+    gitHead: ad32833d069666a19f534715afd2bcd63bb3a80e
+compatibility:
+  dsh: ^0.1.2-alpha.2
+  platform:
+    - web
+screenshots:
+  - https://cdn.jsdelivr.net/npm/dsh-skin-lab@1.0.2/docs/screenshots/skin1.png
+  - https://cdn.jsdelivr.net/npm/dsh-skin-lab@1.0.2/docs/screenshots/skin2.png
+listScreenshot: https://cdn.jsdelivr.net/npm/dsh-skin-lab@1.0.2/docs/screenshots/skin1.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - DSH 兼容范围待核对：保留的市场范围 ^0.1.2-alpha.2 未被本次检测范围 >=0.1.7-alpha.2 完全覆盖（固定版本 ad32833d069666a19f534715afd2bcd63bb3a80e）。已保留原字段，请人工核对；此项是声明冲突，不代表已验证运行失败。
+  scan:
+    commit: ad32833d069666a19f534715afd2bcd63bb3a80e
+    packageVersion: 1.0.4
+    scannerVersion: static-v2
+    dshVersion: ">=0.1.7-alpha.2"
+    mode: static
+    result: pass
+    checkedAt: 2026-09-28T23:52:14.783Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 1098
+starsSnapshot: 0
+releaseUpdatedAt: 2026-10-18T09:48:54.639Z
+metadataUpdatedAt: 2026-09-28T23:52:16.856Z
+starsUpdatedAt: 2026-09-07T21:59:02.581Z
+updatedAt: 2026-10-18T09:48:54.639Z

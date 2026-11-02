@@ -1,0 +1,62 @@
+id: lssyd20070106.dsh-ui-preset-enhance
+name:
+  zh: dsh-ui-preset-enhance
+  en: dsh-ui-preset-enhance
+author: lssyd20070106
+description: 一个给 DeepSeek Harness（DSH）WebUI 用的第三方界面增强插件。
+repo: https://github.com/lssyd20070106/dsh-ui-preset-enhance
+package: dsh-ui-preset-enhance
+rowId: dsh-ui-preset-enhance
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:lssyd20070106/dsh-ui-preset-enhance#36a18e24340677cf3c7a4771c861b9b931360e1e
+  version: 0.1.0
+  commit: 36a18e24340677cf3c7a4771c861b9b931360e1e
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: 0.1.0-rc.6
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/lssyd20070106/dsh-ui-preset-enhance/36a18e24340677cf3c7a4771c861b9b931360e1e/assets/preview-home.png
+  - https://raw.githubusercontent.com/lssyd20070106/dsh-ui-preset-enhance/36a18e24340677cf3c7a4771c861b9b931360e1e/assets/preview-settings.png
+review:
+  compatibility: verified
+  preview: verified
+  installation: verified
+health:
+  status: healthy
+  checks:
+    readmeScreenshots: pass
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions: []
+  scan:
+    commit: 36a18e24340677cf3c7a4771c861b9b931360e1e
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    dshVersion: 0.1.0-rc.6
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:28:18.252Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 42
+starsSnapshot: 6
+releaseUpdatedAt: 2026-08-23T05:28:18.334Z
+metadataUpdatedAt: 2026-09-08T09:45:47.382Z
+starsUpdatedAt: 2026-09-15T22:05:39.046Z
+updatedAt: 2026-09-15T22:05:39.046Z

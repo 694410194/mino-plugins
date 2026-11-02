@@ -1,0 +1,48 @@
+# Changelog
+
+## Studio 0.6.3 / Artifact Services 0.3.2 — 2026-11-02
+
+- Office 共享规范说明不要用命令或脚本启动 Word、Excel、PowerPoint、WPS 等桌面应用验证文件；Windows 受限命令环境里它们会弹出报错并让命令一直等待，改用校验脚本和 LibreOffice Kit 检查。
+- Tell Office skills not to launch desktop Word, Excel, PowerPoint or WPS to test generated files; in the confined Windows command environment they show a modal error and the command waits. Use the validators and LibreOffice Kit instead.
+
+- Studio 精确依赖 Artifact Services 0.3.2，共用更新后的 Office 技能。
+- Pin Artifact Services 0.3.2 in Studio so both use the updated Office guidance.
+
+## Studio 0.6.2 / Artifact Services 0.3.1 — 2026-10-22
+
+- Office、图像、语音和音视频工具的审批提示接入官方 DSH 中英文展示机制，保留原有权限判断与审批行为。
+- Studio 精确依赖 Artifact Services 0.3.1；图像编辑的审批提示明确显示编辑操作。
+- Localize Office, image, speech and media tool approval prompts through the official DSH panel, retaining permission decisions and approval behavior.
+- Pin Artifact Services 0.3.1 in Studio; distinguish image editing from image generation in approval copy.
+
+## Studio 0.6.1 — Unreleased
+
+- Use the optional plugin notification protocol 1 for artifact completion and failure.
+- Keep artifact lifecycle filtering and click navigation inside Studio; preserve existing data and notification preferences.
+- Continue to run without a notification service. Artifact Services stays at 0.3.0.
+
+## Studio 0.6.0 / Artifact Services 0.3.0 — 2026-10-19
+
+- Support standalone DSH 0.2.1-rc.2 and compatible 0.2.x stable Hosts; require Node.js 24.18+.
+- Publish official Office skill/LibreOffice Kit integration, official file-preview handoff, image editing and current session/runtime compatibility already used by EduWork.
+- Keep the shared-service version pinned and retain existing workspace artifacts and settings. Optional Office, speech and media runtimes still require separate provisioning.
+
+## Studio 0.5.0 / Artifact Services 0.2.0
+
+- Studio pins Shared 0.2.0; both DSH integrations require official 0.1.5-rc.1. A stable plugin version does not imply a stable upstream host.
+- Use the official Sidebar Start entry, tabs and fullscreen. Keep Wiki/infographics excluded, preserve historical data, and avoid duplicate reading overlays or cross-session state.
+- Share Office generation and actual-file preview, TTS/ASR provider interfaces, media rendering and content guidance between conversation tools and Studio. Expose advanced editable-video and provider operations through the shared tools without inventing matching Studio cards.
+- Retain six licensed 192 kbps MP3 BGM tracks, shared catalog IDs and loop/ducking behavior. Use one mediabunny 1.55.5 with Remotion 4.0.520; narration provider output remains WAV.
+- Refresh installation, configuration, capabilities, licensing and publication documentation. Document platform requirements and the limits of macOS support.
+
+## Studio 0.4.0 / Artifact Services 0.1.0
+
+- Support DSH 0.1.2-rc.1 with matching package, client loader and Host/Client RPC identities under `@eduwork`.
+- Provide eight workspace-driven Studio capabilities, optional local indexing/Wiki, collapsible controls and full reading mode.
+- Share Office, TTS provider registration, captions, BGM and Remotion between Studio and dialogue tools.
+- Preserve settings namespaces, workspace knowledge, artifacts and learning progress from development builds.
+- Resolve PDF browsers and video-poster FFmpeg through the shared package, including isolated dependency installations and managed runtimes.
+- Render report HTML/PDF with the same headings, formatted text, tables and reference appendix as the shared DOCX specification.
+- Replace institution-specific starter narration defaults and recovery messages with portable configuration.
+- Establish a reviewed public source snapshot, package auditing, cross-platform CI and manual packaging/publishing workflow.
+- Document generic themes and externally supplied legacy branding; use neutral examples and links that also work in each npm package.

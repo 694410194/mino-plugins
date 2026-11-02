@@ -20,6 +20,19 @@ packages:
   - "!packages/status"
   - "!packages/tavern"
   - "!packages/whale-musume"
+  - "!packages/chat-import"
+  - "!packages/damage-pulse"
+  - "!packages/drawio"
+  - "!packages/knowledge-studio"
+  - "!packages/notes"
+  - "!packages/ops"
+  - "!packages/rewind"
+  - "!packages/safety-net"
+  - "!packages/skin-market"
+  - "!packages/skill-explorer"
+  - "!packages/skillhub"
+  - "!packages/task-board"
+  - "!packages/visualize"
 allowBuilds:
   '@deepseek-ai/dsh-subprocess-local': false
   '@google/genai': false

@@ -1,0 +1,62 @@
+id: ai7603.dsh-cyberpunk-theme
+name:
+  zh: dsh-cyberpunk-theme
+  en: dsh-cyberpunk-theme
+author: ai7603
+description: dsh-cyberpunk-theme · DSH 赛博朋克 2077 主题
+repo: https://github.com/ai7603/dsh-cyberpunk-theme
+package: dsh-cyberpunk-theme
+rowId: cyberpunk-2077
+category: skin
+tags:
+  - motion
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:ai7603/dsh-cyberpunk-theme#445693a248a03ebae53f155e8af0401410463d70
+  version: 1.0.0
+  commit: 445693a248a03ebae53f155e8af0401410463d70
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/ai7603/dsh-cyberpunk-theme/445693a248a03ebae53f155e8af0401410463d70/docs/screenshots/session-dark.png
+  - https://raw.githubusercontent.com/ai7603/dsh-cyberpunk-theme/445693a248a03ebae53f155e8af0401410463d70/docs/screenshots/session-light.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+  scan:
+    commit: 445693a248a03ebae53f155e8af0401410463d70
+    packageVersion: 1.0.0
+    scannerVersion: static-v2
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:29:19.323Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 47
+starsSnapshot: 3
+releaseUpdatedAt: 2026-08-23T05:29:19.398Z
+metadataUpdatedAt: 2026-08-23T05:29:19.398Z
+starsUpdatedAt: 2026-09-09T21:39:31.307Z
+updatedAt: 2026-09-09T21:39:31.307Z

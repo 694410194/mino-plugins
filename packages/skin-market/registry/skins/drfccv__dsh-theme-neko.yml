@@ -1,0 +1,66 @@
+id: drfccv.dsh-theme-neko
+name:
+  zh: dsh-theme-neko
+  en: dsh-theme-neko
+author: drfccv
+description: A Nachoneko (甘城猫猫) themed skin for the DeepSeek Harness web GUI.
+repo: https://github.com/drfccv/dsh-theme-neko
+package: dsh-theme-neko
+rowId: ui-skin-neko
+category: skin
+tags:
+  - wallpaper
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:drfccv/dsh-theme-neko#6c7c9a58ff93cef7117cbfc3b48a295039cd7c45
+  version: 0.1.0
+  commit: 6c7c9a58ff93cef7117cbfc3b48a295039cd7c45
+  desktop:
+    mode: manual-only
+    reason: npm-repository-mismatch
+  allowBuild: dsh-theme-neko@https://codeload.github.com/drfccv/dsh-theme-neko/tar.gz/6c7c9a58ff93cef7117cbfc3b48a295039cd7c45
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/drfccv/dsh-theme-neko/6c7c9a58ff93cef7117cbfc3b48a295039cd7c45/sample/screenshot.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: manual-only
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: improve
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+    - 建议补全稳定的 package 名称、dsh.client Web 声明、row ID 和已构建客户端入口，以符合 dsh 插件要求并获得更顺畅的一键安装体验。
+    - 固定版本静态扫描无法完成，市场暂不提供该版本的一键安装。
+  scan:
+    commit: 6c7c9a58ff93cef7117cbfc3b48a295039cd7c45
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    mode: static
+    result: unknown
+    checkedAt: 2026-08-23T05:28:59.522Z
+    findings:
+      - code: client-source-unavailable
+        message: 无法读取固定版本的 client 入口，静态扫描结果未知。
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 46
+starsSnapshot: 3
+releaseUpdatedAt: 2026-08-23T05:28:59.594Z
+metadataUpdatedAt: 2026-08-23T05:28:59.594Z
+starsUpdatedAt: 2026-09-09T21:39:33.481Z
+updatedAt: 2026-09-09T21:39:33.481Z

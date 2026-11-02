@@ -1,0 +1,63 @@
+id: yoimiya.lover.0621.01.himeko.starry.night
+name:
+  zh: 姬子的星月夜
+  en: Himeko's Starry Night
+author: Yoimiya-Lover-0621-01
+description: 姬子的星月夜：星云壁纸 + 莫奈取色 + 液态玻璃的 DSH Web 主题，含启动页、关于栏与插件页皮肤。
+repo: https://github.com/Yoimiya-Lover-0621-01/himeko-starry-night
+package: "@local/star-wallpaper"
+rowId: star-wallpaper
+category: skin
+tags:
+  - appearance
+modes:
+  - light
+  - dark
+install:
+  target: github:Yoimiya-Lover-0621-01/himeko-starry-night#97a3ab9ca2f75f2db18cabf98e0a332d9ee75780
+  version: 1.2.1
+  commit: 97a3ab9ca2f75f2db18cabf98e0a332d9ee75780
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+compatibility:
+  dsh: ">=0.2.1-rc.2 <0.3.0"
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/Yoimiya-Lover-0621-01/himeko-starry-night/f5b83dd7fa34f21a9d042d2f47ff1e14135792bd/preview.png
+  - https://raw.githubusercontent.com/Yoimiya-Lover-0621-01/himeko-starry-night/f5b83dd7fa34f21a9d042d2f47ff1e14135792bd/preview-settings.png
+  - https://raw.githubusercontent.com/Yoimiya-Lover-0621-01/himeko-starry-night/f5b83dd7fa34f21a9d042d2f47ff1e14135792bd/preview-plugins.png
+listScreenshot: https://raw.githubusercontent.com/Yoimiya-Lover-0621-01/himeko-starry-night/f2eeef7d2cb5d499da7974ad203bef183c27e7a3/preview.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - DSH 兼容范围待核对：保留的市场范围 >=0.2.1-rc.2 <0.3.0 未被本次检测范围 >=0.2.1-rc.3 <0.3.0 完全覆盖（固定版本 97a3ab9ca2f75f2db18cabf98e0a332d9ee75780）。已保留原字段，请人工核对；此项是声明冲突，不代表已验证运行失败。
+  scan:
+    commit: 97a3ab9ca2f75f2db18cabf98e0a332d9ee75780
+    packageVersion: 1.2.1
+    scannerVersion: static-v2
+    dshVersion: ">=0.2.1-rc.3 <0.3.0"
+    mode: static
+    result: pass
+    checkedAt: 2026-10-26T23:12:14.220Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+starsSnapshot: 0
+featuredRank: 1000
+releaseUpdatedAt: 2026-10-26T23:12:15.578Z
+metadataUpdatedAt: 2026-10-26T23:12:15.578Z
+starsUpdatedAt: 2026-10-22T15:00:01.347Z
+updatedAt: 2026-10-26T23:12:15.578Z

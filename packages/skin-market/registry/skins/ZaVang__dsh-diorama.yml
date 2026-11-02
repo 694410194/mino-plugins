@@ -1,0 +1,69 @@
+id: zavang.dsh-diorama
+name:
+  zh: dsh-diorama
+  en: dsh-diorama
+author: ZaVang
+description: dsh-diorama · DSH 角色舞台
+repo: https://github.com/ZaVang/dsh-diorama
+package: dsh-diorama
+rowId: ui-skin-diorama
+category: skin
+tags:
+  - glass
+  - token-theme
+modes:
+  - light
+  - dark
+install:
+  target: github:ZaVang/dsh-diorama#9bd7cd7f6fc63da60082eb9fda2703e1e7c820f2
+  version: 0.1.0
+  commit: 9bd7cd7f6fc63da60082eb9fda2703e1e7c820f2
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-diorama
+    packageVersion: 0.1.0
+    integrity: sha512-GnlSXId9e5PeT283OUeeDBi7/bYYp38MW/Wn/pQlGHojex7vKirmnj7uqzrkqh4xrQAWlrHgFKP3/YvKuROa8A==
+compatibility:
+  dsh: ">=0.1.0-rc.6"
+  platform:
+    - web
+screenshots:
+  - skin-screenshots/ZaVang__dsh-diorama/9bd7cd7f6fc63da60082eb9fda2703e1e7c820f2/home.gif
+review:
+  compatibility: verified
+  preview: repository-card
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: improve
+    compatibility: pass
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 中加入至少一张仓库内的真实界面截图，并让图片路径随仓库一起版本化，方便用户预览和市场稳定展示。
+  scan:
+    commit: 9bd7cd7f6fc63da60082eb9fda2703e1e7c820f2
+    packageVersion: 0.1.0
+    scannerVersion: static-v2
+    dshVersion: ">=0.1.0-rc.6"
+    mode: static
+    result: pass
+    checkedAt: 2026-08-23T05:35:37.092Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 212
+starsSnapshot: 0
+releaseUpdatedAt: 2026-08-23T05:35:37.188Z
+metadataUpdatedAt: 2026-08-23T05:35:37.188Z
+starsUpdatedAt: 2026-09-18T21:40:08.685Z
+updatedAt: 2026-09-18T21:40:08.685Z
+
+marketScreenshots:
+  - skin-screenshots/ZaVang__dsh-diorama/9bd7cd7f6fc63da60082eb9fda2703e1e7c820f2/home.png
+  - skin-screenshots/ZaVang__dsh-diorama/9bd7cd7f6fc63da60082eb9fda2703e1e7c820f2/conversation.png
+  - skin-screenshots/ZaVang__dsh-diorama/9bd7cd7f6fc63da60082eb9fda2703e1e7c820f2/settings.png

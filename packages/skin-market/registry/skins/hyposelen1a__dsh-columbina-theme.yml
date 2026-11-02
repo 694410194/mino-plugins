@@ -1,0 +1,76 @@
+id: hyposelen1a.dsh-columbina-theme
+name:
+  zh: dsh-columbina-theme
+  en: dsh-columbina-theme
+author: hyposelen1a
+description: "原神哥伦比娅主题的 DeepSeek Harness Web 插件：背景、蒙版与明暗配色。A Genshin Impact Columbina themed plugin for DeepSeek Harness Web: background, mask, and per light/dark color schemes."
+repo: https://github.com/hyposelen1a/dsh-columbina-theme
+package: dsh-columbina-theme
+rowId: dsh-columbina-theme
+category: skin
+tags:
+  - wallpaper
+  - glass
+  - token-theme
+  - light-dark
+modes:
+  - light
+  - dark
+install:
+  target: github:hyposelen1a/dsh-columbina-theme#7665a976b2ab539993595b8c7d2551054f12f9ec
+  version: 0.2.2
+  commit: 7665a976b2ab539993595b8c7d2551054f12f9ec
+  desktop:
+    mode: managed
+    registry: npm
+    packageName: dsh-columbina-theme
+    packageVersion: 0.2.2
+    integrity: sha512-HEifEJwzYW9XvEhlDRifKj9clAl1HKUTT47/MREDEB3+Z4UAuzQQ2Tnl/wNy4vvFfKASvDVHHKOJke37wAbUww==
+  npm:
+    name: dsh-columbina-theme
+    version: 0.2.2
+    integrity: sha512-HEifEJwzYW9XvEhlDRifKj9clAl1HKUTT47/MREDEB3+Z4UAuzQQ2Tnl/wNy4vvFfKASvDVHHKOJke37wAbUww==
+    repository: https://github.com/hyposelen1a/dsh-columbina-theme
+    gitHead: 7665a976b2ab539993595b8c7d2551054f12f9ec
+compatibility:
+  dsh: 0.1.0-rc.7
+  platform:
+    - web
+screenshots:
+  - https://raw.githubusercontent.com/hyposelen1a/dsh-columbina-theme/2ccf33d427347f0dbf5004eb182f99182ee3c94e/docs/screenshot-light.png
+  - https://raw.githubusercontent.com/hyposelen1a/dsh-columbina-theme/2ccf33d427347f0dbf5004eb182f99182ee3c94e/docs/screenshot-dark.png
+  - https://raw.githubusercontent.com/hyposelen1a/dsh-columbina-theme/00b8e72e5d40bbaf62959e5a5bef5108beded9e0/docs/screenshot-light.png
+  - https://raw.githubusercontent.com/hyposelen1a/dsh-columbina-theme/00b8e72e5d40bbaf62959e5a5bef5108beded9e0/docs/screenshot-dark.png
+listScreenshot: https://raw.githubusercontent.com/hyposelen1a/dsh-columbina-theme/91a2b9bc70a902fe8b8d998185bd6c1446975780/docs/screenshot-light.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: verified
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: pass
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - DSH 兼容范围待核对：保留的市场范围 0.1.0-rc.7 未被本次检测范围 ^0.2.0-rc.1 完全覆盖（固定版本 7665a976b2ab539993595b8c7d2551054f12f9ec）。已保留原字段，请人工核对；此项是声明冲突，不代表已验证运行失败。
+  scan:
+    commit: 7665a976b2ab539993595b8c7d2551054f12f9ec
+    packageVersion: 0.2.2
+    scannerVersion: static-v2
+    dshVersion: ^0.2.0-rc.1
+    mode: static
+    result: pass
+    checkedAt: 2026-10-24T21:31:25.602Z
+    findings: []
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 160
+starsSnapshot: 7
+releaseUpdatedAt: 2026-10-24T21:31:27.264Z
+metadataUpdatedAt: 2026-10-24T21:31:27.264Z
+starsUpdatedAt: 2026-10-24T21:31:27.264Z
+updatedAt: 2026-10-24T21:31:27.264Z

@@ -1,0 +1,70 @@
+id: weibaohui.dsh-ambient
+name:
+  zh: dsh-ambient
+  en: dsh-ambient
+author: weibaohui
+description: 白噪音播放器：场景完全由音频根目录下的文件夹决定——有什么文件夹就有什么场景，有什么音频就播什么。点「执行下载」让 AI 在后台从 Wikimedia Commons 按 CC0/PD/CC BY 许可分门别类下载到对应文件夹（读 INDEX.md 防重复、完成自动刷新库）。顺序/随机/单曲循环/间歇四种播放模式，定时关支持 N 小时或指定时刻。宿主侧流式读取（Range 支持），不上传、不分发音频。
+repo: https://github.com/weibaohui/dsh-ambient
+package: "@weibaohui/dsh-ambient"
+rowId: dsh-ambient
+category: player
+tags:
+  - player
+modes:
+  - light
+  - dark
+install:
+  target: github:weibaohui/dsh-ambient#b36a96749c549ba1ac437aab923b69e989916f04
+  version: 0.1.2
+  commit: b36a96749c549ba1ac437aab923b69e989916f04
+  desktop:
+    mode: manual-only
+    reason: npm-package-not-found
+  npm:
+    name: "@weibaohui/dsh-ambient"
+    version: 0.1.2
+    integrity: sha512-Enz7mmvjzTJGMrub6TVBCRd7m9IZHCGl16V/YDllIEWbQ/MFkK56jWwMwV1jV0KHJDJAlhBGDolsXZuT/Vnn/A==
+    repository: https://github.com/weibaohui/dsh-ambient
+    gitHead: b36a96749c549ba1ac437aab923b69e989916f04
+compatibility:
+  dsh: unverified
+  platform:
+    - web
+screenshots:
+  - https://foruda.gitee.com/images/1774880015525784725/4fd67005_77493.png
+listScreenshot: https://foruda.gitee.com/images/1774880015525784725/4fd67005_77493.png
+review:
+  compatibility: unverified
+  preview: verified
+  installation: manual-only
+health:
+  status: improvements
+  checks:
+    readmeScreenshots: pass
+    compatibility: improve
+    installation: improve
+    installCommand: pass
+    topic: pass
+  suggestions:
+    - 建议在 README 或 package.json 中明确声明支持的 DSH Web 版本范围（例如 0.1.0-rc.6 或兼容区间），方便用户在安装前确认环境。
+    - 建议补全稳定的 package 名称、dsh.client Web 声明、row ID 和已构建客户端入口，以符合 dsh 插件要求并获得更顺畅的一键安装体验。
+    - 固定版本静态扫描无法完成，市场暂不提供该版本的一键安装。
+  scan:
+    commit: b36a96749c549ba1ac437aab923b69e989916f04
+    packageVersion: 0.1.2
+    scannerVersion: static-v2
+    mode: static
+    result: unknown
+    checkedAt: 2026-10-27T23:01:36.658Z
+    findings:
+      - code: client-source-unavailable
+        message: 无法读取固定版本的 client 入口，静态扫描结果未知。
+license:
+  code: MIT
+  commercialUse: true
+featuredRank: 0
+starsSnapshot: 0
+releaseUpdatedAt: 2026-10-27T23:01:42.150Z
+metadataUpdatedAt: 2026-10-27T23:01:42.150Z
+starsUpdatedAt: 2026-10-27T05:10:00.000Z
+updatedAt: 2026-10-27T23:01:42.150Z
