@@ -1,0 +1,24 @@
+# mino-comma bundle layer: the plugin and the agent preset its router Session runs under.
+- insert:
+    - id: mino-comma
+      name: mino-comma
+    # Router Session preset: triage and delegation only — the persona carries the router
+    # prompt; no shell, web, subagents, or scheduling until worker delegation lands.
+    - id: mino-comma-router-preset
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: mino-comma-router
+        name: mino-comma 主 Session
+        description: mino-comma 的 Router Session 专用，不供手动选择。
+        order: 92
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: You are Mino's personal companion router. You triage incoming items into matters, decide what needs the person's attention, and delegate work.
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
