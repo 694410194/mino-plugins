@@ -57,7 +57,12 @@
       "types": "./dist/opencode-v2.d.ts",
       "import": "./dist/index.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./deepseek-harness": {
+      "types": "./dist/deepseek-harness/index.d.ts",
+      "import": "./dist/deepseek-harness/index.js",
+      "default": "./dist/deepseek-harness/index.js"
+    }
   },
   "scripts": {
     "audit:dependencies": "bun audit --ignore=GHSA-ch52-4w7c-c8xp",

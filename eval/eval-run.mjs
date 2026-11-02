@@ -60,7 +60,7 @@ for (const f of [EVLOG, OUT + '.stdout', OUT + '.boot']) writeFileSync(f, '')
 
 // ---------- dsh spawn + JSON-RPC (same mechanics as sdk-drive) ----------
 const DSH = 'D:/Software/Mino/resources/runtime/cli/bin/dsh.cmd'
-const env = { ...process.env, MAGPIE_GATEWAY_KEY: 'magpie', DSH_SDK_NO_BROWSER: '1', SSH_CONNECTION: 'test-harness', DSH_PRIMARY_RUNTIME: 'D:/Software/Mino/resources/runtime/primary-runtime' }
+const env = { ...process.env, MAGPIE_GATEWAY_KEY: 'magpie', DSH_SDK_NO_BROWSER: '1', SSH_CONNECTION: 'test-harness', DSH_PRIMARY_RUNTIME: 'D:/Software/Mino/resources/runtime/primary-runtime', DSH_OFFICE_NODE: 'D:/Software/Mino/resources/runtime/primary-runtime/dependencies/node/bin/node.exe' }
 const spawnArgs = [DSH, '--profile', PROFILE]
 if (PATCH) spawnArgs.push('--patch', PATCH)
 spawnArgs.push('--patch', 'D:/Projects/mino/mino-plugins/eval/patches/eval-port0.yml')

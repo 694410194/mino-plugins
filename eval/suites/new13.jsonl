@@ -1,0 +1,8 @@
+{"id": "skillhub-list", "text": "用工具查一下当前已安装的 skill 列表。", "assert": {"tools.called": ["/^astron_skillhub_list_installed|^astron_skillhub_search|^astron_skillhub_operation/"], "reply.match": ".", "modelCalls.max": 6}}
+{"id": "drawio-template", "text": "用 drawio_template 工具给我一个流程图模板。", "assert": {"tools.called": ["/^drawio_template|^drawio_render|^drawio_validate/"], "reply.match": ".", "modelCalls.max": 6}}
+{"id": "notes-export", "text": "用 notes_export_conversation 把当前对话导出为笔记。", "assert": {"tools.called": ["notes_export_conversation"], "reply.match": ".", "modelCalls.max": 6}}
+{"id": "ops-discover", "text": "用 ops_discover_tools 看看你能发现什么可用工具。", "assert": {"tools.called": ["ops_discover_tools"], "reply.match": ".", "modelCalls.max": 6}}
+{"id": "damage-balance", "text": "用 token_monitor_balance_get 查一下余额状态。", "assert": {"tools.called": ["/^token_monitor_balance_get|^token_monitor_billing_get/"], "reply.match": ".", "modelCalls.max": 6}}
+{"id": "taskboard-list", "text": "用 task_board_list 列出任务板上的任务。", "assert": {"tools.called": ["/^task_board_list|^task_board_get|^task_board_manage/"], "reply.match": ".", "modelCalls.max": 6}}
+{"id": "visualize-call", "text": "用 visualize 工具画一个 hello 卡片。", "assert": {"tools.called": ["visualize"], "reply.match": ".", "modelCalls.max": 6}}
+{"id": "import-schema", "text": "你能从别的 AI agent 导入对话历史吗？用什么工具？", "assert": {"schema.present": ["import_chat"], "reply.match": "import", "modelCalls.max": 3}}

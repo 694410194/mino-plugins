@@ -140,3 +140,35 @@
 
 ### tavern 评分修正：45 → **70 B-**
 闸门修复 + 回归断言转绿；仍缺玩法深测（角色卡/世界书装配/跑团实战）与 engines.dsh 声明。
+
+## 13 个 vendored 社区 fork 实测（reports/run-mvyyrvp6 + boot 证据）
+
+装载修复（vendoring 时引入的问题，已修）：
+- **ops cordis.patch.yml**：`name: "mino-ops"/mode-*` 是非法 YAML（引号没包住斜杠）→ 全改为 `"mino-ops/mode-*"`。上游 vendoring 重命名时把 unquoted scalar 截断进引号。
+- **5 包版本门拒载**：peerDependencies/engines.dsh 声明停在 `0.2.1-rc.*`（drawio/notes 还是 `0.1.0-rc.6` 时代）→ 追加已验证线 `>=0.2.2-alpha.1 <0.2.3`（AGENTS.md 扩线策略）。
+- **skillhub**：lib/*.js 内嵌 TYPERT manifest `package: "@astron-team/skillhub-dsh"` 没跟着改名 → typert-loader 拒注册。改 `mino-skillhub`。
+- **safety-net**：root 入口是 OpenCode 插件（`{server}` 导出形状），DSH 适配器在 `dist/deepseek-harness/index.js` → 补 `"./deepseek-harness"` exports 子路径，patch row 指向它。
+- **dsh-artifact-services**（knowledge-studio 附属）：需 `DSH_OFFICE_NODE` env → eval harness 注入 primary-runtime 自带 node。
+
+### 13 件评分（6/8 功能探针过 + 全量激活验证）
+
+| 件 | 分 | 级 | 实测证据 |
+|---|---|---|---|
+| skillhub | 76 | B | 10 个 astron_skillhub_* 工具全注册；list_installed 真实调用 PASS |
+| ops | 74 | B | **延迟发现网关**设计（1 个 ops_discover_tools 入口，ops_glob/grep/write_file/edit_file/stat/read_table 按需入场——schema 卫生比 tavern 好一个量级）；枚举全目录花 16 call 是模型啰嗦非缺陷 |
+| task-board | 70 | B- | 8 工具注册，task_board_list 真调用 PASS |
+| drawio | 68 | B- | drawio_render 真产 PNG；drawio_template 返回空模板（小缺口） |
+| visualize | 66 | B- | visualize 真调用渲染 |
+| notes | 62 | C+ | notes_export_conversation 真调用 |
+| damage-pulse | 62 | C+ | token_monitor_balance_get 真调用 |
+| chat-import | 60 | C+ | import_chat schema 在；深度导入未测 |
+| safety-net | 60 | C+ | hook 型无工具（设计内）；入口修复后 import 干净；拦截实测未做 |
+| skill-explorer | 58 | C+ | UI 件，装载干净无错 |
+| skin-market | 58 | C+ | UI 件，装载干净无错 |
+| rewind | 58 | C+ | UI 件，装载干净无错 |
+| **knowledge-studio** | **35** | **D** | **LadybugDB native 绑定 Node ABI——Electron 44（ABI 149）宿主必炸**，0.20.1/0.22.1 都试过；普通 node 宿主可。Mino 桌面=Electron=不可用 |
+
+### 架构事实（钉死）
+
+- Mino 桌面宿主 = `Mino.exe` + `ELECTRON_RUN_AS_NODE=1` = Electron 44，**NODE_MODULE_VERSION 149 ≠ Node 24 的 137**。所有带原生 .node 依赖的插件在此宿主必须 Electron-ABI 重建，否则必炸。knowledge-studio 是首个中招者。
+- 索引侧已全标：`upstream-risk`+`needs-config`+`heavy` 打 knowledge-studio；`high-risk` 打 safety-net（拦命令）；其余 verified。

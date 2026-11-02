@@ -7,27 +7,27 @@
 # old specifiers still loads its legacy module, it just cannot match a new row.
 - insert:
     - id: dsh-ops-mode-minimal
-      name: "mino-ops"/mode-minimal
+      name: "mino-ops/mode-minimal"
       config:
         promptPolicy: true
         publishBashTool: true
     - id: dsh-ops-mode-standard
-      name: "mino-ops"/mode-standard
+      name: "mino-ops/mode-standard"
       config:
         promptPolicy: true
         required: false
     - id: dsh-ops-mode-ptc
-      name: "mino-ops"/mode-ptc
+      name: "mino-ops/mode-ptc"
       config:
         required: false
         alwaysLoaded: []
     - id: dsh-ops-mode-cordis
-      name: "mino-ops"/mode-cordis
+      name: "mino-ops/mode-cordis"
       config:
         promptPolicy: true
         required: false
     - id: dsh-ops-discovery
-      name: "mino-ops"/discovery
+      name: "mino-ops/discovery"
       config:
         enabled: true
         maxResults: 3
@@ -35,10 +35,10 @@
         required: false
         denyCredentialReads: true
     - id: dsh-ops-compat
-      name: "mino-ops"/compat
+      name: "mino-ops/compat"
       disabled: true
     - id: dsh-ops-panel
-      name: "mino-ops"/panel
+      name: "mino-ops/panel"
       disabled: true
       config:
         # Row enablement starts capture; explicit legacy capture:false stays inert.
@@ -46,7 +46,7 @@
         textLimit: 2000
         maxSessionBytes: 8388608
     - id: dsh-ops-tui
-      name: "mino-ops"/tui
+      name: "mino-ops/tui"
       disabled: true
       config:
         maxSessions: 32

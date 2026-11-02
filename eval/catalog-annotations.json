@@ -1,53 +1,389 @@
 {
   "$doc": "Mino 精选索引的评测标注源。score=EVAL.md 严格分（0-100，未过运行验证不给分）。labels 引用 index 级 declarations 的 id。category 引用 categories。每次评分更新后同步本文件并重跑 enrich-index.mjs。",
   "categories": {
-    "persona":   { "en": "Persona",        "zh-cn": "人格" },
-    "memory":    { "en": "Memory",         "zh-cn": "记忆" },
-    "channel":   { "en": "Channels",       "zh-cn": "渠道" },
-    "media":     { "en": "Media",          "zh-cn": "媒体" },
-    "roleplay":  { "en": "Roleplay",       "zh-cn": "角色扮演" },
-    "agent":     { "en": "Agents",         "zh-cn": "智能体" },
-    "bilibili":  { "en": "Bilibili",       "zh-cn": "B 站" },
-    "utility":   { "en": "Utility",        "zh-cn": "工具" },
-    "desktop":   { "en": "Desktop",        "zh-cn": "桌面" }
+    "persona": {
+      "en": "Persona",
+      "zh-cn": "人格"
+    },
+    "memory": {
+      "en": "Memory",
+      "zh-cn": "记忆"
+    },
+    "channel": {
+      "en": "Channels",
+      "zh-cn": "渠道"
+    },
+    "media": {
+      "en": "Media",
+      "zh-cn": "媒体"
+    },
+    "roleplay": {
+      "en": "Roleplay",
+      "zh-cn": "角色扮演"
+    },
+    "agent": {
+      "en": "Agents",
+      "zh-cn": "智能体"
+    },
+    "bilibili": {
+      "en": "Bilibili",
+      "zh-cn": "B 站"
+    },
+    "utility": {
+      "en": "Utility",
+      "zh-cn": "工具"
+    },
+    "desktop": {
+      "en": "Desktop",
+      "zh-cn": "桌面"
+    }
   },
   "labels": {
-    "verified":      { "en": "Mino-verified",     "zh-cn": "Mino 实测" },
-    "official":      { "en": "Official",          "zh-cn": "官方本体" },
-    "heavy":         { "en": "Heavy toolset",     "zh-cn": "重型工具面" },
-    "high-risk":     { "en": "High risk",         "zh-cn": "高危能力" },
-    "mutual-qq":     { "en": "QQ channel — pick one", "zh-cn": "QQ 通道互斥" },
-    "upstream-risk": { "en": "Upstream issues",   "zh-cn": "上游有隐患" },
-    "needs-config":  { "en": "Needs setup",       "zh-cn": "需配置" },
-    "optional":      { "en": "Optional",          "zh-cn": "锦上添花" }
+    "verified": {
+      "en": "Mino-verified",
+      "zh-cn": "Mino 实测"
+    },
+    "official": {
+      "en": "Official",
+      "zh-cn": "官方本体"
+    },
+    "heavy": {
+      "en": "Heavy toolset",
+      "zh-cn": "重型工具面"
+    },
+    "high-risk": {
+      "en": "High risk",
+      "zh-cn": "高危能力"
+    },
+    "mutual-qq": {
+      "en": "QQ channel — pick one",
+      "zh-cn": "QQ 通道互斥"
+    },
+    "upstream-risk": {
+      "en": "Upstream issues",
+      "zh-cn": "上游有隐患"
+    },
+    "needs-config": {
+      "en": "Needs setup",
+      "zh-cn": "需配置"
+    },
+    "optional": {
+      "en": "Optional",
+      "zh-cn": "锦上添花"
+    }
   },
   "plugins": {
-    "mino-persona":       { "score": 88, "category": "persona",  "labels": ["verified", "official"] },
-    "mino-fish-memory":   { "score": 82, "category": "memory",   "labels": ["verified", "official"] },
-    "mino-superagent":    { "score": 76, "category": "agent",    "labels": ["verified"] },
-    "mino-mood":          { "score": 76, "category": "persona",  "labels": ["verified", "official"] },
-    "mino-speak-up":      { "score": 74, "category": "persona",  "labels": ["verified", "official"] },
-    "mino-meme":          { "score": 74, "category": "media",    "labels": ["verified"] },
-    "mino-qq-link":       { "score": 72, "category": "channel",  "labels": ["verified", "mutual-qq", "needs-config"] },
-    "mino-bili-scroll":   { "score": 72, "category": "bilibili", "labels": ["verified"] },
-    "mino-tavern":        { "score": 70, "category": "roleplay", "labels": ["verified", "heavy"] },
-    "mino-voice":         { "score": 70, "category": "media",    "labels": ["verified", "needs-config"] },
-    "mino-browser":       { "score": 68, "category": "utility",  "labels": ["verified"] },
-    "mino-open-sea":      { "score": 66, "category": "media",    "labels": ["verified"] },
-    "mino-pet":           { "score": 62, "category": "desktop",  "labels": ["verified", "optional"] },
-    "mino-whale-musume":  { "score": 62, "category": "desktop",  "labels": ["verified", "optional"] },
-    "mino-image":         { "score": 60, "category": "media",    "labels": ["verified", "needs-config"] },
-    "mino-im":            { "score": 58, "category": "channel",  "labels": ["verified", "mutual-qq", "upstream-risk", "needs-config"] },
-    "mino-bili-humanism": { "score": 58, "category": "bilibili", "labels": ["verified"] },
-    "mino-balance":       { "score": 58, "category": "utility",  "labels": ["verified"] },
-    "mino-status":        { "score": 58, "category": "utility",  "labels": ["verified"] },
-    "mino-oh-story":      { "score": 58, "category": "roleplay", "labels": ["verified"] },
-    "mino-qqbot":         { "score": 55, "category": "channel",  "labels": ["verified", "mutual-qq", "upstream-risk", "needs-config"] },
-    "mino-qq-console":    { "score": 55, "category": "channel",  "labels": ["verified", "mutual-qq", "needs-config"] },
-    "mino-aurabot":       { "score": 55, "category": "channel",  "labels": ["verified", "mutual-qq", "needs-config"] },
-    "mino-bili-live":     { "score": 55, "category": "bilibili", "labels": ["verified", "needs-config"] },
-    "mino-bili-whale":    { "score": 55, "category": "bilibili", "labels": ["verified", "optional"] },
-    "mino-pilot":         { "score": 55, "category": "agent",    "labels": ["verified", "high-risk"] },
-    "mino-bridge":        { "score": 52, "category": "channel",  "labels": ["verified", "mutual-qq", "upstream-risk"] }
+    "mino-persona": {
+      "score": 88,
+      "category": "persona",
+      "labels": [
+        "verified",
+        "official"
+      ]
+    },
+    "mino-fish-memory": {
+      "score": 82,
+      "category": "memory",
+      "labels": [
+        "verified",
+        "official"
+      ]
+    },
+    "mino-superagent": {
+      "score": 76,
+      "category": "agent",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-mood": {
+      "score": 76,
+      "category": "persona",
+      "labels": [
+        "verified",
+        "official"
+      ]
+    },
+    "mino-speak-up": {
+      "score": 74,
+      "category": "persona",
+      "labels": [
+        "verified",
+        "official"
+      ]
+    },
+    "mino-meme": {
+      "score": 74,
+      "category": "media",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-qq-link": {
+      "score": 72,
+      "category": "channel",
+      "labels": [
+        "verified",
+        "mutual-qq",
+        "needs-config"
+      ]
+    },
+    "mino-bili-scroll": {
+      "score": 72,
+      "category": "bilibili",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-tavern": {
+      "score": 70,
+      "category": "roleplay",
+      "labels": [
+        "verified",
+        "heavy"
+      ]
+    },
+    "mino-voice": {
+      "score": 70,
+      "category": "media",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-browser": {
+      "score": 68,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-open-sea": {
+      "score": 66,
+      "category": "media",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-pet": {
+      "score": 62,
+      "category": "desktop",
+      "labels": [
+        "verified",
+        "optional"
+      ]
+    },
+    "mino-whale-musume": {
+      "score": 62,
+      "category": "desktop",
+      "labels": [
+        "verified",
+        "optional"
+      ]
+    },
+    "mino-image": {
+      "score": 60,
+      "category": "media",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-im": {
+      "score": 58,
+      "category": "channel",
+      "labels": [
+        "verified",
+        "mutual-qq",
+        "upstream-risk",
+        "needs-config"
+      ]
+    },
+    "mino-bili-humanism": {
+      "score": 58,
+      "category": "bilibili",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-balance": {
+      "score": 58,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-status": {
+      "score": 58,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-oh-story": {
+      "score": 58,
+      "category": "roleplay",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-qqbot": {
+      "score": 55,
+      "category": "channel",
+      "labels": [
+        "verified",
+        "mutual-qq",
+        "upstream-risk",
+        "needs-config"
+      ]
+    },
+    "mino-qq-console": {
+      "score": 55,
+      "category": "channel",
+      "labels": [
+        "verified",
+        "mutual-qq",
+        "needs-config"
+      ]
+    },
+    "mino-aurabot": {
+      "score": 55,
+      "category": "channel",
+      "labels": [
+        "verified",
+        "mutual-qq",
+        "needs-config"
+      ]
+    },
+    "mino-bili-live": {
+      "score": 55,
+      "category": "bilibili",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-bili-whale": {
+      "score": 55,
+      "category": "bilibili",
+      "labels": [
+        "verified",
+        "optional"
+      ]
+    },
+    "mino-pilot": {
+      "score": 55,
+      "category": "agent",
+      "labels": [
+        "verified",
+        "high-risk"
+      ]
+    },
+    "mino-bridge": {
+      "score": 52,
+      "category": "channel",
+      "labels": [
+        "verified",
+        "mutual-qq",
+        "upstream-risk"
+      ]
+    },
+    "mino-skillhub": {
+      "score": 76,
+      "category": "agent",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-drawio": {
+      "score": 68,
+      "category": "media",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-notes": {
+      "score": 62,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-ops": {
+      "score": 74,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-damage-pulse": {
+      "score": 62,
+      "category": "utility",
+      "labels": [
+        "verified",
+        "optional"
+      ]
+    },
+    "mino-task-board": {
+      "score": 70,
+      "category": "agent",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-visualize": {
+      "score": 66,
+      "category": "media",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-chat-import": {
+      "score": 60,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-safety-net": {
+      "score": 60,
+      "category": "utility",
+      "labels": [
+        "verified",
+        "high-risk"
+      ]
+    },
+    "mino-skill-explorer": {
+      "score": 58,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skin-market": {
+      "score": 58,
+      "category": "desktop",
+      "labels": [
+        "verified",
+        "optional"
+      ]
+    },
+    "mino-rewind": {
+      "score": 58,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-knowledge-studio": {
+      "score": 35,
+      "category": "agent",
+      "labels": [
+        "verified",
+        "upstream-risk",
+        "needs-config",
+        "heavy"
+      ]
+    }
   }
 }
