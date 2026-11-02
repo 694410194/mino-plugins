@@ -48,6 +48,7 @@
 | voice | mino-voice | TTS/STT 语音 |
 | meme | mino-meme | 表情包斗图 + 图库市场 |
 | drawio | mino-drawio | draw.io 图表 + 侧边栏 |
+| oh-story | mino-oh-story | 小说/短剧/游戏改编/视频解说四工作台 |
 | visualize | mino-visualize | 对话内交互 HTML 卡片 |
 
 ## 角色扮演 roleplay
@@ -55,7 +56,6 @@
 | 目录 | 包 | 说明 |
 |---|---|---|
 | tavern | mino-tavern | SillyTavern 卡 + 世界书 + MVU（~58 工具重场景） |
-| oh-story | mino-oh-story | 小说/短剧/游戏改编/视频解说四工作台 |
 
 ## B 站 bilibili
 
@@ -117,4 +117,4 @@
 | 目录 | 包 | 说明 |
 |---|---|---|
 | comma | mino-comma | WIP 主动陪伴 agent（搭手脚手架） |
-| market | mino-market | 退役：官方 plugin-market 上线后退出精选 |
+| market | mino-market | 退出索引分发；仍预装，社区插件目录入口 |
