@@ -49,9 +49,9 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 | 通道 | 直连 | 用途 |
 |---|---|---|
 | github.com / raw.githubusercontent.com | **超时** | 不能当用户侧通道；开发 push 走本机代理 `127.0.0.1:7897`（`https_proxy=`） |
-| cdn.jsdelivr.net（gh 镜像） | 可用 | 索引的公共镜像 URL：`cdn.jsdelivr.net/gh/694410194/mino-plugin-index@main/index.json` |
+| cdn.jsdelivr.net（gh 镜像） | 可用 | **已接入**：Discover 第二源 `cdn.jsdelivr.net/gh/694410194/mino-plugin-index@main/index.json`（插件页市场下拉可切换；推 GitHub 后 `purge.jsdelivr.net` 刷缓存） |
 | registry.npmjs.org / registry.npmmirror.com | 可用 | npm 通道备用：`npmjs.com` 注册页被反爬拦（代理出口 IP 亦 403），暂无 npm 账号 → **当前安装通道=自建 git**（`/git/` dumb-HTTP）；将来发 npmjs 后 npmmirror 自动同步，索引 per-version `registry` 填 npmmirror |
-| mino.baby | 可用 | **正式归宿**：`mino.baby/plugins/index.json`（deploy 件在 mino-deploy `site/plugins/` + nginx `/plugins/` 规则，sync.sh→服务器后生效） |
+| mino.baby | 可用 | **正式归宿（第一源）**：`mino.baby/plugins/index.json` + `/git/<name>` 每插件 bare 仓 dumb-HTTP 安装通道。⚠ 镜像不对称：jsdelivr 只镜像索引（图标相对路径自动连带），**安装仍走 mino.baby/git**——安装通道的冗余要 npm 才解得了 |
 
 ## plugweb 测试档（全插件实测基座）
 
