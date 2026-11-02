@@ -1,0 +1,1 @@
+{"id": "image-studio-live", "text": "调用 skill 工具使用 image-studio 技能，然后用它给的方法检查文件 eval-test.png 的尺寸和模式，并在同目录输出一份 120x80 的缩略图 eval-test-thumb.png。", "assert": {"tools.called": ["skill"], "file.exists": ["D:/tmp/mino-sdk/eval-test-thumb.png"], "reply.match": ".", "modelCalls.max": 20}, "timeoutMs": 300000}

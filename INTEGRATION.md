@@ -58,7 +58,7 @@
 | mino-skill-cnki | vendored fork cookjohn/cnki-skills@20d65f6（skill pack） | 已实测（plugweb skill 调用 PASS） | 10 技能知网操作链；驱动 mcp__chrome-devtools__* 需装 mino-mcp-chrome-devtools |
 | mino-skill-paperjury | vendored fork Spark-To-Paper-Skills/paperjury@53c75e8（skill pack） | 已实测（plugweb skill 调用 PASS） | 投稿前 AI 审稿压力测试（含 references/configs/scripts） |
 | mino-skill-humanizer | vendored fork AIScientists-Dev/academic-humanizer@94b88b2（skill pack） | 已实测（plugweb skill 调用 PASS） | 学术去 AI 痕迹；frontmatter description 已折行 |
-| mino-mcp-paper-search | vendored fork openags/paper-search-mcp@cab1b5c（dsh 官方 bundle） | 已实测（plugweb skill 调用 PASS） | uvx 拉起 paper-search-mcp，15+ 源检索；附 paper-search 技能 |
+| mino-mcp-paper-search（宿主需 uv/uvx 在 PATH：`python -m pip install uv`） | vendored fork openags/paper-search-mcp@cab1b5c（dsh 官方 bundle） | 已实测（plugweb skill 调用 PASS） | uvx 拉起 paper-search-mcp，15+ 源检索；附 paper-search 技能 |
 | mino-skill-commit | 自研 skill pack（ctx.skills provider） | 已实测（provider 注册+list/get 冒烟通过） | 无；commit-message 技能，rank 650 可被同名覆盖 |
 | mino-skill-mino-release | 自研 skill pack | 已实测（同上） | 无；mino-release 部署发布速查技能 |
 
@@ -141,7 +141,7 @@
 - 插件发版只走 `scripts/publish-plugins.sh plugins-vX.Y.Z`：先跑 `node scripts/verify-all.mjs`（打包全量、client id、许可、patch name、数量核对），草稿上传、逐件核对 sha256 后才公开；脚本拒绝写入产品仓 mino-releases。
 - 产品仓 mino-releases 的 Latest 必须是 `v<semver>` 产品安装包：服务器 cron 会镜像它并清理旧文件（2026-11-01 插件 release 被标成 Latest 导致官网安装包被删）。
 - CI（.github/workflows/ci.yml）每次推送跑 verify-all；mino-deploy 的 uptime 工作流每 30 分钟巡检线上入口，失败开 issue。
-| mino-creative-studio | vendored fork Ylight-cpu/dsh-creative-studio@5d3e733（图像/视频工作室 2 skill + toolkit/cs.py） | 已实测（plugweb skill 通路，engines 已放宽） |
+| mino-creative-studio | vendored fork Ylight-cpu/dsh-creative-studio@5d3e733（图像/视频工作室 2 skill + toolkit/cs.py） | 已实测（agent 真处理图片落盘 + rembg 抠图直测） | 宿主需 python+Pillow/rembg/onnxruntime/imageio-ffmpeg |
 | mino-scholar-suite | vendored fork docsor1212/dsh-scholar-suite@cd87473（学术工具链 8 skill：图表/去AI味/润色/引文核验 + 斜杠命令） | 已实测（plugweb skill 通路，engines 已放宽） |
 | mino-skill-humanizer-zh | vendored fork op7418/dsh-guizang-design@d16cea6 提取 skills/humanizer-zh（上游仓 AGPL-3.0+商业授权条款，**暂缓上架索引**） | 已实测（plugweb skill 通路） |
 | mino-skill-social-card | vendored fork op7418/dsh-guizang-design@d16cea6 提取 skills/guizang-social-card-skill（上游仓 AGPL-3.0+COMMERCIAL_LICENSING 商业授权条款，**暂缓上架索引**） | 已实测（plugweb skill 通路） |
