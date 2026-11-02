@@ -49,10 +49,10 @@
 | mino-mcp-chrome-devtools | 自研纯配置 bundle | 已实测（bundle 拉起） | 需 node/npm+Chrome；浏览器控制（高危面已标注） |
 | mino-mcp-github | 自研纯配置 bundle（streamable-http） | 已实测（无 token 时 disabled 静默跳过） | GITHUB_TOKEN env；未设自动停用（disabled: !!js） |
 | mino-mcp-brave-search | 自研纯配置 bundle | 已实测（无 key 时 disabled 静默跳过） | BRAVE_API_KEY env；上游包已归档停更已标注 |
-| mino-skill-drama | vendored fork zenstory-ai/drama-skills@d8a9a9b（skill pack） | 待实测 | 11 技能全链：编排/原著/开发/写集/资产/图视频提示词/分镜/生产/剪辑/审查 |
-| mino-skill-screenwriting | vendored fork jtydhr88/screenwriting-skills@51115f1 | 待实测 | 26 个 sw-* 编剧技能（47 本工艺书蒸馏），sw-workflow 编排 |
-| mino-skill-duanju | vendored fork 0xsline/short-drama@8979a42 | 待实测 | duanju-craft + 8 工艺参考（钩子/卡点/爽感矩阵/合规）；上游名撞 zenstory 编排器已改 |
-| mino-skill-script-review | vendored fork Vi7QY/screenwriter-skill@cf22b23 | 待实测 | 红果 Top100 审稿方法论；上游中文名已改 script-review |
+| mino-skill-drama | vendored fork zenstory-ai/drama-skills@d8a9a9b（skill pack） | 已实测（plugweb skill 调用冒烟 PASS） | 11 技能全链：编排/原著/开发/写集/资产/图视频提示词/分镜/生产/剪辑/审查 |
+| mino-skill-screenwriting | vendored fork jtydhr88/screenwriting-skills@51115f1 | 已实测（同上） | 26 个 sw-* 编剧技能（47 本工艺书蒸馏），sw-workflow 编排 |
+| mino-skill-duanju | vendored fork 0xsline/short-drama@8979a42 | 已实测（同上） | duanju-craft + 8 工艺参考（钩子/卡点/爽感矩阵/合规）；上游名撞 zenstory 编排器已改 |
+| mino-skill-script-review | vendored fork Vi7QY/screenwriter-skill@cf22b23 | 已实测（同上） | 红果 Top100 审稿方法论；上游中文名已改 script-review |
 | mino-skill-commit | 自研 skill pack（ctx.skills provider） | 已实测（provider 注册+list/get 冒烟通过） | 无；commit-message 技能，rank 650 可被同名覆盖 |
 | mino-skill-mino-release | 自研 skill pack | 已实测（同上） | 无；mino-release 部署发布速查技能 |
 

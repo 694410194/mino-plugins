@@ -1,0 +1,4 @@
+{"id": "drama-orchestrator", "text": "调用 skill 工具使用 short-drama 技能：帮我新建一个短剧项目，题材复仇打脸，60集。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 25}, "timeoutMs": 240000}
+{"id": "screenwriting-workflow", "text": "调用 skill 工具使用 sw-workflow 技能：我要开始一个新剧本项目，告诉我阶段划分。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 15}, "timeoutMs": 240000}
+{"id": "duanju-craft", "text": "调用 skill 工具使用 duanju-craft 技能：帮我出一个微短剧选题方案。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 25}, "timeoutMs": 240000}
+{"id": "script-review", "text": "调用 skill 工具使用 script-review 技能：审一下这段剧本——女主发现丈夫出轨当场掀桌。", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 8}, "timeoutMs": 240000}

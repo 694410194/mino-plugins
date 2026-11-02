@@ -458,20 +458,32 @@
       ]
     },
     "mino-skill-drama": {
+      "score": 74,
       "category": "skills",
-      "labels": []
+      "labels": [
+        "verified"
+      ]
     },
     "mino-skill-screenwriting": {
+      "score": 70,
       "category": "skills",
-      "labels": []
+      "labels": [
+        "verified"
+      ]
     },
     "mino-skill-duanju": {
+      "score": 68,
       "category": "skills",
-      "labels": []
+      "labels": [
+        "verified"
+      ]
     },
     "mino-skill-script-review": {
+      "score": 60,
       "category": "skills",
-      "labels": []
+      "labels": [
+        "verified"
+      ]
     }
   }
 }
