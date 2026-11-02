@@ -4,3 +4,4 @@
 {"id": "soul-schema", "text": "1+1?", "assert": {"schema.present": ["/^soul_|^memory_/"], "modelCalls.max": 2}}
 {"id": "im-schema", "text": "1+1?", "assert": {"schema.present": ["/^dsh_im_/"], "modelCalls.max": 2}}
 {"id": "comma-idle-cost", "wait": 65, "assert": {"bg.modelCalls.max": 2}}
+{"id": "schema-heavy-cost", "text": "1+1?", "assert": {"tools.max": 90, "modelCalls.max": 2}}

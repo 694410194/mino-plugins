@@ -1,3 +1,4 @@
+import { tavernWhen } from '../session.js'
 /**
  * 世界书（World Info / Lorebook）工具。
  *
@@ -77,9 +78,10 @@ function nextUid(book) {
  * @returns {void}
  */
 export function registerWorldbookTools(ctx, state) {
+  const gate = (def) => ctx.tools.register(def, { when: tavernWhen(state) })
   const books = worldbookStore(state)
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_list_worldbooks',
     description: '列出本地世界书（Lorebook）：书名、条目数、是否启用、是否是当前会话生效的书。',
     parameters: {
@@ -106,7 +108,7 @@ export function registerWorldbookTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_get_worldbook',
     description: '读一本世界书的元信息与条目列表；给 entryUid 时返回该条目的全部 ST 字段。',
     parameters: {
@@ -155,7 +157,7 @@ export function registerWorldbookTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_create_worldbook',
     description: '新建一本空世界书（同名已存在时报错）。建好后用 st_add_worldbook_entry 加条目。',
     parameters: {
@@ -212,7 +214,7 @@ export function registerWorldbookTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_add_worldbook_entry',
     description: '往世界书里加一条条目，字段与 SillyTavern 一致（关键词、正文、常驻、位置、深度、概率、分组等）。默认追加，也可用 entryUid 修改已有条目。',
     parameters: {
@@ -242,7 +244,7 @@ export function registerWorldbookTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_toggle_worldbook',
     description: '启用/停用一本世界书；给 entryUid 时改为启用/停用该条目（条目的 disable 字段）。',
     parameters: {
@@ -267,7 +269,7 @@ export function registerWorldbookTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_scan_worldbook',
     description: '用给定聊天文本试跑一次世界书扫描，返回会被激活的条目与插入位置。不传 chatText 时用当前会话最近的聊天记录。',
     parameters: {

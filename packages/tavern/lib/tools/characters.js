@@ -1,3 +1,4 @@
+import { tavernWhen } from '../session.js'
 /**
  * 角色卡工具。
  *
@@ -72,9 +73,10 @@ function presentCard(state, card, sessionId) {
  * @returns {void}
  */
 export function registerCharacterTools(ctx, state) {
+  const gate = (def) => ctx.tools.register(def, { when: tavernWhen(state) })
   const store = characterStore(state)
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_list_characters',
     description: '列出本地酒馆角色卡。可按名字/标签/作者过滤，返回 id、名字、头像 URL、标签与最后使用时间。',
     parameters: {
@@ -112,7 +114,7 @@ export function registerCharacterTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_get_character',
     description: '读一张角色卡的完整字段（含描述/性格/场景/开场白/对话示例/备选开场白/内嵌世界书/扩展字段）与头像地址。',
     parameters: {
@@ -130,7 +132,7 @@ export function registerCharacterTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_create_character',
     description: '从零创建一张角色卡。至少给名字，其余字段可后补；创建后可用 st_bind_character 绑定到当前会话。',
     parameters: {
@@ -147,7 +149,7 @@ export function registerCharacterTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_edit_character',
     description: '局部修改角色卡字段：只改传入的字段，没传的保持原样。可改名、改描述、换开场白、加备选开场白等。',
     parameters: {
@@ -234,7 +236,7 @@ export function registerCharacterTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_export_character',
     description: '把角色卡导出成 SillyTavern 能直接导入的文件：默认导出 PNG 卡（带 tEXt chara 块），也可导出 V2 JSON。返回写入的绝对路径。',
     parameters: {
@@ -286,7 +288,7 @@ export function registerCharacterTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_bind_character',
     description: '把角色卡绑定到当前会话（写入会话绑定，并记为最近使用角色）。之后装配提示词与聊天都以这张卡为准。',
     parameters: {

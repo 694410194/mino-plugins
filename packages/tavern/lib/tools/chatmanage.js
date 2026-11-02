@@ -8,7 +8,7 @@ import { defineTool } from '../toolkit.js'
 import { existsSync, readdirSync, unlinkSync, renameSync } from 'node:fs'
 import { join } from 'node:path'
 import { createChatStore } from './support.js'
-import { setBinding } from '../session.js'
+import { setBinding, tavernWhen } from '../session.js'
 
 /** 角色 id 解析：先按 id，再按名字精确，最后按包含。 */
 function resolveCharacterId(state, input) {
@@ -53,7 +53,8 @@ function listChatsOf(state, characterId) {
  * @param {Object} state 插件状态
  */
 export function registerChatManageTools(ctx, state) {
-  ctx.tools.register(defineTool({
+  const gate = (def) => ctx.tools.register(def, { when: tavernWhen(state) })
+  gate(defineTool({
     name: 'st_list_chats',
     description: '列出聊天存档（可按角色过滤）。一个角色可以有多个存档，相当于 ST 的「聊天历史」。',
     parameters: {
@@ -67,7 +68,7 @@ export function registerChatManageTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_new_chat',
     description: '开一个新的聊天存档并绑定角色。开档后可以用 st_bind_character 触发开场白。',
     parameters: {
@@ -90,7 +91,7 @@ export function registerChatManageTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_rename_chat',
     description: '重命名一个聊天存档。',
     parameters: {
@@ -107,7 +108,7 @@ export function registerChatManageTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_delete_chat',
     description: '删除一个聊天存档。不可恢复，删除前请确认。',
     parameters: {

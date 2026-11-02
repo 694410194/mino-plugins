@@ -23,7 +23,7 @@ function mapDelta(prev, next, full) {
   return diffMaps(prev, next)
 }
 import { defineTool } from '../toolkit.js'
-import { sessionIdOf } from '../session.js'
+import { sessionIdOf, tavernWhen } from '../session.js'
 import { readDoc, writeDoc, sessionDir, touchMeta, sessionIdFor } from '../trpg/persist.js'
 import { rollDice, rollDamage } from '../trpg/dice.js'
 import { abilityCheck, opposedCheck, normalizeSystem } from '../trpg/check.js'
@@ -167,8 +167,9 @@ export function getTrpgState(state, sessionId) {
  * @returns {void}
  */
 export function registerTrpgTools(ctx, state) {
+  const gate = (def) => ctx.tools.register(def, { when: tavernWhen(state) })
   // ── trpg_roll ─────────────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_roll',
     description: '掷骰子。支持 2d6、1d20、d100、纯数字、多段（2d6+1d4+3）、优势劣势（2d20kh1/2d20kl1）、'
       + '弃低/弃高（4d6dl1）、爆炸（1d6!）、重复（3#1d20）。'
@@ -210,7 +211,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_check ────────────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_check',
     description: '判定/检定。system 决定规则体系：dnd5e（d20+加值 vs DC）、coc7e（d100 vs 技能值）、generic（百分比）。'
       + '只在结果不确定且有代价时才调用；必然成功或必然失败的行动直接叙述，不要掷。'
@@ -273,7 +274,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_opposed ──────────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_opposed_check',
     description: '对抗判定：双方各掷一次比较成败与等级（例如一边 stealth vs 另一边 perception）。'
       + '甲方与乙方各自给 bonus 与 dc（或技能值）。',
@@ -322,7 +323,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_damage ───────────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_damage',
     description: '掷伤害骰并直接结算到目标身上（改角色卡 HP）。crit=true 时骰子翻倍（5e 暴击规则），固定加值不翻倍。'
       + '目标可以是角色卡名字，也可以是当前遭遇战里的参战单位。',
@@ -394,7 +395,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_start_encounter ──────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_start_encounter',
     description: '开始一场遭遇战，按先攻排序。combatants 不给就自动把本局所有角色卡（标记为敌人/友方/NPC 的）拉进来。'
       + '先攻可手动指定，不指定就自动掷 d20+敏捷修正。',
@@ -448,7 +449,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_next_turn ────────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_next_turn',
     description: '推进战斗回合：把回合交给下一个还能行动的单位。全员都动过就进入下一回合（状态持续时间 -1、重置行动标记），并检查胜负。',
     parameters: {},
@@ -482,7 +483,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_status ───────────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_status',
     description: '给遭遇战里的某个单位加状态（中毒/眩晕/流血等），可带持续回合数。战斗每回合结束自动递减。',
     parameters: {
@@ -505,7 +506,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_end_encounter ────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_end_encounter',
     description: '手动结束当前遭遇战（谈判收场、敌人逃跑、剧情中断都算）。自动判定的胜负不受影响。',
     parameters: {
@@ -527,7 +528,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_update_sheet ─────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_update_sheet',
     description: '建角色卡或更新角色卡数值。HP 自动夹在 [0, 最大值]；状态带持续回合；物品按名字合并数量。'
       + '任何 HP/资源/物品/状态变化都必须走这个工具，不要在正文里自己编数字。'
@@ -633,7 +634,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_get_sheets ───────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_get_sheets',
     description: '读本局全部角色卡的当前数值（HP/AC/状态/物品）。改数值前先读，改完再读一次核对。',
     parameters: {
@@ -661,7 +662,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_remove_sheet ─────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_remove_sheet',
     description: '删除一张角色卡（角色离场、NPC 退场、建错了要重来）。',
     parameters: {
@@ -681,7 +682,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_show_map ─────────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_show_map',
     description: '地图操作（一个工具带 action）。'
       + 'action=create 新建空地图；generate 生成随机地牢；paint 批量刷地形；rect 铺矩形房间；'
@@ -818,7 +819,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_update_scene ─────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_update_scene',
     description: '切换/更新当前场景（地点、时间、天气、氛围、插图）。场景只负责叙事与氛围；'
       + '需要玩家走位或战斗时改用 trpg_show_map，不要两者重复叠加。',
@@ -865,7 +866,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_log ──────────────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_log',
     description: '读写跑团日志。action=append 追加一条（剧情摘要/关键决策/判定记录都写这里）；'
       + 'action=list 读最近的日志；action=clear 清空。日志是这一局的"刚才发生了什么"，'
@@ -909,7 +910,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_parse_markers ────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_parse_markers',
     description: '解析一段回复里的 GM 标记（[判定]/[状态]/[获得]/[地图]/[选项]、<dice>、<battlecheck>、'
       + '<UpdateVariable>、[[turn:end]]、[[event:...]]、[[map:bg:...]]），返回结构化结果与去掉标记的正文。'
@@ -927,7 +928,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_state ────────────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_state',
     description: '读本局跑团的完整状态：当前场景、地图摘要、遭遇战、角色卡、最近日志。'
       + '每轮开场或不确定当前局势时先读它，不要凭记忆猜。',
@@ -964,7 +965,7 @@ export function registerTrpgTools(ctx, state) {
   }))
 
   // ── trpg_reset ────────────────────────────────────────────────────────────
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'trpg_reset',
     description: '清空本局的跑团存档（地图/场景/角色卡/遭遇战/日志全部重置）。开新的一局时用；'
       + '只想清日志请用 trpg_log action=clear。',

@@ -36,6 +36,21 @@ export function setBinding(state, sessionId, patch) {
   return next
 }
 
+/**
+ * 装配期门控（tools.register 的 when）：只有「已进入酒馆模式」的会话放行
+ * st_/trpg_/stage_ 工具。判定只看 binding.entered——不看 characterId：
+ * getBinding 对新会话会回退继承 lastCharacter，玩过一次酒馆后
+ * characterId 非空会让门对所有会话敞开，必须用 entered 这个显式标记。
+ */
+export function tavernWhen(state) {
+  return ({ agent }) => {
+    const session = agent && agent.session
+    const sid = session && session.id
+    const binding = getBinding(state, sid === undefined || sid === null ? undefined : String(sid))
+    return binding.entered === true
+  }
+}
+
 /** 从工具执行上下文里取会话 id；取不到返回 undefined。 */
 export function sessionIdOf(exec) {
   if (!exec) return undefined

@@ -14,7 +14,7 @@
  * 另外 stage_get 用于读回当前内容（改之前先看）。
  */
 import { defineTool } from '../toolkit.js'
-import { sessionIdOf } from '../session.js'
+import { sessionIdOf, tavernWhen } from '../session.js'
 import { getStage, publishStage, patchStage, clearStage, PANEL_KINDS, BLOCK_KINDS } from '../stage.js'
 
 /** 解析会话 id；工具被无会话调用时落到 'default'。 */
@@ -33,7 +33,8 @@ function failure(message) {
  * @param {Object} state 插件状态
  */
 export function registerStageTools(ctx, state) {
-  ctx.tools.register(defineTool({
+  const gate = (def) => ctx.tools.register(def, { when: tavernWhen(state) })
+  gate(defineTool({
     name: 'stage_publish',
     description: [
       '设置中间舞台的内容。舞台是 AI 输出的一部分：你要展示什么、长什么样，由你决定。',
@@ -70,7 +71,7 @@ export function registerStageTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'stage_patch',
     description: [
       '增量修改舞台，不重写整个面板。改数值、更新一格地图、换一行文字都用这个。',
@@ -105,7 +106,7 @@ export function registerStageTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'stage_get',
     description: '读回当前舞台内容。改之前先看，避免把已有内容覆盖掉。',
     parameters: {
@@ -118,7 +119,7 @@ export function registerStageTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'stage_clear',
     description: '清空舞台。换场景、结束战斗、回到纯对话时用。',
     parameters: {

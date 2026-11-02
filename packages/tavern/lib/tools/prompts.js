@@ -1,3 +1,4 @@
+import { tavernWhen } from '../session.js'
 /**
  * 预设 / 作者注释 / 正则脚本工具。
  *
@@ -100,10 +101,11 @@ export function activePreset(state) {
  * @returns {void}
  */
 export function registerPromptTools(ctx, state) {
+  const gate = (def) => ctx.tools.register(def, { when: tavernWhen(state) })
   const presets = presetStore(state)
   const regex = regexStore(state)
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_list_presets',
     description: '列出可用的 SillyTavern 预设（OpenAI Settings JSON），标出当前生效的那一份。',
     parameters: {
@@ -128,7 +130,7 @@ export function registerPromptTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_get_preset',
     description: '读一份预设的细节：采样参数、提示词段（prompts）与装配顺序（prompt_order）。不给名字时读当前生效的那份。',
     parameters: {
@@ -165,7 +167,7 @@ export function registerPromptTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_set_preset',
     description: '导入 / 覆盖 / 切换预设。传 path 从磁盘 JSON 导入；传 name 且已存在则切换到它；两者都给则先导入再切换。',
     parameters: {
@@ -208,7 +210,7 @@ export function registerPromptTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_set_author_note',
     description: '设置作者注释（Author\'s Note）：一段会按深度插进聊天历史的指令。也可查看当前设置；text 传空串表示清除。',
     parameters: {
@@ -240,7 +242,7 @@ export function registerPromptTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_set_scene',
     description: '设置当前场景（跑团/剧情用）：地点、时间、氛围、在场角色。写入会话的 scene 字段，装配提示词与会话状态都会用到。',
     parameters: {
@@ -278,7 +280,7 @@ export function registerPromptTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_apply_regex',
     description: '管理 ST 正则脚本：action=list 列出，add 新增一条，remove 按名字或 id 删除，toggle 启用/停用。脚本按 ST 的 placement（1=用户输入 2=AI 输出 3=斜杠命令 5=世界书 6=显示）作用在对应文本上。',
     parameters: {

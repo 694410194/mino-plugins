@@ -1,3 +1,4 @@
+import { tavernWhen } from '../session.js'
 /**
  * 聊天 / 会话工具。
  *
@@ -55,10 +56,11 @@ export function chatToStJsonl(chat, card) {
  * @returns {void}
  */
 export function registerChatTools(ctx, state) {
+  const gate = (def) => ctx.tools.register(def, { when: tavernWhen(state) })
   const chats = createChatStore(state)
   const cards = characterStore(state)
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_get_chat_state',
     description: '读当前会话的酒馆状态：绑定的角色卡、persona、消息条数、最近几条消息、世界书、场景、变量、作者注释与 token 估算。',
     parameters: {
@@ -105,7 +107,7 @@ export function registerChatTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_swipe',
     description: '切换最后一条（或指定）AI 回复的 swipe 分支：direction=1 下一个、-1 上一个；给 content 则追加一条新 swipe 并切过去。返回当前生效的文本。',
     parameters: {
@@ -121,7 +123,7 @@ export function registerChatTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_regenerate',
     description: '重生成最后一条 AI 回复：把现有内容存进 swipe 历史，清空当前正文并标记待生成；返回装配好的提示词上下文，供模型据此写出新回复后用 st_swipe 的 content 参数写回。',
     parameters: {
@@ -134,7 +136,7 @@ export function registerChatTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_set_persona',
     description: '设置用户 persona（ST 的 User Persona：名字 + 描述）。可以只改当前会话，也可以存成全局 persona 供以后复用。',
     parameters: {
@@ -171,7 +173,7 @@ export function registerChatTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_export_chat',
     description: '把会话导出成 SillyTavern 能直接导入的 JSONL 聊天记录，返回写入的绝对路径。',
     parameters: {
@@ -200,7 +202,7 @@ export function registerChatTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_get_variables',
     description: '读当前会话的变量表（ST 的 setvar / MVU 变量），返回全部键值与类型。',
     parameters: {
@@ -220,7 +222,7 @@ export function registerChatTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_list_variables',
     description: '列出当前会话变量表的明细：键、值、类型、值长度，便于按类型筛选或统计。',
     parameters: {
@@ -246,7 +248,7 @@ export function registerChatTools(ctx, state) {
     },
   }))
 
-  ctx.tools.register(defineTool({
+  gate(defineTool({
     name: 'st_set_variable',
     description: '设置 / 增加 / 删除一个会话变量（ST 的 setvar / addvar / delvar）。value 传 null 表示删除该变量。',
     parameters: {

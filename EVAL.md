@@ -124,3 +124,19 @@
 | image | 60→**64 C+** | 诚实降级实测（报错→披露→可选兜底） |
 | tavern | **45 D** 维持 | schema.absent 机器断言 FAIL 实锤，修复项#1 |
 | comma | **70 B** 维持 | 开销实测合预算；worker 委派仍缺 |
+
+## tavern 隔离闸门修复（1.0.0 → 1.1.1，回归断言验证）
+
+- **机制**：`tavernWhen(state)`（lib/session.js）喂 `ctx.tools.register(def,{when})`——
+  装配期按 `agent.session.id` 查 `binding.entered===true` 才放行。
+  门控 51 个工具（7 个文件 53 处调用点）；入口/setup 面 7 个保持开放：
+  tavern_enter/lobby/state + st_import_character/sillytavern/worldbook/st_list_st_sources。
+- **坑**：getBinding 对新会话回退继承 lastCharacter——门必须看 `entered` 显式标记，
+  看 characterId 会在玩过一次后对所有会话敞开。
+- **验证**：`schema-plain`/`schema-mino` 从 FAIL×6 → **PASS**（reports/gate-v3、core-v4-gated）；
+  非酒馆会话 137→86 工具；入口面 schema.present 断言保住。
+- **副产品暴露**：bili_ 43 + oh_story_ 3 是另外两家的常驻特性面（设计内，成本已标注）；
+  schema-heavy-cost 探针文档化该开销（tools.max:90 门线）。
+
+### tavern 评分修正：45 → **70 B-**
+闸门修复 + 回归断言转绿；仍缺玩法深测（角色卡/世界书装配/跑团实战）与 engines.dsh 声明。
