@@ -88,7 +88,8 @@ for (const dir of readdirSync(packagesDir).sort()) {
   } else if (typeof pkg.name === 'string') {
     try {
       const patch = readFileSync(patchPath, 'utf8');
-      const nameLine = new RegExp(`^[\\t ]*name:[\\t ]*['"]?${pkg.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"]?[\\t ]*$`, 'm');
+      // A row naming the package itself or a subpath export of it (multi-face packages expose e.g. ./deepseek-harness as the DSH entry).
+      const nameLine = new RegExp(`^[\\t ]*name:[\\t ]*['"]?${pkg.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:/[^'"\\s]*)?['"]?[\\t ]*$`, 'm');
       if (!nameLine.test(patch)) {
         recordFailure(`${dir}: cordis.patch.yml has no name matching ${pkg.name}`);
       }
