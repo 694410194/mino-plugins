@@ -200,5 +200,8 @@
     "build": "tsdown",
     "check:bundle": "node scripts/check-standard-bundle.mjs",
     "pack:check": "pnpm pack --dry-run"
+  },
+  "mino": {
+    "upstream": "dsh-damage-pulse@4.3.2"
   }
 }

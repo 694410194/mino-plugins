@@ -43,6 +43,13 @@
 | mino-rewind | fork dsh-rewind-plugin | 推荐位 | 无；会话内原地回退（改稿返工场景） |
 | mino-skin-market | fork dsh-skin-market | 推荐位 | 无；社区皮肤发现/一键安装/生命周期管理 |
 | mino-task-board | fork @linxin666/dsh-client-ui-task-board（9.9k★） | 推荐位 | 无；侧边栏多列任务看板，卡片=真实 agent 会话，支持 cron |
+| mino-mcp-memory | 自研纯配置 bundle（插官方 dsh-mcp-client 行） | 待实测 | 需本机 node/npm；官方 memory 知识图谱 MCP |
+| mino-mcp-thinking | 自研纯配置 bundle | 待实测 | 需 node/npm；sequential-thinking 逐步思考 |
+| mino-mcp-chrome-devtools | 自研纯配置 bundle | 待实测 | 需 node/npm+Chrome；浏览器控制（高危面已标注） |
+| mino-mcp-github | 自研纯配置 bundle（streamable-http） | 待实测 | GITHUB_TOKEN env；未设自动停用（disabled: !!js） |
+| mino-mcp-brave-search | 自研纯配置 bundle | 待实测 | BRAVE_API_KEY env；上游包已归档停更已标注 |
+| mino-skill-commit | 自研 skill pack（ctx.skills provider） | 待实测 | 无；commit-message 技能，rank 650 可被同名覆盖 |
+| mino-skill-mino-release | 自研 skill pack | 待实测 | 无；mino-release 部署发布速查技能 |
 
 > 已否决：dsh-super-code（dsh-xray C3 级：patch 运行时/改写系统提示/起网络服务/读凭据环境变量；21★ 单人作者、无第三方验证）。不并入推荐，避免品牌背书风险。
 >

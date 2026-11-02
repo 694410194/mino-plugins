@@ -220,5 +220,8 @@
   "homepage": "https://github.com/ECNU/EduWork/tree/main/packages/dsh-knowledge-studio#readme",
   "bugs": {
     "url": "https://github.com/ECNU/EduWork/issues"
+  },
+  "mino": {
+    "upstream": "dsh-knowledge-studio@0.6.3"
   }
 }

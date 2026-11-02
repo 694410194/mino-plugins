@@ -22,6 +22,16 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
   `@deepseek-ai/dsh-*` 区间的合取。维护策略：覆盖已验证的大版本线（如
   `>=0.2.2-alpha.1 <0.2.3`），新版本验证后扩线，不用版本豁免当长期手段。
 - **`disabled: !!js`** 表达式可用于 cordis 行级条件合成（见 plugin-market 挂法）。
+- **bundle patch 可 insert 官方包行**：`name: '@deepseek-ai/dsh-<pkg>'` 随宿主
+  安装解析，与 plugweb patch 插 `plugin-market` 两行同机制。`mcp-*` 系列纯配置
+  bundle 即此形态：每个包插一条 `dsh-mcp-client` 行（`serverName`/`transport`/
+  stdio `command`/`args`/`env` 或 streamable-http `url`/`headers`），凭据走
+  `env`/`headers` 里的 `!!js process.env.*`，未配时 `disabled: !!js` 整行停用。
+- **`ctx.skills.registerProvider(create)`**：打包 skill 的公开缝。provider
+  `{name, list→candidates, get→definition}` 同步注册即进 catalog；candidate 需
+  `rank`+`locator`+`resourceBase`，`get` 每次实时重读文件。`skill-*` pack
+  （模板 `packages/skill-template`）rank 650 低于 bundled(600)，同名永远被
+  用户/项目 skill 覆盖；provider 名取 package.json `name` 保证 per-layer 唯一。
 
 ## 插件市场与分发
 
@@ -143,3 +153,18 @@ locale 键必须全小写（`zh-cn`，`zh-CN` 会炸）。
 - 官方 ui-plugin-market 实测消费：标签渲染成卡片 Tag、分类进过滤栏、
   `sortKeys` 支持按分排序（dsh-client-ui-plugin-market client.js 确认）。
 - 部署：`site/plugins/index.json` 随 sync.sh 上服务器；`build-site.py` 不碰它。
+
+## 版本策略（与官方解耦，但不破坏生态兼容）
+
+- **运行时 fork**（`@deepseek-ai/dsh-*` 在 mino-agent 里）：固定形态
+  `<upstream-ver>.mino.<n>`（如 `0.2.2-alpha.2.mino.1`）。**不能**换成纯自有
+  版本线（1.0.0）：社区插件 peer 门按 installed 版本算区间合取，脱离上游
+  tuple 会让全部插件 gate 失败。`.mino.N` 就是我们的版本段——每次 Mino
+  运行时发布 +1，上游 base 升级时归 1。代价：精确版本 peer（`=x.y.z`）
+  会失配——区间声明才是社区常态，目前 40 精选零命中。
+- **mino-* 插件**：自有 semver，**不跟踪上游版本号**（`mino-qq-link 1.5.0`
+  这类镜像上游号是历史遗留，下次 bump 起走自有线）。上游 parity 写进
+  `package.json` 的 `mino.upstream`（如 `"dsh-qq-link@1.5.0"`），供 drift
+  追踪；索引/安装不消费它。
+- **索引版本**：git commit-pinned，与包 version 无耦合；npm 通道启用后
+  版本号才成硬约束。

@@ -36,6 +36,14 @@
     "desktop": {
       "en": "Desktop",
       "zh-cn": "桌面"
+    },
+    "mcp": {
+      "en": "MCP servers",
+      "zh-cn": "MCP 服务器"
+    },
+    "skills": {
+      "en": "Skills",
+      "zh-cn": "技能"
     }
   },
   "labels": {
@@ -346,7 +354,7 @@
       ]
     },
     "mino-safety-net": {
-      "score": 60,
+      "score": 68,
       "category": "utility",
       "labels": [
         "verified",
@@ -383,6 +391,61 @@
         "upstream-risk",
         "needs-config",
         "heavy"
+      ]
+    },
+    "mino-mcp-memory": {
+      "score": 72,
+      "category": "mcp",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-mcp-thinking": {
+      "score": 70,
+      "category": "mcp",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-mcp-chrome-devtools": {
+      "score": 66,
+      "category": "mcp",
+      "labels": [
+        "verified",
+        "needs-config",
+        "high-risk",
+        "heavy"
+      ]
+    },
+    "mino-mcp-github": {
+      "score": 60,
+      "category": "mcp",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-mcp-brave-search": {
+      "score": 58,
+      "category": "mcp",
+      "labels": [
+        "verified",
+        "needs-config",
+        "upstream-risk"
+      ]
+    },
+    "mino-skill-commit": {
+      "score": 60,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-mino-release": {
+      "score": 60,
+      "category": "skills",
+      "labels": [
+        "verified"
       ]
     }
   }

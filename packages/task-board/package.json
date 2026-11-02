@@ -107,5 +107,8 @@
     "typecheck": "tsgo --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
+  },
+  "mino": {
+    "upstream": "@linxin666/dsh-client-ui-task-board@0.4.13"
   }
 }

@@ -83,5 +83,8 @@
     "typescript": "^5.9.3",
     "vitest": "^4.1.1"
   },
-  "license": "BSD-3-Clause"
+  "license": "BSD-3-Clause",
+  "mino": {
+    "upstream": "dsh-visualize@0.1.7"
+  }
 }

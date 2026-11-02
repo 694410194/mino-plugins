@@ -77,5 +77,8 @@
   },
   "engines": {
     "dsh": ">=0.1.0-rc.6 <0.2.3"
+  },
+  "mino": {
+    "upstream": "dsh-notes@0.1.2"
   }
 }

@@ -1,0 +1,41 @@
+{
+  "name": "mino-mcp-thinking",
+  "version": "0.1.0",
+  "description": "MCP 接入包：官方 sequential-thinking 逐步思考服务器（stdio/npx，无需密钥）。安装即挂载一条 dsh-mcp-client 配置行。",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "mcp",
+    "sequential-thinking",
+    "reasoning"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/694410194/mino-plugins",
+    "directory": "packages/mcp-thinking"
+  },
+  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/mcp-thinking#readme",
+  "icon": "icon.svg",
+  "main": "index.js"
+}

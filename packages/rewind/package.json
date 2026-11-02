@@ -198,5 +198,8 @@
     "react-dom": "^18.3.1",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"
+  },
+  "mino": {
+    "upstream": "dsh-rewind-plugin@0.19.1"
   }
 }

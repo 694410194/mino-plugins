@@ -33,6 +33,15 @@ packages:
   - "!packages/skillhub"
   - "!packages/task-board"
   - "!packages/visualize"
+  # Pure-config MCP bundles and skill packs: release-tarball-only, zero deps,
+  # kept out of the frozen workspace install like the community forks.
+  - "!packages/mcp-memory"
+  - "!packages/mcp-thinking"
+  - "!packages/mcp-chrome-devtools"
+  - "!packages/mcp-github"
+  - "!packages/mcp-brave-search"
+  - "!packages/skill-commit"
+  - "!packages/skill-mino-release"
 allowBuilds:
   '@deepseek-ai/dsh-subprocess-local': false
   '@google/genai': false

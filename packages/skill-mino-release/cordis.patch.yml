@@ -1,0 +1,4 @@
+# mino-skill-mino-release bundle patch：挂载 skill pack provider 行。
+- insert:
+    - id: skill-mino-release
+      name: "mino-skill-mino-release"

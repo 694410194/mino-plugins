@@ -94,5 +94,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jean3690/dsh-drawio.git"
+  },
+  "mino": {
+    "upstream": "dsh-drawio@0.1.0"
   }
 }

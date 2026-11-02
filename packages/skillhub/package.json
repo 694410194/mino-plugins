@@ -171,5 +171,8 @@
     "@deepseek-ai/dsh-user-questions": {
       "optional": true
     }
+  },
+  "mino": {
+    "upstream": "@astron-team/skillhub-dsh@0.6.1"
   }
 }

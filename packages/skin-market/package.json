@@ -92,5 +92,8 @@
     "ajv": "^8.17.1",
     "undici": "^7.30.1",
     "yaml": "^2.8.1"
+  },
+  "mino": {
+    "upstream": "dsh-skin-market@0.1.72"
   }
 }

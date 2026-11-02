@@ -1,0 +1,16 @@
+# mino-mcp-brave-search：Brave Search MCP 服务器接入（stdio，npx 拉起）。
+# 纯配置 bundle——只插入一条官方 dsh-mcp-client 行，零代码；卸载本包即移除该服务器。
+# 需要本机 node/npm + BRAVE_API_KEY：未设环境变量时该行自动停用。
+- insert:
+    - id: mcp-brave-search-pack
+      name: 'mino-mcp-brave-search'
+    - id: mcp-brave-search
+      name: '@deepseek-ai/dsh-mcp-client'
+      disabled: !!js "!process.env.BRAVE_API_KEY"
+      config:
+        serverName: brave
+        transport: stdio
+        command: npx
+        args: ['-y', '@modelcontextprotocol/server-brave-search@0.6.2']
+        env:
+          BRAVE_API_KEY: !!js process.env.BRAVE_API_KEY

@@ -32,7 +32,7 @@
 // per-suite pass rates, latency/cost stats, flake detection across repeats.
 import { spawn, execSync } from 'node:child_process'
 import { createInterface } from 'node:readline'
-import { readFileSync, appendFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { readFileSync, appendFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
 import { dirname } from 'node:path'
 
 const args = process.argv.slice(2)
@@ -192,6 +192,8 @@ function checkAssertions(a, d, ctx) {
     else if (k === 'tools.count') ok(k, d.tools === v, `tools=${d.tools}`)
     else if (k === 'tools.max') ok(k, d.tools <= v, `tools=${d.tools} > ${v}`)
     else if (k === 'systemChars.max') ok(k, d.systemChars <= v, `systemChars=${d.systemChars}`)
+    else if (k === 'file.exists') for (const f of [].concat(v)) ok(k, existsSync(f), `file missing: ${f}`)
+    else if (k === 'file.absent') for (const f of [].concat(v)) ok(k, !existsSync(f), `file should be gone: ${f}`)
   }
   return fails
 }

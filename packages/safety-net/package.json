@@ -149,5 +149,8 @@
       "./dist/pi/index.js"
     ]
   },
-  "gitHead": "e18b82d5ce7cbc29394535865050b1f21e1bcd0f"
+  "gitHead": "e18b82d5ce7cbc29394535865050b1f21e1bcd0f",
+  "mino": {
+    "upstream": "cc-safety-net@2.7.2"
+  }
 }
