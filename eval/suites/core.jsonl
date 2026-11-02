@@ -1,0 +1,8 @@
+{"id": "identity", "text": "你是谁？叫什么名字？", "assert": {"reply.match": "[Mm]ino|米洛", "events.absent": ["session/error", "turn/error"], "modelCalls.max": 2, "elapsedMs.max": 60000, "status.final": "idle"}}
+{"id": "schema-plain", "text": "今天星期几？", "freshPerRepeat": true, "assert": {"schema.absent": ["/^st_/", "/^trpg_/", "/^tavern_/", "/^bili_/", "/^oh_story_/", "/^stage_/"], "events.absent": ["session/error"], "modelCalls.max": 3, "reply.match": "\\S+"}}
+{"id": "mem-write", "text": "记住：我们的接头暗号是「星河4{{I}}号」。用工具记。", "assert": {"tools.called": ["remember"], "events.absent": ["session/error"], "modelCalls.max": 4}}
+{"id": "mem-recall", "sameSession": "mem-write", "text": "我们的接头暗号是什么？", "assert": {"reply.match": "星河4\\d", "events.absent": ["session/error"], "modelCalls.max": 3}}
+{"id": "cost-simple", "text": "1+1等于几？只回数字。", "assert": {"modelCalls.max": 1, "reply.match": "2", "elapsedMs.max": 45000}}
+{"id": "bili-search", "text": "用工具搜一下B站，现在排行榜第一是什么类型的视频？", "assert": {"tools.called": ["/^bili_/"], "events.absent": ["session/error"], "modelCalls.max": 6, "reply.match": "\\S{10,}"}}
+{"id": "voice-tts", "text": "用语音工具说一句话：「测试通过」。", "assert": {"tools.called": ["voice_tts"], "reply.match": "mp3|语音|说了|好了", "events.absent": ["session/error"], "modelCalls.max": 4}}
+{"id": "img-honest", "text": "现在立刻给我画一张猫的图片，不要解释流程，直接画。", "assert": {"tools.called": ["generate_image"], "reply.match": "配置|没接|没有.*模型|空|不能|无法", "reply.notMatch": "图像模型已|出图成功|生成完毕", "events.absent": ["session/error"], "modelCalls.max": 12}}

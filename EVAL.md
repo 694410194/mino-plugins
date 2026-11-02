@@ -80,3 +80,47 @@
 4. pilot 高危标注/在场门控；tavern/bili 重场景标注
 5. 全包补 engines.dsh（19/27 缺失，靠 peerDeps 兜底）
 6. voice 对照 edge-tts 7.3.1 DRM v2 核一次（微软已升协议）
+
+## 运行验证证据（eval/ harness，n≥1 + core 部分 n=3）
+
+评测基座：`eval/eval-run.mjs`（JSON-RPC stdio + 事件流断言引擎 + HTTP 面探测 + 故障注入 + 统计）。
+套件：`eval/suites/{core,faults,features,qq-link}.jsonl`（23 条机器断言探针）。
+运行：`node eval/eval-run.mjs --profile plugweb --patch <plugweb patch> --suite eval/suites/<s>.jsonl --repeat N --out eval/reports/<name>`。
+
+### 判死/已验证结论（含原始证据位置）
+
+1. **tavern/bili/oh-story 工具全量泄漏** —— `schema-plain`/`schema-mino` 断言 FAIL（reports/final-*.json）：
+   非酒馆纯会话的 request/header 含全部 58 st_*/trpg_*/tavern_* + 43 bili_* + oh_story_* = 137 中 104 个无关工具。
+   **修复项 #1**：按顶部 agentPreset 门控。注：`request/header` 仅会话首轮发出（schema 快照语义），
+   LLM 调用数应按 step/start 计。
+2. **fish-memory 对 {{user}} 毒记忆免疫** —— `mem-poisoned-turn`+`schema-mem-poisoned` PASS：
+   字面量注入进上下文（interpolate:false 行为），会话存活、无 session/turn error、无模板回显。
+   上游 1.3.5 崩会话 bug 不存在 → 回归断言已入册。
+3. **qq-link 鉴权链全部实测** —— 5/5：未认证 POST /save → 200 包体 `authentication_required`（只认本人门生效）；
+   /receive 公开口可达+语义校验；superagent API = token→cookie→x-orchestrator-request+origin 三层（200/403/401 各自验证）。
+   ⚠ 发现：宿主 webserver **只放行 GET/HEAD**——/receive、/notice 的 POST 面是死面，NapCat 只能被轮询不能被推送。
+4. **comma 主动循环开销实测**：65s 空闲 = 1 次模型调用（comma-router 会话），bg.modelCalls≤2 预算内。
+5. **voice TTS 4/4 实测**（~5s 稳定）；**bili_search 4/4**（8-46s，冷启动慢）；**remember→跨会话召回**多轮稳定。
+6. **image 诚实降级**：generate_image 报错后模型如实披露"未配置"并可走 SVG/手画兜底（行为合格但路线不定 → flaky 属模型行为非缺陷）。
+7. **pilot 能力属实**（screen_view/desktop_control 在 schema）；oh-story/meme/soul/im 工具在册。
+8. **引擎卫生扫描**：19/27 包缺 engines.dsh（靠 peerDeps 兜底）；oh-story 13 文件 console.log、qqbot 7 env 直读、market 16 env 直读。
+
+### 流程缺陷修复记录（harness 自身——假阴性比假阳性危险）
+
+- spawn cmd.exe 包装 + kill() 只杀壳 → Mino.exe 孙子孤活占端口/锁 → taskkill /T 整树
+- session.status 'idle' 是 attach 时快照（轮间 7ms 间隙会假阳性）→ 需 turn/start 先见才认
+- session/query 响应到达时历史事件已在缓冲 → preDone 需"同轮 turn/start 在前"配对
+- status.final 断言改"曾到达"语义 + turn/end 后 400ms 宽限
+- webBase 尾斜杠 → //?token= 400；token 只在 GET / 换 cookie，API 靠 cookie 鉴权
+- dsh cwd 绑定 workspace：spawn 须钉 cwd 到 profile 工作区，否则 comma-router 报 domain inconsistent
+
+### 修正后评分（只列变化的）
+
+| 插件 | 原→新 | 依据 |
+|---|---|---|
+| qq-link | 72→**76 B+** | 鉴权链 5/5 实测；POST 死面已记档（轮询兜底） |
+| superagent | 76→**78 B+** | API 三层鉴权实测；policyVersion 真实返回 |
+| fish-memory | 82→**83 A** | {{user}} 注入免疫实测 |
+| image | 60→**64 C+** | 诚实降级实测（报错→披露→可选兜底） |
+| tavern | **45 D** 维持 | schema.absent 机器断言 FAIL 实锤，修复项#1 |
+| comma | **70 B** 维持 | 开销实测合预算；worker 委派仍缺 |

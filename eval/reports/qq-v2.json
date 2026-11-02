@@ -1,0 +1,177 @@
+{
+  "suite": "suites/qq-link.jsonl",
+  "profile": "plugweb",
+  "patch": "C:\\Users\\69441\\.dsh\\profiles\\plugweb\\cordis.patch.yml",
+  "runtag": "wmlme",
+  "startedAt": "2026-11-02T06:55:14.698Z",
+  "probes": [
+    {
+      "id": "qq-state-noauth",
+      "session": "qq-state-noauth-wmlme",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 404,
+            "body": "",
+            "pass": false,
+            "expectStatus": 401
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=404"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "qq-save-noauth",
+      "session": "qq-save-noauth-wmlme",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "pass": false,
+            "expectStatus": 401
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=405"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "qq-testsend-noauth",
+      "session": "qq-testsend-noauth-wmlme",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "pass": false,
+            "expectStatus": 401
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=405"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "qq-receive-public",
+      "session": "qq-receive-public-wmlme",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "pass": false,
+            "expectStatus": 200
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=405"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "qq-notice-filter",
+      "session": "qq-notice-filter-wmlme",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "pass": false,
+            "expectStatus": 200
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=405"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-live",
+      "session": "sa-api-live-wmlme",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 401,
+            "body": "unauthorized",
+            "pass": false,
+            "expectStatus": 200
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=401"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    }
+  ],
+  "stats": {
+    "probes": 6,
+    "passAll": 0,
+    "fail": 6,
+    "flaky": 0,
+    "bootMs": 3632
+  },
+  "bootMs": 3632,
+  "serverInfo": {
+    "name": "deepseek-harness-sdk-runtime",
+    "version": "0.0.1"
+  }
+}

@@ -1,0 +1,4 @@
+{"id": "mem-poison-seed", "text": "记住：毒物测试暗号是「紫电67」。用工具记。", "assert": {"tools.called": ["remember"], "modelCalls.max": 4}}
+{"id": "mem-poisoned-turn", "sameSession": "mem-poison-seed", "pre": "node D:/Projects/mino/mino-plugins/eval/faults/poison-memory.mjs {{SESSION}}", "text": "随便聊聊吧。", "assert": {"events.absent": ["session/error", "turn/error"], "reply.match": "\\S{2,}", "modelCalls.max": 3, "reply.notMatch": "\\{\\{"}}
+{"id": "schema-mem-poisoned", "sameSession": "mem-poison-seed", "text": "我最近喜欢什么？", "assert": {"events.absent": ["session/error", "turn/error"], "reply.match": "\\S{2,}", "modelCalls.max": 4}}
+{"id": "schema-mino", "text": "数一数你能用的工具名前缀有哪些族。", "assert": {"schema.absent": ["/^st_/", "/^trpg_/", "/^tavern_/", "/^stage_/"], "reply.match": "\\S{10,}", "modelCalls.max": 2}}

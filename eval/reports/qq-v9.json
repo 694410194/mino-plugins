@@ -1,0 +1,158 @@
+{
+  "suite": "suites/qq-link.jsonl",
+  "profile": "plugweb",
+  "patch": "C:\\Users\\69441\\.dsh\\profiles\\plugweb\\cordis.patch.yml",
+  "runtag": "x1h8f",
+  "startedAt": "2026-11-02T07:06:48.849Z",
+  "probes": [
+    {
+      "id": "qq-mgmt-post-blocked",
+      "session": "qq-mgmt-post-blocked-x1h8f",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 200,
+            "body": "{\"ok\":false,\"说\":\"authentication_required\"}",
+            "mint": null,
+            "pass": false,
+            "expectStatus": [
+              401,
+              403,
+              405
+            ]
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=200"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "qq-receive-post-blocked",
+      "session": "qq-receive-post-blocked-x1h8f",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 200,
+            "body": "{\"ok\":false,\"说\":\"还没绑任何聊天（私聊或群）\"}",
+            "mint": null,
+            "pass": false,
+            "expectStatus": [
+              401,
+              403,
+              405
+            ]
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=200"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-csrf",
+      "session": "sa-api-csrf-x1h8f",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 403,
+            "body": "{\"error\":\"Same-origin management request required\"}",
+            "mint": null,
+            "pass": true,
+            "expectStatus": [
+              401,
+              403
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-authed",
+      "session": "sa-api-authed-x1h8f",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 200,
+            "body": "{\"policyVersion\":\"9fbbf9a0cf77f5da1785bc7d03d13b0b\",\"blocks\":{\"policy\":{\"value\":{\"rules\":[{\"id\":\"copy\",\"name\":\"Copy fixes\",\"enabled\":true,\"instruction\":\"Explicit requests to correct a typo, wording, punctuation or existing translation. Preserve product promises and business meaning.\"},{\"id\":\"visual\",\"name\":\"Visual fixes\",\"enabled\":true,\"instruction\":\"Explicit implementation requests for local spacing, alignment, overflow or styling, with a specified target or an objectively established existing standard/correct state to restore. Locating an element or calling it inconsistent, unattractive or hard to understand does not establish a target. Do not invent visual style, information hierarchy, rendering or interaction decisions. No redesign, new interaction or behavior. A known spacing defect does not authorize adjacent undefined restyling; assess only a clearly separable authorized scope. If direction or scope is unsettled, observe only: no acknowledgement, worker or unsolicited question.\"}],\"sources\":{}},\"revision\":0},\"eval\":{\"value\":{\"mode\":\"observe\",\"timeoutSeconds\":120,\"model\":null},\"revision\":0},\"executor\":{\"value\":{\"model\":null,\"maxWorkers\":3,\"directory\":\"\",\"prepare\":\"\",\"blockedCommands\":[]},\"revision\":0}},\"sources\":[{\"id\":\"github\",\"kind\":\"github\",\"title\":{\"zh\":\"GitHub\",\"en\":\"GitHub\"},\"description\":{\"zh\":\"智能体的 GitHub 账号；接收仓库里发给它的通知、已订阅 Issue 与 PR 的讨论、CI 状态变化和 PR 合并关闭。\",\"en\":\"The agent's GitHub accounts; receives notifications to it in the repository, discussion on subscribed Issues and PRs, CI changes, and PR merge or close.\"},\"installed\":true,\"value\":{\"enabled\":true,\"config\":{\"repository\":\"\",\"cli\":\"\",\"pollSeconds\":60,\"failuresBeforeError\":3,\"observeIssues\":false,\"observePulls\":false,\"observeComments\":false,\"observeCi\":false}},\"revision\":0,\"restarts\":[\"repository\",\"cli\"],\"fields\":[{\"key\":\"repository\",\"type\":\"text\",\"pattern\":\"[A-Za-z0-9_.\\\\-]+/[A-Za-z0-9_.\\\\-]+\",\"label\":{\"zh\":\"监听的仓库\",\"en\":\"Repository\"},\"hint\":{\"zh\":\"写作 owner/name。这个来源接收这个仓库的通知和讨论；保存时检查智能体账号能否推送到它，然",
+            "mint": {
+              "status": 303,
+              "hasCookie": true
+            },
+            "pass": true,
+            "expectStatus": 200
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-wrongorigin",
+      "session": "sa-api-wrongorigin-x1h8f",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 403,
+            "body": "{\"error\":\"Same-origin management request required\"}",
+            "mint": {
+              "status": 303,
+              "hasCookie": true
+            },
+            "pass": true,
+            "expectStatus": 403
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    }
+  ],
+  "stats": {
+    "probes": 5,
+    "passAll": 3,
+    "fail": 2,
+    "flaky": 0,
+    "bootMs": 3544
+  },
+  "bootMs": 3544,
+  "serverInfo": {
+    "name": "deepseek-harness-sdk-runtime",
+    "version": "0.0.1"
+  }
+}

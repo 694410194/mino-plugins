@@ -1,0 +1,6 @@
+{"id":"qq-state-get","i":0,"run":{"i":0,"http":{"status":404,"body":"","pass":true,"expectStatus":[200,401,403,404,405]},"pass":true,"fails":[]}}
+{"id":"qq-mgmt-post-blocked","i":0,"run":{"i":0,"http":{"status":405,"body":"","pass":true,"expectStatus":[401,403,405]},"pass":true,"fails":[]}}
+{"id":"qq-receive-post-blocked","i":0,"run":{"i":0,"http":{"status":405,"body":"","pass":true,"expectStatus":[401,403,405]},"pass":true,"fails":[]}}
+{"id":"sa-api-csrf","i":0,"run":{"i":0,"http":{"status":401,"body":"unauthorized","pass":true,"expectStatus":[401,403]},"pass":true,"fails":[]}}
+{"id":"sa-api-authed","i":0,"run":{"i":0,"http":{"status":401,"body":"unauthorized","pass":false,"expectStatus":200},"pass":false,"fails":[{"assert":"http.expectStatus","evidence":"status=401"}]}}
+{"id":"sa-api-wrongorigin","i":0,"run":{"i":0,"http":{"status":403,"body":"forbidden","pass":true,"expectStatus":403},"pass":true,"fails":[]}}

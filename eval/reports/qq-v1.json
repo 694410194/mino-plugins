@@ -1,0 +1,177 @@
+{
+  "suite": "suites/qq-link.jsonl",
+  "profile": "plugweb",
+  "patch": "C:\\Users\\69441\\.dsh\\profiles\\plugweb\\cordis.patch.yml",
+  "runtag": "wlvu7",
+  "startedAt": "2026-11-02T06:54:41.280Z",
+  "probes": [
+    {
+      "id": "qq-state-noauth",
+      "session": "qq-state-noauth-wlvu7",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": -1,
+            "body": "TypeError: Failed to parse URL from /dsh-qq-bridge/state",
+            "pass": false,
+            "expectStatus": 401
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=-1"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "qq-save-noauth",
+      "session": "qq-save-noauth-wlvu7",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": -1,
+            "body": "TypeError: Failed to parse URL from /dsh-qq-bridge/save",
+            "pass": false,
+            "expectStatus": 401
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=-1"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "qq-testsend-noauth",
+      "session": "qq-testsend-noauth-wlvu7",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": -1,
+            "body": "TypeError: Failed to parse URL from /dsh-qq-bridge/test-send",
+            "pass": false,
+            "expectStatus": 401
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=-1"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "qq-receive-public",
+      "session": "qq-receive-public-wlvu7",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": -1,
+            "body": "TypeError: Failed to parse URL from /dsh-qq-bridge/receive",
+            "pass": false,
+            "expectStatus": 200
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=-1"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "qq-notice-filter",
+      "session": "qq-notice-filter-wlvu7",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": -1,
+            "body": "TypeError: Failed to parse URL from /dsh-qq-bridge/notice",
+            "pass": false,
+            "expectStatus": 200
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=-1"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-live",
+      "session": "sa-api-live-wlvu7",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": -1,
+            "body": "TypeError: Failed to parse URL from /orchestrator/api/settings",
+            "pass": false,
+            "expectStatus": 200
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=-1"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    }
+  ],
+  "stats": {
+    "probes": 6,
+    "passAll": 0,
+    "fail": 6,
+    "flaky": 0,
+    "bootMs": 3532
+  },
+  "bootMs": 3532,
+  "serverInfo": {
+    "name": "deepseek-harness-sdk-runtime",
+    "version": "0.0.1"
+  }
+}

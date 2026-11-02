@@ -1,0 +1,169 @@
+{
+  "suite": "suites/qq-link.jsonl",
+  "profile": "plugweb",
+  "patch": "C:\\Users\\69441\\.dsh\\profiles\\plugweb\\cordis.patch.yml",
+  "runtag": "wro0v",
+  "startedAt": "2026-11-02T06:59:11.087Z",
+  "probes": [
+    {
+      "id": "qq-state-get",
+      "session": "qq-state-get-wro0v",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 404,
+            "body": "",
+            "pass": true,
+            "expectStatus": [
+              200,
+              401,
+              403,
+              404,
+              405
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "qq-mgmt-post-blocked",
+      "session": "qq-mgmt-post-blocked-wro0v",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "pass": true,
+            "expectStatus": [
+              401,
+              403,
+              405
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "qq-receive-post-blocked",
+      "session": "qq-receive-post-blocked-wro0v",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "pass": true,
+            "expectStatus": [
+              401,
+              403,
+              405
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-csrf",
+      "session": "sa-api-csrf-wro0v",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 401,
+            "body": "unauthorized",
+            "pass": true,
+            "expectStatus": [
+              401,
+              403
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-authed",
+      "session": "sa-api-authed-wro0v",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 401,
+            "body": "unauthorized",
+            "pass": false,
+            "expectStatus": 200
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=401"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-wrongorigin",
+      "session": "sa-api-wrongorigin-wro0v",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 403,
+            "body": "forbidden",
+            "pass": true,
+            "expectStatus": 403
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    }
+  ],
+  "stats": {
+    "probes": 6,
+    "passAll": 5,
+    "fail": 1,
+    "flaky": 0,
+    "bootMs": 3713
+  },
+  "bootMs": 3713,
+  "serverInfo": {
+    "name": "deepseek-harness-sdk-runtime",
+    "version": "0.0.1"
+  }
+}

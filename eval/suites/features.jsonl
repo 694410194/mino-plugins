@@ -1,0 +1,6 @@
+{"id": "pilot-schema", "text": "你有哪些控制桌面的能力？列名字就行，别执行。", "assert": {"schema.present": ["/^screen_view|^desktop_/"], "reply.notMatch": "已执行|已点击", "modelCalls.max": 2}}
+{"id": "oh-story-schema", "text": "如果我要写一个故事企划，你有工具接吗？", "assert": {"schema.present": ["/^oh_story_/"], "modelCalls.max": 2}}
+{"id": "meme-schema", "text": "你能发表情包吗？", "assert": {"schema.present": ["/^send_meme|^learn_meme|^meme_/"], "reply.match": "能|可以|表情包|send_meme", "modelCalls.max": 2}}
+{"id": "soul-schema", "text": "1+1?", "assert": {"schema.present": ["/^soul_|^memory_/"], "modelCalls.max": 2}}
+{"id": "im-schema", "text": "1+1?", "assert": {"schema.present": ["/^dsh_im_/"], "modelCalls.max": 2}}
+{"id": "comma-idle-cost", "wait": 65, "assert": {"bg.modelCalls.max": 2}}

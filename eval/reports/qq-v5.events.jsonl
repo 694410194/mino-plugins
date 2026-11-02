@@ -1,0 +1,5 @@
+{"t":1793602780028,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"session-e548314c-5f9e-4865-a6a1-a964908e843f","event":{"type":"permission/preset","seq":0,"time":1793602780026,"data":{"preset":"workspace-write"}}}}}
+{"t":1793602780028,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"session-e548314c-5f9e-4865-a6a1-a964908e843f","event":{"type":"sandbox/mode","seq":1,"time":1793602780028,"data":{"mode":"workspace-write"}}}}}
+{"t":1793602780029,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"session-e548314c-5f9e-4865-a6a1-a964908e843f","event":{"type":"approval/policy","seq":2,"time":1793602780029,"data":{"policy":"ask"}}}}}
+{"t":1793602780056,"msg":{"jsonrpc":"2.0","id":1,"result":{"serverInfo":{"name":"deepseek-harness-sdk-runtime","version":"0.0.1"}}}}
+{"t":1793602780743,"msg":{"jsonrpc":"2.0","id":2,"result":{}}}

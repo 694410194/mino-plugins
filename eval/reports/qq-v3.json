@@ -1,0 +1,227 @@
+{
+  "suite": "suites/qq-link.jsonl",
+  "profile": "plugweb",
+  "patch": "C:\\Users\\69441\\.dsh\\profiles\\plugweb\\cordis.patch.yml",
+  "runtag": "wni47",
+  "startedAt": "2026-11-02T06:55:56.811Z",
+  "probes": [
+    {
+      "id": "qq-state-noauth",
+      "session": "qq-state-noauth-wni47",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 404,
+            "body": "",
+            "pass": true,
+            "expectStatus": [
+              401,
+              403,
+              404,
+              405
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "qq-save-noauth",
+      "session": "qq-save-noauth-wni47",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "pass": true,
+            "expectStatus": [
+              401,
+              403,
+              404,
+              405
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "qq-testsend-noauth",
+      "session": "qq-testsend-noauth-wni47",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "pass": true,
+            "expectStatus": [
+              401,
+              403,
+              404,
+              405
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "qq-receive-public",
+      "session": "qq-receive-public-wni47",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "pass": false,
+            "expectStatus": [
+              200,
+              400,
+              422
+            ]
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=405"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "qq-notice-filter",
+      "session": "qq-notice-filter-wni47",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "pass": true,
+            "expectStatus": [
+              200,
+              400,
+              405
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "qq-state-authed",
+      "session": "qq-state-authed-wni47",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 404,
+            "body": "",
+            "pass": false,
+            "expectStatus": 200
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=404"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-noauth",
+      "session": "sa-api-noauth-wni47",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 401,
+            "body": "unauthorized",
+            "pass": true,
+            "expectStatus": 401
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-authed",
+      "session": "sa-api-authed-wni47",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 401,
+            "body": "unauthorized",
+            "pass": false,
+            "expectStatus": 200
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=401"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    }
+  ],
+  "stats": {
+    "probes": 8,
+    "passAll": 5,
+    "fail": 3,
+    "flaky": 0,
+    "bootMs": 3556
+  },
+  "bootMs": 3556,
+  "serverInfo": {
+    "name": "deepseek-harness-sdk-runtime",
+    "version": "0.0.1"
+  }
+}

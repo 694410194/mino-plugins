@@ -1,0 +1,153 @@
+{
+  "suite": "suites/qq-link.jsonl",
+  "profile": "plugweb",
+  "patch": "C:\\Users\\69441\\.dsh\\profiles\\plugweb\\cordis.patch.yml",
+  "runtag": "x1382",
+  "startedAt": "2026-11-02T07:06:30.692Z",
+  "probes": [
+    {
+      "id": "qq-mgmt-post-blocked",
+      "session": "qq-mgmt-post-blocked-x1382",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "mint": null,
+            "pass": true,
+            "expectStatus": [
+              401,
+              403,
+              405
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "qq-receive-post-blocked",
+      "session": "qq-receive-post-blocked-x1382",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 405,
+            "body": "",
+            "mint": null,
+            "pass": true,
+            "expectStatus": [
+              401,
+              403,
+              405
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-csrf",
+      "session": "sa-api-csrf-x1382",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 401,
+            "body": "unauthorized",
+            "mint": null,
+            "pass": true,
+            "expectStatus": [
+              401,
+              403
+            ]
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-authed",
+      "session": "sa-api-authed-x1382",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 401,
+            "body": "unauthorized",
+            "mint": {
+              "status": 400,
+              "hasCookie": false
+            },
+            "pass": false,
+            "expectStatus": 200
+          },
+          "pass": false,
+          "fails": [
+            {
+              "assert": "http.expectStatus",
+              "evidence": "status=401"
+            }
+          ]
+        }
+      ],
+      "passAll": false,
+      "passRate": 0,
+      "flaky": false
+    },
+    {
+      "id": "sa-api-wrongorigin",
+      "session": "sa-api-wrongorigin-x1382",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "http": {
+            "status": 403,
+            "body": "forbidden",
+            "mint": {
+              "status": 400,
+              "hasCookie": false
+            },
+            "pass": true,
+            "expectStatus": 403
+          },
+          "pass": true,
+          "fails": []
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false
+    }
+  ],
+  "stats": {
+    "probes": 5,
+    "passAll": 4,
+    "fail": 1,
+    "flaky": 0,
+    "bootMs": 3522
+  },
+  "bootMs": 3522,
+  "serverInfo": {
+    "name": "deepseek-harness-sdk-runtime",
+    "version": "0.0.1"
+  }
+}

@@ -1,0 +1,5 @@
+{"id": "qq-mgmt-post-gate", "http": {"path": "/dsh-qq-bridge/save", "method": "POST", "headers": {"Content-Type": "application/json"}, "body": {}, "expectStatus": 200, "expectBody": "authentication_required"}}
+{"id": "qq-receive-ingress", "http": {"path": "/dsh-qq-bridge/receive", "method": "POST", "headers": {"Content-Type": "application/json"}, "body": {"text": "eval-ingress", "from": "fault-injection"}, "expectStatus": 200, "expectBody": "ok"}}
+{"id": "sa-api-csrf", "http": {"path": "/orchestrator/api/settings", "expectStatus": [401, 403]}}
+{"id": "sa-api-authed", "http": {"path": "/orchestrator/api/settings", "auth": true, "headers": {"x-orchestrator-request": "1"}, "expectStatus": 200, "expectBody": "policyVersion|rules"}}
+{"id": "sa-api-wrongorigin", "http": {"path": "/orchestrator/api/settings", "auth": true, "headers": {"x-orchestrator-request": "1", "origin": "http://evil.example"}, "expectStatus": 403}}

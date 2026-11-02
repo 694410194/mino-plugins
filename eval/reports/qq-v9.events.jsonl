@@ -1,0 +1,6 @@
+{"t":1793603212370,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"comma-router","event":{"type":"agent/inbox/spliced","seq":456,"time":1793603212369,"data":{"target":"next-turn","start":0,"inserted":[{"id":"mino-comma:a41a93f9-cab2-4021-8459-4efafd85e5ee","role":"user","content":[{"type":"text","text":"[comma loop:probe] 巡检测试：用一句话汇报你的状态。"}],"source":{"kind":"mino-comma"}}]}}}}}
+{"t":1793603212371,"msg":{"jsonrpc":"2.0","method":"session.status","params":{"sessionId":"comma-router","status":"running"}}}
+{"t":1793603212373,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"comma-router","event":{"type":"turn/start","seq":457,"time":1793603212371,"data":{"turn":56}}}}}
+{"t":1793603212373,"msg":{"jsonrpc":"2.0","method":"session.event","params":{"sessionId":"comma-router","event":{"type":"agent/inbox/spliced","seq":458,"time":1793603212373,"data":{"target":"next-turn","start":0,"removedCount":1,"inserted":[]}}}}}
+{"t":1793603212377,"msg":{"jsonrpc":"2.0","id":1,"result":{"serverInfo":{"name":"deepseek-harness-sdk-runtime","version":"0.0.1"}}}}
+{"t":1793603212984,"msg":{"jsonrpc":"2.0","id":2,"result":{}}}

@@ -1,0 +1,8 @@
+{"id":"qq-state-noauth","i":0,"run":{"i":0,"http":{"status":404,"body":"","pass":true,"expectStatus":[401,403,404,405]},"pass":true,"fails":[]}}
+{"id":"qq-save-noauth","i":0,"run":{"i":0,"http":{"status":405,"body":"","pass":true,"expectStatus":[401,403,404,405]},"pass":true,"fails":[]}}
+{"id":"qq-testsend-noauth","i":0,"run":{"i":0,"http":{"status":405,"body":"","pass":true,"expectStatus":[401,403,404,405]},"pass":true,"fails":[]}}
+{"id":"qq-receive-public","i":0,"run":{"i":0,"http":{"status":405,"body":"","pass":false,"expectStatus":[200,400,422]},"pass":false,"fails":[{"assert":"http.expectStatus","evidence":"status=405"}]}}
+{"id":"qq-notice-filter","i":0,"run":{"i":0,"http":{"status":405,"body":"","pass":true,"expectStatus":[200,400,405]},"pass":true,"fails":[]}}
+{"id":"qq-state-authed","i":0,"run":{"i":0,"http":{"status":404,"body":"","pass":false,"expectStatus":200},"pass":false,"fails":[{"assert":"http.expectStatus","evidence":"status=404"}]}}
+{"id":"sa-api-noauth","i":0,"run":{"i":0,"http":{"status":401,"body":"unauthorized","pass":true,"expectStatus":401},"pass":true,"fails":[]}}
+{"id":"sa-api-authed","i":0,"run":{"i":0,"http":{"status":401,"body":"unauthorized","pass":false,"expectStatus":200},"pass":false,"fails":[{"assert":"http.expectStatus","evidence":"status=401"}]}}
