@@ -172,3 +172,22 @@
 
 - Mino 桌面宿主 = `Mino.exe` + `ELECTRON_RUN_AS_NODE=1` = Electron 44，**NODE_MODULE_VERSION 149 ≠ Node 24 的 137**。所有带原生 .node 依赖的插件在此宿主必须 Electron-ABI 重建，否则必炸。knowledge-studio 是首个中招者。
 - 索引侧已全标：`upstream-risk`+`needs-config`+`heavy` 打 knowledge-studio；`high-risk` 打 safety-net（拦命令）；其余 verified。
+
+## 7 个自研 bundle 实测（reports/run-mvyz2vgc + safety-v2）
+
+- **mcp-memory 72 B**：npx 拉起官方 memory MCP，9 个 `mcp__memory__*` 工具实时入 schema
+- **mcp-thinking 70 B**：sequentialthinking 工具入场
+- **mcp-chrome-devtools 66 B-**：37 个 `mcp__chrome__*` 工具——能力真实但工具面最重（heavy+high-risk 已标）；**已默认追加 `--no-usage-statistics`**（上游 Google 遥测 opt-out，启动横幅自曝会收集使用统计）
+- **mcp-github 60 C+** / **mcp-brave-search 58 C+**：`disabled: !!js` 无 key 自动停用验证通过（schema 无工具、启动无错）；实功能需 key 后复测
+- **skill-commit / skill-mino-release 60 C+**：provider 挂载无错（skill catalog 注册，非工具面）
+
+### safety-net 拦截实锤（safety-v2，60→68）
+
+`read` 调 `~/.aws/credentials` → 插件在工具层拦截，模型回复"安全防护直接拦下了"，假密钥标记零泄漏。
+会话 cwd 内的 `Remove-Item -Recurse -Force` 放行是**策略内**（scope 内删自己工作目录合法），不是拦截失效。
+
+### 待办：索引收编
+
+7 包已推 github（`f78d089`）。入索引需服务器两步：
+1. `build-plugin-git-repos.sh`（给新包铸 snapshot 裸仓——commit sha 只能在服务器现场产生）
+2. 重新生成 index.json + `node eval/enrich-index.mjs`（annotations 已备齐 47 条）
