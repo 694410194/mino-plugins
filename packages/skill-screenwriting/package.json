@@ -1,0 +1,48 @@
+{
+  "name": "mino-skill-screenwriting",
+  "version": "0.1.0",
+  "description": "Mino 精选 skill 包（上游 jtydhr88/screenwriting-skills）：26 个编剧技能，蒸馏自 47 本工艺书与 23 部公开剧本（中美英日韩）。含 sw-workflow 编排器与剧集 S0–S7 阶段表。安装即注入 ctx.skills。",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-skill",
+    "skills",
+    "screenwriting",
+    "dramaturgy",
+    "series",
+    "craft"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "skills",
+    "README.md",
+    "LICENSE",
+    "icon.svg",
+    "NOTICE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jtydhr88/screenwriting-skills"
+  },
+  "homepage": "https://github.com/jtydhr88/screenwriting-skills",
+  "mino": {
+    "upstream": "jtydhr88/screenwriting-skills@51115f1"
+  },
+  "author": "jtydhr88"
+}

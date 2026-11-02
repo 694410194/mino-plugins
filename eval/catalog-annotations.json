@@ -447,6 +447,22 @@
       "labels": [
         "verified"
       ]
+    },
+    "mino-skill-drama": {
+      "category": "skills",
+      "labels": []
+    },
+    "mino-skill-screenwriting": {
+      "category": "skills",
+      "labels": []
+    },
+    "mino-skill-duanju": {
+      "category": "skills",
+      "labels": []
+    },
+    "mino-skill-script-review": {
+      "category": "skills",
+      "labels": []
     }
   }
 }

@@ -1,0 +1,4 @@
+# mino-skill-script-review bundle patch：挂载 skill pack provider 行。
+- insert:
+    - id: skill-script-review
+      name: "mino-skill-script-review"

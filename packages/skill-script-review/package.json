@@ -1,0 +1,46 @@
+{
+  "name": "mino-skill-script-review",
+  "version": "0.1.0",
+  "description": "Mino 精选 skill 包（上游 Vi7QY/screenwriter-skill）：短剧/漫剧编剧审稿技能——按头部平台内容负责人方法论审剧本、卡第一集生死线、给改稿方向。安装即注入 ctx.skills。",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-skill",
+    "skills",
+    "script-review",
+    "drama-review",
+    "screenwriting"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "skills",
+    "README.md",
+    "LICENSE",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vi7QY/screenwriter-skill"
+  },
+  "homepage": "https://github.com/Vi7QY/screenwriter-skill",
+  "mino": {
+    "upstream": "Vi7QY/screenwriter-skill@cf22b23"
+  },
+  "author": "Vi7QY"
+}

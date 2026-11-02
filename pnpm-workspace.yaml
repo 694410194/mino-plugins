@@ -40,6 +40,10 @@ packages:
   - "!packages/mcp-chrome-devtools"
   - "!packages/mcp-github"
   - "!packages/mcp-brave-search"
+  - "!packages/skill-drama"
+  - "!packages/skill-screenwriting"
+  - "!packages/skill-duanju"
+  - "!packages/skill-script-review"
   - "!packages/skill-commit"
   - "!packages/skill-mino-release"
 allowBuilds:
