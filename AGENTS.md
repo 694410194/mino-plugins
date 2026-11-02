@@ -129,3 +129,17 @@ api.github.com 0.02s）。**大文件只走 github→server 方向**：服务器
   + 截图上云），QQ 通道三路互斥（qqbot / im-QQ / qq-link+aurabot）。
 - fish-memory `remember` 现为单注册 + when 门控；注入 text 内按请求判
   isEnabled/归档，开关切换当场生效无需装卸挂载。
+
+### 索引评测元数据管线（enrich-index）
+
+重新生成 `index.json` 后**必须**重跑富化，否则 metadata 被生成器重置：
+`node eval/enrich-index.mjs <index.json>`（标注源 `eval/catalog-annotations.json`，
+评分与 EVAL.md 同步）。官方 `parseMarketIndex` 验证后才写出；
+locale 键必须全小写（`zh-cn`，`zh-CN` 会炸）。
+
+- format-1 官方扩展面：index 级 `metadata.{categories,labels,sortKeys}` 声明 +
+  插件级 `metadata.{category,labels,sortKeys.<id>:number}`——**未知顶层字段会被
+  parser 丢弃**，不要发明 `x-*` 字段。
+- 官方 ui-plugin-market 实测消费：标签渲染成卡片 Tag、分类进过滤栏、
+  `sortKeys` 支持按分排序（dsh-client-ui-plugin-market client.js 确认）。
+- 部署：`site/plugins/index.json` 随 sync.sh 上服务器；`build-site.py` 不碰它。
