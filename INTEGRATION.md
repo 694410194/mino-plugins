@@ -49,6 +49,8 @@
 > - mood 0.8.4→**0.8.5**（移植：判定提示词分三档防小情绪全判 0；mood 顶 ≥85/底 ≤40 半幅阻尼）
 > tavern 上游 dsh-tavern 已 2.7.x 但系 MUV 引擎另一血缘（我们有跑团/地图/战斗它没有），换不换看特性对比，不算掉队。
 >
+> **dsh-our-free-model 2.1.0 实测（2026-11，本机中国直连出口）**：provider / 干净挂载（inject 只要 llm），live catalog 拉到 7 个免费车道模型 + 13 账号渠道。但匿名道**全军覆没**：beam-free=region-blocked（出口国家被拦），deepseek-v4.1-flash-free/mimo 等=429 全局限流（"subscribe to OpenCode Go"，retryAfter ~17.7h）。**结论：匿名道在此出口当前不可用，不替换 Magpie**；其剩余价值在账号渠道 hub（WorkBuddy 等登录池）与内嵌 Magpie 引擎跟进，待账号登录实测后再评。已装 plugweb 待复测（patch insert 行，dep ^2.1.0）。注：其 settings 面板会写 ~/.dsh/our-free-model/{catalog,availability,stats}.json。
+
 > **互斥/高危标注（Discover 元数据待办）**：QQ 三路（qqbot/im-QQ/qq-link+aurabot）同号互踢应标互斥；tavern ~58 工具与 bili 系 ~43 工具全量进每轮 schema 是实打实的 token 前缀成本，应标"重场景包"；pilot 真实输入控制+截图上云，应标"高危，先读说明"。
 | mino-qqbot | 腾讯官方 fork | 推荐位 | QQBOT_APPID/SECRET 环境变量 |
 | mino-qq-console | fork | 推荐位 | 设置卡片填 AppID/Secret |
