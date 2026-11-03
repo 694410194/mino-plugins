@@ -558,6 +558,13 @@
         "verified",
         "needs-config"
       ]
+    },
+    "mino-skill-nsfc": {
+      "score": 70,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
     }
   }
 }

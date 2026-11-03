@@ -45,6 +45,7 @@ https://mino.baby/git/skill-explorer
 https://mino.baby/git/skill-humanizer
 https://mino.baby/git/skill-mino-release
 https://mino.baby/git/skill-nature
+https://mino.baby/git/skill-nsfc
 https://mino.baby/git/skill-paperjury
 https://mino.baby/git/skill-screenwriting
 https://mino.baby/git/skill-script-review
