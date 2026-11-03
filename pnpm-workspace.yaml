@@ -52,6 +52,14 @@ packages:
   - "!packages/skill-paperjury"
   - "!packages/skill-humanizer"
   - "!packages/mcp-paper-search"
+  # Grok Bot parity vendored forks (prebuilt lib shipped) + pure-config mounts.
+  - "!packages/agent-team"
+  - "!packages/voice-input"
+  - "!packages/distill"
+  - "!packages/team-conductor"
+  - "!packages/voice-mode"
+  - "!packages/bot"
+  - "!packages/proactive"
 allowBuilds:
   '@deepseek-ai/dsh-subprocess-local': false
   '@google/genai': false
