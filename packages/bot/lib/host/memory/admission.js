@@ -1,0 +1,268 @@
+import { MemoryLineage } from '../data-flow/lineage.js';
+import { randomUUID } from 'node:crypto';
+import { isDeepStrictEqual } from 'node:util';
+import { isAgentLoopRequest } from '@deepseek-ai/dsh-llm';
+import { preserveInbox } from './preserve-inbox.js';
+import { removalNotice } from './history.js';
+export class MemoryAdmission {
+    ctx;
+    presetPrefix;
+    kernel;
+    stopped = false;
+    ready = false;
+    startupFailed = false;
+    agents = new Map();
+    leases = new Map();
+    seen = new Map();
+    audits = new Map();
+    cleanupReads = new Map();
+    denied = 0;
+    /** Exact one-call capability: no arbitrary tool or model bypass while the barrier is held. */
+    async cleanupRead(agent, callId, read) {
+        this.cleanupReads.set(callId, agent);
+        try {
+            return await read();
+        }
+        finally {
+            this.cleanupReads.delete(callId);
+        }
+    }
+    assertToolAllowed(exec) {
+        if (this.stopped || !this.ready)
+            throw new Error('Memory admission stopped');
+        this.kernel?.assertOwnership();
+        if (exec.agent && exec.name === 'mcp__bot_memory_graph__read_graph' && this.cleanupReads.get(exec.callId) === exec.agent)
+            return;
+        this.assertAllowed();
+        // Raw events are intentionally retained. After forgetting, unreviewed readers and side-effect tools stay closed.
+        if (this.kernel?.snapshot.forgotten.size && !['bot_memory_save', 'bot_memory_search', 'bot_memory_list', 'bot_memory_forget',
+            'mcp__bot_memory_graph__read_graph', 'mcp__bot_memory_graph__search_nodes',
+            'mcp__bot_memory_graph__open_nodes'].includes(exec.name))
+            throw new Error('Raw history access is restricted after memory cleanup');
+    }
+    /** Native request assembly, captured at final admission without reaching any provider or executing a tool. */
+    async verifyRequest(agent) {
+        if (this.audits.has(agent.session.id))
+            throw new Error('Request verification busy');
+        if (agent.inbox.nextStep.length || agent.inbox.nextTurn.length)
+            throw new Error('Inbox requires review');
+        const input = removalNotice(), audit = { inputId: input.id, admitted: false, request: undefined };
+        this.audits.set(agent.session.id, audit);
+        try {
+            agent.followup(input);
+            await agent.whenIdle();
+            if (!audit.request)
+                throw new Error('No complete native request captured');
+            return audit.request;
+        }
+        finally {
+            this.audits.delete(agent.session.id);
+        }
+    }
+    auditRequest(options) {
+        const audit = options.sessionId ? this.audits.get(options.sessionId) : undefined;
+        const agent = options.sessionId ? this.agents.get(options.sessionId) : undefined;
+        if (!audit?.admitted || !agent || !isAgentLoopRequest(options) ||
+            !isDeepStrictEqual(options.messages, agent.session.deriveMessages()) ||
+            !options.messages.some(message => 'id' in message && message.id === audit.inputId))
+            return false;
+        if (audit.request)
+            throw new Error('Duplicate verification request');
+        audit.request = options;
+        return true;
+    }
+    get inFlight() { return this.leases.size; }
+    sessions() { return [...this.agents.values()]; }
+    async drain() {
+        this.changed();
+        await Promise.all([...this.leases.values()].map(l => l.done));
+    }
+    constructor(ctx, presetPrefix = 'bot-') {
+        this.ctx = ctx;
+        this.presetPrefix = presetPrefix;
+        ctx.effect(() => ctx.on('llm/stream', (options, next) => this.stream(options, next, this.kernel?.epoch)), 'dsh-bot: memory final admission');
+    }
+    start(kernel) {
+        this.kernel = kernel;
+        this.startupFailed = false;
+        this.ready = true;
+        kernel.listeners.add(this.changed);
+    }
+    /** Permanent startup failure can never produce managed Agents. Recording it
+     * lets the final admission release positively unrelated sessions instead of
+     * gating the whole runtime forever on a kernel that will never arrive. */
+    markStartupFailed() {
+        if (!this.ready)
+            this.startupFailed = true;
+    }
+    changed = () => {
+        if (!this.kernel?.blocked && !this.stopped)
+            return;
+        // No whenIdle here: forget can be called from the very turn being cancelled.
+        for (const agent of this.agents.values())
+            agent.cancel({ kind: 'hook', reason: 'Memory admission blocked' }, { keepInbox: true });
+    };
+    assertAllowed() {
+        if (!this.ready || this.stopped || !this.kernel || this.kernel.blocked)
+            throw new Error('Memory admission blocked');
+        this.kernel.assertReadable();
+        this.kernel.assertOwnership();
+    }
+    observed(sessionId, versionIds) {
+        this.seen.set(sessionId, [...new Set([...(this.seen.get(sessionId) ?? []), ...versionIds])]);
+    }
+    async recordRead(sessionId, versionIds) {
+        if (!this.kernel)
+            throw new Error('Memory lineage unavailable');
+        await new MemoryLineage(this.kernel).record(sessionId, versionIds);
+        this.observed(sessionId, versionIds);
+    }
+    /** This effect is intentionally not returned to the preset/Host: it lasts until Agent disposal. */
+    protect(agent) {
+        const id = agent.session.id;
+        if (this.agents.get(id) === agent)
+            return;
+        this.agents.set(id, agent);
+        const admission = this;
+        agent.ctx.effect(() => {
+            const inbox = preserveInbox(agent, () => {
+                try {
+                    admission.assertAllowed();
+                    return false;
+                }
+                catch {
+                    return true;
+                }
+            });
+            const offStep = agent.ctx.on('agent/pre-step', async (payload, next) => {
+                const decision = await next();
+                const audit = admission.audits.get(id);
+                if (audit && payload.messages.length === 1 && payload.messages[0]?.id === audit.inputId) {
+                    audit.admitted = true;
+                    return decision;
+                }
+                try {
+                    admission.assertAllowed();
+                }
+                catch {
+                    inbox.restore(payload.messages);
+                    return { kind: 'reject', reason: 'Memory admission blocked' };
+                }
+                return decision;
+            });
+            const offStream = agent.ctx.on('llm/stream', async function* (options, next) {
+                if (admission.auditRequest(options)) {
+                    yield { type: 'finish', reason: { kind: 'stop' } };
+                    return;
+                }
+                admission.assertAllowed();
+                yield* next();
+            });
+            const offTools = agent.ctx.tools.guard(exec => {
+                try {
+                    admission.assertToolAllowed(exec);
+                }
+                catch {
+                    return 'Memory cleanup pending; tool access blocked';
+                }
+            });
+            return () => {
+                offStep();
+                offStream();
+                offTools();
+                inbox.dispose();
+                if (admission.agents.get(id) === agent)
+                    admission.agents.delete(id);
+                admission.seen.delete(id);
+            };
+        }, 'dsh-bot: retained memory guard');
+    }
+    assertSurface(agent, options) {
+        if (this.kernel?.snapshot.forgotten.size && (!isAgentLoopRequest(options) ||
+            !isDeepStrictEqual(options.messages, agent.session.deriveMessages()) ||
+            !isDeepStrictEqual(options.toolHistory, agent.session.toolHistory())))
+            throw new Error('Stale memory request epoch or surface');
+    }
+    async *stream(options, next, capturedEpoch) {
+        if (this.auditRequest(options)) {
+            yield { type: 'finish', reason: { kind: 'stop' } };
+            return;
+        }
+        const agent = options.sessionId ? this.agents.get(options.sessionId) : undefined;
+        if (!agent) {
+            if (this.kernel?.snapshot.forgotten.size)
+                throw new Error('Memory admission blocked: request ownership unknown after cleanup');
+            let preset, presetKnown = false;
+            try {
+                const live = options.sessionId ? this.ctx.get('agents')?.get(options.sessionId) : undefined;
+                preset = live && this.ctx.get('agentPresets')?.composedPreset(live.ctx);
+                presetKnown = true;
+            }
+            catch {
+                // Ownership stays unknown; the gate below still applies.
+            }
+            if (this.startupFailed && !this.stopped && presetKnown && !preset?.startsWith(this.presetPrefix)) {
+                yield* next();
+                return;
+            }
+            // During startup, unknown ownership, a pending cleanup or shutdown, block the whole runtime.
+            try {
+                this.assertAllowed();
+            }
+            catch (error) {
+                this.denied++;
+                throw error;
+            }
+            if (preset?.startsWith(this.presetPrefix)) {
+                this.denied++;
+                throw new Error('Legacy Bot generation requires safe reattachment');
+            }
+            yield* next();
+            return;
+        }
+        const kernel = this.kernel;
+        if (!kernel)
+            throw new Error('Memory admission is not ready');
+        this.assertSurface(agent, options);
+        const epoch = capturedEpoch, id = randomUUID();
+        if (epoch === undefined)
+            throw new Error('Memory request predates readiness');
+        let finish;
+        const done = new Promise(resolve => { finish = resolve; });
+        try {
+            await kernel.serial(async () => {
+                this.assertAllowed();
+                this.assertSurface(agent, options);
+                if (epoch !== kernel.epoch)
+                    throw new Error('Stale memory request epoch');
+                // Every managed request records its actual context dependencies before dispatch.
+                await kernel.domain.table('receipts').put(id, { id, epoch, sessionId: agent.session.id,
+                    versionIds: [...new Set([...new MemoryLineage(kernel).seen(agent.session.id), ...(this.seen.get(agent.session.id) ?? [])])], state: 'read' });
+                this.assertAllowed();
+                this.leases.set(id, { agent, done, finish });
+            });
+            this.assertAllowed();
+            this.assertSurface(agent, options);
+            if (epoch !== kernel.epoch)
+                throw new Error('Stale memory request epoch');
+            yield* next();
+        }
+        catch (error) {
+            this.denied++;
+            throw error;
+        }
+        finally {
+            this.leases.delete(id);
+            finish();
+        }
+    }
+    async close() {
+        this.stopped = true;
+        this.changed();
+        if (this.kernel)
+            this.kernel.listeners.delete(this.changed);
+        await Promise.all([...this.leases.values()].map(l => l.done));
+    }
+}
+//# sourceMappingURL=admission.js.map
+export const DSH_BOT_MODULE_VERSION = '0.6.3';

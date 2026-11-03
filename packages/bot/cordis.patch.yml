@@ -1,0 +1,15 @@
+# mino-bot bundle patch：挂载个人 Bot 工作区行。
+# 行名必须等于安装包名，否则静默不加载。
+- insert:
+    - id: bot
+      name: 'mino-bot'
+      config:
+        seedExamples: true
+        presetIdPrefix: bot-
+        presetOrder: 50
+        dataDir: $DSH_HOME/mino-bot
+        maxInjectChars: 4000
+        memorySectionOrder: 100
+        memoryListLimit: 20
+        enableBotManageInStandard: false
+        botManagePersonaPreviewChars: 200

@@ -1,0 +1,10 @@
+import type { Context } from '@deepseek-ai/cordis';
+import type { Config as HostConfig } from './host/registry-config.js';
+export declare const VERSION = "0.6.3";
+export declare const name = "dsh-bot";
+export declare const inject: string[];
+export type Config = HostConfig;
+export declare const Config: typeof import('./host/index.js').Config;
+export type DshBotRegistry = import('./host/index.js').DshBotRegistry;
+export declare const DshBotRegistry: typeof import("./host/registry.js").DshBotRegistry | undefined;
+export declare function apply(ctx: Context, config: HostConfig): void;

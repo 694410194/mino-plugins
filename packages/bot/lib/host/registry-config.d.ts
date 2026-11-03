@@ -1,0 +1,55 @@
+import { type MessagingConfig } from './messaging/config.js';
+import Schema from '@deepseek-ai/schemastery';
+import { type ShadowConfig } from './shadow/config.js';
+export interface Config extends MessagingConfig, ShadowConfig {
+    onboardingEnabled: boolean;
+    onboardingMaxOutputTokens: number;
+    onboardingTimeoutMs: number;
+    nativeToolPolicy: 'native' | 'restricted';
+    groupMaxContinuations: number;
+    groupConcurrentTurns: number;
+    groupConcurrentMembers: number;
+    groupMemberTimeoutMs: number;
+    groupTaskTimeoutMs: number;
+    memoryGrantTtlMs: number;
+    autoShareEnabled: boolean;
+    autoShareBotDaily: number;
+    autoShareDomainDaily: number;
+    memoryRetrieval: import('./memory/retrieval-config.js').Config;
+    referenceMemoryTimeoutMs: number;
+    referenceMemoryMaxFileBytes: number;
+    groupMaxMembers: number;
+    groupMaxTurns: number;
+    groupMaxDepth: number;
+    groupContextMaxBytes: number;
+    groupRoundTimeoutMs: number;
+    connectorApplyTimeoutMs: number;
+    notificationDailyLimit: number;
+    notificationCooldownSec: number;
+    routineOutcomeLimit: number;
+    notificationRetentionDays: number;
+    notificationMaxRecords: number;
+    notificationSendTimeoutMs: number;
+    seedExamples: boolean;
+    presetIdPrefix: string;
+    presetOrder: number;
+    /** Files such as skills; storageDomain retains its separately configured backend root. */
+    dataDir: string;
+    maxInjectChars: number;
+    privateShare: number;
+    sharedShare: number;
+    journalShare: number;
+    journalDays: number;
+    quotaTimeZone: string;
+    memorySectionOrder: number;
+    memoryListLimit: number;
+    enableBotManageInStandard: boolean;
+    botManagePersonaPreviewChars: number;
+    activityMaxSessionsPerBot: number;
+    activityMaxSessionsTotal: number;
+}
+type ConfigInput = Omit<Partial<Config>, 'memoryRetrieval'> & {
+    memoryRetrieval?: Partial<Config['memoryRetrieval']>;
+};
+export declare const Config: Schema<ConfigInput, Config>;
+export {};
