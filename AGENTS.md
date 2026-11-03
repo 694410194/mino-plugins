@@ -63,6 +63,36 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 | registry.npmjs.org / registry.npmmirror.com | 可用 | npm 通道备用：`npmjs.com` 注册页被反爬拦（代理出口 IP 亦 403），暂无 npm 账号 → **当前安装通道=自建 git**（`/git/` dumb-HTTP）；将来发 npmjs 后 npmmirror 自动同步，索引 per-version `registry` 填 npmmirror |
 | mino.baby | 可用 | **正式归宿（第一源）**：`mino.baby/plugins/index.json` + `/git/<name>` 每插件 bare 仓 dumb-HTTP 安装通道。⚠ 镜像不对称：jsdelivr 只镜像索引（图标相对路径自动连带），**安装仍走 mino.baby/git**——安装通道的冗余要 npm 才解得了 |
 
+## 发布链（刚性顺序，勿跳步）
+
+插件源码到用户可装之间是五段串联，任何一段没走完就停手 = 线上断链：
+
+1. `git push origin main`（GitHub；直连 reset 时走 `127.0.0.1:7897` 代理）。
+2. 服务器跑 `sudo bash /opt/mino/managed/scripts/build-plugin-git-repos.sh`：
+   镜像 fetch GitHub → 全量重拆 `/var/www/git/<name>` 孤儿快照仓。
+   **重拆后全部快照 commit 失效**——索引里的旧 pin 立刻作废，下一步不可省。
+3. 工作站重生成索引：`plugin-market-generator` 跑 `eval/.index-input.txt`
+   → `node eval/enrich-index.mjs <index.json>` 富化（内部过 `parseMarketIndex`
+   校验）。跑前清 `eval/.plugin-market-cache/`，否则拿旧 clone 生成旧 pin；
+   Windows 下 `TMPDIR` 指到 `D:\tmp`，杀软锁默认 Temp 会 EPERM 丢源。
+4. 三处落位：服务器 `/var/www/mino-home/plugins/index.json`（site/ 同步 +
+   `deploy-site.sh`）、`694410194/mino-plugin-index` 仓（jsdelivr 第二源，
+   推后 `purge.jsdelivr.net` 刷缓存）、mino-deploy 仓 `site/plugins/index.json`
+   提交——三处必须同一份内容。
+5. `mino-plugin-releases` 手动 tgz 通道（`plugins-v*` tag）：非刚性但 docs
+   页挂链接；`build-site.py` 里的 tag 必须指向已存在的 release——
+   **先发 release 再改脚本**，顺序不能反。
+
+配套红线：
+
+- **`/opt/mino/managed` 是同步副本不是真相**：跑其脚本前先 tar 同步本仓
+  （2026-11-03 事故：managed 旧脚本写 `<name>.git` 目录，索引 URL 落在
+  未更新的 `<name>` 目录上，重拆出的新仓全部白跑）。
+- **`site/plugins/index.json` 是部署态**：`deploy-site.sh` `rsync --delete`
+  整个 site/，本地旧副本会静默回滚线上索引；动 site/ 前先与线上 diff。
+- 推了 mino-plugins 却不打算当天走完整链，至少别让服务器跑拆分；
+  跑了就必须把索引链走完。
+
 ## plugweb 测试档（全插件实测基座）
 
 `C:\Users\69441\.dsh\profiles\plugweb`：29 个 file: tgz 依赖（全部 mino-* 插件
@@ -127,9 +157,10 @@ release 指纹变化时）→ `build-site.py` 重建 → `deploy-site.sh` rsync 
 api.github.com 0.02s）。**大文件只走 github→server 方向**：服务器用
 `git clone/fetch` 或 release 资产下载自取，绝不从工作站 git push/scp
 大负载。插件安装源即此模式：`/var/www/git/mino-plugins.git` bare 镜像
-（服务器 cron fetch github + `update-server-info`），nginx `/git/`
-只读 dumb-HTTP 对外，索引安装目标为
-`git+https://mino.baby/git/mino-plugins.git#commit path:packages/<name>`。
+（服务器 fetch github + `update-server-info`）由
+`build-plugin-git-repos.sh` 重拆成 `/var/www/git/<name>` 每插件单仓孤儿
+快照，nginx `/git/` 只读 dumb-HTTP 对外，索引安装目标为
+`git+https://mino.baby/git/<name>` commit 固定。
 
 ## 产品分层事实（全量实测结论）
 
