@@ -282,3 +282,17 @@
 - **扩线**：31 件 `engines.dsh` 上界 `<0.2.3` → `<0.3.0`（oh-story、
   whale-musume 多子句归并单区间）。profile 安装件仍为旧 manifest，
   下次重装后 compatibility.json 里对应豁免可删。
+
+## 收尾闭环（2026-11-04，reports/final-verify-1）
+
+- **诊断豁免全部清除**：31 件扩线后重打 tgz + profile 强重装
+  （notes/ops/skillhub prepack 脚本坏走 `npm pack --ignore-scripts`——
+  记为待修），compatibility.json 只留 mcp-client 官方精确-pin 豁免。
+  final-verify-1：0 条 disabling/incompatible，177 工具，模型调用正常。
+- **experimental-agent-team 定案**：上游 0.2.5 已把三件套转正并进官方
+  默认组合（base: agent-team/tool-agent-team，web-app: ui-agent-team），
+  包名去掉 experimental- 前缀。plugweb patch 里摊平的旧 experimental 行
+  已删（官方行默认即挂）；mino-agent-team 纯挂载层使命消失 →
+  private:true 退役；team-conductor 文档更正为「官方默认即后端」。
+- **speech-to-text 四件套仍 experimental 名**，0.2.5 未转正，行保留。
+- **knowledge-studio**：LadybugDB 原生 DLL 失败维持 gated（环境问题）。

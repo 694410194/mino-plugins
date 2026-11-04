@@ -1,0 +1,12 @@
+# mino-agent-team —— 已退役（0.2.5 起）。
+#
+# 上游 0.2.5 把 Agent Teams 三件套从 experimental 转正并挂进官方默认组合：
+#   base    -> @deepseek-ai/dsh-agent-team + @deepseek-ai/dsh-tool-agent-team
+#   web-app -> @deepseek-ai/dsh-client-ui-agent-team
+# 本包原职责（insert experimental 行补挂）不复存在，官方解耦即为默认解；
+# 任何 config 覆盖属于产品组合层（宿主自身 cordis.patch.yml），不是插件的事。
+# package.json 已标 private: true，不进索引不分发。
+- insert:
+    # 标记行：与包同名的稳定插件身份，不注册任何贡献。
+    - id: agent-team-pack
+      name: 'mino-agent-team'

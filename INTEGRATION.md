@@ -84,10 +84,10 @@
 > **dsh-our-free-model 2.1.0 实测（2026-11，本机中国直连出口）**：provider / 干净挂载（inject 只要 llm），live catalog 拉到 7 个免费车道模型 + 13 账号渠道。但匿名道**全军覆没**：beam-free=region-blocked（出口国家被拦），deepseek-v4.1-flash-free/mimo 等=429 全局限流（"subscribe to OpenCode Go"，retryAfter ~17.7h）。**结论：匿名道在此出口当前不可用，不替换 Magpie**；其剩余价值在账号渠道 hub（WorkBuddy 等登录池）与内嵌 Magpie 引擎跟进，待账号登录实测后再评。已装 plugweb 待复测（patch insert 行，dep ^2.1.0）。注：其 settings 面板会写 ~/.dsh/our-free-model/{catalog,availability,stats}.json。
 
 > **互斥/高危标注（Discover 元数据待办）**：QQ 三路（qqbot/im-QQ/qq-link+aurabot）同号互踢应标互斥；tavern ~58 工具与 bili 系 ~43 工具全量进每轮 schema 是实打实的 token 前缀成本，应标"重场景包"；pilot 真实输入控制+截图上云，应标"高危，先读说明"。
-| mino-agent-team | 自研纯配置 bundle（官方 experimental 三件套 insert） | 已实测（plugweb 真启零失败） | 官方语义=Team 替换直接委派面：patch 已含 tool-subagent* 三行 disable；名册/私信/任务 DAG |
+| mino-agent-team | 自研纯配置 bundle | 已退役（private） | 0.2.5 上游把 agent-team 三件套转正并进默认组合，挂载职责消失；config 覆盖属产品组合层不归插件 |
 | mino-voice-input | 自研纯配置 bundle（官方 voice-input 四件套 insert） | 已实测（plugweb 真启零失败） | 首次使用下载 SenseVoice 运行时/模型（需网络） |
 | mino-distill | fork @loserfox/distill 0.1.0（BSD-3） | 已实测（plugweb 真启零失败） | 无；turn 结束后台 subagent 反思→自动写/更新 SKILL.md |
-| mino-team-conductor | fork dsh-team-conductor 1.6.0（MIT） | 已实测（plugweb 真启零失败） | 需 mino-agent-team 先挂载；与官方 tool-agent-team 互斥（自带 team_*+别名面），patch 已含 disable；名册控制面/DoD 任务审议 |
+| mino-team-conductor | fork dsh-team-conductor 1.6.0（MIT） | 已实测（plugweb 真启零失败） | 0.2.5 起官方默认 agent-team 即其后端（无需 mino-agent-team）；与官方 tool-agent-team 互斥（自带 team_*+别名面），patch 已含 disable；名册控制面/DoD 任务审议 |
 | mino-voice-mode | fork dsh-voice-mode 0.7.34（MIT） | opt-in 未默认挂载 | sherpa-onnx 原生依赖重（~数百 MB）；全双工语音/barge-in；默认走 mino-voice-input |
 | mino-bot | fork MJ-CJM/DSH-Bot dsh-bot 0.6.3（MIT） | 已实测（plugweb 真启零失败） | 无；多 Bot 名册+人设+长期记忆+群组协作+后台任务+凭据编辑 |
 | mino-proactive | fork dsh-proactive 0.3.2（MIT） | 已实测（plugweb 真启零失败） | 无；模型自订闹钟/冷会话唤醒/安静时段/每日预算 |

@@ -1,0 +1,5 @@
+# mino-distill bundle patch：挂载会话蒸馏行。
+# 行名必须等于安装包名，否则静默不加载。
+- insert:
+    - id: distill
+      name: 'mino-distill'

@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+# dsh 隔离核心获取（版本感知的安装器选择）
+#
+# 背景：旧版本 dsh 的 loader 要求 npm 式扁平 node_modules；pnpm 隔离布局
+# （.pnpm 虚拟存储）下其插件名解析失败（0.1.3-alpha.2 实证：包在 store 内存在
+# 且已链接，但 loader 报 could not be resolved；裸 profile 对照同样死亡；
+# 同一版本改用 npm install 后 boot 成功 200 + 真流程 PASS）。
+# 新版本（0.1.5+）两种布局均可，默认 pnpm（快、省空间）。
+#
+# 用法：bash scripts/ensure-core.sh <dsh版本> [目标目录]
+#   例：bash scripts/ensure-core.sh 0.1.7-alpha.2
+#       bash scripts/ensure-core.sh 0.1.1-rc.2 /tmp/dshcore-npm/dsh-0-1-1-rc-2
+# 输出：成功时打印 bin.js 绝对路径（可直接喂给 full-e2e.sh / smoke-runtime.sh）。
+# 退出码：0=就绪（已存在则直接复用，不重装）；1=安装失败。
+set -euo pipefail
+
+VER="${1:?usage: $0 <dsh版本> [目标目录]}"
+SAFE="${VER//./-}"
+DEFAULT_BASE="/tmp/dshcore"
+
+# 安装器选择表（证据驱动，新增旧版本时按实证追加；R22 修正）：
+#   npm-flat（仅此一例）：0.1.3-alpha.2——pnpm 树 loader 解析失败，npm 扁平树 boot 成功（R10/R11 实证）。
+#   pnpm + HMR-skip fixture 补丁：0.1.1-*、0.1.0-*（R15/R17 实证 PASS；补丁打在该树
+#     profile-boot-*.js，DSH_TEST_SKIP_HMR_WATCH=1 生效；先 stat 查 inode 是否与他树共享）。
+#   npm-flat：0.0.1-*（rc.5 实证；pnpm 树死于自身 subprocess-local 解析）。
+#   pnpm：其余（0.1.2+、0.1.5+、0.1.6+、0.1.7+ 均已实证可用）。
+# 注意：npm 装旧树极慢（10 分钟零进展常见）且后台易死；能走 pnpm 的一律走 pnpm。
+case "$VER" in
+  0.1.3-*|0.0.1-*)
+    INSTALLER="npm"
+    BASE="/tmp/dshcore-npm"
+    ;;
+  *)
+    INSTALLER="pnpm"
+    BASE="$DEFAULT_BASE"
+    ;;
+esac
+
+DIR="${2:-$BASE/dsh-$SAFE}"
+BIN="$DIR/node_modules/@deepseek-ai/dsh/lib/bin.js"
+
+if [ -f "$BIN" ]; then
+  INSTALLED_VER=$(node -e "console.log(require('$DIR/node_modules/@deepseek-ai/dsh/package.json').version)" 2>/dev/null || echo "?")
+  if [ "$INSTALLED_VER" = "$VER" ]; then
+    echo "$BIN"
+    exit 0
+  fi
+  echo "(!) $DIR 存在但版本为 $INSTALLED_VER（要 $VER），重建..." >&2
+  rm -rf "$DIR"
+fi
+
+mkdir -p "$DIR"
+if [ "$INSTALLER" = "npm" ]; then
+  (cd "$DIR" && npm init -y >/dev/null 2>&1 && \
+    NODE_OPTIONS=--max-old-space-size=4096 npm install "@deepseek-ai/dsh@$VER" --no-audit --no-fund) || {
+    echo "✗ npm 安装失败 @ $VER"; exit 1
+  }
+else
+  # pnpm 11 对带安装脚本的依赖（0.2.1-alpha.1 起的 node-pty/koffi 等）以 ERR_PNPM_IGNORED_BUILDS 非零退出，
+  # 但包已全部落盘；冒烟/类型检查不需要这些原生模块的构建产物 → 该错误且 bin 存在时视为成功（其余错误照旧失败）。
+  PNPM_LOG="$(mktemp)"
+  if ! (cd "$DIR" && pnpm init -y >/dev/null 2>&1 && \
+      NODE_OPTIONS=--max-old-space-size=4096 pnpm add "@deepseek-ai/dsh@$VER") >"$PNPM_LOG" 2>&1; then
+    if grep -q ERR_PNPM_IGNORED_BUILDS "$PNPM_LOG" && [ -f "$BIN" ]; then
+      echo "(!) pnpm 报 ERR_PNPM_IGNORED_BUILDS（原生依赖构建被拦截），包已落盘，继续" >&2
+    else
+      tail -5 "$PNPM_LOG" >&2; echo "✗ pnpm 安装失败 @ $VER"; rm -f "$PNPM_LOG"; exit 1
+    fi
+  fi
+  rm -f "$PNPM_LOG"
+fi
+
+[ -f "$BIN" ] || { echo "✗ 安装后仍找不到 $BIN"; exit 1; }
+
+# 0.1.0-* / 0.1.1-*：dsh-app-boot 无条件 watch 用户补丁层，最小 profile 无 Cordis HMR 服务即启动崩溃
+# （compat-contract §11.4 R15）。对测试核心的 profile-boot-*.js 打环境变量门控补丁：DSH_TEST_SKIP_HMR_WATCH=1 时跳过 watchUserPatches。
+# pnpm 的文件常与 store 硬链接共享：先 cp 出新 inode 再 mv 覆盖（不改 store 里的原文件）；补丁只存在于 /tmp 测试核心。
+case "$VER" in
+  0.1.0-*|0.1.1-*)
+    for f in "$DIR"/node_modules/.pnpm/@deepseek-ai+dsh@"$VER"_*/node_modules/@deepseek-ai/dsh/lib/profile-boot-*.js; do
+      [ -f "$f" ] || continue
+      grep -q 'watchUserPatches(ctx' "$f" || continue
+      grep -q DSH_TEST_SKIP_HMR_WATCH "$f" && continue
+      tmp="$f.patching"; cp "$f" "$tmp"
+      sed -i 's/^\(\t*\)await watchUserPatches(ctx, {/\1if (!process.env.DSH_TEST_SKIP_HMR_WATCH) await watchUserPatches(ctx, {/' "$tmp"
+      mv "$tmp" "$f"
+      echo "(i) 已为 $VER 打 HMR 跳过夹具（运行冒烟时需 DSH_TEST_SKIP_HMR_WATCH=1）" >&2
+    done ;;
+esac
+echo "$BIN"

@@ -1,0 +1,214 @@
+#!/usr/bin/env bash
+# runtime 冒烟（防回归 I-3）：在隔离 DSH_HOME 上 boot 指定 dsh 核心 + voice-mode，
+# 验证 host 端点（/voice-mode、/voice-mode/config、/voice-mode/models/status），
+# 并在 playwright-core 可用时用 headless chromium 验证客户端 mic 按钮 + console 0 error。
+#
+# 用法：bash scripts/smoke-runtime.sh <dsh-core-bin.js> [port]
+#   dsh-core-bin.js：目标 dsh 的 lib/bin.js 绝对路径（0.1.1 与 0.1.2 各自准备一份）。
+#   port：默认 3120（避免与线上 3018 冲突）。
+#   DSHVM_SHOT=<目录>：客户端冒烟时把右键菜单截图存到该目录（人工核对视觉）。
+set -euo pipefail
+
+BIN="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
+PORT="${2:-3120}"
+[ -f "$BIN" ] || { echo "✗ dsh 核心不存在: $BIN"; exit 2; }
+
+# 插件来源：默认 link 本仓库；DSHVM_SPEC=0.7.17（或 npm tarball 路径）则按「别人全新安装」的方式装发布包验证。
+# 链接路径必须是原生格式：Git Bash/MSYS 下 $PWD 是 /c/... 形式，pnpm 在 Windows 上
+# 解析不了，会静默装不上，最终 boot 报 "cannot resolve profile bundle"。cygpath -m
+# 输出 C:/... 混合格式，Windows 与 POSIX 侧都能用。
+LINK_SRC="$PWD"
+if command -v cygpath >/dev/null 2>&1; then LINK_SRC="$(cygpath -m "$PWD")"; fi
+
+# pwd -P：macOS 的 /tmp、/var 是符号链接，宿主按真实路径校验预置工作区（见 full-e2e.sh）
+WORK=$(cd "$(mktemp -d "${TMPDIR:-/tmp}/dsh-smoke-XXXXXX")" && pwd -P)
+DSH_HOME="$WORK/home"
+BOOTLOG="$WORK/boot.log"
+NODE_PID=""
+
+cleanup() {
+  [ -n "$NODE_PID" ] && kill "$NODE_PID" 2>/dev/null || true
+  rm -rf "$WORK"
+}
+trap cleanup EXIT
+
+echo "== 初始化隔离 profile（DSH_HOME=$DSH_HOME）=="
+mkdir -p "$DSH_HOME/profiles/web"
+cat > "$DSH_HOME/profiles/web/package.json" <<EOF
+{
+  "name": "dsh-profile-web",
+  "private": true,
+  "dependencies": { "dsh-voice-mode": "${DSHVM_SPEC:-link:$LINK_SRC}" },
+  "dsh": { "profile": { "bundles": ["@deepseek-ai/dsh-base", "@deepseek-ai/dsh-web-app", "dsh-voice-mode"], "patchReload": "startup" } }
+}
+EOF
+echo '[]' > "$DSH_HOME/profiles/web/cordis.patch.yml"
+# 复刻真实 dsh profile 的 pnpm 工作区配置（dsh 初始化 profile 时写入；缺它会让 pnpm 自动安装 peer 依赖的第二份 cordis，
+# 与宿主实例冲突 → 已安装形态的插件「failed to import」，link 形态则不受影响）。
+cat > "$DSH_HOME/profiles/web/pnpm-workspace.yaml" <<'YAML'
+packages:
+  - .
+
+nodeLinker: hoisted
+autoInstallPeers: false
+minimumReleaseAge: 0
+YAML
+# DSHVM_ALLOW_BUILDS=1：放行 msedge-tts 的 preinstall（仅用于复现 ≤0.7.17 旧版本的加载缺陷，见 ADR-0011；0.7.18+ 不需要）。
+[ -n "${DSHVM_ALLOW_BUILDS:-}" ] && printf 'allowBuilds:\n  msedge-tts: true\n' >> "$DSH_HOME/profiles/web/pnpm-workspace.yaml"
+
+# 预置 settings：跳过首次引导弹窗。比在 UI 上按文本点按钮可靠得多——界面语言跟随浏览器，
+# 文本匹配天然脆弱（实测中文环境下英文正则全不命中，引导关不掉）。
+# smoke-client 里的点击逻辑保留为兜底（本键名若在未来版本改变，仍能走 UI 关）。
+cat > "$DSH_HOME/settings.yaml" <<'YAML'
+ui-onboarding:
+  welcomeNoticeVersion: 2026-08-13.1
+permission:
+  defaultPreset: danger-full-access
+voice-mode:
+  silenceMs: 1800
+YAML
+
+# 预置一个工作区：mic 按钮所在的输入区要选定工作区后才渲染，而「选择工作区」走的是
+# 系统目录选择器，headless 里点不了。直接写 storages/workspace.json 绕过整个交互。
+mkdir -p "$DSH_HOME/storages" "$WORK/ws"
+WS_DIR="$WORK/ws"
+if command -v cygpath >/dev/null 2>&1; then WS_DIR="$(cygpath -m "$WORK/ws")"; fi  # -m 出正斜杠，JSON 无需转义，Windows 也接受
+WS_ID="00000000-0000-4000-8000-00000000smoke"
+WS_ID="${WS_ID:0:36}"
+NOW="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
+cat > "$DSH_HOME/storages/workspace.json" <<EOF
+{
+  "unit": { "name": "workspace", "version": 2 },
+  "global": { "initialized": true, "workspaceIds": ["$WS_ID"], "archivedSessionIds": [] },
+  "tables": {
+    "workspaces": {
+      "$WS_ID": {
+        "path": "$WS_DIR",
+        "title": "smoke",
+        "sessionIds": [],
+        "createdAt": "$NOW",
+        "updatedAt": "$NOW"
+      }
+    }
+  }
+}
+EOF
+(cd "$DSH_HOME/profiles/web" && pnpm install --no-frozen-lockfile >"$WORK/pnpm.log" 2>&1) || {
+  echo "✗ profile pnpm install 失败"; tail -20 "$WORK/pnpm.log"; exit 1
+}
+# 装完立即校验链接真的建起来了——pnpm 对无法解析的 link 会静默跳过（退出码仍为 0），
+# 不校验的话要到 boot 阶段才以 "cannot resolve profile bundle" 暴露，排障成本高。
+if [ ! -e "$DSH_HOME/profiles/web/node_modules/dsh-voice-mode/package.json" ]; then
+  echo "✗ dsh-voice-mode 未链接进隔离 profile（link:$LINK_SRC 解析失败）"
+  tail -20 "$WORK/pnpm.log"; exit 1
+fi
+
+echo "== boot dsh 核心（port $PORT）=="
+# DSHVM_HOST_CMD：宿主进程的启动命令（默认 node）。桌面端宿主是 Electron 的 RunAsNode 子进程，可设为
+#   DSHVM_HOST_CMD="env ELECTRON_RUN_AS_NODE=1 <electron> --expose-internals" 以贴近桌面端运行时。
+DSH_HOME="$DSH_HOME" ${DSHVM_HOST_CMD:-node} "$BIN" web --port "$PORT" --host 127.0.0.1 --no-open >"$BOOTLOG" 2>&1 &
+NODE_PID=$!
+
+# 等 URL（最多 60s）
+URL=""
+for _ in $(seq 1 60); do
+  URL=$(grep -oE "http://127\.0\.0\.1:$PORT[^ ]*" "$BOOTLOG" 2>/dev/null | head -1 || true)
+  [ -n "$URL" ] && break
+  if ! kill -0 "$NODE_PID" 2>/dev/null; then
+    echo "✗ dsh 启动即退出"; tail -20 "$BOOTLOG"; exit 1
+  fi
+  sleep 1
+done
+[ -z "$URL" ] && { echo "✗ 60s 内未等到 URL"; tail -20 "$BOOTLOG"; exit 1; }
+echo "   boot 成功: $URL"
+
+# 就绪等待：URL 打印 ≠ 端口已接受连接（旧核心如 0.1.1-rc.2 先打印后监听；curl 连接被拒会因 set -e 以 exit 7 误杀）。
+# 与 full-e2e.sh 的同名等待一致：任何 HTTP 码都算活着，000 才算没好。
+READY=""
+for _ in $(seq 1 60); do
+  CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 3 "http://127.0.0.1:$PORT/voice-mode" 2>/dev/null || true)
+  if [ -n "$CODE" ] && [ "$CODE" != "000" ]; then READY=1; break; fi
+  if ! kill -0 "$NODE_PID" 2>/dev/null; then echo "✗ dsh 在就绪等待期退出"; tail -20 "$BOOTLOG"; exit 1; fi
+  sleep 1
+done
+[ -z "$READY" ] && { echo "✗ 60s 内服务未就绪（URL 已打印但无响应）"; tail -20 "$BOOTLOG"; exit 1; }
+
+fail=0
+ORIGIN="http://127.0.0.1:$PORT"
+check() {  # name, url, expect_substr
+  local body code
+  body=$(curl -s -H "Origin:$ORIGIN" "$2" 2>/dev/null)
+  code=$(curl -s -o /dev/null -w "%{http_code}" -H "Origin:$ORIGIN" "$2" 2>/dev/null)
+  if [ "$code" = "200" ] && printf '%s' "$body" | grep -q "$3"; then
+    echo "   ✓ $1 ($code)"
+  else
+    echo "   ✗ $1 (code=$code, body=$(printf '%s' "$body" | head -c 120))"
+    fail=1
+  fi
+}
+
+BASE="http://127.0.0.1:$PORT"
+check "/voice-mode"           "$BASE/voice-mode"            '"ok":true'
+check "/voice-mode/config"    "$BASE/voice-mode/config"     'ttsEngine'
+check "/voice-mode/models/status" "$BASE/voice-mode/models/status" 'asr'
+
+# 客户端冒烟（mic 按钮 + console 0 error）：需要 playwright-core + chromium
+if node -e "require.resolve('playwright-core')" >/dev/null 2>&1; then
+  echo "== 客户端冒烟（headless chromium）=="
+  if node scripts/smoke-client.mjs "$URL"; then
+    : # 通过
+  else
+    fail=1
+  fi
+  echo "== 客户端冒烟（中文界面：mic 文案语言）=="
+  if node scripts/smoke-client.mjs "$URL" --locale=zh-CN; then
+    : # 通过
+  else
+    fail=1
+  fi
+  echo "== 设置页冒烟（卡片入口 + 写入生效 + 刷新保留 + 国际化）=="
+  if DSH_HOME="$DSH_HOME" node scripts/smoke-settings.mjs "$URL"; then
+    : # 通过
+  else
+    fail=1
+  fi
+else
+  echo "   （跳过客户端冒烟：playwright-core 未安装）"
+fi
+
+# DSHVM_VOICE_CHAIN=1：语音全链路冒烟（真实语音→采集→/asr→识别；需本机已缓存 VITS/zipformer 模型）。
+#   与 DSHVM_ELECTRON 同设时改在桌面端外壳里跑（xvfb-run）。
+if [ -n "${DSHVM_VOICE_CHAIN:-}" ]; then
+  echo "== 语音全链路冒烟（真实语音→识别）=="
+  env -u DSHVM_ELECTRON node scripts/smoke-voice-chain.mjs "$URL" || fail=1
+  if [ -n "${DSHVM_ELECTRON:-}" ] && command -v xvfb-run >/dev/null 2>&1; then
+    echo "== 语音全链路冒烟（桌面端外壳内）=="
+    xvfb-run -a node scripts/smoke-voice-chain.mjs "$URL" || fail=1
+  fi
+fi
+
+# DSHVM_ELECTRON=<electron 可执行文件>：桌面端外壳冒烟（真 Electron + Xvfb，按官方桌面端的 dsh-app:// 协议/转发/麦克风权限机制加载 dsh）。
+CORE_VER="$(node -p "require('$(dirname "$BIN")/../package.json').version" 2>/dev/null || echo 0.0.0)"
+if [ -n "${DSHVM_ELECTRON:-}" ] && [ "$(printf '%s\n' 0.1.7-alpha.1 "$CORE_VER" | sort -V | head -1)" != "0.1.7-alpha.1" ]; then
+  echo "== 桌面端外壳冒烟：跳过（dsh $CORE_VER < 0.1.7，桌面端自 0.1.7 起才有）=="
+elif [ -n "${DSHVM_ELECTRON:-}" ]; then
+  echo "== 桌面端外壳冒烟（Electron + dsh-app://）=="
+  if command -v xvfb-run >/dev/null 2>&1; then
+    # 官方桌面端的静态首页取自打包的 dsh-web-frontend/dist；在被测核心里找到同一份
+    WEB_INDEX="$(find -L "$(dirname "$BIN")/../../.." -maxdepth 6 -path '*dsh-web-frontend/dist/index.html' 2>/dev/null | head -1)"
+    [ -n "$WEB_INDEX" ] && export DSHVM_WEB_DIST="$(dirname "$WEB_INDEX")"
+    xvfb-run -a node scripts/smoke-desktop-shell.mjs "$URL" || fail=1
+  else
+    echo "   （跳过：缺 xvfb-run）"
+  fi
+fi
+
+# DSHVM_TTS_SMOKE=1：朗读引擎冒烟（vits/kokoro 真实合成；需本机已缓存模型，否则首次合成会下载）。
+# 宿主是 Electron（DSHVM_HOST_CMD 含 electron）时自动按桌面端语义断言 Kokoro。
+if [ -n "${DSHVM_TTS_SMOKE:-}" ]; then
+  echo "== 朗读引擎冒烟（vits / kokoro）=="
+  EL_FLAG=""; case "${DSHVM_HOST_CMD:-}" in *[Ee]lectron*) EL_FLAG="--electron" ;; esac
+  node scripts/smoke-tts-engines.mjs "$URL" $EL_FLAG || fail=1
+fi
+
+[ "$fail" -eq 0 ] && echo "✓ runtime 冒烟通过（host + client，dsh 核心: $BIN）" || { echo "✗ runtime 冒烟有失败项"; exit 1; }

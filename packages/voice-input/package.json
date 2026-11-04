@@ -1,0 +1,39 @@
+{
+  "name": "mino-voice-input",
+  "version": "0.1.0",
+  "description": "Mino 纯配置 bundle：挂载官方语音输入四件套（本地 SenseVoice ASR + Remote API + 输入栏语音 UI），零内核改动。",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "voice",
+    "speech-to-text",
+    "asr"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/694410194/mino-plugins",
+    "directory": "packages/voice-input"
+  },
+  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/voice-input#readme"
+}

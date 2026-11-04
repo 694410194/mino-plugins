@@ -1,0 +1,28 @@
+# mino-voice-input bundle patch：官方 experimental voice-input 四件套。
+#
+# 与上游 dsh-experimental-voice-input-bundle 的 insert 完全一致；
+# 行指向宿主运行时自带的官方包，本包只做可开关的挂载层。
+- insert:
+    # 标记行：与包同名的稳定插件身份（verify-all 要求），不注册任何贡献。
+    - id: voice-input-pack
+      name: 'mino-voice-input'
+
+    # STT 服务门面：默认 provider 走本地 SenseVoice。
+    - id: speech-to-text
+      name: '@deepseek-ai/dsh-experimental-speech-to-text'
+      config:
+        defaultProvider: sensevoice-local
+
+    # 本地 SenseVoice ASR：运行时与模型文件首次使用按需下载到 dshHome。
+    - id: speech-to-text-sensevoice
+      name: '@deepseek-ai/dsh-experimental-speech-to-text-sensevoice'
+      config:
+        dataRoot: !!js dshHomePath('speech-to-text', 'sensevoice')
+
+    # Remote API 面：客户端经 Remote 调 STT。
+    - id: api-speech-to-text
+      name: '@deepseek-ai/dsh-experimental-api-speech-to-text'
+
+    # 输入栏语音输入 UI（按住说话/听写）。
+    - id: ui-voice-input
+      name: '@deepseek-ai/dsh-experimental-client-ui-voice-input'

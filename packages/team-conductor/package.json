@@ -1,0 +1,62 @@
+{
+  "name": "mino-team-conductor",
+  "version": "0.1.0",
+  "description": "官方 Agent Teams 的控制面（fork dsh-team-conductor）：名册总览、成员上下文压力、成员编辑（别名/描述/优先级/标签/token 预算/re-brief/retire/restore/compact/interrupt）、DoD 任务与完成审议、跨名册可续接子代理消息。",
+  "type": "module",
+  "main": "lib/index.js",
+  "bin": {
+    "mino-team": "bin/dsh-team.js"
+  },
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "bin/dsh-team.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "agent-teams",
+    "teammate",
+    "team-orchestration"
+  ],
+  "engines": {
+    "node": ">=20",
+    "dsh": ">=0.2.2-alpha.1 <0.3.0"
+  },
+  "os": [
+    "win32",
+    "darwin",
+    "linux"
+  ],
+  "mino": {
+    "upstream": "dsh-team-conductor@1.6.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/694410194/mino-plugins",
+    "directory": "packages/team-conductor"
+  },
+  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/team-conductor#readme"
+}
