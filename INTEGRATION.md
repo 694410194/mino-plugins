@@ -14,7 +14,7 @@
 | mino-superagent | fork 官方 superagent 原型 + im-watch 源 | 实验向推荐位 | SETUP 向导：bot 账号+准入名单+stateDir；源码在本仓用 tsdown 构建 |
 | mino-comma | 自研 sessionless 主动陪伴（AFK-surf/Comma 启发） | 已实测（plugweb 常驻运行，router 会话+事项域起） | 零配置可跑；接源需 mino-im botId（external-consumer 独占），推送出口需 notify.botId+targetId；worker 委派未落地 |
 | mino-tavern | fork KamishiroRei/dsh-sillytavern | 推荐位 | 无（预设选“酒馆跑团”）；ST V2/V3/PNG 卡+世界书+MVU |
-| mino-market | fork dshmarket | 推荐位强推 | 无；官方市场可视化装全部社区插件（生态自助入口） |
+| mino-market | fork dshmarket | 已退役（private，不进索引） | 打开未经精选闸门的全量社区目录（billion-context 等拒收件直达用户），与精选通道定位冲突；保留源码仅作社区目录读口参考 |
 | mino-aurabot | fork dsh-aurabot-qq | 推荐位 | OneBot/NapCat 个人号；QQ 鱼本体（聊天/表情/语音/记事/空间/B站/唱歌，模块化） |
 | mino-qq-link | fork Yuuyuko-uu/dsh-qq-link（插件许可 1.2） | 推荐位 | OneBot 11/NapCat；QQ 双向桥 |
 | mino-speak-up | fork Yuuyuko-uu/dsh-speak-up（同上许可） | 推荐位 | 无；主动搭话（本地掷骰子触发） |
@@ -44,6 +44,7 @@
 | mino-rewind | fork dsh-rewind-plugin | 推荐位 | 无；会话内原地回退（改稿返工场景） |
 | mino-skin-market | fork dsh-skin-market | 推荐位 | 无；社区皮肤发现/一键安装/生命周期管理 |
 | mino-task-board | fork @linxin666/dsh-client-ui-task-board（9.9k★） | 推荐位 | 无；侧边栏多列任务看板，卡片=真实 agent 会话，支持 cron |
+| mino-better-sidebar | fork omdsh-dev/DSH-better-sidebar（4.9k★） | 评测通过，待发布链收编 | 无（sidebar_open 工具 opt-in 默认关）；按会话隔离的右编辑器侧栏，eval 5/5 PASS |
 | mino-mcp-memory | 自研纯配置 bundle（插官方 dsh-mcp-client 行） | 已实测（plugweb bundles 层拉起 stdio server） | 需本机 node/npm；官方 memory 知识图谱 MCP |
 | mino-mcp-thinking | 自研纯配置 bundle | 已实测（bundle 拉起） | 需 node/npm；sequential-thinking 逐步思考 |
 | mino-mcp-chrome-devtools | 自研纯配置 bundle | 已实测（bundle 拉起） | 需 node/npm+Chrome；浏览器控制（高危面已标注） |

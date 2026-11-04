@@ -1,5 +1,6 @@
 https://mino.baby/git/aurabot
 https://mino.baby/git/balance
+https://mino.baby/git/better-sidebar
 https://mino.baby/git/bili-humanism
 https://mino.baby/git/bili-live
 https://mino.baby/git/bili-scroll
