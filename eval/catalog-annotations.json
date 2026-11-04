@@ -974,42 +974,28 @@
       ]
     },
     "mino-connector-wechat": {
+      "score": 70,
       "category": "conn-im",
       "labels": [
-        "connector",
-        "local-first",
-        "special-zone"
-      ],
-      "sortKeys": {
-        "demand": 95,
-        "strategic": 95,
-        "freshness": 80
-      }
+        "verified",
+        "high-risk"
+      ]
     },
     "mino-connector-qq": {
+      "score": 68,
       "category": "conn-im",
       "labels": [
-        "connector",
-        "local-first",
-        "special-zone"
-      ],
-      "sortKeys": {
-        "demand": 92,
-        "strategic": 95,
-        "freshness": 80
-      }
+        "verified",
+        "high-risk",
+        "mutual-qq"
+      ]
     },
     "mino-connector-collab": {
+      "score": 62,
       "category": "conn-im",
       "labels": [
-        "connector",
-        "local-first"
-      ],
-      "sortKeys": {
-        "demand": 75,
-        "strategic": 80,
-        "freshness": 75
-      }
+        "verified"
+      ]
     }
   }
 }
