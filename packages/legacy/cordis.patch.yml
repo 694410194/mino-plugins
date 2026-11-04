@@ -1,0 +1,5 @@
+# mino-connector-legacy — bundle patch
+- insert:
+    - id: connector-legacy
+      name: 'mino-connector-legacy'
+      config: {}

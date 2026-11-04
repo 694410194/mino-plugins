@@ -1,0 +1,276 @@
+{
+  "suite": "suites/prod-remeasure.jsonl",
+  "profile": "prodbill",
+  "patch": null,
+  "runtag": "9rcl5",
+  "startedAt": "2026-11-03T05:50:37.450Z",
+  "probes": [
+    {
+      "id": "real-lit30",
+      "session": "real-lit30-9rcl5",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "reply": "",
+          "tools": 9,
+          "toolNames": [
+            "edit",
+            "glob",
+            "grep",
+            "pwsh",
+            "read",
+            "read_image",
+            "skill",
+            "working_directory",
+            "write"
+          ],
+          "toolCalls": [],
+          "toolResults": [],
+          "modelCalls": 1,
+          "systemChars": 4016,
+          "eventTypes": {
+            "permission/preset": 1,
+            "sandbox/mode": 1,
+            "approval/policy": 1,
+            "agent/inbox/spliced": 2,
+            "turn/start": 1,
+            "step/start": 1,
+            "system/message": 1,
+            "user/message": 3,
+            "request/header": 1,
+            "request/context": 1,
+            "session/title": 1,
+            "session/title-llm-request": 1,
+            "assistant/attempt": 1,
+            "step/end": 1,
+            "turn/end": 1
+          },
+          "turns": 1,
+          "elapsedMs": 3571,
+          "statusFinal": "idle",
+          "statuses": [
+            "running",
+            "idle",
+            "running",
+            "idle",
+            "running",
+            "idle",
+            "running",
+            "idle"
+          ],
+          "headerSnapshots": 1,
+          "endReason": "turn/end",
+          "respKind": "prompt",
+          "fails": [],
+          "pass": true
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false,
+      "medianMs": 3571
+    },
+    {
+      "id": "real-mara1",
+      "session": "real-lit30-9rcl5",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "reply": "",
+          "tools": 0,
+          "toolNames": [],
+          "toolCalls": [],
+          "toolResults": [],
+          "modelCalls": 1,
+          "systemChars": 0,
+          "eventTypes": {
+            "agent/inbox/spliced": 2,
+            "turn/start": 1,
+            "step/start": 1,
+            "user/message": 1,
+            "assistant/attempt": 1,
+            "step/end": 1,
+            "turn/end": 1
+          },
+          "turns": 1,
+          "elapsedMs": 1895,
+          "statusFinal": "idle",
+          "statuses": [
+            "running",
+            "idle",
+            "running",
+            "idle",
+            "running",
+            "idle"
+          ],
+          "endReason": "turn/end",
+          "respKind": "prompt",
+          "fails": [],
+          "pass": true
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false,
+      "medianMs": 1895
+    },
+    {
+      "id": "real-mara2",
+      "session": "real-lit30-9rcl5",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "reply": "",
+          "tools": 0,
+          "toolNames": [],
+          "toolCalls": [],
+          "toolResults": [],
+          "modelCalls": 1,
+          "systemChars": 0,
+          "eventTypes": {
+            "agent/inbox/spliced": 2,
+            "turn/start": 1,
+            "step/start": 1,
+            "user/message": 1,
+            "assistant/attempt": 1,
+            "step/end": 1,
+            "turn/end": 1
+          },
+          "turns": 1,
+          "elapsedMs": 2283,
+          "statusFinal": "idle",
+          "statuses": [
+            "running",
+            "idle",
+            "running",
+            "idle"
+          ],
+          "endReason": "turn/end",
+          "respKind": "prompt",
+          "fails": [],
+          "pass": true
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false,
+      "medianMs": 2283
+    },
+    {
+      "id": "real-mara3",
+      "session": "real-lit30-9rcl5",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "reply": "",
+          "tools": 0,
+          "toolNames": [],
+          "toolCalls": [],
+          "toolResults": [],
+          "modelCalls": 1,
+          "systemChars": 0,
+          "eventTypes": {
+            "agent/inbox/spliced": 2,
+            "turn/start": 1,
+            "step/start": 1,
+            "user/message": 1,
+            "assistant/attempt": 1,
+            "step/end": 1,
+            "turn/end": 1
+          },
+          "turns": 1,
+          "elapsedMs": 2748,
+          "statusFinal": "idle",
+          "statuses": [
+            "running",
+            "idle"
+          ],
+          "endReason": "turn/end",
+          "respKind": "prompt",
+          "fails": [],
+          "pass": true
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false,
+      "medianMs": 2748
+    },
+    {
+      "id": "real-rebuttal",
+      "session": "real-rebuttal-9rcl5",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "reply": "",
+          "tools": 9,
+          "toolNames": [
+            "edit",
+            "glob",
+            "grep",
+            "pwsh",
+            "read",
+            "read_image",
+            "skill",
+            "working_directory",
+            "write"
+          ],
+          "toolCalls": [],
+          "toolResults": [],
+          "modelCalls": 1,
+          "systemChars": 4016,
+          "eventTypes": {
+            "permission/preset": 1,
+            "sandbox/mode": 1,
+            "approval/policy": 1,
+            "agent/inbox/spliced": 2,
+            "turn/start": 1,
+            "step/start": 1,
+            "system/message": 1,
+            "user/message": 3,
+            "request/header": 1,
+            "request/context": 1,
+            "session/title": 1,
+            "session/title-llm-request": 1,
+            "assistant/attempt": 1,
+            "step/end": 1,
+            "turn/end": 1
+          },
+          "turns": 1,
+          "elapsedMs": 3063,
+          "statusFinal": "idle",
+          "statuses": [
+            "running",
+            "idle"
+          ],
+          "headerSnapshots": 1,
+          "endReason": "turn/end",
+          "respKind": "prompt",
+          "fails": [],
+          "pass": true
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false,
+      "medianMs": 3063
+    }
+  ],
+  "stats": {
+    "probes": 5,
+    "passAll": 5,
+    "fail": 0,
+    "flaky": 0,
+    "bootMs": 1568
+  },
+  "bootMs": 1568,
+  "serverInfo": {
+    "name": "deepseek-harness-sdk-runtime",
+    "version": "0.0.1"
+  }
+}

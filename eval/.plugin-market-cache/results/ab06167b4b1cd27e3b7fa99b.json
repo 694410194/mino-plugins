@@ -1,0 +1,1 @@
+{"release":{"name":"mino-skill-humanizer","version":{"version":"0.1.0","publishTimestamp":1793774628,"source":{"type":"git","url":"https://mino.baby/git/skill-humanizer","commit":"38b822a0d900f1260a5f67c534e6c1fe6a6ed178"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-files-search","description":"文件检索连接器：装了 Everything 走全盘索引，没装扫常用目录，按文件名帮用户找文件。只读、本地。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/files-search"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","files","search","everything"]}}}

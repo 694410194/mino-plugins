@@ -1,0 +1,1 @@
+{"release":{"name":"mino-skillhub","version":{"version":"0.6.1","publishTimestamp":1793773588,"source":{"type":"git","url":"https://mino.baby/git/skillhub","commit":"108da833b06c05bf86136d24be0d9d352c260e1b"},"engines":{"dsh":">=0.1.0-rc.6 <0.3.0"}}}}

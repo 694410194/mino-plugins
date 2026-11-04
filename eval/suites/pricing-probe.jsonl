@@ -1,0 +1,6 @@
+{"id": "price-read", "text": "用 read 工具读 papers/p1.md（一篇英文论文），给我做一张精读卡：研究问题、方法、主要结论、局限，各 2-3 句。", "assert": {"tools.called": ["read"], "reply.match": "."}, "timeoutMs": 600000}
+{"id": "price-read-f1", "sameSession": "price-read", "text": "第二部分方法里最关键的设计是什么？为什么这样设计？", "assert": {"reply.match": "."}, "timeoutMs": 300000}
+{"id": "price-read-f2", "sameSession": "price-read", "text": "如果我想在这篇基础上做改进，给我 3 个可行方向。", "assert": {"reply.match": "."}, "timeoutMs": 300000}
+{"id": "price-polish", "text": "用 read 工具读 papers/draft.md（约 1500 词的英文论文段落），逐段润色成地道的学术英语，直接输出完整的修改稿，最后列出主要改动。", "assert": {"tools.called": ["read"], "reply.match": "."}, "timeoutMs": 600000}
+{"id": "price-review", "text": "调用 skill 工具使用 paperjury 技能：对 papers/p1.md 这篇论文做一次投稿前的审稿压力测试，给出 3 位审稿人的意见。", "assert": {"tools.called": ["skill"], "reply.match": "."}, "timeoutMs": 600000}
+{"id": "price-litreview", "text": "用 read 工具依次读 papers/p1.md、papers/p2.md、papers/p3.md、papers/p4.md 四篇英文论文，做一张文献矩阵（研究问题/方法/结论/局限），再写一段 500 词左右的英文综述，比较它们的异同。", "assert": {"tools.called": ["read"], "reply.match": "."}, "timeoutMs": 900000}

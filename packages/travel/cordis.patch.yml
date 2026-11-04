@@ -1,0 +1,5 @@
+# mino-connector-travel — bundle patch
+- insert:
+    - id: connector-travel
+      name: 'mino-connector-travel'
+      config: {}

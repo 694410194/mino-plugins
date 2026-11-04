@@ -1,0 +1,2 @@
+{"id": "sweep-warmup", "wait": 60}
+{"id": "sweep-model", "text": "你好", "assert": {"modelCalls.min": 1, "status.final": "idle"}}

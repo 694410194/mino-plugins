@@ -1,0 +1,1 @@
+{"release":{"name":"mino-rewind","version":{"version":"0.19.1","publishTimestamp":1793773587,"source":{"type":"git","url":"https://mino.baby/git/rewind","commit":"e1e3b9ddaf6b376a5edd3976be6a7d211c013523"},"engines":{"dsh":">=0.2.1-rc.1 <0.3.0-0"}}}}

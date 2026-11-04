@@ -1,0 +1,1 @@
+{"release":{"name":"mino-skill-academic","version":{"version":"0.1.0","publishTimestamp":1793774628,"source":{"type":"git","url":"https://mino.baby/git/skill-academic","commit":"cd50f8a5e342a261e467cfd17d2bf50a62ca9103"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

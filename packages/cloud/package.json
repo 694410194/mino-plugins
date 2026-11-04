@@ -1,0 +1,45 @@
+{
+  "name": "mino-connector-cloud",
+  "version": "0.1.0",
+  "description": "云端账号连接器：微信读书划线/B站收藏/微博/百度网盘/immich/Home Assistant——凭据用户自己填配置文件，没填就给接入指引。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "mino-connector",
+    "cloud"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "hostdeps.mjs",
+    "skill-provider.mjs",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.3.0",
+    "node": ">=20.18"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/cloud"
+  },
+  "bugs": {
+    "url": "https://github.com/694410194/mino-plugins/issues"
+  }
+}

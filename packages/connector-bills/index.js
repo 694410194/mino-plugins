@@ -112,7 +112,85 @@ export function apply(ctx) {
     when: () => DEG_AVAILABLE,
   })
 
+  ctx.tools.register(defineTool({
+    name: 'bills_subscriptions',
+    description:
+      '在已解析的 .beancount 账目里找出疑似订阅扣费：同一收款方、相近金额、' +
+      '出现在 3 个及以上不同月份的周期性扣款（如视频会员/iCloud/音乐包）。' +
+      '先用 bills_import 生成账目，再把 .beancount 路径传进来。',
+    parameters: {
+      path: { type: 'string', required: true, description: 'bills_import 产出的 .beancount 文件绝对路径' },
+      minMonths: { type: 'integer', description: '至少出现在多少个不同月份（默认 3）' },
+    },
+    output: {
+      schema: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          subscriptions: { type: 'array', items: { type: 'object', additionalProperties: true } },
+          monthlyTotal: { type: 'number' },
+        },
+      },
+      render: (_a, v) => [{ type: 'text', text:
+        `疑似订阅 ${v.subscriptions.length} 项，每月合计约 ${fmt(v.monthlyTotal)}` }],
+    },
+    isConcurrencySafe: () => true,
+    async execute(args) {
+      const file = resolve(String(args.path ?? '').trim())
+      if (!file || !existsSync(file)) throw new Error(`bills_subscriptions: 文件不存在：${file}（先用 bills_import 生成账目）`)
+      const minMonths = Math.max(2, Number.isFinite(+args.minMonths) ? +args.minMonths : 3)
+      return findSubscriptions(readFileSync(file, 'utf8'), minMonths)
+    },
+    presentCall: (args) => ({ card: 'generic', title: '找订阅扣费', kind: 'other', rawInput: args }),
+  }), {
+    when: () => DEG_AVAILABLE,
+  })
+
   ctx.effect(() => ctx.skills.registerProvider(() => createSkillProvider(ctx)))
+}
+
+// ── 订阅识别：同收款方+相近金额，跨 ≥minMonths 个不同月份 ─────────────────────
+function findSubscriptions(bean, minMonths) {
+  const entries = []
+  let cur = null
+  for (const line of bean.split('\n')) {
+    const m = line.match(/^(\d{4})-(\d{2})-(\d{2}) \* "([^"]*)"(?:\s+"([^"]*)")?/)
+    if (m) { if (cur) entries.push(cur); cur = { date: m[0].slice(0, 10), payee: m[4] || m[5] || '', postings: [] }; continue }
+    const p = line.match(/^\s+([A-Za-z]+(?::[A-Za-z0-9:_-]+)*)\s+(-?[\d,]+(?:\.\d+)?)\s+([A-Z]{3})\s*$/)
+    if (cur && p) { cur.postings.push({ account: p[1], amount: parseFloat(p[2].replace(/,/g, '')), currency: p[3] }); continue }
+    if (cur && /^\S/.test(line)) { entries.push(cur); cur = null }
+  }
+  if (cur) entries.push(cur)
+
+  const groups = new Map()
+  for (const e of entries) {
+    let spent = 0
+    for (const po of e.postings) if (po.account.startsWith('Expenses:')) spent += po.amount
+    if (spent <= 0 || !e.payee) continue
+    const key = e.payee
+    if (!groups.has(key)) groups.set(key, [])
+    groups.get(key).push({ month: e.date.slice(0, 7), amount: spent })
+  }
+
+  const subs = []
+  let monthlyTotal = 0
+  for (const [payee, list] of groups) {
+    // 按相近金额聚类（±10%）
+    const clusters = []
+    for (const { month, amount } of list) {
+      const c = clusters.find(c => Math.abs(c.avg - amount) <= Math.max(0.5, c.avg * 0.1))
+      if (c) { c.months.add(month); c.count++; c.total += amount; c.avg = c.total / c.count; c.lastMonth = month > c.lastMonth ? month : c.lastMonth }
+      else clusters.push({ avg: amount, total: amount, count: 1, months: new Set([month]), lastMonth: month })
+    }
+    for (const c of clusters) {
+      if (c.months.size < minMonths) continue
+      const monthly = round2(c.avg)
+      monthlyTotal += monthly
+      subs.push({ payee, 每月约: monthly, 出现月数: c.months.size, 最近扣款月: c.lastMonth, 月份: [...c.months].sort() })
+    }
+  }
+  subs.sort((a, b) => b.每月约 - a.每月约)
+  return { subscriptions: subs, monthlyTotal: round2(monthlyTotal) }
 }
 
 // ── provider 识别与 zip ──────────────────────────────────────────────────────

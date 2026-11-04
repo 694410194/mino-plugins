@@ -1,0 +1,5 @@
+# mino-connector-dev-activity — bundle patch
+- insert:
+    - id: connector-dev-activity
+      name: 'mino-connector-dev-activity'
+      config: {}

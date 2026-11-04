@@ -64,3 +64,16 @@ https://mino.baby/git/tavern
 https://mino.baby/git/visualize
 https://mino.baby/git/voice
 https://mino.baby/git/whale-musume
+https://mino.baby/git/chat-export
+https://mino.baby/git/cloud
+https://mino.baby/git/collections
+https://mino.baby/git/dev-activity
+https://mino.baby/git/game
+https://mino.baby/git/gzh
+https://mino.baby/git/health
+https://mino.baby/git/invoice
+https://mino.baby/git/legacy
+https://mino.baby/git/local-inventory
+https://mino.baby/git/mail
+https://mino.baby/git/music
+https://mino.baby/git/travel

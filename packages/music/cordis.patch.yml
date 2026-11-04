@@ -1,0 +1,5 @@
+# mino-connector-music — bundle patch
+- insert:
+    - id: connector-music
+      name: 'mino-connector-music'
+      config: {}

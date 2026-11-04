@@ -127,6 +127,10 @@
     "optional": {
       "en": "Optional",
       "zh-cn": "锦上添花"
+    },
+    "manual-import": {
+      "en": "Manual import",
+      "zh-cn": "手动导入"
     }
   },
   "plugins": {
@@ -216,11 +220,11 @@
       ]
     },
     "mino-connector-bills": {
-      "score": 58,
+      "score": 72,
       "category": "conn-finance",
       "labels": [
         "verified",
-        "needs-config"
+        "manual-import"
       ]
     },
     "mino-connector-browser-history": {
@@ -232,7 +236,7 @@
     },
     "mino-connector-files-search": {
       "score": 55,
-      "category": "conn-system",
+      "category": "conn-docs",
       "labels": [
         "verified"
       ]
@@ -649,6 +653,108 @@
       "labels": [
         "verified",
         "optional"
+      ]
+    },
+    "mino-connector-dev-activity": {
+      "score": 66,
+      "category": "conn-system",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-connector-gzh": {
+      "score": 66,
+      "category": "conn-reading",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-connector-music": {
+      "score": 64,
+      "category": "conn-media",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-connector-travel": {
+      "score": 64,
+      "category": "conn-travel",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-health": {
+      "score": 66,
+      "category": "conn-health",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-local-inventory": {
+      "score": 66,
+      "category": "conn-system",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-connector-chat-export": {
+      "score": 68,
+      "category": "conn-im",
+      "labels": [
+        "verified",
+        "manual-import",
+        "needs-config"
+      ]
+    },
+    "mino-connector-cloud": {
+      "score": 66,
+      "category": "conn-docs",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-connector-mail": {
+      "score": 64,
+      "category": "conn-mail",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-connector-invoice": {
+      "score": 64,
+      "category": "conn-finance",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-game": {
+      "score": 62,
+      "category": "conn-media",
+      "labels": [
+        "verified",
+        "needs-config",
+        "manual-import"
+      ]
+    },
+    "mino-connector-collections": {
+      "score": 64,
+      "category": "conn-social",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-legacy": {
+      "score": 60,
+      "category": "conn-system",
+      "labels": [
+        "verified"
       ]
     }
   }

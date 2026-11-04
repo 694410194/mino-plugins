@@ -1,0 +1,1 @@
+{"id": "paper-search-skill", "text": "调用 skill 工具使用 paper-search 技能：怎么用这个技能查 arXiv 论文？", "assert": {"tools.called": ["skill"], "reply.match": ".", "modelCalls.max": 8}, "timeoutMs": 240000}

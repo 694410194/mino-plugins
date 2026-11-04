@@ -1,0 +1,45 @@
+{
+  "name": "mino-connector-gzh",
+  "version": "0.1.0",
+  "description": "公众号文章连接器：把微信公众号文章存成 markdown 留档，防原文被删。公开页面抓取，正文只在本机处理。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "mino-connector",
+    "gzh"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "hostdeps.mjs",
+    "skill-provider.mjs",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.3.0",
+    "node": ">=20.18"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/gzh"
+  },
+  "bugs": {
+    "url": "https://github.com/694410194/mino-plugins/issues"
+  }
+}

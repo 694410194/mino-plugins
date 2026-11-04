@@ -1,0 +1,1043 @@
+{
+  "suite": "suites/prod-remeasure.jsonl",
+  "profile": "prodbill",
+  "patch": null,
+  "runtag": "a563d",
+  "startedAt": "2026-11-03T06:01:22.219Z",
+  "probes": [
+    {
+      "id": "real-lit30",
+      "session": "real-lit30-a563d",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "reply": "32 篇的摘要、实验和结论已经对齐。现在把文献矩阵和综述写到 `real/matrix30.md`。",
+          "tools": 9,
+          "toolNames": [
+            "edit",
+            "glob",
+            "grep",
+            "pwsh",
+            "read",
+            "read_image",
+            "skill",
+            "working_directory",
+            "write"
+          ],
+          "toolCalls": [
+            "glob",
+            "read",
+            "pwsh",
+            "pwsh",
+            "read",
+            "pwsh",
+            "read",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "grep",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "grep",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "grep",
+            "grep",
+            "grep",
+            "grep",
+            "grep",
+            "grep",
+            "grep",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "grep",
+            "grep",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "write"
+          ],
+          "toolResults": [
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":1,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"toolu_bdrk_01GcxcEXgEDxC6BaLRxfip3w\"},\"toolCallId\":\"toolu_bdrk_01GcxcEXgEDxC6BaLRxfip3w\",\"content\":[{\"type\":\"text\",\"text\":\"real\\\\set\\\\r01_2507.22925.md\\nreal\\\\set\\\\r03_2502.12280.md\\nreal\\\\set\\\\r05_2509.25302.md\\nreal\\\\set\\\\r07_2601.07309.md\\nreal\\\\set\\\\r09_2605.11169.md\\nreal\\\\set\\\\r11_2606.09461.md\\nreal\\\\set\\\\r13_2510"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":2,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-f6304fcc-9dfb-4c65-80a1-1f7af7476394-1\"},\"toolCallId\":\"call-f6304fcc-9dfb-4c65-80a1-1f7af7476394-1\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\_meta.json</path>\\n<type>file</type>\\n<content>\\n1: [\\n2:  {\\n3:   \\\"id\\\": \\\"2507.22925\\\",\\n4:   \\\"file\\\": \\\"r01_2507.22925.md\\\",\\n5:   \\\"title\\\": "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":3,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-da4e92ec-887f-4490-952d-0626047f0620-2\"},\"toolCallId\":\"call-da4e92ec-887f-4490-952d-0626047f0620-2\",\"content\":[{\"type\":\"text\",\"text\":\"799E2D82     36349  r01_2507.22925.md\\r\\n8667C261     40257  r03_2502.12280.md\\r\\nCCAB62F0     72773  r05_2509.25302.md\\r\\nC94F03A1     43744  r07_2601.07309.md\\r\\n833958A6     53163 "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":4,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-81ec7186-f0a1-41ef-aa08-1a2cc354c0f9-3\"},\"toolCallId\":\"call-81ec7186-f0a1-41ef-aa08-1a2cc354c0f9-3\",\"content\":[{\"type\":\"text\",\"text\":\"r01_2507.22925.md: \\r\\nr03_2502.12280.md: \\r\\nr05_2509.25302.md: \\r\\nr07_2601.07309.md: \\r\\nr09_2605.11169.md: \\r\\nr11_2606.09461.md: \\r\\nr13_2510.24695.md: \\r\\nr15_2509.18576.md: \\r\\"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":5,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-345a0b72-a0ab-491a-85af-a3a62e8b6813-4\"},\"toolCallId\":\"call-345a0b72-a0ab-491a-85af-a3a62e8b6813-4\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r01_2507.22925.md</path>\\n<type>file</type>\\n<content>\\n1: H-MEM: Hierarchical Memory for High-Efficiency Long-Term Reasoning in LLM Agents \\n2: \\n"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":6,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-564cc387-f03d-46c9-a4f5-100b99498724-5\"},\"toolCallId\":\"call-564cc387-f03d-46c9-a4f5-100b99498724-5\",\"content\":[{\"type\":\"text\",\"text\":\"r01_2507.22925.md :: H-MEM: Hierarchical Memory for High-Efficiency Long-Term Reasoning in LLM Agents \\r\\nr03_2502.12280.md :: Connecting Large Language Model Agent to High Performanc"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":7,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-58f81271-ea14-4c8f-95b2-b756271c25ee-6\"},\"toolCallId\":\"call-58f81271-ea14-4c8f-95b2-b756271c25ee-6\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r21_2607.28272.md</path>\\n<type>file</type>\\n<content>\\n1: 1Introduction \\n2: \\n3:  Report GitHub Issue\\n4: \\n5:  × \\n6: \\n7:  Title: \\n8: \\n9:  Co"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":8,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-dabcd2a0-818d-4be7-bf03-a95a3337dff3-7\"},\"toolCallId\":\"call-dabcd2a0-818d-4be7-bf03-a95a3337dff3-7\",\"content\":[{\"type\":\"text\",\"text\":\"Found 18 matches\\n\\nreal\\\\set\\\\r21_2607.28272.md\\nLine 138: arXiv:2607.28272v1 [cs.AI] 30 Jul 2026\\nLine 419:  arXiv preprint arXiv:2305.11598 .\\nLine 428:  arXiv preprint arXiv:2509."
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":9,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-13b86973-bf43-4813-9215-b7459e5b809a-8\"},\"toolCallId\":\"call-13b86973-bf43-4813-9215-b7459e5b809a-8\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r21_2607.28272.md</path>\\n<type>file</type>\\n<content>\\n130:  D Case Studies \\n131: \\n132:  D.1 ALFWorld: Abstracting and Transferring Skills \\n133"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":10,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-abb38565-8297-4519-8f70-60cfc5a9a657-9\"},\"toolCallId\":\"call-abb38565-8297-4519-8f70-60cfc5a9a657-9\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r01_2507.22925.md</path>\\n<type>file</type>\\n<content>\\n60: arXiv:2507.22925v1 [cs.CL] 23 Jul 2025\\n61: \\n62:  H-MEM: Hierarchical Memory for High"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":10,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-abb38565-8297-4519-8f70-60cfc5a9a657-10\"},\"toolCallId\":\"call-abb38565-8297-4519-8f70-60cfc5a9a657-10\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r03_2502.12280.md</path>\\n<type>file</type>\\n<content>\\n55: \\n56:  4 Conclusion \\n57: \\n58:  References \\n59: \\n60:  License: CC BY-NC-SA 4.0\\n6"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":10,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-abb38565-8297-4519-8f70-60cfc5a9a657-11\"},\"toolCallId\":\"call-abb38565-8297-4519-8f70-60cfc5a9a657-11\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r05_2509.25302.md</path>\\n<type>file</type>\\n<content>\\n55: \\n56:  3.2 Results and Discussions \\n57: \\n58:  4 Setting II: Service Maintenance un"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":11,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ae5ddd79-5803-4e03-8fac-9de1f3707e2f-12\"},\"toolCallId\":\"call-ae5ddd79-5803-4e03-8fac-9de1f3707e2f-12\",\"content\":[{\"type\":\"text\",\"text\":\"Found 4 matches\\n\\nreal\\\\set\\\\r03_2502.12280.md\\nLine 50:  3 Results \\nLine 56:  4 Conclusion \\nLine 218:  3. Results\\nLine 341:  4. Conclusion\"}],\"isError\":false,\"id\":\"1144e71f-52"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":11,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ae5ddd79-5803-4e03-8fac-9de1f3707e2f-13\"},\"toolCallId\":\"call-ae5ddd79-5803-4e03-8fac-9de1f3707e2f-13\",\"content\":[{\"type\":\"text\",\"text\":\"Found 6 matches\\n\\nreal\\\\set\\\\r05_2509.25302.md\\nLine 56:  3.2 Results and Discussions \\nLine 62:  4.2 Results and Discussions \\nLine 66:  6 Conclusion \\nLine 275:  3.2 Results and"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":12,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-cb1457ab-1220-42ab-a0ad-de86d144b1a4-14\"},\"toolCallId\":\"call-cb1457ab-1220-42ab-a0ad-de86d144b1a4-14\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r03_2502.12280.md</path>\\n<type>file</type>\\n<content>\\n218:  3. Results\\n219: \\n220:  The prompt results included both the LLM outputs and the "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":12,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-cb1457ab-1220-42ab-a0ad-de86d144b1a4-15\"},\"toolCallId\":\"call-cb1457ab-1220-42ab-a0ad-de86d144b1a4-15\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r05_2509.25302.md</path>\\n<type>file</type>\\n<content>\\n204:  As illustrated in Figure 2 , the agent autonomously navigates the following milest"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":13,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-29df598f-a71c-4d6b-b819-7e437fcd4a6f-16\"},\"toolCallId\":\"call-29df598f-a71c-4d6b-b819-7e437fcd4a6f-16\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r07_2601.07309.md</path>\\n<type>file</type>\\n<content>\\n55: \\n56:  Baselines. \\n57: \\n58:  Benchmarks. \\n59: \\n60:  Calibration data and role sp"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":13,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-29df598f-a71c-4d6b-b819-7e437fcd4a6f-17\"},\"toolCallId\":\"call-29df598f-a71c-4d6b-b819-7e437fcd4a6f-17\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r09_2605.11169.md</path>\\n<type>file</type>\\n<content>\\n55: \\n56:  5 Methodology \\n57: \\n58:  5.1 Hidden-State Decision Layer \\n59: \\n60:  LLM-a"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":13,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-29df598f-a71c-4d6b-b819-7e437fcd4a6f-18\"},\"toolCallId\":\"call-29df598f-a71c-4d6b-b819-7e437fcd4a6f-18\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r11_2606.09461.md</path>\\n<type>file</type>\\n<content>\\n55: \\n56:  A Dataset Details \\n57: \\n58:  A.1 Conversation Data Statistics \\n59: \\n60:  "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":14,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-237ab06a-67bf-4a60-a8c0-21d077995f8e-19\"},\"toolCallId\":\"call-237ab06a-67bf-4a60-a8c0-21d077995f8e-19\",\"content\":[{\"type\":\"text\",\"text\":\"Found 8 matches\\n\\nreal\\\\set\\\\r07_2601.07309.md\\nLine 62:  4.2 Main Results \\nLine 64:  4.3 Ablation Study \\nLine 78:  5 Conclusion \\nLine 80:  6 Limitations \\nLine 308:  4.2 Main "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":14,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-237ab06a-67bf-4a60-a8c0-21d077995f8e-20\"},\"toolCallId\":\"call-237ab06a-67bf-4a60-a8c0-21d077995f8e-20\",\"content\":[{\"type\":\"text\",\"text\":\"Found 6 matches\\n\\nreal\\\\set\\\\r09_2605.11169.md\\nLine 76:  6.2 Results \\nLine 80:  6.3 Ablation Studies \\nLine 88:  7 Conclusion \\nLine 497:  6.2 Results\\nLine 503:  6.3 Ablation S"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":14,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-237ab06a-67bf-4a60-a8c0-21d077995f8e-21\"},\"toolCallId\":\"call-237ab06a-67bf-4a60-a8c0-21d077995f8e-21\",\"content\":[{\"type\":\"text\",\"text\":\"Found 2 matches\\n\\nreal\\\\set\\\\r11_2606.09461.md\\nLine 52:  5 Conclusion \\nLine 305:  5 Conclusion\"}],\"isError\":false,\"id\":\"4ce96cd9-2e15-40b0-ab53-5d1f5e119ad7\"},\"meta\":{\"shape\":\"m"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":15,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84f27753-508f-4bd0-a113-786063bf9674-22\"},\"toolCallId\":\"call-84f27753-508f-4bd0-a113-786063bf9674-22\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r07_2601.07309.md</path>\\n<type>file</type>\\n<content>\\n185: This motivates a stability-aware backbone selection strategy prior to any fine-grai"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":15,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84f27753-508f-4bd0-a113-786063bf9674-23\"},\"toolCallId\":\"call-84f27753-508f-4bd0-a113-786063bf9674-23\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r07_2601.07309.md</path>\\n<type>file</type>\\n<content>\\n300:  Benchmarks.\\n301: \\n302:  To evaluate the generalization capability of our method,"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":15,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84f27753-508f-4bd0-a113-786063bf9674-24\"},\"toolCallId\":\"call-84f27753-508f-4bd0-a113-786063bf9674-24\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r09_2605.11169.md</path>\\n<type>file</type>\\n<content>\\n450:  so that each ground-truth tool can be matched at most\\n451: once. This provides a "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":15,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84f27753-508f-4bd0-a113-786063bf9674-25\"},\"toolCallId\":\"call-84f27753-508f-4bd0-a113-786063bf9674-25\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r11_2606.09461.md</path>\\n<type>file</type>\\n<content>\\n185: \\n186:  2 Related Work\\n187: \\n188:  Agents in human–human Interactions. \\n189: Rec"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":16,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-87d9f0db-01b4-4ee3-ba53-4910b6fcf943-26\"},\"toolCallId\":\"call-87d9f0db-01b4-4ee3-ba53-4910b6fcf943-26\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r11_2606.09461.md</path>\\n<type>file</type>\\n<content>\\n270:  3.3 Task Design\\n271: \\n272:  To systematically evaluate these capabilities, we de"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":16,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-87d9f0db-01b4-4ee3-ba53-4910b6fcf943-27\"},\"toolCallId\":\"call-87d9f0db-01b4-4ee3-ba53-4910b6fcf943-27\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r07_2601.07309.md</path>\\n<type>file</type>\\n<content>\\n376:  6 Limitations\\n377: \\n378:  ARM is training-free, but it makes several assumptions"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":17,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ffcabcfa-fa84-4781-adb4-642b291b8ca1-28\"},\"toolCallId\":\"call-ffcabcfa-fa84-4781-adb4-642b291b8ca1-28\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r13_2510.24695.md</path>\\n<type>file</type>\\n<content>\\n55: \\n56:  Rejection Sampling Fine-Tuning \\n57: \\n58:  Models and Benchmarks \\n59: \\n60:"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":17,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ffcabcfa-fa84-4781-adb4-642b291b8ca1-29\"},\"toolCallId\":\"call-ffcabcfa-fa84-4781-adb4-642b291b8ca1-29\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r15_2509.18576.md</path>\\n<type>file</type>\\n<content>\\n55: \\n56:  III-D Downstream Task Settings and Frameworks \\n57: \\n58:  IV EXPERIMENTS \\n5"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":17,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ffcabcfa-fa84-4781-adb4-642b291b8ca1-30\"},\"toolCallId\":\"call-ffcabcfa-fa84-4781-adb4-642b291b8ca1-30\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r17_2609.32424.md</path>\\n<type>file</type>\\n<content>\\n55: \\n56:  5.1 Experimental Setup \\n57: \\n58:  5.2 Main Results \\n59: \\n60:  5.3 Perform"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":17,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ffcabcfa-fa84-4781-adb4-642b291b8ca1-31\"},\"toolCallId\":\"call-ffcabcfa-fa84-4781-adb4-642b291b8ca1-31\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r19_2606.15508.md</path>\\n<type>file</type>\\n<content>\\n55: \\n56:  III-D Gold Trajectories and State Variables \\n57: \\n58:  III-E Distractor Tax"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":18,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-69b8c1b3-8aa0-4c3c-8c5b-40bdae288949-32\"},\"toolCallId\":\"call-69b8c1b3-8aa0-4c3c-8c5b-40bdae288949-32\",\"content\":[{\"type\":\"text\",\"text\":\"Found 24 matches\\n\\nreal\\\\set\\\\r19_2606.15508.md\\nLine 30:  Abstract \\nLine 114:  VII Results \\nLine 128:  VIII Discussion \\nLine 140:  IX Limitations and Threats to Validity \\nLin"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":19,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-33\"},\"toolCallId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-33\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r13_2510.24695.md</path>\\n<type>file</type>\\n<content>\\n177:  Abstract\\n178: \\n179:  Training large language model agents on tasks at the fronti"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":19,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-34\"},\"toolCallId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-34\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r13_2510.24695.md</path>\\n<type>file</type>\\n<content>\\n380: The holistic training pipeline consists of two stages:\\n381: \\n382:  1. \\n383: \\n38"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":19,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-35\"},\"toolCallId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-35\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r15_2509.18576.md</path>\\n<type>file</type>\\n<content>\\n300: \\n301:  We propose two evaluation methods [ 35 ] : one is to train the entire video"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":19,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-36\"},\"toolCallId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-36\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r17_2609.32424.md</path>\\n<type>file</type>\\n<content>\\n148:  Abstract\\n149: \\n150:  Large language model (LLM) agents have demonstrated promisi"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":19,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-37\"},\"toolCallId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-37\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r17_2609.32424.md</path>\\n<type>file</type>\\n<content>\\n350:  5.1 Experimental Setup\\n351: \\n352:  LLMs. \\n353: We evaluate DeepSeek-V4-Flash  ("
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":19,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-38\"},\"toolCallId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-38\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r19_2606.15508.md</path>\\n<type>file</type>\\n<content>\\n166:  Abstract\\n167: \\n168:  Tool-augmented large language model agents increasingly ope"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":19,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-39\"},\"toolCallId\":\"call-f9101cb5-25ea-41da-bd1c-291c75038021-39\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r19_2606.15508.md</path>\\n<type>file</type>\\n<content>\\n473:  VII Results \\n474: \\n475:  We evaluate ToolMenuBench along three axes: filtering s"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":20,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-35b2b9b0-a8d8-461f-89c4-bb8cb2726217-40\"},\"toolCallId\":\"call-35b2b9b0-a8d8-461f-89c4-bb8cb2726217-40\",\"content\":[{\"type\":\"text\",\"text\":\"Found 24 matches\\n\\nreal\\\\set\\\\r29_2511.18313.md\\nLine 32:  Abstract \\nLine 68:  5 Results \\nLine 84:  6 Analysis and Discussion \\nLine 94:  7 Limitations \\nLine 96:  8 Conclusion "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":20,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-35b2b9b0-a8d8-461f-89c4-bb8cb2726217-41\"},\"toolCallId\":\"call-35b2b9b0-a8d8-461f-89c4-bb8cb2726217-41\",\"content\":[{\"type\":\"text\",\"text\":\"Found 40 matches\\n\\nreal\\\\set\\\\r39_2403.05307.md\\nLine 30:  Abstract \\nLine 114:  8 Conclusion \\nLine 116:  9 Limitations \\nLine 293:  Abstract\\nLine 505:  8 Conclusion\\nLine 509: "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":20,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-35b2b9b0-a8d8-461f-89c4-bb8cb2726217-42\"},\"toolCallId\":\"call-35b2b9b0-a8d8-461f-89c4-bb8cb2726217-42\",\"content\":[{\"type\":\"text\",\"text\":\"Found 36 matches\\n\\nreal\\\\set\\\\r46_2504.10286.md\\nLine 30:  Abstract. \\nLine 54:  8 Discussion \\nLine 64:  9 Conclusion \\nLine 124:  Abstract.\\n\\nreal\\\\set\\\\r45_2607.14574.md\\nLine"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":21,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-43\"},\"toolCallId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-43\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r21_2607.28272.md</path>\\n<type>file</type>\\n<content>\\n330:  • \\n331: \\n332:  RQ4: Does the reconstruction mechanism genuinely rely on state co"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":21,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-44\"},\"toolCallId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-44\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r23_2405.14744.md</path>\\n<type>file</type>\\n<content>\\n181:  Abstract\\n182: \\n183:  Large language models (LLMs) have been shown to face halluc"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":21,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-45\"},\"toolCallId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-45\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r25_2608.01710.md</path>\\n<type>file</type>\\n<content>\\n108:  Abstract\\n109: \\n110:  Tool-using large language model agents frequently replan, r"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":21,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-46\"},\"toolCallId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-46\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r27_2610.16175.md</path>\\n<type>file</type>\\n<content>\\n195:  Abstract\\n196: \\n197:  Real-world studies (RWS) analyze routinely collected health"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":21,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-47\"},\"toolCallId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-47\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r29_2511.18313.md</path>\\n<type>file</type>\\n<content>\\n120:  Abstract\\n121: \\n122:  Large Language Model (LLM) agents often retrieve context fr"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":21,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-48\"},\"toolCallId\":\"call-0897b775-d6e2-4e31-a64f-33443c702735-48\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r31_2602.11351.md</path>\\n<type>file</type>\\n<content>\\n151:  Abstract\\n152: \\n153:  Proactive large language model (LLM) agents aim to actively"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":22,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-cbb1f9bd-2e82-4085-b0a7-64b176998d7e-49\"},\"toolCallId\":\"call-cbb1f9bd-2e82-4085-b0a7-64b176998d7e-49\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r23_2405.14744.md</path>\\n<type>file</type>\\n<content>\\n317:  4 Experiments & Discussion\\n318: \\n319:  In this section, we categorize the seven "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":22,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-cbb1f9bd-2e82-4085-b0a7-64b176998d7e-50\"},\"toolCallId\":\"call-cbb1f9bd-2e82-4085-b0a7-64b176998d7e-50\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r25_2608.01710.md</path>\\n<type>file</type>\\n<content>\\n187:  We introduce CapLease , an authorization-consumption layer for\\n188: tool-using ag"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":22,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-cbb1f9bd-2e82-4085-b0a7-64b176998d7e-51\"},\"toolCallId\":\"call-cbb1f9bd-2e82-4085-b0a7-64b176998d7e-51\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r27_2610.16175.md</path>\\n<type>file</type>\\n<content>\\n245:  where denotes structured fusion of profile blocks. The candidate IR is admitted on"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":22,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-cbb1f9bd-2e82-4085-b0a7-64b176998d7e-52\"},\"toolCallId\":\"call-cbb1f9bd-2e82-4085-b0a7-64b176998d7e-52\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r29_2511.18313.md</path>\\n<type>file</type>\\n<content>\\n270:  • \\n271: \\n272:  Relevance@k : Fraction of relevant nodes in the top- retrieved re"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":22,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-cbb1f9bd-2e82-4085-b0a7-64b176998d7e-53\"},\"toolCallId\":\"call-cbb1f9bd-2e82-4085-b0a7-64b176998d7e-53\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r31_2602.11351.md</path>\\n<type>file</type>\\n<content>\\n310:  The training curves on Function-Gym are visualized in Figure  4 , where BAO conver"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-54\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-54\",\"content\":[{\"type\":\"text\",\"text\":\"Found 2 matches\\n\\nreal\\\\set\\\\r25_2608.01710.md\\nLine 88:  Conclusion \\nLine 623:  Conclusion\"}],\"isError\":false,\"id\":\"5e0b1e47-ea97-4d90-b06a-f861d86e279b\"},\"meta\":{\"shape\":\"match"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-55\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-55\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r27_2610.16175.md</path>\\n<type>file</type>\\n<content>\\n334:  6 Conclusion\\n335: \\n336:  We introduced ProCARE, a profile-grounded contract arch"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-56\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-56\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r29_2511.18313.md</path>\\n<type>file</type>\\n<content>\\n338:  7 Limitations\\n339: \\n340:  Several limitations should be acknowledged:\\n341: \\n34"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-57\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-57\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r32_2606.28450.md</path>\\n<type>file</type>\\n<content>\\n241:  Abstract\\n242: \\n243:  Large language model (LLM) agents are rapidly being integra"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-58\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-58\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r33_2406.05516.md</path>\\n<type>file</type>\\n<content>\\n118:  Abstract\\n119: \\n120:  Human cognition excels at transcending sensory input and fo"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-59\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-59\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r34_2606.02871.md</path>\\n<type>file</type>\\n<content>\\n132:  Abstract\\n133: \\n134:  Large reasoning models improve performance by generating ex"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-60\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-60\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r35_2608.01684.md</path>\\n<type>file</type>\\n<content>\\n144:  Abstract.\\n145: \\n146:  Large language model (LLM) agents are increasingly capable"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-61\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-61\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r36_2606.26627.md</path>\\n<type>file</type>\\n<content>\\n96:  Abstract.\\n97: \\n98:  Large language model agents increasingly query databases, sea"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-62\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-62\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r37_2605.23723.md</path>\\n<type>file</type>\\n<content>\\n182:  Abstract\\n183: \\n184:  Large language model agents increasingly rely on persistent"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-63\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-63\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r38_2505.17767.md</path>\\n<type>file</type>\\n<content>\\n122:  Abstract\\n123: \\n124:  Large Language Model (LLM) agents represent a promising shi"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-64\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-64\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r39_2403.05307.md</path>\\n<type>file</type>\\n<content>\\n293:  Abstract\\n294: \\n295:  Interactive Data Analysis, a collaboration between humans a"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":23,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-65\"},\"toolCallId\":\"call-84c211a0-cadc-407a-992b-eb762ebaf32a-65\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r40_2504.04485.md</path>\\n<type>file</type>\\n<content>\\n122:  Abstract\\n123: \\n124:  LLM-driven autonomous agents have emerged as a promising di"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":24,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-66\"},\"toolCallId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-66\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r25_2608.01710.md</path>\\n<type>file</type>\\n<content>\\n560: non-idempotent-sink negative control localizes exactly-once external\\n561: effects "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":24,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-67\"},\"toolCallId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-67\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r32_2606.28450.md</path>\\n<type>file</type>\\n<content>\\n900: \\n901:  Evaluation benchmark requires multi-dimensional developments . Current agen"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":24,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-68\"},\"toolCallId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-68\",\"content\":[{\"type\":\"text\",\"text\":\"Found 2 matches\\n\\nreal\\\\set\\\\r33_2406.05516.md\\nLine 88:  Conclusion \\nLine 346:  Conclusion\"}],\"isError\":false,\"id\":\"09847bd5-b894-4d3a-942e-57e448bb3b8c\"},\"meta\":{\"shape\":\"match"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":24,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-69\"},\"toolCallId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-69\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r34_2606.02871.md</path>\\n<type>file</type>\\n<content>\\n270:  5 Experiment Results\\n271: \\n272:  5.1 Main Results\\n273: \\n274:  Table   1 and Ta"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":24,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-70\"},\"toolCallId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-70\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r35_2608.01684.md</path>\\n<type>file</type>\\n<content>\\n700: \\n701:  arXiv preprint .\\n702: \\n703:  Cited by: §A.2 .\\n704: \\n705:  Luo et al. (2"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":24,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-71\"},\"toolCallId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-71\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r36_2606.26627.md</path>\\n<type>file</type>\\n<content>\\n2680: 2024.\\n2681: \\n2682:  GuardAgent: Safeguard LLM Agents by a Guard Agent\\n2683: via"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":24,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-72\"},\"toolCallId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-72\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r37_2605.23723.md</path>\\n<type>file</type>\\n<content>\\n291:  6 Results\\n292: \\n293:  6.1 Main results\\n294: \\n295:  We evaluate MemAudit on Dee"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":24,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-73\"},\"toolCallId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-73\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r38_2505.17767.md</path>\\n<type>file</type>\\n<content>\\n360: \\n361:  From Generalist Giants to Specialized Experts: While large generalist model"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":24,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-74\"},\"toolCallId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-74\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r39_2403.05307.md</path>\\n<type>file</type>\\n<content>\\n480:  6.4 Model Shortcoming Analysis\\n481: \\n482:  Long-Context Challenges.\\n483: \\n484:"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":24,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-75\"},\"toolCallId\":\"call-142f19cc-003f-4681-9925-74797ae0e620-75\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r40_2504.04485.md</path>\\n<type>file</type>\\n<content>\\n220: \\n221:  3.3 Multi-Core System\\n222: \\n223:  Multi-core mechanisms in computer syste"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-76\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-76\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r25_2608.01710.md</path>\\n<type>file</type>\\n<content>\\n605: authorization is itself sound.\\n606: \\n607:  Overall evidence and system implicatio"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-77\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-77\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r33_2406.05516.md</path>\\n<type>file</type>\\n<content>\\n320: \\n321:  Results\\n322: \\n323:  We present the performance of various methods in Tabl"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-78\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-78\",\"content\":[{\"type\":\"text\",\"text\":\"Found 1 match\\n\\nreal\\\\set\\\\r35_2608.01684.md\\nLine 80:  5 Conclusion \"}],\"isError\":false,\"id\":\"f26065a2-552b-4986-b6e7-c5a806087169\"},\"meta\":{\"shape\":\"matches\",\"files\":[{\"path\":\"r"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-79\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-79\",\"content\":[{\"type\":\"text\",\"text\":\"Found 1 match\\n\\nreal\\\\set\\\\r36_2606.26627.md\\nLine 68:  9 Conclusion \"}],\"isError\":false,\"id\":\"66f37eac-6640-494f-8601-9571152497de\"},\"meta\":{\"shape\":\"matches\",\"files\":[{\"path\":\"r"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-80\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-80\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r41_2607.25297.md</path>\\n<type>file</type>\\n<content>\\n115:  Abstract.\\n116: \\n117:  The rapid development of large language model (LLM) agents"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-81\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-81\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r42_2402.04559.md</path>\\n<type>file</type>\\n<content>\\n236:  Abstract\\n237: \\n238:  Large Language Model (LLM) agents have been increasingly ad"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-82\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-82\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r43_2605.02379.md</path>\\n<type>file</type>\\n<content>\\n104:  Abstract\\n105: \\n106:  LLM agents are increasingly used for personalization due to"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-83\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-83\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r44_2407.01231.md</path>\\n<type>file</type>\\n<content>\\n185:  Abstract\\n186: \\n187:  Recent advancements in Large Language Models (LLMs) have em"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-84\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-84\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r45_2607.14574.md</path>\\n<type>file</type>\\n<content>\\n81:  Abstract\\n82: \\n83:  Collective problem solving often requires that group members c"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-85\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-85\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r46_2504.10286.md</path>\\n<type>file</type>\\n<content>\\n124:  Abstract.\\n125: \\n126:  The emergence of large language models (LLMs) has enabled "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":25,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-86\"},\"toolCallId\":\"call-ca9a4554-da7b-49ce-b83f-ef5346b0a181-86\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r47_2407.19354.md</path>\\n<type>file</type>\\n<content>\\n194:  Abstract.\\n195: \\n196:  Inspired by the rapid development of Large Language Models"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":26,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-47\"},\"toolCallId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-47\",\"content\":[{\"type\":\"text\",\"text\":\"Found 2 matches\\n\\nreal\\\\set\\\\r35_2608.01684.md\\nLine 80:  5 Conclusion \\nLine 398:  5. Conclusion\"}],\"isError\":false,\"id\":\"a3f4a4c1-ec0c-4a57-b1b8-b9b141bfef1f\"},\"meta\":{\"shape\":\""
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":26,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-48\"},\"toolCallId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-48\",\"content\":[{\"type\":\"text\",\"text\":\"Found 2 matches\\n\\nreal\\\\set\\\\r36_2606.26627.md\\nLine 68:  9 Conclusion \\nLine 1129:  9. Conclusion\"}],\"isError\":false,\"id\":\"c8f506c1-b13b-4d9e-9c10-9e4a2d32a45c\"},\"meta\":{\"shape\":"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":26,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-49\"},\"toolCallId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-49\",\"content\":[{\"type\":\"text\",\"text\":\"Found 2 matches\\n\\nreal\\\\set\\\\r41_2607.25297.md\\nLine 68:  7 Conclusion \\nLine 518:  7. Conclusion\"}],\"isError\":false,\"id\":\"7b9b39ee-8da4-47be-a860-4ac66a243109\"},\"meta\":{\"shape\":\""
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":26,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-50\"},\"toolCallId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-50\",\"content\":[{\"type\":\"text\",\"text\":\"Found 2 matches\\n\\nreal\\\\set\\\\r42_2402.04559.md\\nLine 92:  7 Conclusion \\nLine 498:  7 Conclusion\"}],\"isError\":false,\"id\":\"5d4ceb7f-f556-4f60-a2d5-e38607ae6463\"},\"meta\":{\"shape\":\"m"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":26,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-51\"},\"toolCallId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-51\",\"content\":[{\"type\":\"text\",\"text\":\"Found 2 matches\\n\\nreal\\\\set\\\\r43_2605.02379.md\\nLine 78:  5 Conclusion and Future Work \\nLine 252:  5 Conclusion and Future Work\"}],\"isError\":false,\"id\":\"e9e6ae8b-a4b4-40a4-bd08-8"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":26,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-52\"},\"toolCallId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-52\",\"content\":[{\"type\":\"text\",\"text\":\"Found 3 matches\\n\\nreal\\\\set\\\\r44_2407.01231.md\\nLine 60:  5 Conclusion and Limitation \\nLine 455:  5 Conclusion and Limitation\\nLine 1335:  5 Conclusion and Limitation \"}],\"isErro"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":26,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-53\"},\"toolCallId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-53\",\"content\":[{\"type\":\"text\",\"text\":\"Found 2 matches\\n\\nreal\\\\set\\\\r45_2607.14574.md\\nLine 52:  5 Summary and Discussion \\nLine 533:  5 Summary and Discussion\"}],\"isError\":false,\"id\":\"1150d31d-4cb4-4eb3-bb1b-9c2e4cd34"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":26,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-54\"},\"toolCallId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-54\",\"content\":[{\"type\":\"text\",\"text\":\"Found 2 matches\\n\\nreal\\\\set\\\\r46_2504.10286.md\\nLine 64:  9 Conclusion \\nLine 531:  9. Conclusion\"}],\"isError\":false,\"id\":\"5327cea1-bdfc-49b6-8840-7f5f7b0c4ab3\"},\"meta\":{\"shape\":\""
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":26,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-55\"},\"toolCallId\":\"call-8b1e8ed2-53e4-4fdf-a989-85b1f59a2cdd-55\",\"content\":[{\"type\":\"text\",\"text\":\"Found 1 match\\n\\nreal\\\\set\\\\r47_2407.19354.md\\nLine 132:  7 Conclusion \"}],\"isError\":false,\"id\":\"f47db3de-22e2-4dcc-9436-00bbec81bc70\"},\"meta\":{\"shape\":\"matches\",\"files\":[{\"path\":\""
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":27,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-56\"},\"toolCallId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-56\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r35_2608.01684.md</path>\\n<type>file</type>\\n<content>\\n398:  5. Conclusion\\n399: \\n400:  In this paper, we introduce GABench, a comprehensive b"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":27,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-57\"},\"toolCallId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-57\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r36_2606.26627.md</path>\\n<type>file</type>\\n<content>\\n1129:  9. Conclusion\\n1130: \\n1131:  In this paper, we surveyed the privacy of LLM agent"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":27,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-58\"},\"toolCallId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-58\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r41_2607.25297.md</path>\\n<type>file</type>\\n<content>\\n490: Moreover, post-execution verification detects unsafe behavior only after the tool h"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":27,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-59\"},\"toolCallId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-59\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r42_2402.04559.md</path>\\n<type>file</type>\\n<content>\\n498:  7 Conclusion\\n499: \\n500:  In this paper, we discover LLM agent trust behavior und"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":27,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-60\"},\"toolCallId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-60\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r43_2605.02379.md</path>\\n<type>file</type>\\n<content>\\n252:  5 Conclusion and Future Work\\n253: \\n254:  In this paper, we identify three core r"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":27,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-61\"},\"toolCallId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-61\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r44_2407.01231.md</path>\\n<type>file</type>\\n<content>\\n455:  5 Conclusion and Limitation\\n456: \\n457:  In conclusion, we introduce Mirai , a be"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":27,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-62\"},\"toolCallId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-62\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r45_2607.14574.md</path>\\n<type>file</type>\\n<content>\\n533:  5 Summary and Discussion\\n534: \\n535:  In this work, we observed that the Mason–Wa"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":27,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-63\"},\"toolCallId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-63\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r46_2504.10286.md</path>\\n<type>file</type>\\n<content>\\n531:  9. Conclusion\\n532: \\n533:  Summary & Insights. \\n534: We have presented a large-s"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":27,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-64\"},\"toolCallId\":\"call-6facd9ac-e7fb-4969-b35f-970e70aa67a1-64\",\"content\":[{\"type\":\"text\",\"text\":\"Found 10 matches\\n\\nreal\\\\set\\\\r03_2502.12280.md\\nLine 56:  4 Conclusion \\nLine 341:  4. Conclusion\\n\\nreal\\\\set\\\\r09_2605.11169.md\\nLine 88:  7 Conclusion \\nLine 517:  7 Conclusio"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":28,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-65\"},\"toolCallId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-65\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r01_2507.22925.md</path>\\n<type>file</type>\\n<content>\\n1: H-MEM: Hierarchical Memory for High-Efficiency Long-Term Reasoning in LLM Agents \\n2:"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":28,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-66\"},\"toolCallId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-66\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r01_2507.22925.md</path>\\n<type>file</type>\\n<content>\\n146:  5 Conclusion and Future Work\\n147: \\n148:  We propose a Hierarchical Memory (H-MEM"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":28,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-67\"},\"toolCallId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-67\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r03_2502.12280.md</path>\\n<type>file</type>\\n<content>\\n1: Connecting Large Language Model Agent to High Performance Computing Resource \\n2: \\n3"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":28,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-68\"},\"toolCallId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-68\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r03_2502.12280.md</path>\\n<type>file</type>\\n<content>\\n341:  4. Conclusion\\n342: \\n343:  This work aims to improve the tool execution of the LL"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":28,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-69\"},\"toolCallId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-69\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r05_2509.25302.md</path>\\n<type>file</type>\\n<content>\\n1: Dive into the Agent Matrix: A Realistic Evaluation of Self-Replication Risk in LLM Ag"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":28,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-70\"},\"toolCallId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-70\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r05_2509.25302.md</path>\\n<type>file</type>\\n<content>\\n332:  6 Conclusion\\n333: \\n334:  This work presents a systematic framework for evaluatin"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":28,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-71\"},\"toolCallId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-71\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r07_2601.07309.md</path>\\n<type>file</type>\\n<content>\\n1: ARM: Role-Conditioned Neuron Transplantation for Training-Free Generalist LLM Agent M"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":28,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-72\"},\"toolCallId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-72\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r07_2601.07309.md</path>\\n<type>file</type>\\n<content>\\n368:  5 Conclusion\\n369: \\n370:  We presented Agent-Role Merging (ARM) , a training-free"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":28,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-73\"},\"toolCallId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-73\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r09_2605.11169.md</path>\\n<type>file</type>\\n<content>\\n1: OLIVIA: Online Learning via Inference-time Action Adaptation for Decision Making in L"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":28,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-74\"},\"toolCallId\":\"call-774e63ab-6468-4e34-950c-11f311f86f02-74\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r09_2605.11169.md</path>\\n<type>file</type>\\n<content>\\n517:  7 Conclusion\\n518: \\n519:  We presented OLIVIA , an inference-time action adaptati"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":29,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-75\"},\"toolCallId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-75\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r01_2507.22925.md</path>\\n<type>file</type>\\n<content>\\n80: \\n81:  • \\n82: \\n83:  H-MEM, a hierarchical memory architecture for LLM agents, is p"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":29,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-76\"},\"toolCallId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-76\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r03_2502.12280.md</path>\\n<type>file</type>\\n<content>\\n80: \\n81:  2018\\n82: \\n83:  Abstract.\\n84: \\n85:  The Large Language Model agent workflo"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":29,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-77\"},\"toolCallId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-77\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r05_2509.25302.md</path>\\n<type>file</type>\\n<content>\\n80:  Setting 2: Service Maintenance under Termination Threats. \\n81: \\n82:  Resource All"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":29,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-78\"},\"toolCallId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-78\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r07_2601.07309.md</path>\\n<type>file</type>\\n<content>\\n80:  6 Limitations \\n81: \\n82:  References \\n83: \\n84:  A Detailed Experiment Settings \\"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":29,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-79\"},\"toolCallId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-79\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r09_2605.11169.md</path>\\n<type>file</type>\\n<content>\\n90:  References \\n91: \\n92:  A Appendix \\n93: \\n94:  A.1 Implementation Algorithm \\n95: "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":29,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-80\"},\"toolCallId\":\"call-138c5ffa-ba65-4079-ae87-b1f5e9f822b2-80\",\"content\":[{\"type\":\"text\",\"text\":\"No matches found\"}],\"isError\":false,\"id\":\"ce9f977a-6ac4-4030-b3f6-98cfa28b8164\"},\"meta\":{\"shape\":\"matches\",\"files\":[],\"truncated\":false,\"total\":0}}"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":30,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6b7b8005-8fe2-47df-bdec-d70b98624be0-81\"},\"toolCallId\":\"call-6b7b8005-8fe2-47df-bdec-d70b98624be0-81\",\"content\":[{\"type\":\"text\",\"text\":\"Found 17 matches\\n\\nreal\\\\set\\\\r19_2606.15508.md\\nLine 26:  Back to Abstract \\nLine 30:  Abstract \\nLine 166:  Abstract\\n\\nreal\\\\set\\\\r17_2609.32424.md\\nLine 22:  Back to Abstract "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":30,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6b7b8005-8fe2-47df-bdec-d70b98624be0-82\"},\"toolCallId\":\"call-6b7b8005-8fe2-47df-bdec-d70b98624be0-82\",\"content\":[{\"type\":\"text\",\"text\":\"Found 7 matches\\n\\nreal\\\\set\\\\r01_2507.22925.md\\nLine 77:  The most basic memory mechanism involves simple multi-turn dialogue, where all previous interactions with LLM are concate"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":30,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-6b7b8005-8fe2-47df-bdec-d70b98624be0-83\"},\"toolCallId\":\"call-6b7b8005-8fe2-47df-bdec-d70b98624be0-83\",\"content\":[{\"type\":\"text\",\"text\":\"Found 21 matches\\n\\nreal\\\\set\\\\r05_2509.25302.md\\nLine 1: Dive into the Agent Matrix: A Realistic Evaluation of Self-Replication Risk in LLM Agents \\nLine 96:  C.5 Risk Score ( ) W"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":31,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-84\"},\"toolCallId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-84\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r11_2606.09461.md</path>\\n<type>file</type>\\n<content>\\n148:  Abstract\\n149: \\n150:  Large language model agents are increasingly deployed in hu"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":31,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-85\"},\"toolCallId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-85\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r13_2510.24695.md</path>\\n<type>file</type>\\n<content>\\n177:  Abstract\\n178: \\n179:  Training large language model agents on tasks at the fronti"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":31,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-86\"},\"toolCallId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-86\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r15_2509.18576.md</path>\\n<type>file</type>\\n<content>\\n123:  Abstract\\n124: \\n125:  Multimodal semantic learning plays a critical role in embod"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":31,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-87\"},\"toolCallId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-87\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r17_2609.32424.md</path>\\n<type>file</type>\\n<content>\\n148:  Abstract\\n149: \\n150:  Large language model (LLM) agents have demonstrated promisi"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":31,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-88\"},\"toolCallId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-88\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r19_2606.15508.md</path>\\n<type>file</type>\\n<content>\\n166:  Abstract\\n167: \\n168:  Tool-augmented large language model agents increasingly ope"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":31,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-89\"},\"toolCallId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-89\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r09_2605.11169.md</path>\\n<type>file</type>\\n<content>\\n160:  Email:  tyu@adobe.com \\n161: \\n162:  Julian McAuley\\n163: \\n164:  Affiliation:  UC"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":31,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-90\"},\"toolCallId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-90\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r07_2601.07309.md</path>\\n<type>file</type>\\n<content>\\n140:  Junjie Nian 1 \\n141: \\n142:  Changyi Xiao 1 \\n143: \\n144:  Yixin Cao 1,2 \\n145: \\n"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":31,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-91\"},\"toolCallId\":\"call-e7291a61-8040-4143-ab04-9765cf4e63d5-91\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\set\\\\r41_2607.25297.md</path>\\n<type>file</type>\\n<content>\\n400:  4.2. Defense effectiveness\\n401: \\n402:  We first evaluate the attacks against the"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":32,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-74205e0d-03f1-4966-9072-8ee503c807fd-92\"},\"toolCallId\":\"call-74205e0d-03f1-4966-9072-8ee503c807fd-92\",\"content\":[{\"type\":\"text\",\"text\":\"Error: cannot modify \\\"D:\\\\tmp\\\\mino-sdk\\\\real\\\\matrix30.md\\\": file has not been read — read the file, then retry\"}],\"isError\":true,\"id\":\"b6898194-5f54-4a44-8966-a13ca7da0b97\"},\"er"
+            }
+          ],
+          "modelCalls": 33,
+          "systemChars": 4016,
+          "eventTypes": {
+            "permission/preset": 1,
+            "sandbox/mode": 1,
+            "approval/policy": 1,
+            "agent/inbox/spliced": 2,
+            "turn/start": 1,
+            "step/start": 33,
+            "system/message": 1,
+            "user/message": 3,
+            "request/header": 1,
+            "request/context": 1,
+            "session/title": 2,
+            "session/title-llm-request": 1,
+            "session-log-deepseek/delivery-accepted": 33,
+            "assistant/message": 32,
+            "tool/call": 133,
+            "tool/result": 133,
+            "step/end": 33,
+            "assistant/attempt": 1,
+            "turn/end": 1
+          },
+          "turns": 1,
+          "elapsedMs": 764842,
+          "statusFinal": "idle",
+          "statuses": [
+            "running",
+            "idle",
+            "running",
+            "idle",
+            "running",
+            "idle",
+            "running",
+            "idle"
+          ],
+          "headerSnapshots": 1,
+          "endReason": "turn/end",
+          "respKind": "prompt",
+          "fails": [],
+          "pass": true
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false,
+      "medianMs": 764842
+    },
+    {
+      "id": "real-mara1",
+      "session": "real-lit30-a563d",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "reply": "",
+          "tools": 0,
+          "toolNames": [],
+          "toolCalls": [],
+          "toolResults": [],
+          "modelCalls": 1,
+          "systemChars": 0,
+          "eventTypes": {
+            "agent/inbox/spliced": 2,
+            "turn/start": 1,
+            "step/start": 1,
+            "user/message": 1,
+            "assistant/attempt": 1,
+            "step/end": 1,
+            "turn/end": 1
+          },
+          "turns": 1,
+          "elapsedMs": 14207,
+          "statusFinal": "idle",
+          "statuses": [
+            "running",
+            "idle",
+            "running",
+            "idle",
+            "running",
+            "idle"
+          ],
+          "endReason": "turn/end",
+          "respKind": "prompt",
+          "fails": [],
+          "pass": true
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false,
+      "medianMs": 14207
+    },
+    {
+      "id": "real-mara2",
+      "session": "real-lit30-a563d",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "reply": "",
+          "tools": 0,
+          "toolNames": [],
+          "toolCalls": [],
+          "toolResults": [],
+          "modelCalls": 1,
+          "systemChars": 0,
+          "eventTypes": {
+            "agent/inbox/spliced": 2,
+            "turn/start": 1,
+            "step/start": 1,
+            "user/message": 1,
+            "assistant/attempt": 1,
+            "step/end": 1,
+            "turn/end": 1
+          },
+          "turns": 1,
+          "elapsedMs": 30048,
+          "statusFinal": "idle",
+          "statuses": [
+            "running",
+            "idle",
+            "running",
+            "idle"
+          ],
+          "endReason": "turn/end",
+          "respKind": "prompt",
+          "fails": [],
+          "pass": true
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false,
+      "medianMs": 30048
+    },
+    {
+      "id": "real-mara3",
+      "session": "real-lit30-a563d",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "reply": "",
+          "tools": 0,
+          "toolNames": [],
+          "toolCalls": [],
+          "toolResults": [],
+          "modelCalls": 1,
+          "systemChars": 0,
+          "eventTypes": {
+            "agent/inbox/spliced": 2,
+            "turn/start": 1,
+            "step/start": 1,
+            "user/message": 1,
+            "assistant/attempt": 1,
+            "step/end": 1,
+            "turn/end": 1
+          },
+          "turns": 1,
+          "elapsedMs": 30771,
+          "statusFinal": "idle",
+          "statuses": [
+            "running",
+            "idle"
+          ],
+          "endReason": "turn/end",
+          "respKind": "prompt",
+          "fails": [],
+          "pass": true
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false,
+      "medianMs": 30771
+    },
+    {
+      "id": "real-rebuttal",
+      "session": "real-rebuttal-a563d",
+      "repeat": 1,
+      "runs": [
+        {
+          "i": 0,
+          "reply": "",
+          "tools": 9,
+          "toolNames": [
+            "edit",
+            "glob",
+            "grep",
+            "pwsh",
+            "read",
+            "read_image",
+            "skill",
+            "working_directory",
+            "write"
+          ],
+          "toolCalls": [
+            "skill",
+            "read",
+            "read",
+            "glob",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "grep",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read",
+            "read"
+          ],
+          "toolResults": [
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":1,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"toolu_bdrk_01LjHrBhDTLz7dDJoPHezTb2\"},\"toolCallId\":\"toolu_bdrk_01LjHrBhDTLz7dDJoPHezTb2\",\"content\":[{\"type\":\"text\",\"text\":\"<skill_content name=\\\"nature-response\\\">\\n<skill_resources>\\nBase directory for this skill: C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-response\\nResol"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":1,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"toolu_bdrk_01LVTLk5S9W2RuLADQYycNDt\"},\"toolCallId\":\"toolu_bdrk_01LVTLk5S9W2RuLADQYycNDt\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\real-reviews-113120.md</path>\\n<type>file</type>\\n<content>\\n1: # eLife RP113120 公开评审原文（3 位审稿人）\\n2: \\n3: Reviewer #2 (Public review): Summary: In a series of experiment"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":2,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-bd4c7821-0c0a-4141-a863-ccb6a506bf06-2\"},\"toolCallId\":\"call-bd4c7821-0c0a-4141-a863-ccb6a506bf06-2\",\"content\":[{\"type\":\"text\",\"text\":\"<path>C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-response\\\\manifest.yaml</path>\\n<type>file</type>\\n<content>\\n1: name: nature-respons"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":2,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-bd4c7821-0c0a-4141-a863-ccb6a506bf06-3\"},\"toolCallId\":\"call-bd4c7821-0c0a-4141-a863-ccb6a506bf06-3\",\"content\":[{\"type\":\"text\",\"text\":\"real\\\\set\\\\r01_2507.22925.md\\nreal\\\\set\\\\r03_2502.12280.md\\nreal\\\\set\\\\r05_2509.25302.md\\nreal\\\\set\\\\r07_2601.07309.md\\nreal\\\\set\\\\r09_2605.11169.md\\nreal\\\\set\\\\r11_2606.09461.md\\nrea"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":3,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-2f605ef3-20fb-41c6-bd96-f3b369fec8a7-4\"},\"toolCallId\":\"call-2f605ef3-20fb-41c6-bd96-f3b369fec8a7-4\",\"content\":[{\"type\":\"text\",\"text\":\"<path>C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-response\\\\static\\\\core\\\\stance.md</path>\\n<type>file</type>\\n<content>\\n1: # Default "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":3,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-2f605ef3-20fb-41c6-bd96-f3b369fec8a7-5\"},\"toolCallId\":\"call-2f605ef3-20fb-41c6-bd96-f3b369fec8a7-5\",\"content\":[{\"type\":\"text\",\"text\":\"<path>C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-response\\\\static\\\\core\\\\workflow.md</path>\\n<type>file</type>\\n<content>\\n1: # Workfl"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":3,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-2f605ef3-20fb-41c6-bd96-f3b369fec8a7-6\"},\"toolCallId\":\"call-2f605ef3-20fb-41c6-bd96-f3b369fec8a7-6\",\"content\":[{\"type\":\"text\",\"text\":\"<path>C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-response\\\\references\\\\intake-and-routing.md</path>\\n<type>file</type>\\n<content>\\n1: "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":3,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-2f605ef3-20fb-41c6-bd96-f3b369fec8a7-7\"},\"toolCallId\":\"call-2f605ef3-20fb-41c6-bd96-f3b369fec8a7-7\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\reviews-113120.md</path>\\n<type>file</type>\\n<content>\\n1: Reviewer #1 (Public review):\\\\u003c/strong\\\\u003e\\\\u003c/p\\\\u003e\\\\n\\\\u003cp\\\\u003eSummary:\\\\"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":3,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-2f605ef3-20fb-41c6-bd96-f3b369fec8a7-8\"},\"toolCallId\":\"call-2f605ef3-20fb-41c6-bd96-f3b369fec8a7-8\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\elife-response.md</path>\\n<type>file</type>\\n<content>\\n1: # Response to Reviewers\\n2: \\n3: **Manuscript:** [Manuscript title]\\n4: **Manuscript ID:** eL"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":4,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-75defcc6-99a9-4add-b366-f312d1b6e96b-9\"},\"toolCallId\":\"call-75defcc6-99a9-4add-b366-f312d1b6e96b-9\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\elife-response.md</path>\\n<type>file</type>\\n<content>\\n96: ---\\n97: \\n98: <!-- ================= INTERNAL NOTES, NOT FOR SUBMISSION ================= -"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":4,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-75defcc6-99a9-4add-b366-f312d1b6e96b-10\"},\"toolCallId\":\"call-75defcc6-99a9-4add-b366-f312d1b6e96b-10\",\"content\":[{\"type\":\"text\",\"text\":\"Found 6 matches\\n\\nreal\\\\elife-113120.xml\\nLine 449: <article-title>Reviewer #1 (Public review):</article-title>\\nLine 454: <role specific-use=\\\"referee\\\">Reviewer</role>\\nLine 465:"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":4,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-75defcc6-99a9-4add-b366-f312d1b6e96b-11\"},\"toolCallId\":\"call-75defcc6-99a9-4add-b366-f312d1b6e96b-11\",\"content\":[{\"type\":\"text\",\"text\":\"<path>C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-response\\\\references\\\\response-structure.md</path>\\n<type>file</type>\\n<content>\\n1"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":4,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-75defcc6-99a9-4add-b366-f312d1b6e96b-12\"},\"toolCallId\":\"call-75defcc6-99a9-4add-b366-f312d1b6e96b-12\",\"content\":[{\"type\":\"text\",\"text\":\"<path>C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-response\\\\references\\\\tone-and-stance.md</path>\\n<type>file</type>\\n<content>\\n1: #"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":4,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-75defcc6-99a9-4add-b366-f312d1b6e96b-13\"},\"toolCallId\":\"call-75defcc6-99a9-4add-b366-f312d1b6e96b-13\",\"content\":[{\"type\":\"text\",\"text\":\"<path>C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-response\\\\references\\\\chinese-author-alignment.md</path>\\n<type>file</type>\\n<conte"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":5,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-58642279-7c05-45e8-997b-cc49cea7a1cb-14\"},\"toolCallId\":\"call-58642279-7c05-45e8-997b-cc49cea7a1cb-14\",\"content\":[{\"type\":\"text\",\"text\":\"<path>D:\\\\tmp\\\\mino-sdk\\\\real\\\\elife-113120.xml</path>\\n<type>file</type>\\n<content>\\n440: </front-stub>\\n441: <body>\\n442: <p>This work provides an <bold>important</bold> set of fi"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":5,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-58642279-7c05-45e8-997b-cc49cea7a1cb-15\"},\"toolCallId\":\"call-58642279-7c05-45e8-997b-cc49cea7a1cb-15\",\"content\":[{\"type\":\"text\",\"text\":\"<path>C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-response\\\\references\\\\comment-taxonomy.md</path>\\n<type>file</type>\\n<content>\\n1: "
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":5,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-58642279-7c05-45e8-997b-cc49cea7a1cb-16\"},\"toolCallId\":\"call-58642279-7c05-45e8-997b-cc49cea7a1cb-16\",\"content\":[{\"type\":\"text\",\"text\":\"<path>C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-response\\\\references\\\\qa-checklist.md</path>\\n<type>file</type>\\n<content>\\n1: # QA"
+            },
+            {
+              "name": "?",
+              "text": "{\"turn\":1,\"step\":5,\"message\":{\"role\":\"tool\",\"source\":{\"kind\":\"tool\",\"callId\":\"call-58642279-7c05-45e8-997b-cc49cea7a1cb-17\"},\"toolCallId\":\"call-58642279-7c05-45e8-997b-cc49cea7a1cb-17\",\"content\":[{\"type\":\"text\",\"text\":\"<path>C:\\\\Users\\\\69441\\\\.dsh\\\\profiles\\\\prodbill\\\\node_modules\\\\mino-skill-nature\\\\skills\\\\nature-shared\\\\core\\\\main-text-discipline.md</path>\\n<type>file</type>\\n<content>\\n1: # Ma"
+            }
+          ],
+          "modelCalls": 6,
+          "systemChars": 4016,
+          "eventTypes": {
+            "permission/preset": 1,
+            "sandbox/mode": 1,
+            "approval/policy": 1,
+            "agent/inbox/spliced": 2,
+            "turn/start": 1,
+            "step/start": 6,
+            "system/message": 1,
+            "user/message": 3,
+            "request/header": 1,
+            "request/context": 1,
+            "session/title": 2,
+            "session/title-llm-request": 1,
+            "session-log-deepseek/delivery-accepted": 6,
+            "assistant/message": 5,
+            "tool/call": 18,
+            "tool/result": 18,
+            "step/end": 6,
+            "assistant/attempt": 1,
+            "turn/end": 1
+          },
+          "turns": 1,
+          "elapsedMs": 59053,
+          "statusFinal": "idle",
+          "statuses": [
+            "running",
+            "idle"
+          ],
+          "headerSnapshots": 1,
+          "endReason": "turn/end",
+          "respKind": "prompt",
+          "fails": [],
+          "pass": true
+        }
+      ],
+      "passAll": true,
+      "passRate": 1,
+      "flaky": false,
+      "medianMs": 59053
+    }
+  ],
+  "stats": {
+    "probes": 5,
+    "passAll": 5,
+    "fail": 0,
+    "flaky": 0,
+    "bootMs": 1639
+  },
+  "bootMs": 1639,
+  "serverInfo": {
+    "name": "deepseek-harness-sdk-runtime",
+    "version": "0.0.1"
+  }
+}

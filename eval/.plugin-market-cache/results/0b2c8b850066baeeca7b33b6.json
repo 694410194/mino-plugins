@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-browser-history","description":"浏览器历史连接器：只读本机 Chrome/Edge/Firefox/Brave 的浏览记录，查最近看过什么、统计常去站点，全本地处理。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/browser-history"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","browser-history","chrome","edge","firefox"]}}}

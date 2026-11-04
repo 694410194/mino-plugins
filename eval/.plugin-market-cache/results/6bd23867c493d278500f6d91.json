@@ -1,0 +1,1 @@
+{"release":{"name":"mino-skill-nsfc","version":{"version":"0.1.0","publishTimestamp":1793771244,"source":{"type":"git","url":"https://mino.baby/git/skill-nsfc","commit":"2c228284d85024ec50f276263d838e7b5b61db76"},"engines":{"dsh":">=0.2.2-alpha.1 <0.2.3"}}}}

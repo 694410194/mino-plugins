@@ -1,0 +1,5 @@
+# mino-connector-local-inventory — bundle patch
+- insert:
+    - id: connector-local-inventory
+      name: 'mino-connector-local-inventory'
+      config: {}

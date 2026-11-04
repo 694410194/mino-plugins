@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-portfolio","description":"行情与持仓连接器：查股票/基金实时价，算自己持仓的盈亏。公共行情接口只收证券代码，持仓数据不出本机。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/portfolio"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","stock","fund","portfolio","finance"]}}}

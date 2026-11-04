@@ -1,0 +1,17 @@
+# REAL-materials heavyweight probe: every input is a real document.
+# real/set/ = 32 unique arXiv papers (LLM agents field); real/long-report.md =
+# Llama-3 herd (90pp); real/draft-real.tex = real LaTeX manuscript;
+# real/elife-paper.md + real-reviews-*.md = real eLife paper + public reviews.
+{"id": "real-read-long", "text": "精读 real/long-report.md 这篇长论文，输出结构化精读卡：研究问题、方法、数据、主要结果、局限、对文献综述的价值。用中文。", "timeoutMs": 900000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-polish-tex", "text": "real/draft-real.tex 是一份论文手稿（LaTeX 源码）。请做学术英文润色：润色摘要和引言部分并写到 real/draft-real-polished.md，再用中文列出主要修改点。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-review-long", "text": "对 real/long-report.md 做投稿前审稿压力测试：扮演 3 位审稿人（方法严谨性、创新性、写作呈现各一位），每人总体评价、3-5 条具体意见（标严重级别）、录用建议。用中文。", "timeoutMs": 900000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-compound", "text": "处理 real/set/r01_2507.22925.md：第一步输出精读卡，第二步模拟 3 位审稿人各给 3-5 条意见，第三步起草逐条英文回复信。三步全做完，回复信写到 real/r01-response.md。", "timeoutMs": 900000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-lit10", "text": "读 real/set/ 下文件名以 r01 到 r19 开头的十篇论文，整理成文献矩阵（研究问题、方法、数据、核心结论、局限），再写 500 字中文综述指出共同问题和研究空白。矩阵写到 real/matrix10.md。", "timeoutMs": 1200000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-lit30", "text": "读 real/set/ 目录下所有论文（约 30 篇），整理成文献矩阵（研究问题、方法、数据、核心结论、局限），再写 800 字中文综述指出该领域的共同问题和研究空白。矩阵写到 real/matrix30.md。", "timeoutMs": 1800000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-mara1", "sameSession": "real-lit30", "text": "把矩阵里每篇的局限展开成一句话点评，归纳出三个共同缺陷模式。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-mara2", "sameSession": "real-lit30", "text": "按创新性给这批论文排前五名，各写一句理由。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-mara3", "sameSession": "real-lit30", "text": "基于矩阵写一份综述大纲：五个小节，每节列出引用的论文文件名和要点。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-rebuttal", "text": "real/elife-paper.md 是一篇论文，real/real-reviews-113120.md 是它收到的三位审稿人真实意见。请起草逐条英文回复信（response letter）：每条意见先礼貌回应，再说明修改方案。写到 real/elife-response.md。", "timeoutMs": 900000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-write-section", "text": "从 real/set/ 的论文中挑 3 篇你认为最相关的，精读它们，然后写一节综述论文的 Introduction（约 800 词英文，引用标注文件名），写到 real/intro.md。", "timeoutMs": 900000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-grep-loop", "text": "在 real/set/ 的论文里，找出所有方法部分用了 attention mechanism 的论文，逐篇给出原文摘录（一两句）和对比分析。用中文。", "timeoutMs": 900000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-vague", "text": "帮我把论文搞好", "timeoutMs": 240000, "assert": {"events.absent": ["session/error"]}}

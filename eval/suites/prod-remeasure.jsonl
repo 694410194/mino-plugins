@@ -1,0 +1,5 @@
+{"id": "real-lit30", "text": "读 real/set/ 目录下所有论文（约 30 篇），整理成文献矩阵（研究问题、方法、数据、核心结论、局限），再写 800 字中文综述指出该领域的共同问题和研究空白。矩阵写到 real/matrix30.md。", "timeoutMs": 1800000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-mara1", "sameSession": "real-lit30", "text": "把矩阵里每篇的局限展开成一句话点评，归纳出三个共同缺陷模式。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-mara2", "sameSession": "real-lit30", "text": "按创新性给这批论文排前五名，各写一句理由。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-mara3", "sameSession": "real-lit30", "text": "基于矩阵写一份综述大纲：五个小节，每节列出引用的论文文件名和要点。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "real-rebuttal", "text": "real/elife-paper.md 是一篇论文，real/real-reviews-113120.md 是它收到的三位审稿人真实意见。请起草逐条英文回复信（response letter）：每条意见先礼貌回应，再说明修改方案。写到 real/elife-response.md。", "timeoutMs": 900000, "assert": {"events.absent": ["session/error"]}}

@@ -1,0 +1,16 @@
+{
+  "name": "mino-connector-template",
+  "version": "0.0.0",
+  "private": true,
+  "description": "数据连接器模板：复制本目录 → 改包名/id → 填 cordis.patch.yml 的服务器配置即得新的连接器包。private，不进索引。",
+  "type": "module",
+  "main": "index.js",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.2.3"
+  }
+}

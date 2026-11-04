@@ -1,0 +1,12 @@
+# Agent-mode pricing probe: one probe = ONE real agent task (multi-step loop,
+# tool calls, skill loading). Token usage is summed from assistant/message
+# usage fields across all steps of the turn — this is the TRUE agent cost,
+# not the chat-mode single call measured in pricing-probe.jsonl.
+{"id": "agent-read", "text": "精读 papers/p1.md 这篇论文，输出结构化精读卡：研究问题、方法、数据、主要结果、局限、对文献综述的价值。用中文。", "timeoutMs": 300000, "assert": {"reply.match": "^.{80,}$", "events.absent": ["session/error"]}}
+{"id": "agent-read-f1", "sameSession": "agent-read", "text": "方法部分有哪些可复现性风险？逐条列出，引用原文位置。", "timeoutMs": 180000, "assert": {"reply.match": "^.{50,}$", "events.absent": ["session/error"]}}
+{"id": "agent-polish", "text": "润色 papers/draft.md 这篇论文草稿：输出润色后的全文，再用中文列出主要修改点。把润色结果写到 papers/draft-polished.md。", "timeoutMs": 300000, "assert": {"reply.match": "^.{50,}$", "events.absent": ["session/error"]}}
+{"id": "agent-review", "text": "对 papers/p2.md 做投稿前审稿压力测试：扮演 3 位审稿人（方法严谨性、创新性、写作呈现各一位），每人给出总体评价、3-5 条具体意见（标严重级别）、录用建议。用中文。", "timeoutMs": 300000, "assert": {"reply.match": "^.{80,}$", "events.absent": ["session/error"]}}
+{"id": "agent-rebuttal", "text": "读 papers/p3.md：先给出 5 条具体审稿意见（标 major/minor），再起草逐条英文回复信（response letter）。回复信用英文，说明用中文。", "timeoutMs": 300000, "assert": {"reply.match": "^.{80,}$", "events.absent": ["session/error"]}}
+{"id": "agent-lit4", "text": "读 papers/ 目录下 p1.md 到 p4.md 四篇论文，整理成一张文献矩阵（研究问题、方法、数据、核心结论、局限），再写一段 300 字中文综述指出共同问题和研究空白。矩阵写到 papers/matrix.md。", "timeoutMs": 600000, "assert": {"reply.match": "^.{80,}$", "events.absent": ["session/error"]}}
+{"id": "agent-ps", "text": "papers/ps.md 是一篇申请 CS 硕士的个人陈述初稿。请逐段给出反馈：这段的问题、怎么改更好、给一句修改示例。只反馈，不重写全文。用中文。", "timeoutMs": 240000, "assert": {"reply.match": "^.{80,}$", "events.absent": ["session/error"]}}
+{"id": "agent-quick", "text": "帮我改一句学术英语：\"In this paper, we proposes a novel method which can effectively solve the problem, and the experiments shows our method is better.\" 说明改了什么。", "timeoutMs": 120000, "assert": {"reply.match": "^.{30,}$", "events.absent": ["session/error"]}}

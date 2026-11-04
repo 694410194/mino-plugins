@@ -1,0 +1,1 @@
+{"id": "img-gen", "text": "调用 generate_image 工具生成一张竖屏角色立绘：26岁中国女性，黑色齐肩直发，米白针织开衫，浅灰背景，写实摄影质感。如果工具支持指定保存位置就存到 D:/tmp/mino-sdk/img-test/。", "assert": {"reply.match": ".", "modelCalls.max": 15}, "timeoutMs": 300000}

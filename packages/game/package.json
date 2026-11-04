@@ -1,0 +1,45 @@
+{
+  "name": "mino-connector-game",
+  "version": "0.1.0",
+  "description": "游戏数据连接器：原神祈愿记录（用户提供祈愿 URL）等用户侧游戏数据导入整理。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "mino-connector",
+    "game"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "hostdeps.mjs",
+    "skill-provider.mjs",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.3.0",
+    "node": ">=20.18"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/game"
+  },
+  "bugs": {
+    "url": "https://github.com/694410194/mino-plugins/issues"
+  }
+}

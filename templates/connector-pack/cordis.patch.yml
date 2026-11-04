@@ -1,0 +1,25 @@
+# connector-pack：个人数据连接器接入模板（纯配置 bundle，官方解耦零代码）。
+#
+# 两种用法：
+#   A. 上游是现成 MCP server——把下面 config 段改成它的 transport/command/env 即可
+#      （一行 dsh-mcp-client = 一个连接器）。
+#   B. 上游是 CLI/本地工具——先包一层薄 stdio MCP wrapper（放 vendor/ 或同包），
+#      再走同样的挂法；wrapper 只读、本地、用户主动三原则不变。
+#
+# 合规分级（接入前过一遍）：官方MCP/官方导出 > 本地直读 > 自托管API >
+#   解密类（必须洛雪壳：本体不带破解能力，能力在用户侧）> 逆向API（最脆，只作配菜）。
+#
+# 未配凭据时该行自动停用（disabled 表达式），装卸本包即装卸连接器，绝不耦合内核。
+- insert:
+    - id: connector-template-pack
+      name: 'mino-connector-template'
+    - id: connector-template
+      name: '@deepseek-ai/dsh-mcp-client'
+      disabled: !!js "!process.env.CONNECTOR_TEMPLATE_KEY"
+      config:
+        serverName: connector-template
+        transport: stdio
+        command: npx
+        args: ['-y', 'REPLACE-WITH-MCP-SERVER-PACKAGE']
+        env:
+          CONNECTOR_TEMPLATE_KEY: !!js process.env.CONNECTOR_TEMPLATE_KEY

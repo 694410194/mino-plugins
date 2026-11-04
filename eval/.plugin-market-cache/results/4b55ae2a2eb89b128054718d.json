@@ -1,0 +1,1 @@
+{"release":{"name":"mino-knowledge-studio","version":{"version":"0.6.3","publishTimestamp":1793771234,"source":{"type":"git","url":"https://mino.baby/git/knowledge-studio","commit":"ee97bb2ffa9f705b9f49738e7a13a6428e9858ae"},"engines":{"dsh":">=0.2.1-rc.2 <0.3.0-0"}}}}

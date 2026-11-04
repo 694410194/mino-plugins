@@ -1,0 +1,5 @@
+# mino-connector-mail — bundle patch
+- insert:
+    - id: connector-mail
+      name: 'mino-connector-mail'
+      config: {}

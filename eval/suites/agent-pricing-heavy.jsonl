@@ -1,0 +1,15 @@
+# Heavyweight pricing probe: tasks deliberately HARDER than real user scenarios.
+# Worst-case billing must survive these. Same usage accounting as agent-pricing.
+{"id": "hw-read-long", "text": "精读 papers/long-report.md 这篇长论文，输出结构化精读卡：研究问题、方法、数据、主要结果、局限、对文献综述的价值。用中文。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-polish5k", "text": "润色 papers/draft5k.md 这篇论文草稿：输出润色后的全文，再用中文列出主要修改点。把润色结果写到 papers/draft5k-polished.md。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-review-long", "text": "对 papers/long-report.md 做投稿前审稿压力测试：扮演 3 位审稿人（方法严谨性、创新性、写作呈现各一位），每人总体评价、3-5 条具体意见（标严重级别）、录用建议。用中文。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-compound", "text": "处理 papers/p2.md：第一步输出精读卡，第二步模拟 3 位审稿人各给 3-5 条意见，第三步起草逐条英文回复信。三步全做完，回复信写到 papers/p2-response.md。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-lit10", "text": "读 papers/ 下 p1.md 到 p10.md 共十篇论文，整理成文献矩阵（研究问题、方法、数据、核心结论、局限），再写 500 字中文综述指出共同问题和研究空白。矩阵写到 papers/matrix10.md。", "timeoutMs": 900000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-mara1", "sameSession": "hw-lit10", "text": "把矩阵里每篇的局限展开成一段话，指出哪些局限是共同模式。", "timeoutMs": 300000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-mara2", "sameSession": "hw-lit10", "text": "按创新性给这十篇排序，前三名各写一句理由。", "timeoutMs": 300000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-mara3", "sameSession": "hw-lit10", "text": "基于矩阵，写一份综述论文的大纲：五个小节，每节列出要引用的论文编号和要点。", "timeoutMs": 300000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-mara4", "sameSession": "hw-lit10", "text": "我刚写了一句综述开头：\"Recent advances in large models has enabled many applications, however the limitations is not well studied.\" 帮我改好，再根据矩阵补写 3 句承接。", "timeoutMs": 300000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-rewrite", "text": "把 papers/draft.md 扩写成约 3000 词的完整英文论文（Introduction/Method/Experiments/Conclusion 齐全），保留原意，写到 papers/rewrite.md。写完用中文列出你补了哪些内容。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-grep-loop", "text": "在 papers/ 目录的 p1.md 到 p10.md 里，找出所有论文方法部分用了 attention 或注意力机制的段落，逐篇列出原文摘录和对比分析。用中文。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-ps-full", "text": "papers/ps.md 是留学 PS 初稿。先逐段反馈，然后按反馈重写全文，最后自查一遍逻辑一致性。重写的版本写到 papers/ps-v2.md。用中文。", "timeoutMs": 600000, "assert": {"events.absent": ["session/error"]}}
+{"id": "hw-vague", "text": "帮我把论文搞好", "timeoutMs": 180000, "assert": {"events.absent": ["session/error"]}}

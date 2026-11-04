@@ -1,0 +1,7 @@
+[dsh-expression] 管理 API: /dsh-memes-api , 管理面板: /memes-panel , 小图 CSS 已注入(160px)
+[dsh-expression] send_meme 已注册(Web通道,/dsh-memes)
+[dsh-token-monitor] 已加载 262 条历史明细
+[bili-whale] 自主生物钟已启动（每 60s tick · 会话 bili-whale）；监听 + 直播间监看都挂上了 ✓
+[bili-whale] 设置页已挂载：/dsh-bili/ · 配置 C:\Users\69441\.dsh\bili-whale.config.json
+dsh web: http://127.0.0.1:62578/?token=0ZarjYSgK98CiH4ID3Wrn7ACzNEYoeXO7AawlZt_ZsI
+[dsh-token-monitor] 已为 1 个历史会话重建 tokenCost 投影

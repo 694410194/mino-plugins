@@ -1,0 +1,5 @@
+# mino-connector-gzh — bundle patch
+- insert:
+    - id: connector-gzh
+      name: 'mino-connector-gzh'
+      config: {}
