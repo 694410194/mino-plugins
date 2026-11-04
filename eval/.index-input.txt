@@ -106,3 +106,6 @@ https://mino.baby/git/scrcpy
 https://mino.baby/git/translate
 https://mino.baby/git/corpus
 https://mino.baby/git/memorial
+https://mino.baby/git/connector-wechat
+https://mino.baby/git/connector-qq
+https://mino.baby/git/connector-collab

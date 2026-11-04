@@ -1,0 +1,5 @@
+# mino-connector-qq — bundle patch
+- insert:
+    - id: qq
+      name: 'mino-connector-qq'
+      config: {}
