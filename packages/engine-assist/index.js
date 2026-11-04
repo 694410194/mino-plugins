@@ -8,7 +8,7 @@
  */
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
-import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync, renameSync, statSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync, renameSync, statSync, createWriteStream } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { homedir } from 'node:os'
 import { fileURLToPath } from 'node:url'
@@ -21,18 +21,31 @@ const PKG = JSON.parse(readFileSync(join(PKG_DIR, 'package.json'), 'utf8'))
 const DSH_HOME = process.env.DSH_HOME || join(homedir(), '.dsh')
 const ENGINES_DIR = join(DSH_HOME, 'engines')
 const REGISTRY = join(DSH_HOME, 'engines.json')
+// 官方托管运行时（装机自带 node/python/pnpm/ffmpeg，零下载）：DSH_PRIMARY_RUNTIME 指向它
+const RUNTIME = process.env.DSH_PRIMARY_RUNTIME || ''
 
 export const name = PKG.name
 export const inject = ['skills', 'tools']
 const defineTool = (await loadHostDeps()).defineTool
 
 // ── 引擎配方 ─────────────────────────────────────────────────────────────────
-// kind: url=直链文件 / ghasset=GitHub release 资产正则 / manual=仓随时蒸发只登记
+// kind: url=直链文件 / ghasset=GitHub release 资产正则 / manual=仓随时蒸发只登记 / runtime=官方托管运行时自带
+// runtimeBin=DSH_PRIMARY_RUNTIME 下的相对路径，命中即就绪永不下载
 const RECIPES = {
+  'node': { kind: 'runtime', runtimeBin: 'dependencies/node/bin/node.exe',
+    check: ['--version'], use: 'JS 运行时（装机自带，skill/脚本底座）', pathBin: 'node' },
+  'python': { kind: 'runtime', runtimeBin: 'dependencies/python/python.exe',
+    check: ['--version'], use: 'Python 运行时（装机自带，含 numpy/pandas/Pillow 科学栈）', pathBin: 'python' },
+  'powershell': { kind: 'runtime',
+    check: ['-NoProfile', '-Command', '$PSVersionTable.PSVersion.ToString()'], use: 'Windows 自带脚本宿主', pathBin: 'powershell' },
+  'pwsh': { kind: 'runtime',
+    check: ['-NoProfile', '-Command', '$PSVersionTable.PSVersion.ToString()'], use: 'PowerShell 7（可选增强）', pathBin: 'pwsh' },
   'yt-dlp': { kind: 'url', url: 'https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe',
     file: 'yt-dlp.exe', check: ['--version'], use: '视频下载（connector-ytdlp）', pathBin: 'yt-dlp' },
   'ffmpeg': { kind: 'ghasset', repo: 'BtbN/FFmpeg-Builds', match: /ffmpeg-master-latest-win64-gpl\.zip$/i,
-    findExe: /bin[\\/]ffmpeg\.exe$/i, check: ['-version'], use: '音视合并（yt-dlp 配菜，大包）', pathBin: 'ffmpeg' },
+    runtimeBin: 'mino-bin/ffmpeg.exe', findExe: /bin[\\/]ffmpeg\.exe$/i, check: ['-version'], use: '音视合并（装机自带 mino-bin，yt-dlp 配菜）', pathBin: 'ffmpeg' },
+  'ffprobe': { kind: 'runtime', runtimeBin: 'mino-bin/ffprobe.exe',
+    check: ['-version'], use: '音视探测（装机自带 mino-bin）', pathBin: 'ffprobe' },
   'scrcpy': { kind: 'ghasset', repo: 'Genymobile/scrcpy', match: /scrcpy-win64-v.*\.zip$/i,
     findExe: /scrcpy\.exe$/i, check: ['--version'], use: '手机投屏/拉文件（connector-scrcpy，内含 adb）', pathBin: 'scrcpy' },
   'platform-tools': { kind: 'url', url: 'https://dl.google.com/android/repository/platform-tools-latest-windows.zip',
@@ -81,16 +94,56 @@ async function detectOne(name, r) {
     if (r.findExe) { const hit = findExe(dir, r.findExe); if (hit) return hit }
     if (r.file && existsSync(join(dir, r.file))) return join(dir, r.file)
   }
+  if (r.runtimeBin && RUNTIME) {
+    const p = join(RUNTIME, r.runtimeBin)
+    if (existsSync(p)) return p
+  }
   if (r.pathBin) { try { await execFileP(r.pathBin, r.check || ['--version'], { timeout: 8000, windowsHide: true }); return r.pathBin } catch { } }
   return null
 }
 
-async function download(url, dest) {
+// 中国大陆 GitHub 直连 ~40KB/s：低速看门狗 25 秒判死 → 换镜像。
+// 镜像对 github.com/objects.githubusercontent.com 的 release 资产直接前缀代理
+const GH_MIRRORS = ['https://ghfast.top/', 'https://gh-proxy.com/']
+
+async function downloadOne(url, dest) {
   const res = await fetch(url, { signal: AbortSignal.timeout(600000), redirect: 'follow' })
-  if (!res.ok) throw new Error(`下载失败 HTTP ${res.status}：${url.slice(0, 90)}`)
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const total = Number(res.headers.get('content-length') || 0)
   mkdirSync(dirname(dest), { recursive: true })
-  writeFileSync(dest, Buffer.from(await res.arrayBuffer()))
-  return dest
+  const out = createWriteStream(dest)
+  const reader = res.body.getReader()
+  let got = 0, t0 = Date.now(), checked = false
+  try {
+    for (;;) {
+      const { done, value } = await reader.read()
+      if (done) break
+      got += value.byteLength
+      if (!out.write(value)) await new Promise(r => out.once('drain', r))
+      // 低速判死：25s 后速率 <40KB/s 且还差 >5MB → 放弃换镜像
+      if (!checked && Date.now() - t0 > 25000) {
+        checked = true
+        const rate = got / ((Date.now() - t0) / 1000)
+        if (rate < 40960 && (total === 0 || total - got > 5 * 1048576))
+          throw new Error(`直连太慢 ${(rate / 1024) | 0}KB/s`)
+      }
+    }
+  } finally {
+    try { reader.cancel() } catch { }
+    out.end()
+    await new Promise(r => out.once('finish', r)).catch(() => { })
+  }
+}
+
+async function download(url, dest) {
+  const urls = [url]
+  if (/^https:\/\/(github\.com|objects\.githubusercontent\.com|release-assets\.githubusercontent\.com)\//.test(url))
+    urls.push(...GH_MIRRORS.map(m => m + url))
+  let lastErr = null
+  for (const u of urls) {
+    try { await downloadOne(u, dest); return dest } catch (e) { lastErr = e; try { unlinkSync(dest) } catch { } }
+  }
+  throw new Error(`下载失败：${lastErr?.message}（${url.slice(0, 90)}，可手动下载后 engine_register）`)
 }
 
 async function ghReleaseAsset(repo, match) {
@@ -116,6 +169,11 @@ async function unzip(zipPath, destDir) {
 async function installOne(name) {
   const r = RECIPES[name]
   if (r.kind === 'manual') throw new Error(r.hint)
+  if (r.kind === 'runtime') {
+    const have = await detectOne(name, r)
+    if (have) return { name, bin: have, version: '装机自带' }
+    throw new Error(`engine_setup: ${name} 应由官方运行时自带但没找到（DSH_PRIMARY_RUNTIME=${RUNTIME || '未设置'}），属部署问题不是用户问题`)
+  }
   if (process.platform !== 'win32') throw new Error(`engine_setup: 自动安装只做了 Windows；其它平台手动装好后 engine_register ${name} <路径>`)
   const destDir = join(ENGINES_DIR, name)
   let url = r.url

@@ -24,3 +24,20 @@ description: 引擎代办用法：连接器说缺引擎、或用户说「帮我�
 - 微信/QQ 解密引擎（wechat-dump / qq-exporter）不自动下载：仓随时被函蒸发，
   让用户自己找活跃 fork 下载后 `engine_register`
 - 下载失败=网络不通：报白话原因+手动安装路径，不装死
+
+## 装机自带的运行时（永远不用装）
+
+Mino 官方托管运行时（`DSH_PRIMARY_RUNTIME`）自带这些，engine_status 会直接报就绪：
+node（dependencies/node/bin/node.exe）、python（dependencies/python/python.exe，含
+numpy/pandas/Pillow/lxml）、ffmpeg/ffprobe（mino-bin/）、powershell（Windows 自带）。
+跑脚本优先用运行时里的 node/python，不要让用户装环境。
+
+## 中国大陆下载默认值（镜像）
+
+- engine_setup 内置 GitHub release 镜像回退（ghfast.top → gh-proxy.com），
+  直连低于 40KB/s 自动换，不用手动配
+- 如果你自己用 shell 装东西，默认用这些源，别直连官方源干等：
+  - npm：`--registry=https://registry.npmmirror.com`
+  - pip：`-i https://pypi.tuna.tsinghua.edu.cn/simple`
+  - GitHub 文件：`https://ghfast.top/<原 URL>` 前缀
+  - HuggingFace 模型：`https://hf-mirror.com` 或 modelscope

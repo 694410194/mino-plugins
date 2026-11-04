@@ -8,7 +8,7 @@
  */
 import { execFile, spawn } from 'node:child_process'
 import { promisify } from 'node:util'
-import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync, renameSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync, renameSync, createWriteStream } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { homedir } from 'node:os'
 import { createHash } from 'node:crypto'
@@ -83,12 +83,46 @@ async function findServerBin() {
   return null
 }
 
-async function download(url, dest, timeout = 600000) {
-  const res = await fetch(url, { signal: AbortSignal.timeout(timeout), redirect: 'follow' })
-  if (!res.ok) throw new Error(`下载失败 HTTP ${res.status}`)
+// 与 engine-assist 同逻辑：GitHub 直连慢 → 低速看门狗 → 镜像回退
+const GH_MIRRORS = ['https://ghfast.top/', 'https://gh-proxy.com/']
+
+async function downloadOne(url, dest) {
+  const res = await fetch(url, { signal: AbortSignal.timeout(600000), redirect: 'follow' })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const total = Number(res.headers.get('content-length') || 0)
   mkdirSync(dirname(dest), { recursive: true })
-  writeFileSync(dest, Buffer.from(await res.arrayBuffer()))
-  return dest
+  const out = createWriteStream(dest)
+  const reader = res.body.getReader()
+  let got = 0, t0 = Date.now(), checked = false
+  try {
+    for (;;) {
+      const { done, value } = await reader.read()
+      if (done) break
+      got += value.byteLength
+      if (!out.write(value)) await new Promise(r => out.once('drain', r))
+      if (!checked && Date.now() - t0 > 25000) {
+        checked = true
+        const rate = got / ((Date.now() - t0) / 1000)
+        if (rate < 40960 && (total === 0 || total - got > 5 * 1048576))
+          throw new Error(`直连太慢 ${(rate / 1024) | 0}KB/s`)
+      }
+    }
+  } finally {
+    try { reader.cancel() } catch { }
+    out.end()
+    await new Promise(r => out.once('finish', r)).catch(() => { })
+  }
+}
+
+async function download(url, dest) {
+  const urls = [url]
+  if (/^https:\/\/(github\.com|objects\.githubusercontent\.com|release-assets\.githubusercontent\.com)\//.test(url))
+    urls.push(...GH_MIRRORS.map(m => m + url))
+  let lastErr = null
+  for (const u of urls) {
+    try { await downloadOne(u, dest); return dest } catch (e) { lastErr = e; try { unlinkSync(dest) } catch { } }
+  }
+  throw new Error(`下载失败：${lastErr?.message}`)
 }
 
 async function ghReleaseAsset(repo, match) {
