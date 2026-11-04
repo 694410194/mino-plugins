@@ -267,8 +267,8 @@
 - **真缺陷 1（已修）**：mino-proactive 0.1.0 调上游已删 API
   `ctx.agents.roots()`（0.2.5 只有 `list()`+`session.header.parentSession`）。
   修复=版本自适应枚举（roots 在则用，否则 list 滤 parentSession），
-  0.1.1 已发；proactive-verify-2 2/2 PASS（proactive_set/list 进 schema、
-  普通调用正常）。
+  源码版本 bump 0.1.1（包未跟踪未发布，索引不含）；proactive-verify-2
+  2/2 PASS（proactive_set/list 进 schema、普通调用正常）。
 - **真缺陷 2（上游打包形态，豁免通道）**：`@deepseek-ai/dsh-mcp-client`
   peers 精确 pin 同版本号（0.2.0-rc.2/0.2.2-alpha.3 均精确），上游未发
   0.2.5 版 → 官方精确版本豁免是唯一通道（非 stale range）。
