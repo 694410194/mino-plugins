@@ -1,0 +1,5 @@
+# mino-connector-car — bundle patch
+- insert:
+    - id: car
+      name: 'mino-connector-car'
+      config: {}

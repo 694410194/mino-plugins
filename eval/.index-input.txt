@@ -93,3 +93,16 @@ https://mino.baby/git/vault
 https://mino.baby/git/ime
 https://mino.baby/git/ocr
 https://mino.baby/git/backup
+https://mino.baby/git/gov
+https://mino.baby/git/edu
+https://mino.baby/git/jobs
+https://mino.baby/git/company
+https://mino.baby/git/car
+https://mino.baby/git/meeting
+https://mino.baby/git/note-import
+https://mino.baby/git/ytdlp
+https://mino.baby/git/localsend
+https://mino.baby/git/scrcpy
+https://mino.baby/git/translate
+https://mino.baby/git/corpus
+https://mino.baby/git/memorial

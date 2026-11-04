@@ -1,0 +1,5 @@
+# mino-connector-note-import — bundle patch
+- insert:
+    - id: note-import
+      name: 'mino-connector-note-import'
+      config: {}

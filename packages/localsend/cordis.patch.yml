@@ -1,0 +1,5 @@
+# mino-connector-localsend — bundle patch
+- insert:
+    - id: localsend
+      name: 'mino-connector-localsend'
+      config: {}

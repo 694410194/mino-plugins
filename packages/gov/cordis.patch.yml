@@ -1,0 +1,5 @@
+# mino-connector-gov — bundle patch
+- insert:
+    - id: gov
+      name: 'mino-connector-gov'
+      config: {}

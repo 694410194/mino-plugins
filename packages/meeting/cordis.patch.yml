@@ -1,0 +1,5 @@
+# mino-connector-meeting — bundle patch
+- insert:
+    - id: meeting
+      name: 'mino-connector-meeting'
+      config: {}

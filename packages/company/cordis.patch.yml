@@ -1,0 +1,5 @@
+# mino-connector-company — bundle patch
+- insert:
+    - id: company
+      name: 'mino-connector-company'
+      config: {}

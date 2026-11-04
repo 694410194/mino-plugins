@@ -1,0 +1,5 @@
+# mino-connector-memorial — bundle patch
+- insert:
+    - id: memorial
+      name: 'mino-connector-memorial'
+      config: {}

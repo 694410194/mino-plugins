@@ -1,0 +1,5 @@
+# mino-connector-scrcpy — bundle patch
+- insert:
+    - id: scrcpy
+      name: 'mino-connector-scrcpy'
+      config: {}

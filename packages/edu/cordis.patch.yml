@@ -1,0 +1,5 @@
+# mino-connector-edu — bundle patch
+- insert:
+    - id: edu
+      name: 'mino-connector-edu'
+      config: {}

@@ -1,0 +1,5 @@
+# mino-connector-ytdlp — bundle patch
+- insert:
+    - id: ytdlp
+      name: 'mino-connector-ytdlp'
+      config: {}

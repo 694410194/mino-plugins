@@ -1,0 +1,5 @@
+# mino-connector-translate — bundle patch
+- insert:
+    - id: translate
+      name: 'mino-connector-translate'
+      config: {}

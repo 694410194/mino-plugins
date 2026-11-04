@@ -29,6 +29,27 @@ try { ({ DatabaseSync } = await import('node:sqlite')) } catch { /* 无 sqlite �
 function* iterMessages(file) {
   const ext = extname(file).toLowerCase()
   const raw = readFileSync(file, 'utf8')
+  // Telegram Desktop 导出 result.json：{"messages":[{from,date,text|text_entities}]}
+  if (ext === '.json' && /"messages"\s*:/.test(raw.slice(0, 2000))) {
+    try {
+      const j = JSON.parse(raw)
+      for (const m of j.messages || []) {
+        const text = typeof m.text === 'string' ? m.text
+          : (Array.isArray(m.text) ? m.text.map(t => typeof t === 'string' ? t : t.text || '').join('') : '')
+        if (text) yield { time: String(m.date || '').replace('T', ' ').slice(0, 19), sender: String(m.from || m.from_id || ''), text: text.slice(0, 2000) }
+      }
+    } catch { }
+    return
+  }
+  // WhatsApp 导出 txt：[dd/mm/yyyy, hh:mm:ss] 名字: 内容 或 dd/mm/yyyy, hh:mm - 名字: 内容
+  if (ext === '.txt' && /^\[?\d{1,4}[/.]\d{1,2}[/.]\d{1,4}[,，\s]/.test(raw.trimStart())) {
+    for (const line of raw.split(/\r?\n/)) {
+      const m = line.match(/^\[?(\d{1,4}[/.]\d{1,2}[/.]\d{1,4})[,，]?\s+(\d{1,2}:\d{2}(?::\d{2})?(?:\s?[AP]M)?)\]?\s*[-—]\s*([^:：]{1,40})[:：]\s*(.*)$/i)
+        || line.match(/^\[(\d{1,4}[/.]\d{1,2}[/.]\d{1,4})[,，]\s*(\d{1,2}:\d{2}(?::\d{2})?(?:\s?[AP]M)?)\]\s*([^:：]{1,40})[:：]\s*(.*)$/i)
+      if (m && m[4]) yield { time: `${m[1]} ${m[2]}`, sender: m[3].trim(), text: m[4].trim().slice(0, 2000) }
+    }
+    return
+  }
   if (ext === '.json' || ext === '.jsonl') {
     for (const line of raw.split(/\r?\n/)) {
       const t = line.trim()
@@ -72,8 +93,9 @@ export function apply(ctx) {
   ctx.tools.register(defineTool({
     name: 'chat_import',
     description:
-      '把你自己用导出工具（WeChatMsg/留痕/PyWxDump/QQExporter 等）产出的明文聊天导出文件' +
-      '导入本地检索库。支持目录或单个 .txt/.csv/.json/.jsonl/.html 文件。' +
+      '把你自己用导出工具（WeChatMsg/留痕/PyWxDump/QQExporter）或官方导出' +
+      '（Telegram Desktop 导出 result.json、WhatsApp 导出聊天 txt、钉钉/飞书导出的 csv/txt）' +
+      '产出的明文聊天导出文件导入本地检索库。支持目录或单个 .txt/.csv/.json/.jsonl/.html。' +
       '只读你的导出文件，不碰原软件数据库，不解密。',
     parameters: {
       path: { type: 'string', required: true, description: '导出文件或目录的绝对路径' },

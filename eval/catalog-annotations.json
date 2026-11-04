@@ -874,6 +874,104 @@
       "labels": [
         "verified"
       ]
+    },
+    "mino-connector-gov": {
+      "score": 62,
+      "category": "conn-system",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-edu": {
+      "score": 60,
+      "category": "conn-system",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-jobs": {
+      "score": 62,
+      "category": "conn-system",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-company": {
+      "score": 62,
+      "category": "conn-docs",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-car": {
+      "score": 62,
+      "category": "conn-device",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-meeting": {
+      "score": 64,
+      "category": "conn-im",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-note-import": {
+      "score": 64,
+      "category": "conn-reading",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-ytdlp": {
+      "score": 64,
+      "category": "conn-media",
+      "labels": [
+        "needs-config"
+      ]
+    },
+    "mino-connector-localsend": {
+      "score": 62,
+      "category": "conn-device",
+      "labels": [
+        "needs-config"
+      ]
+    },
+    "mino-connector-scrcpy": {
+      "score": 64,
+      "category": "conn-device",
+      "labels": [
+        "needs-config"
+      ]
+    },
+    "mino-connector-translate": {
+      "score": 62,
+      "category": "conn-system",
+      "labels": [
+        "needs-config"
+      ]
+    },
+    "mino-connector-corpus": {
+      "score": 66,
+      "category": "conn-system",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-connector-memorial": {
+      "score": 64,
+      "category": "conn-system",
+      "labels": [
+        "verified"
+      ]
     }
   }
 }
