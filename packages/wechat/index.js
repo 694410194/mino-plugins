@@ -114,6 +114,19 @@ export function apply(ctx) {
     async execute(args) {
       const c = cfg()
       let dumper = c.dumper
+      // engine-assist 共享注册表兜底（engine_register wechat-dump 登记的也认）
+      if (!dumper) {
+        try {
+          const reg = JSON.parse(readFileSync(join(homedir(), '.dsh', 'engines.json'), 'utf8'))['wechat-dump']
+          if (reg && existsSync(reg)) dumper = reg
+        } catch { }
+        if (!dumper) {
+          const edir = join(homedir(), '.dsh', 'engines', 'wechat-dump')
+          if (existsSync(edir)) {
+            for (const f of readdirSync(edir)) if (/\.exe$/i.test(f)) { dumper = join(edir, f); break }
+          }
+        }
+      }
       if (!dumper && c.dumperUrl) {
         mkdirSync(STORE, { recursive: true })
         dumper = join(STORE, 'dumper.exe')

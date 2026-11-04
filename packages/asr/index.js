@@ -6,7 +6,7 @@
  */
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join, dirname, extname, basename } from 'node:path'
 import { homedir } from 'node:os'
 import { fileURLToPath } from 'node:url'
@@ -26,11 +26,33 @@ const SETUP_HINT = `语音转写需要本机装 whisper 推理器（二选一）
 2) faster-whisper：pip install faster-whisper（首次跑自动下模型）
 装好后用 asr_transcribe 的 engine 参数指定可执行文件路径，或放 PATH 里`
 
+// engine-assist 共享注册表兜底
+function registryBin(name, re) {
+  try {
+    const reg = JSON.parse(readFileSync(join(homedir(), '.dsh', 'engines.json'), 'utf8'))[name]
+    if (reg && existsSync(reg)) return reg
+  } catch { }
+  const dir = join(homedir(), '.dsh', 'engines', name)
+  if (!existsSync(dir)) return null
+  const stack = [dir]
+  while (stack.length) {
+    const d = stack.pop()
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const p = join(d, e.name)
+      if (e.isDirectory()) stack.push(p)
+      else if (re.test(p)) return p
+    }
+  }
+  return null
+}
+
 async function detectEngine(custom) {
+  const reg = registryBin('whisper-cli', /whisper-cli\.exe$|main\.exe$/i)
   const candidates = custom ? [custom] : [
     'whisper-cli', 'whisper-cli.exe', 'main', 'whisper', 'faster-whisper',
     join(homedir(), 'whisper.cpp', 'whisper-cli.exe'),
     'D:/whisper/whisper-cli.exe',
+    ...(reg ? [reg] : []),
   ]
   for (const c of candidates) {
     try {

@@ -95,6 +95,19 @@ export function apply(ctx) {
     async execute(args) {
       const c = cfg()
       let exporter = c.exporter
+      // engine-assist 共享注册表兜底（engine_register qq-exporter 登记的也认）
+      if (!exporter) {
+        try {
+          const reg = JSON.parse(readFileSync(join(homedir(), '.dsh', 'engines.json'), 'utf8'))['qq-exporter']
+          if (reg && existsSync(reg)) exporter = reg
+        } catch { }
+        if (!exporter) {
+          const edir = join(homedir(), '.dsh', 'engines', 'qq-exporter')
+          if (existsSync(edir)) {
+            for (const f of readdirSync(edir)) if (/\.exe$/i.test(f)) { exporter = join(edir, f); break }
+          }
+        }
+      }
       if (!exporter && c.exporterUrl) {
         mkdirSync(STORE, { recursive: true })
         exporter = join(STORE, 'exporter.exe')

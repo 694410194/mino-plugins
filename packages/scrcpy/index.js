@@ -5,7 +5,7 @@
  */
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { homedir } from 'node:os'
 import { fileURLToPath } from 'node:url'
@@ -22,10 +22,32 @@ const defineTool = (await loadHostDeps()).defineTool
 
 const HINT = `没装 adb：装 platform-tools（Google 官方，或 scoop install adb）；投屏另需 scrcpy（scoop install scrcpy）。手机要开 USB 调试。`
 
+// engine-assist 共享注册表兜底
+function registryBin(name, re) {
+  try {
+    const reg = JSON.parse(readFileSync(join(homedir(), '.dsh', 'engines.json'), 'utf8'))[name]
+    if (reg && existsSync(reg)) return reg
+  } catch { }
+  const dir = join(homedir(), '.dsh', 'engines', name)
+  if (!existsSync(dir)) return null
+  const stack = [dir]
+  while (stack.length) {
+    const d = stack.pop()
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const p = join(d, e.name)
+      if (e.isDirectory()) stack.push(p)
+      else if (re.test(p)) return p
+    }
+  }
+  return null
+}
+
 async function adb() {
   for (const c of ['adb', 'D:/platform-tools/adb.exe', 'C:/platform-tools/adb.exe']) {
     try { await execFileP(c, ['version'], { timeout: 8000, windowsHide: true }); return c } catch { }
   }
+  const reg = registryBin('platform-tools', /adb\.exe$/i)
+  if (reg) { try { await execFileP(reg, ['version'], { timeout: 8000, windowsHide: true }); return reg } catch { } }
   return null
 }
 
@@ -101,6 +123,10 @@ export function apply(ctx) {
       let scrcpy = null
       for (const c of ['scrcpy', 'D:/scrcpy/scrcpy.exe', 'C:/scrcpy/scrcpy.exe']) {
         try { await execFileP(c, ['--version'], { timeout: 8000, windowsHide: true }); scrcpy = c; break } catch { }
+      }
+      if (!scrcpy) {
+        const reg = registryBin('scrcpy', /scrcpy\.exe$/i)
+        if (reg) { try { await execFileP(reg, ['--version'], { timeout: 8000, windowsHide: true }); scrcpy = reg } catch { } }
       }
       if (!scrcpy) throw new Error('phone_mirror: 没装 scrcpy（scoop install scrcpy）')
       const argv = ['-s', args.serial].filter(Boolean)

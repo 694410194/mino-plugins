@@ -8,7 +8,7 @@
  */
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join, dirname, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { homedir } from 'node:os'
@@ -35,6 +35,17 @@ let esPath = null
 for (const p of ES_CANDIDATES) if (existsSync(p)) { esPath = p; break }
 if (!esPath) {
   try { execFileP('where.exe', ['es.exe'], { timeout: 3000 }).then(r => { if (r.stdout.trim()) esPath = r.stdout.trim().split('\n')[0].trim() }).catch(() => {}) } catch {}
+  // engine-assist 共享注册表兜底
+  try {
+    const reg = JSON.parse(readFileSync(join(homedir(), '.dsh', 'engines.json'), 'utf8'))['es']
+    if (reg && existsSync(reg)) esPath = reg
+  } catch { }
+  if (!esPath) {
+    const dir = join(homedir(), '.dsh', 'engines', 'es')
+    if (existsSync(dir)) {
+      for (const f of readdirSync(dir)) if (/es\.exe$/i.test(f)) { esPath = join(dir, f); break }
+    }
+  }
 }
 
 async function esSearch(q, limit) {

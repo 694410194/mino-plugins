@@ -5,7 +5,7 @@
  */
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
-import { existsSync, readFileSync, mkdirSync, chmodSync } from 'node:fs'
+import { existsSync, readFileSync, mkdirSync, chmodSync, readdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { homedir } from 'node:os'
 import { fileURLToPath } from 'node:url'
@@ -23,11 +23,26 @@ const defineTool = (await loadHostDeps()).defineTool
 
 const HINT = `没装 yt-dlp：yt-dlp_install 可自动下载（Windows），或手动：winget install yt-dlp / scoop install yt-dlp / pip install yt-dlp，装完重试`
 
+// engine-assist 共享注册表兜底：~/.dsh/engines.json + ~/.dsh/engines/<name>/
+function registryBin(name) {
+  try {
+    const reg = JSON.parse(readFileSync(join(homedir(), '.dsh', 'engines.json'), 'utf8'))[name]
+    if (reg && existsSync(reg)) return reg
+  } catch { }
+  const dir = join(homedir(), '.dsh', 'engines', name)
+  if (existsSync(dir)) {
+    for (const f of readdirSync(dir)) if (/\.exe$/i.test(f)) return join(dir, f)
+  }
+  return null
+}
+
 async function detectBin(custom) {
   const cands = custom ? [custom] : ['yt-dlp', 'yt-dlp.exe', join(STORE, 'yt-dlp.exe'), 'D:/tools/yt-dlp.exe']
   for (const c of cands) {
     try { await execFileP(c, ['--version'], { timeout: 10000, windowsHide: true }); return c } catch { }
   }
+  const reg = registryBin('yt-dlp')
+  if (reg) { try { await execFileP(reg, ['--version'], { timeout: 10000, windowsHide: true }); return reg } catch { } }
   return null
 }
 
@@ -48,10 +63,17 @@ export function apply(ctx) {
       if (process.platform !== 'win32') throw new Error('自动安装只做了 Windows；其它平台 pip/brew 装 yt-dlp 后重试')
       mkdirSync(STORE, { recursive: true })
       const dest = join(STORE, 'yt-dlp.exe')
-      const res = await fetch('https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe',
-        { signal: AbortSignal.timeout(120000), redirect: 'follow' })
-      if (!res.ok) throw new Error(`下载失败 HTTP ${res.status}（网络不通就手动装：${HINT}）`)
-      const buf = Buffer.from(await res.arrayBuffer())
+      // 直连 GitHub 在国内 ~40KB/s，挂镜像兜底（与 engine-assist 同策略）
+      const src = 'https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe'
+      let buf = null, lastErr = null
+      for (const u of [src, 'https://ghfast.top/' + src, 'https://gh-proxy.com/' + src]) {
+        try {
+          const res = await fetch(u, { signal: AbortSignal.timeout(120000), redirect: 'follow' })
+          if (!res.ok) { lastErr = new Error(`HTTP ${res.status}`); continue }
+          buf = Buffer.from(await res.arrayBuffer()); break
+        } catch (e) { lastErr = e }
+      }
+      if (!buf) throw new Error(`下载失败 ${lastErr?.message}（网络不通就手动装：${HINT}）`)
       const { writeFileSync } = await import('node:fs')
       writeFileSync(dest, buf)
       const { stdout } = await execFileP(dest, ['--version'], { timeout: 10000, windowsHide: true })
