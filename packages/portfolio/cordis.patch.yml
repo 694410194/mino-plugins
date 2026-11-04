@@ -1,0 +1,6 @@
+# mino-connector-portfolio — bundle patch
+# 行情/持仓连接器（conn-finance）：公开行情接口零凭据，持仓盈亏本地算。
+- insert:
+    - id: connector-portfolio
+      name: 'mino-connector-portfolio'
+      config: {}

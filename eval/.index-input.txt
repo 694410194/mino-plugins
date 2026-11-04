@@ -12,6 +12,7 @@ https://mino.baby/git/comma
 https://mino.baby/git/browser-history
 https://mino.baby/git/connector-bills
 https://mino.baby/git/files-search
+https://mino.baby/git/portfolio
 https://mino.baby/git/creative-studio
 https://mino.baby/git/damage-pulse
 https://mino.baby/git/drawio
