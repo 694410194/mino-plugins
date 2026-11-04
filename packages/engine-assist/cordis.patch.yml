@@ -1,0 +1,5 @@
+# mino-connector-engine-assist — bundle patch
+- insert:
+    - id: engine-assist
+      name: 'mino-connector-engine-assist'
+      config: {}

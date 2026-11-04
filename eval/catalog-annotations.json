@@ -996,6 +996,42 @@
       "labels": [
         "verified"
       ]
+    },
+    "mino-connector-engine-assist": {
+      "score": 66,
+      "category": "conn-system",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-connector-semsearch": {
+      "score": 68,
+      "category": "conn-system",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-connector-poster": {
+      "score": 66,
+      "category": "conn-media",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-connector-credcheck": {
+      "score": 64,
+      "category": "conn-system",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-connector-webwatch": {
+      "score": 64,
+      "category": "conn-browser",
+      "labels": [
+        "verified"
+      ]
     }
   }
 }

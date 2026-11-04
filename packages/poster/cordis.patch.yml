@@ -1,0 +1,5 @@
+# mino-connector-poster — bundle patch
+- insert:
+    - id: poster
+      name: 'mino-connector-poster'
+      config: {}

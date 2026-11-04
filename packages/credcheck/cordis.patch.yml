@@ -1,0 +1,5 @@
+# mino-connector-credcheck — bundle patch
+- insert:
+    - id: credcheck
+      name: 'mino-connector-credcheck'
+      config: {}

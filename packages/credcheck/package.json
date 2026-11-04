@@ -1,0 +1,37 @@
+{
+  "name": "mino-connector-credcheck",
+  "version": "0.1.0",
+  "description": "凭据自检：拿真凭据实测 cloud/mail/music 各源通不通，哪个过期哪个没配一目了然。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "mino-connector",
+    "credential",
+    "check",
+    "imap"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "hostdeps.mjs",
+    "skill-provider.mjs",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.3.0"
+  }
+}

@@ -1,0 +1,5 @@
+# mino-connector-semsearch — bundle patch
+- insert:
+    - id: semsearch
+      name: 'mino-connector-semsearch'
+      config: {}

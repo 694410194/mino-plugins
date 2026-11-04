@@ -1,0 +1,5 @@
+# mino-connector-webwatch — bundle patch
+- insert:
+    - id: webwatch
+      name: 'mino-connector-webwatch'
+      config: {}

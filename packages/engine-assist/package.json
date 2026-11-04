@@ -1,0 +1,37 @@
+{
+  "name": "mino-connector-engine-assist",
+  "version": "0.1.0",
+  "description": "引擎代办：统一下载/登记各连接器的第三方引擎（yt-dlp/scrcpy/whisper/llama-server/es/localsend/HackBrowserData 等），「帮我装」一句话装齐。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "mino-connector",
+    "engine",
+    "setup",
+    "installer"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "hostdeps.mjs",
+    "skill-provider.mjs",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.3.0"
+  }
+}
