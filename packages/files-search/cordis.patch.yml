@@ -1,0 +1,6 @@
+# mino-connector-files-search — bundle patch
+# 文件检索连接器（conn-system）：Everything 全盘索引或 PowerShell 兜底。零依赖。
+- insert:
+    - id: connector-files-search
+      name: 'mino-connector-files-search'
+      config: {}

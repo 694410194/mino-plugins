@@ -230,6 +230,13 @@
         "verified"
       ]
     },
+    "mino-connector-files-search": {
+      "score": 55,
+      "category": "conn-system",
+      "labels": [
+        "verified"
+      ]
+    },
     "mino-creative-studio": {
       "score": 64,
       "category": "skills",
