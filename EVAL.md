@@ -191,3 +191,69 @@
 7 包已推 github（`f78d089`）。入索引需服务器两步：
 1. `build-plugin-git-repos.sh`（给新包铸 snapshot 裸仓——commit sha 只能在服务器现场产生）
 2. 重新生成 index.json + `node eval/enrich-index.mjs`（annotations 已备齐 47 条）
+
+## mino-better-sidebar 评测（0.28.2 vendored fork，2026-11-04，reports/better-sidebar-v5）
+
+- **vendoring 变更**：包名 → `mino-better-sidebar`；`lib/index.js` 仅一处功能改名
+  `SIDEBAR_PACKAGE_NAME`（ownEntryId 按 `options.name` 反查 loader 行，不改设置面失效）；
+  cordis.patch.yml row name 改 + 双挂载守卫扩为同时匹配 `dsh-/mino-` 两名；
+  `engines.dsh >=0.2.1-rc.1 <0.3.0-0`；`mino.upstream=dsh-better-sidebar@0.28.2`。其余零改动。
+- **5/5 PASS**（suite `eval/suites/better-sidebar.jsonl`，patch `eval/patches/better-sidebar.yml`）：
+  `/sidebar/api` 未授权 → 403 `forbidden`（fence=connection.requestRejection 与 /api 同闸）；
+  授权 settings.get → 200，`agentOpenTools:true` 种到（config 种子生效+设置面找到 loader 行）；
+  `sidebar_open` 入 schema（opt-in，默认 `agentOpenTools:false` 不注册——**默认零 schema 成本**）；
+  模型真实调用 → `tool/result` isError:false，cwd 相对路径解析正确，无视图连接时按设计入队。
+- **机制注意**：工具注册是惰性的——gate 在 settings face 首次被读时才同步
+  （v1/v2 实锤默认态 schema absent）；套件内 settings.get 探针必须先于 schema 断言。
+- **卫生面**：9 env（DSH_HOME/WSL/debug 全功能性）、1 console（debug 门控）、
+  **58 裸 child_process**（git/外部编辑器/归档——绕开宿主沙箱，安全面扣分项）；
+  `open.external` 可拉起系统应用（POST+auth 闸后）；`htmlViewerNoSandbox` 默认关。
+- **评分 ~82 A-（推荐位候选）**：工程 21/25（成熟 typed 码、C1/C4/C6/C10 工具规范、
+  双挂载守卫；惰注册+裸 spawn 扣分）· 安全 19/25（全路由 fence+POST only，
+  spawn 面大扣分）· 冲突 18/20（官方 tab 注册缝走法、1 工具零污染、守卫双向）·
+  成本 14/15（默认零工具、按需 watcher）· 维护 13/15（上游极活跃、pin 表清晰、
+  163 issue 属正常积压；#947 worktree 路径拼接、#238 SSH 远端不兼容留档）。
+- **客户端面未验边界**：UI 本体（侧栏页签/底部面板渲染）stdio 探针够不到，
+  同其他 UI 件惯例按"装载无错+宿主面实测"定级；真机浏览器验证待做。
+- **上游 issue 红线扫描**：无安全/烧钱类实锤；双挂载 FAQ 已有（守卫覆盖）。
+
+## 环境实锤两条（2026-11-04，plugweb on dsh 0.2.5）
+
+1. **装机运行时已到 0.2.5，精选目录 engines 大面积到期**：plugweb boot 实录
+   ~30 件 `engines.dsh <0.2.3` 被 disable/skip（全部 skill-*、mcp-*、creative-studio、
+   notes、oh-story、comma、scholar-suite、ops 五个 mode、token-monitor、damage-pulse、
+   distill、team-conductor、proactive）。按 AGENTS 扩线纪律需全目录复测扩门，
+   否则 0.2.5 装机用户装精选=静默不挂载。
+2. **mino-bot 0.1.1 memoryAdmission 对非 bot 会话持久全局阻断**：`agent/pre-step`
+   + `llm/stream` 闸在 `assertAllowed` 抛 `Memory admission blocked`，
+   turn/end reason=error、模型零调用。45s 预热不恢复 = 非启动竞态是持久态
+   （kernel 未就绪/被 blocked 即永锁；`startupFailed` 放行需 presetKnown+非 bot 前缀）。
+   plugweb 探针会话全灭（v1-v4 复现）；`4d13aa2` 修的启动失败路径未覆盖此形态。
+   **评测 overlay 里 `- id: bot disabled: true` 可复现干净环境。**
+   同类面：bot 在用户装机精选目录内（index 含它）——若线上形态同此，
+   用户正常会话在 kernel 未就绪期间同样被锁，按事故级处理立案。
+
+### mino-bot 阻断根因定案与修复（0.1.2，2026-11-04，reports/bot-dbg2、bot-fix-a/b/c）
+
+- **根因 1（触发源）**：`owner-lease.js ensureLeaseDirectory` 对 `resolve()`
+  出的绝对路径 `split('/')`——Windows 返回 `\` 分隔 → 整串当一个组件 →
+  单级 `mkdir` 深路径必 ENOENT。`~/.dsh/dsh-bot/memory-owner` 永远建不起来，
+  bot 存储在 Windows 上**首 boot 必死**（Linux 上 `resolve` 出 `/` 路径正常，
+  上游 dsh-bot@0.6.3 的 Windows 潜伏 bug）。修：split 兼容双分隔符。
+- **根因 2（全局锁）**：`4d13aa2` 的 startupFailed 放行门
+  `startupFailed && !stopped` **永远不满足**——initialize() catch 先跑
+  `shutdown()`（`memoryAdmission.close()` → `stopped=true`）才轮到外层
+  catch 记 `startupFailed=true`；且 `markStartupFailed` 的 `!ready` 守卫
+  让 start() 之后的失败连标记都不打。修复：标记无条件记 + 放行门去掉
+  `!stopped`（startupFailed 即终态，closed 态同样永产不出 managed agent）。
+- **复现证据链**：注入安装件埋点（安装件带逐文件 SHA-256 完整性校验，
+  改文件必须同步 manifest hash）→ `bot-dbg2.boot` 实录
+  `startupError: ENOENT mkdir '...\dsh-bot\memory-owner'` 与
+  `blocked: {stopped:true,ready:false,startupFailed:true,hasKernel:false}`。
+- **验证**：A) 修复后冷 boot，`memory-owner/owner.json` 建成、kernel ready；
+  B) 人为坏库（dsh-bot 置文件）→ 启动失败 → 非 bot 会话经放行门真实应答；
+  C) 删库冷 boot + 40s → `turn/end completed` 真实回复。
+- **残余语义（上游设计，保留）**：启动窗口内未知归属会话仍 block
+  （`turn/end reason.kind=error`——eval 断言须看 reason 不是 turn/error 事件）；
+  kernel.blocked 为暂态对账语义不属于释放范围；preset 不可判定的会话
+  startupFailed 下仍保守阻断。

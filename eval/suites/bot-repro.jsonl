@@ -1,0 +1,2 @@
+{"id": "bot-warmup", "wait": 40}
+{"id": "bot-nonbot-model", "text": "你好", "assert": {"modelCalls.min": 1, "status.final": "idle"}}

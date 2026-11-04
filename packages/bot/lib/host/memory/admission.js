@@ -90,10 +90,11 @@ export class MemoryAdmission {
     }
     /** Permanent startup failure can never produce managed Agents. Recording it
      * lets the final admission release positively unrelated sessions instead of
-     * gating the whole runtime forever on a kernel that will never arrive. */
+     * gating the whole runtime forever on a kernel that will never arrive. The
+     * flag is unconditional: initialize() can also fail after start() ran, and
+     * its cleanup always closes this admission before the failure is recorded. */
     markStartupFailed() {
-        if (!this.ready)
-            this.startupFailed = true;
+        this.startupFailed = true;
     }
     changed = () => {
         if (!this.kernel?.blocked && !this.stopped)
@@ -201,7 +202,7 @@ export class MemoryAdmission {
             catch {
                 // Ownership stays unknown; the gate below still applies.
             }
-            if (this.startupFailed && !this.stopped && presetKnown && !preset?.startsWith(this.presetPrefix)) {
+            if (this.startupFailed && presetKnown && !preset?.startsWith(this.presetPrefix)) {
                 yield* next();
                 return;
             }

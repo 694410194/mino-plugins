@@ -8,7 +8,7 @@ const recordSchema = z.strictObject({ token: z.uuid(), pid: z.number().int().pos
 export async function ensureLeaseDirectory(path) {
     const absolute = resolve(path);
     let part = parse(absolute).root;
-    for (const name of absolute.slice(part.length).split('/').filter(Boolean)) {
+    for (const name of absolute.slice(part.length).split(/[\\/]/).filter(Boolean)) {
         part = join(part, name);
         try {
             await mkdir(part, { mode: 0o700 });
