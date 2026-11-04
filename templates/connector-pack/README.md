@@ -53,3 +53,13 @@
   TMP/TEMP/TMPDIR 指到 `D:\tmp` 后重试可收敛一部分，残留缺口按
   「服务器 `/var/www/git/*` pins 表 + 旧索引条目」补齐再 enrich，
   **残缺索引禁止上线**（pin 错=安装全断）。
+- **依赖外部 exe 的连接器必须含 engines.json 兜底**（D50 实锤）：
+  engine-assist 装的引擎登记在 `~/.dsh/engines.json` + `~/.dsh/engines/<name>/`，
+  只查 PATH+写死路径的连接器看不见它——装了等于没装。
+  探测顺序：显式配置路径 → PATH → engines.json → engines/ 目录递归扫
+  exe → 写死路径兜底。每家自包含 20 行，不共享模块。
+- **嵌套 object schema 必须写 `additionalProperties`**（D48 实锤）：
+  output schema 里 `items: { type: 'object' }` 漏写 `additionalProperties`
+  会被 DSH 校验拒注册，整件工具不进模型表、无声装死。
+- **output schema 对齐 emit 真字段**（D49 实锤）：声明的字段名必须和
+  execute 真返回一致（如 `src` 不是 `domain`），虚写字段=每条调用撞校验。
