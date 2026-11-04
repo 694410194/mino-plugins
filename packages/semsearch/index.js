@@ -92,13 +92,15 @@ async function download(url, dest, timeout = 600000) {
 }
 
 async function ghReleaseAsset(repo, match) {
-  const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`,
+  // 与 engine-assist 同逻辑：latest 可能是无二进制的版本化 tag，翻列表取首个匹配
+  const res = await fetch(`https://api.github.com/repos/${repo}/releases?per_page=15`,
     { headers: { 'User-Agent': 'Mino/1.0', Accept: 'application/vnd.github+json' }, signal: AbortSignal.timeout(30000) })
   if (!res.ok) throw new Error(`GitHub release 查询失败 HTTP ${res.status}`)
-  const j = await res.json()
-  const a = (j.assets || []).find(x => match.test(x.name))
-  if (!a) throw new Error(`${repo} release 里没找到匹配资产`)
-  return a.browser_download_url
+  for (const rel of await res.json()) {
+    const a = (rel.assets || []).find(x => match.test(x.name))
+    if (a) return a.browser_download_url
+  }
+  throw new Error(`${repo} release 里没找到匹配资产`)
 }
 
 async function unzip(zipPath, destDir) {
@@ -291,7 +293,9 @@ export function apply(ctx) {
       k: { type: 'integer', description: '返回条数（默认 8）' },
     },
     output: { schema: { type: 'object', additionalProperties: false, properties: {
-      hits: { type: 'array', items: { type: 'object' } }, count: { type: 'integer' } } },
+      hits: { type: 'array', items: { type: 'object', additionalProperties: false, properties: {
+        domain: { type: 'string' }, text: { type: 'string' }, score: { type: 'number' } } } },
+      count: { type: 'integer' } } },
       render: (_a, v) => [{ type: 'text', text: v.hits.length
         ? v.hits.map(h => `[${h.src}] ${h.text.slice(0, 120)}（${h.score}）`).join('\n')
         : '没搜到——先 sem_index 编索引' }] },
@@ -336,10 +340,10 @@ export function apply(ctx) {
       }
       const cfg = loadCfg()
       const model = findModel()
-      let engine = null
+      let engine = '未就绪'
       if (cfg.endpoint) engine = `端点 ${cfg.endpoint}`
-      else { const bin = await findServerBin(); engine = bin ? 'llama-server' : null }
-      return { rows, engine, model: model ? model.split(/[\\/]/).pop() : null }
+      else { const bin = await findServerBin(); if (bin) engine = 'llama-server' }
+      return { rows, engine, model: model ? model.split(/[\\/]/).pop() : '无' }
     },
     presentCall: (a) => ({ card: 'generic', title: '查语义层状态', kind: 'other', rawInput: a }),
   }))

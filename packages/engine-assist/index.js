@@ -94,13 +94,16 @@ async function download(url, dest) {
 }
 
 async function ghReleaseAsset(repo, match) {
-  const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`,
+  // 不用 /releases/latest：llama.cpp 等仓的 latest 已换成无二进制的版本化 tag，
+  // 翻列表取第一个带匹配资产的 release（对普通仓等价于 latest）
+  const res = await fetch(`https://api.github.com/repos/${repo}/releases?per_page=15`,
     { headers: { 'User-Agent': 'Mino/1.0', Accept: 'application/vnd.github+json' }, signal: AbortSignal.timeout(30000) })
   if (!res.ok) throw new Error(`GitHub release 查询失败 HTTP ${res.status}（网络不通就手动下载后 engine_register）`)
-  const j = await res.json()
-  const a = (j.assets || []).find(x => match.test(x.name))
-  if (!a) throw new Error(`${repo} 最新 release 里没找到匹配资产（${match}）`)
-  return a.browser_download_url
+  for (const rel of await res.json()) {
+    const a = (rel.assets || []).find(x => match.test(x.name))
+    if (a) return a.browser_download_url
+  }
+  throw new Error(`${repo} 最近 15 个 release 里没找到匹配资产（${match}）`)
 }
 
 async function unzip(zipPath, destDir) {

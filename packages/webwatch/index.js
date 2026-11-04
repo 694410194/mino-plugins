@@ -104,7 +104,10 @@ export function apply(ctx) {
       browser: { type: 'string', description: 'chrome|edge|firefox|brave|auto（默认 auto 全扫）' },
     },
     output: { schema: { type: 'object', additionalProperties: false, properties: {
-      hits: { type: 'array', items: { type: 'object' } }, browsers: { type: 'integer' } } },
+      hits: { type: 'array', items: { type: 'object', additionalProperties: false, properties: {
+        site: { type: 'string' }, browser: { type: 'string' }, when: { type: 'string' },
+        title: { type: 'string' }, url: { type: 'string' }, hint: { type: 'string' } } } },
+      browsers: { type: 'integer' } } },
       render: (_a, v) => [{ type: 'text', text: v.hits.length
         ? `命中 ${v.hits.length} 条：\n` + v.hits.slice(0, 15).map(h => `[${h.site}] ${h.when} ${h.title || h.url}`).join('\n')
         : '近 N 天没访问过订单/行程页' }] },
