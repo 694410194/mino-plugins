@@ -1,6 +1,59 @@
 {
   "$doc": "Mino 精选索引的评测标注源。score=EVAL.md 严格分（0-100，未过运行验证不给分）。labels 引用 index 级 declarations 的 id。category 引用 categories。每次评分更新后同步本文件并重跑 enrich-index.mjs。",
+  "$doc_categories": "分类法（D40 定案，长期维护）：conn-* 为连接域分类，对照 warroom/supply-catalog.md 28 域与 ChainlessChain PDH adapter 分组——conn-im=域1·2(微信/QQ,含IM通道)+企微/钉钉/飞书/TG/WhatsApp；conn-social=域5·11·23·24(收藏/微博豆瓣/公众号/QQ空间)；conn-finance=域3·12·15·19(账单/发票/股基/订阅)；conn-travel=域8；conn-media=域4·9·20·22·28(相册/音乐/截图/语音/孩子相册)；conn-reading=域6；conn-health=域7；conn-mail=域14；conn-docs=域10·13·26(网盘/本地文件/旧盘)；conn-browser=域18·21(浏览器历史/密码清单)；conn-device=域16·17(家居/备份/系统数据)；conn-system=域25·27(输入法/数字遗产)；conn-ai=AI会话导入(PDH ai-chat-history 对应)。其余为功能类（非连接器插件）。",
   "categories": {
+    "conn-im": {
+      "en": "Chat & messaging",
+      "zh-cn": "聊天与消息"
+    },
+    "conn-social": {
+      "en": "Social & collections",
+      "zh-cn": "社交与收藏"
+    },
+    "conn-finance": {
+      "en": "Bills & finance",
+      "zh-cn": "账单与理财"
+    },
+    "conn-travel": {
+      "en": "Travel & places",
+      "zh-cn": "出行足迹"
+    },
+    "conn-media": {
+      "en": "Photos & media",
+      "zh-cn": "影音相册"
+    },
+    "conn-reading": {
+      "en": "Reading & notes",
+      "zh-cn": "阅读笔记"
+    },
+    "conn-health": {
+      "en": "Health records",
+      "zh-cn": "健康档案"
+    },
+    "conn-mail": {
+      "en": "Mail & calendar",
+      "zh-cn": "邮件日历"
+    },
+    "conn-docs": {
+      "en": "Files & drives",
+      "zh-cn": "文件与网盘"
+    },
+    "conn-browser": {
+      "en": "Browser & passwords",
+      "zh-cn": "浏览器与密码"
+    },
+    "conn-device": {
+      "en": "Devices & home",
+      "zh-cn": "设备与家居"
+    },
+    "conn-system": {
+      "en": "System & legacy",
+      "zh-cn": "系统与数字遗产"
+    },
+    "conn-ai": {
+      "en": "AI chat history",
+      "zh-cn": "AI 会话历史"
+    },
     "persona": {
       "en": "Persona",
       "zh-cn": "人格"
@@ -8,10 +61,6 @@
     "memory": {
       "en": "Memory",
       "zh-cn": "记忆"
-    },
-    "channel": {
-      "en": "Channels",
-      "zh-cn": "渠道"
     },
     "media": {
       "en": "Media",
@@ -129,7 +178,7 @@
     },
     "mino-qq-link": {
       "score": 72,
-      "category": "channel",
+      "category": "conn-im",
       "labels": [
         "verified",
         "mutual-qq",
@@ -199,7 +248,7 @@
     },
     "mino-im": {
       "score": 58,
-      "category": "channel",
+      "category": "conn-im",
       "labels": [
         "verified",
         "mutual-qq",
@@ -237,7 +286,7 @@
     },
     "mino-qqbot": {
       "score": 55,
-      "category": "channel",
+      "category": "conn-im",
       "labels": [
         "verified",
         "mutual-qq",
@@ -247,7 +296,7 @@
     },
     "mino-qq-console": {
       "score": 55,
-      "category": "channel",
+      "category": "conn-im",
       "labels": [
         "verified",
         "mutual-qq",
@@ -256,7 +305,7 @@
     },
     "mino-aurabot": {
       "score": 55,
-      "category": "channel",
+      "category": "conn-im",
       "labels": [
         "verified",
         "mutual-qq",
@@ -289,7 +338,7 @@
     },
     "mino-bridge": {
       "score": 52,
-      "category": "channel",
+      "category": "conn-im",
       "labels": [
         "verified",
         "mutual-qq",
@@ -357,7 +406,7 @@
     },
     "mino-chat-import": {
       "score": 60,
-      "category": "utility",
+      "category": "conn-ai",
       "labels": [
         "verified"
       ]
