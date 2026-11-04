@@ -130,137 +130,13 @@
     }
   },
   "plugins": {
-    "mino-persona": {
-      "score": 88,
-      "category": "persona",
-      "labels": [
-        "verified",
-        "official"
-      ]
-    },
-    "mino-fish-memory": {
-      "score": 82,
-      "category": "memory",
-      "labels": [
-        "verified",
-        "official"
-      ]
-    },
-    "mino-superagent": {
-      "score": 76,
-      "category": "agent",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-mood": {
-      "score": 76,
-      "category": "persona",
-      "labels": [
-        "verified",
-        "official"
-      ]
-    },
-    "mino-speak-up": {
-      "score": 74,
-      "category": "persona",
-      "labels": [
-        "verified",
-        "official"
-      ]
-    },
-    "mino-meme": {
-      "score": 74,
-      "category": "media",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-qq-link": {
-      "score": 72,
+    "mino-aurabot": {
+      "score": 55,
       "category": "conn-im",
       "labels": [
         "verified",
         "mutual-qq",
         "needs-config"
-      ]
-    },
-    "mino-bili-scroll": {
-      "score": 72,
-      "category": "bilibili",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-tavern": {
-      "score": 70,
-      "category": "roleplay",
-      "labels": [
-        "verified",
-        "heavy"
-      ]
-    },
-    "mino-voice": {
-      "score": 70,
-      "category": "media",
-      "labels": [
-        "verified",
-        "needs-config"
-      ]
-    },
-    "mino-browser": {
-      "score": 68,
-      "category": "utility",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-open-sea": {
-      "score": 66,
-      "category": "desktop",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-pet": {
-      "score": 62,
-      "category": "desktop",
-      "labels": [
-        "verified",
-        "optional"
-      ]
-    },
-    "mino-whale-musume": {
-      "score": 62,
-      "category": "desktop",
-      "labels": [
-        "verified",
-        "optional"
-      ]
-    },
-    "mino-image": {
-      "score": 60,
-      "category": "media",
-      "labels": [
-        "verified",
-        "needs-config"
-      ]
-    },
-    "mino-im": {
-      "score": 58,
-      "category": "conn-im",
-      "labels": [
-        "verified",
-        "mutual-qq",
-        "upstream-risk",
-        "needs-config"
-      ]
-    },
-    "mino-bili-humanism": {
-      "score": 58,
-      "category": "bilibili",
-      "labels": [
-        "verified"
       ]
     },
     "mino-balance": {
@@ -270,46 +146,18 @@
         "verified"
       ]
     },
-    "mino-status": {
-      "score": 58,
+    "mino-better-sidebar": {
+      "score": 82,
       "category": "utility",
       "labels": [
         "verified"
       ]
     },
-    "mino-oh-story": {
+    "mino-bili-humanism": {
       "score": 58,
-      "category": "media",
+      "category": "bilibili",
       "labels": [
         "verified"
-      ]
-    },
-    "mino-qqbot": {
-      "score": 55,
-      "category": "conn-im",
-      "labels": [
-        "verified",
-        "mutual-qq",
-        "upstream-risk",
-        "needs-config"
-      ]
-    },
-    "mino-qq-console": {
-      "score": 55,
-      "category": "conn-im",
-      "labels": [
-        "verified",
-        "mutual-qq",
-        "needs-config"
-      ]
-    },
-    "mino-aurabot": {
-      "score": 55,
-      "category": "conn-im",
-      "labels": [
-        "verified",
-        "mutual-qq",
-        "needs-config"
       ]
     },
     "mino-bili-live": {
@@ -320,20 +168,19 @@
         "needs-config"
       ]
     },
+    "mino-bili-scroll": {
+      "score": 72,
+      "category": "bilibili",
+      "labels": [
+        "verified"
+      ]
+    },
     "mino-bili-whale": {
       "score": 55,
       "category": "bilibili",
       "labels": [
         "verified",
         "optional"
-      ]
-    },
-    "mino-pilot": {
-      "score": 55,
-      "category": "agent",
-      "labels": [
-        "verified",
-        "high-risk"
       ]
     },
     "mino-bridge": {
@@ -345,9 +192,16 @@
         "upstream-risk"
       ]
     },
-    "mino-skillhub": {
-      "score": 76,
+    "mino-browser": {
+      "score": 68,
       "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-chat-import": {
+      "score": 60,
+      "category": "conn-ai",
       "labels": [
         "verified"
       ]
@@ -361,25 +215,20 @@
         "official"
       ]
     },
-    "mino-drawio": {
-      "score": 68,
-      "category": "media",
+    "mino-connector-bills": {
+      "score": 58,
+      "category": "conn-finance",
       "labels": [
-        "verified"
+        "verified",
+        "needs-config"
       ]
     },
-    "mino-notes": {
-      "score": 62,
-      "category": "utility",
+    "mino-creative-studio": {
+      "score": 64,
+      "category": "skills",
       "labels": [
-        "verified"
-      ]
-    },
-    "mino-ops": {
-      "score": 74,
-      "category": "utility",
-      "labels": [
-        "verified"
+        "verified",
+        "needs-config"
       ]
     },
     "mino-damage-pulse": {
@@ -390,55 +239,37 @@
         "optional"
       ]
     },
-    "mino-task-board": {
-      "score": 70,
-      "category": "agent",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-visualize": {
-      "score": 66,
+    "mino-drawio": {
+      "score": 68,
       "category": "media",
       "labels": [
         "verified"
       ]
     },
-    "mino-chat-import": {
+    "mino-fish-memory": {
+      "score": 82,
+      "category": "memory",
+      "labels": [
+        "verified",
+        "official"
+      ]
+    },
+    "mino-im": {
+      "score": 58,
+      "category": "conn-im",
+      "labels": [
+        "verified",
+        "mutual-qq",
+        "upstream-risk",
+        "needs-config"
+      ]
+    },
+    "mino-image": {
       "score": 60,
-      "category": "conn-ai",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-safety-net": {
-      "score": 68,
-      "category": "utility",
+      "category": "media",
       "labels": [
         "verified",
-        "high-risk"
-      ]
-    },
-    "mino-skill-explorer": {
-      "score": 58,
-      "category": "utility",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-skin-market": {
-      "score": 58,
-      "category": "desktop",
-      "labels": [
-        "verified",
-        "optional"
-      ]
-    },
-    "mino-rewind": {
-      "score": 58,
-      "category": "utility",
-      "labels": [
-        "verified"
+        "needs-config"
       ]
     },
     "mino-knowledge-studio": {
@@ -451,18 +282,13 @@
         "heavy"
       ]
     },
-    "mino-mcp-memory": {
-      "score": 72,
+    "mino-mcp-brave-search": {
+      "score": 58,
       "category": "mcp",
       "labels": [
-        "verified"
-      ]
-    },
-    "mino-mcp-thinking": {
-      "score": 70,
-      "category": "mcp",
-      "labels": [
-        "verified"
+        "verified",
+        "needs-config",
+        "upstream-risk"
       ]
     },
     "mino-mcp-chrome-devtools": {
@@ -483,52 +309,140 @@
         "needs-config"
       ]
     },
-    "mino-mcp-brave-search": {
-      "score": 58,
+    "mino-mcp-memory": {
+      "score": 72,
+      "category": "mcp",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-mcp-paper-search": {
+      "score": 70,
       "category": "mcp",
       "labels": [
         "verified",
-        "needs-config",
-        "upstream-risk"
+        "needs-config"
       ]
     },
-    "mino-skill-commit": {
-      "score": 60,
-      "category": "skills",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-skill-mino-release": {
-      "score": 60,
-      "category": "skills",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-skill-drama": {
-      "score": 74,
-      "category": "skills",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-skill-screenwriting": {
+    "mino-mcp-thinking": {
       "score": 70,
-      "category": "skills",
+      "category": "mcp",
       "labels": [
         "verified"
       ]
     },
-    "mino-skill-duanju": {
+    "mino-meme": {
+      "score": 74,
+      "category": "media",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-mood": {
+      "score": 76,
+      "category": "persona",
+      "labels": [
+        "verified",
+        "official"
+      ]
+    },
+    "mino-notes": {
+      "score": 62,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-oh-story": {
+      "score": 58,
+      "category": "media",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-open-sea": {
+      "score": 66,
+      "category": "desktop",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-ops": {
+      "score": 74,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-persona": {
+      "score": 88,
+      "category": "persona",
+      "labels": [
+        "verified",
+        "official"
+      ]
+    },
+    "mino-pet": {
+      "score": 62,
+      "category": "desktop",
+      "labels": [
+        "verified",
+        "optional"
+      ]
+    },
+    "mino-pilot": {
+      "score": 55,
+      "category": "agent",
+      "labels": [
+        "verified",
+        "high-risk"
+      ]
+    },
+    "mino-qq-console": {
+      "score": 55,
+      "category": "conn-im",
+      "labels": [
+        "verified",
+        "mutual-qq",
+        "needs-config"
+      ]
+    },
+    "mino-qq-link": {
+      "score": 72,
+      "category": "conn-im",
+      "labels": [
+        "verified",
+        "mutual-qq",
+        "needs-config"
+      ]
+    },
+    "mino-qqbot": {
+      "score": 55,
+      "category": "conn-im",
+      "labels": [
+        "verified",
+        "mutual-qq",
+        "upstream-risk",
+        "needs-config"
+      ]
+    },
+    "mino-rewind": {
+      "score": 58,
+      "category": "utility",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-safety-net": {
       "score": 68,
-      "category": "skills",
+      "category": "utility",
       "labels": [
-        "verified"
+        "verified",
+        "high-risk"
       ]
     },
-    "mino-skill-script-review": {
-      "score": 60,
+    "mino-scholar-suite": {
+      "score": 70,
       "category": "skills",
       "labels": [
         "verified"
@@ -536,13 +450,6 @@
     },
     "mino-skill-academic": {
       "score": 74,
-      "category": "skills",
-      "labels": [
-        "verified"
-      ]
-    },
-    "mino-skill-nature": {
-      "score": 72,
       "category": "skills",
       "labels": [
         "verified"
@@ -556,9 +463,30 @@
         "needs-config"
       ]
     },
-    "mino-skill-paperjury": {
-      "score": 62,
+    "mino-skill-commit": {
+      "score": 60,
       "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-drama": {
+      "score": 74,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-duanju": {
+      "score": 68,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-explorer": {
+      "score": 58,
+      "category": "utility",
       "labels": [
         "verified"
       ]
@@ -570,31 +498,50 @@
         "verified"
       ]
     },
-    "mino-mcp-paper-search": {
-      "score": 70,
-      "category": "mcp",
-      "labels": [
-        "verified",
-        "needs-config"
-      ]
-    },
-    "mino-creative-studio": {
-      "score": 64,
+    "mino-skill-humanizer-zh": {
+      "score": 58,
       "category": "skills",
       "labels": [
-        "verified",
-        "needs-config"
+        "verified"
       ]
     },
-    "mino-scholar-suite": {
+    "mino-skill-mino-release": {
+      "score": 60,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-nature": {
+      "score": 72,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-nsfc": {
       "score": 70,
       "category": "skills",
       "labels": [
         "verified"
       ]
     },
-    "mino-skill-humanizer-zh": {
-      "score": 58,
+    "mino-skill-paperjury": {
+      "score": 62,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-screenwriting": {
+      "score": 70,
+      "category": "skills",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-skill-script-review": {
+      "score": 60,
       "category": "skills",
       "labels": [
         "verified"
@@ -608,18 +555,79 @@
         "needs-config"
       ]
     },
-    "mino-skill-nsfc": {
-      "score": 70,
-      "category": "skills",
+    "mino-skillhub": {
+      "score": 76,
+      "category": "utility",
       "labels": [
         "verified"
       ]
     },
-    "mino-better-sidebar": {
-      "score": 82,
+    "mino-skin-market": {
+      "score": 58,
+      "category": "desktop",
+      "labels": [
+        "verified",
+        "optional"
+      ]
+    },
+    "mino-speak-up": {
+      "score": 74,
+      "category": "persona",
+      "labels": [
+        "verified",
+        "official"
+      ]
+    },
+    "mino-status": {
+      "score": 58,
       "category": "utility",
       "labels": [
         "verified"
+      ]
+    },
+    "mino-superagent": {
+      "score": 76,
+      "category": "agent",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-task-board": {
+      "score": 70,
+      "category": "agent",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-tavern": {
+      "score": 70,
+      "category": "roleplay",
+      "labels": [
+        "verified",
+        "heavy"
+      ]
+    },
+    "mino-visualize": {
+      "score": 66,
+      "category": "media",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-voice": {
+      "score": 70,
+      "category": "media",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-whale-musume": {
+      "score": 62,
+      "category": "desktop",
+      "labels": [
+        "verified",
+        "optional"
       ]
     }
   }

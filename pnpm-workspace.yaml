@@ -53,6 +53,8 @@ packages:
   - "!packages/skill-paperjury"
   - "!packages/skill-humanizer"
   - "!packages/mcp-paper-search"
+  # Connector packs: vendored third-party binaries + thin wrappers, release-tarball-only.
+  - "!packages/connector-bills"
   # Grok Bot parity vendored forks (prebuilt lib shipped) + pure-config mounts.
   - "!packages/agent-team"
   - "!packages/voice-input"

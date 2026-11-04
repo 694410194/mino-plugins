@@ -1,0 +1,48 @@
+{
+  "name": "mino-connector-bills",
+  "version": "0.1.0",
+  "description": "跨生态消费账单连接器：读你自己从支付宝/微信官方导出的账单文件，本地转成统一账目 + 分类汇总，数据不出本机。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "mino-connector",
+    "bills",
+    "alipay",
+    "wechat",
+    "beancount"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "hostdeps.mjs",
+    "vendor",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.3.0",
+    "node": ">=20.18"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/connector-bills"
+  },
+  "bugs": {
+    "url": "https://github.com/694410194/mino-plugins/issues"
+  }
+}

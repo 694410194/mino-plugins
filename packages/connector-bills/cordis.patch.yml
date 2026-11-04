@@ -1,0 +1,7 @@
+# mino-connector-bills — bundle patch
+# 账单连接器（warroom D41 首件）：vendored double-entry-generator CLI +
+# ctx.tools 直接注册 + 随包年度报告 skill。官方解耦，零内核改动。
+- insert:
+    - id: connector-bills
+      name: 'mino-connector-bills'
+      config: {}
