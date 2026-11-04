@@ -8,7 +8,7 @@
  */
 import { execFile, spawn } from 'node:child_process'
 import { promisify } from 'node:util'
-import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync, renameSync, createWriteStream } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync, renameSync, createWriteStream, statSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { homedir } from 'node:os'
 import { createHash } from 'node:crypto'
@@ -86,14 +86,20 @@ async function findServerBin() {
 // 与 engine-assist 同逻辑：GitHub 直连慢 → 低速看门狗 → 镜像回退
 const GH_MIRRORS = ['https://ghfast.top/', 'https://gh-proxy.com/']
 
+// 断点续传：dest 已有 N 字节就发 Range 从 N 继续
 async function downloadOne(url, dest) {
-  const res = await fetch(url, { signal: AbortSignal.timeout(600000), redirect: 'follow' })
-  if (!res.ok) throw new Error(`HTTP ${res.status}`)
-  const total = Number(res.headers.get('content-length') || 0)
+  const have = existsSync(dest) ? statSync(dest).size : 0
+  const res = await fetch(url, {
+    headers: have > 0 ? { Range: `bytes=${have}-` } : {},
+    signal: AbortSignal.timeout(600000), redirect: 'follow' })
+  if (have > 0 && res.status === 200) { try { unlinkSync(dest) } catch { } }
+  else if (!res.ok && !(have > 0 && res.status === 206)) throw new Error(`HTTP ${res.status}`)
+  const appending = have > 0 && res.status === 206
+  const total = Number(res.headers.get('content-length') || 0) + (appending ? have : 0)
   mkdirSync(dirname(dest), { recursive: true })
-  const out = createWriteStream(dest)
+  const out = createWriteStream(dest, { flags: appending ? 'a' : 'w' })
   const reader = res.body.getReader()
-  let got = 0, t0 = Date.now(), checked = false
+  let got = appending ? have : 0, t0 = Date.now(), checked = false
   try {
     for (;;) {
       const { done, value } = await reader.read()
@@ -102,7 +108,7 @@ async function downloadOne(url, dest) {
       if (!out.write(value)) await new Promise(r => out.once('drain', r))
       if (!checked && Date.now() - t0 > 25000) {
         checked = true
-        const rate = got / ((Date.now() - t0) / 1000)
+        const rate = (got - have) / ((Date.now() - t0) / 1000)
         if (rate < 40960 && (total === 0 || total - got > 5 * 1048576))
           throw new Error(`直连太慢 ${(rate / 1024) | 0}KB/s`)
       }
@@ -120,7 +126,7 @@ async function download(url, dest) {
     urls.push(...GH_MIRRORS.map(m => m + url))
   let lastErr = null
   for (const u of urls) {
-    try { await downloadOne(u, dest); return dest } catch (e) { lastErr = e; try { unlinkSync(dest) } catch { } }
+    try { await downloadOne(u, dest); return dest } catch (e) { lastErr = e }
   }
   throw new Error(`下载失败：${lastErr?.message}`)
 }
@@ -328,7 +334,7 @@ export function apply(ctx) {
     },
     output: { schema: { type: 'object', additionalProperties: false, properties: {
       hits: { type: 'array', items: { type: 'object', additionalProperties: false, properties: {
-        domain: { type: 'string' }, text: { type: 'string' }, score: { type: 'number' } } } },
+        src: { type: 'string' }, text: { type: 'string' }, score: { type: 'number' } } } },
       count: { type: 'integer' } } },
       render: (_a, v) => [{ type: 'text', text: v.hits.length
         ? v.hits.map(h => `[${h.src}] ${h.text.slice(0, 120)}（${h.score}）`).join('\n')
