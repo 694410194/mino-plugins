@@ -73,9 +73,75 @@ const SOURCES = {
   },
 }
 
+const LIST_SOURCES = {
+  // B站某个收藏夹的内容
+  async bili_fav(c, param) {
+    const cookie = c.biliCookie || need('biliCookie', '"biliCookie":"SESSDATA=..."')
+    const id = String(param || '')
+    if (!id) throw new Error('cloud_list: bili_fav 要传收藏夹 id（先用 cloud_pull bilibili 看 id）')
+    const r = await jget(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${id}&ps=40&pn=1`, { Cookie: cookie, 'User-Agent': 'Mino/1.0' })
+    if (r.code !== 0) throw new Error(`B站接口拒绝：${r.message}`)
+    return { 收藏数: r.data?.info?.media_count, 内容: (r.data?.medias || []).map(m => ({ title: m.title, up: m.upper?.name, bvid: m.bvid, 时长: m.duration })) }
+  },
+  // 微博收藏
+  async weibo_fav(c) {
+    const cookie = c.weiboCookie || need('weiboCookie', '"weiboCookie":"weibo.com 登录后的 Cookie"')
+    const r = await jget('https://weibo.com/ajax/favorites/all_fav?page=1', { Cookie: cookie, 'User-Agent': 'Mino/1.0', 'X-Requested-With': 'XMLHttpRequest' })
+    const list = r.favorites || r.data?.favorites || []
+    return { 收藏: list.slice(0, 30).map(f => ({ 作者: f.user?.screen_name, 内容: (f.text || '').replace(/<[^>]+>/g, '').slice(0, 80), 时间: f.created_at })) }
+  },
+  // 豆瓣：公开主页「看过/想看」需要用户 id，公开可读无需凭据
+  async douban(c, param) {
+    const uid = String(param || c.doubanUid || '')
+    if (!uid) throw new Error('cloud_list: douban 要传豆瓣用户 id 或数字 uid（个人主页 /people/xxx/ 那段）')
+    const res = await fetch(`https://m.douban.com/rexxar/api/v2/user/${uid}/interests?count=20&start=0&status=done`, {
+      headers: { 'User-Agent': 'Mino/1.0', 'Referer': 'https://m.douban.com/' }, signal: AbortSignal.timeout(15000) })
+    if (!res.ok) throw new Error(`豆瓣接口 HTTP ${res.status}`)
+    const j = await res.json()
+    return { 标记数: j.total, 内容: (j.interests || []).map(i => ({ 类型: i.subject?.type, 标题: i.subject?.title, 评分: i.rating?.value, 时间: i.create_time?.slice(0, 10) })) }
+  },
+  // 百度网盘文件列表
+  async netdisk_files(c, param) {
+    const cookie = c.netdiskCookie || need('netdiskCookie', '"netdiskCookie":"pan.baidu.com Cookie"')
+    const dir = encodeURIComponent(String(param || '/'))
+    const r = await jget(`https://pan.baidu.com/api/list?dir=${dir}&order=name&num=50`, { Cookie: cookie, 'User-Agent': 'pan.baidu.com' })
+    if (r.errno !== 0) throw new Error('网盘凭据无效或过期')
+    return { 目录: decodeURIComponent(dir), 条目: (r.list || []).slice(0, 50).map(f => ({ 名: f.server_filename, 大小MB: Math.round(f.size / 1048576 * 10) / 10, 目录: !!f.isdir })) }
+  },
+  // Home Assistant 实体查询
+  async ha_query(c, param) {
+    const ha = c.homeassistant || need('homeassistant', '"homeassistant":{"url","token"}')
+    const r = await jget(`${ha.url.replace(/\/$/, '')}/api/states`, { Authorization: `Bearer ${ha.token}` })
+    const domain = param ? String(param) : null
+    const list = r.filter(s => !domain || s.entity_id.startsWith(domain + '.'))
+    return { 实体数: list.length, 实体: list.slice(0, 50).map(s => ({ id: s.entity_id, 状态: s.state, 名: s.attributes?.friendly_name })) }
+  },
+}
+
 const SOURCE_NAMES = Object.keys(SOURCES)
+const LIST_NAMES = Object.keys(LIST_SOURCES)
 
 export function apply(ctx) {
+  ctx.tools.register(defineTool({
+    name: 'cloud_list',
+    description: '从配好凭据的云端源拉明细列表：bili_fav(收藏夹内容,param=收藏夹id)、' +
+      'weibo_fav(微博收藏)、douban(豆瓣标记,param=用户id)、netdisk_files(网盘文件,param=目录)、' +
+      'ha_query(智能家居实体,param=域如light)。',
+    parameters: {
+      source: { type: 'string', required: true, description: LIST_NAMES.join('|') },
+      param: { type: 'string', description: '源所需参数（收藏夹id/豆瓣uid/网盘目录/HA域）' },
+    },
+    output: { schema: { type: 'object', additionalProperties: true },
+      render: (_a, v) => [{ type: 'text', text: JSON.stringify(v).slice(0, 200) }] },
+    isConcurrencySafe: () => true,
+    async execute(args) {
+      const fn = LIST_SOURCES[String(args.source || '').toLowerCase()]
+      if (!fn) throw new Error(`cloud_list: 不认识的源 "${args.source}"，支持：${LIST_NAMES.join('/')}`)
+      return await fn(cfg(), args.param)
+    },
+    presentCall: (a) => ({ card: 'generic', title: `拉取 ${a.source}`, kind: 'other', rawInput: a }),
+  }))
+
   ctx.tools.register(defineTool({
     name: 'cloud_status',
     description: '查云端连接器状态：哪些源配好了凭据、每个源的接入指引。' +

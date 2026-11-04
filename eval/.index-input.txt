@@ -77,3 +77,9 @@ https://mino.baby/git/local-inventory
 https://mino.baby/git/mail
 https://mino.baby/git/music
 https://mino.baby/git/travel
+https://mino.baby/git/footprints
+https://mino.baby/git/kids-album
+https://mino.baby/git/old-disk
+https://mino.baby/git/photos
+https://mino.baby/git/qzone
+https://mino.baby/git/records

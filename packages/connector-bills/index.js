@@ -39,12 +39,15 @@ export function apply(ctx) {
   ctx.tools.register(defineTool({
     name: 'bills_import',
     description:
-      '把用户从支付宝/微信官方导出的账单文件（.csv/.xlsx/.zip）解析成统一账目。' +
+      '把用户从支付宝/微信/银行官方导出的账单文件（.csv/.xlsx/.zip）解析成统一账目。' +
       '纯本地运行，数据不出本机。在源文件旁边生成两份产物：<文件名>.beancount（全量复式账目）' +
-      '和 <文件名>.summary.md（分类/月度/大额汇总）。返回汇总数字与产物路径。',
+      '和 <文件名>.summary.md（分类/月度/大额汇总）。返回汇总数字与产物路径。' +
+      '支持：alipay/wechat（自带规则）及 deg 内置 provider（icbc 工行/ccb 建行/cmb 招行/' +
+      'bocom 交行/citic 中信/ceb 光大/pingan 平安/spdb 浦发/abc 农行/boc 中行/' +
+      'hsbc 汇丰/mt 美团/jd 京东/htsec 华泰/…）——银行/平台源必须显式 provider 指定。',
     parameters: {
-      path: { type: 'string', required: true, description: '账单导出文件的绝对路径（支付宝/微信官方导出的 .csv/.xlsx/.zip）' },
-      provider: { type: 'string', description: '账单来源：alipay / wechat / auto（默认 auto，按文件头自动识别）' },
+      path: { type: 'string', required: true, description: '账单导出文件的绝对路径（支付宝/微信/银行/平台官方导出的 .csv/.xlsx/.zip）' },
+      provider: { type: 'string', description: '账单来源：alipay / wechat / 银行 provider 名（icbc/ccb/cmb/bocom/citic/ceb/pingan/spdb/abc/boc/hsbc/mt/jd/htsec…）/ auto（默认 auto，仅支付宝/微信可自动识别）' },
       rules: { type: 'string', description: '可选：自定义分类规则 YAML 绝对路径（double-entry-generator 规则格式）' },
     },
     output: {
@@ -82,16 +85,18 @@ export function apply(ctx) {
       if (ext === '.zip') billFile = await extractZip(input)
 
       const provider = normalizeProvider(args.provider) ?? detectProvider(billFile)
-      if (!provider) throw new Error('bills_import: 认不出账单来源，请用 provider 参数指定 alipay 或 wechat')
-      if (!PROFILES[provider]) throw new Error(`bills_import: 暂不支持 ${provider}（当前支持 alipay/wechat）`)
+      if (!provider) throw new Error('bills_import: 认不出账单来源，请用 provider 参数指定（alipay/wechat/银行 provider 名）')
 
+      // alipay/wechat 有随包规则；其余走 deg 内置 provider（无 --config）
       const rulesFile = args.rules ? resolve(String(args.rules)) : PROFILES[provider]
       if (args.rules && !existsSync(rulesFile)) throw new Error(`bills_import: 规则文件不存在：${rulesFile}`)
 
       const dir = dirname(billFile)
       const stem = basename(billFile, extname(billFile))
       const beanFile = join(dir, `${stem}.beancount`)
-      const argv = ['translate', billFile, '-p', provider, '--config', rulesFile, '-o', beanFile]
+      const argv = ['translate', billFile, '-p', provider]
+      if (rulesFile) argv.push('--config', rulesFile)
+      argv.push('-o', beanFile)
       if (provider === 'wechat') argv.push('--ignore-invalid-tx-types')
       try {
         await execFileP(DEG, argv, { timeout: 120000, maxBuffer: 8 * 1024 * 1024, windowsHide: true })

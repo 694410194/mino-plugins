@@ -1,0 +1,5 @@
+# mino-connector-old-disk — bundle patch
+- insert:
+    - id: connector-old-disk
+      name: 'mino-connector-old-disk'
+      config: {}

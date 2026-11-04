@@ -1,0 +1,5 @@
+# mino-connector-kids-album — bundle patch
+- insert:
+    - id: connector-kids-album
+      name: 'mino-connector-kids-album'
+      config: {}

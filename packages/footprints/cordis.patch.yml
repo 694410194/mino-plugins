@@ -1,0 +1,5 @@
+# mino-connector-footprints — bundle patch
+- insert:
+    - id: connector-footprints
+      name: 'mino-connector-footprints'
+      config: {}

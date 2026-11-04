@@ -756,6 +756,53 @@
       "labels": [
         "verified"
       ]
+    },
+    "mino-connector-photos": {
+      "score": 66,
+      "category": "conn-media",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-connector-qzone": {
+      "score": 64,
+      "category": "conn-social",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-kids-album": {
+      "score": 62,
+      "category": "conn-media",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-footprints": {
+      "score": 62,
+      "category": "conn-travel",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-old-disk": {
+      "score": 64,
+      "category": "conn-system",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-connector-records": {
+      "score": 62,
+      "category": "conn-system",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
     }
   }
 }
