@@ -44,7 +44,7 @@
 | mino-rewind | fork dsh-rewind-plugin | 推荐位 | 无；会话内原地回退（改稿返工场景） |
 | mino-skin-market | fork dsh-skin-market | 推荐位 | 无；社区皮肤发现/一键安装/生命周期管理 |
 | mino-task-board | fork @linxin666/dsh-client-ui-task-board（9.9k★） | 推荐位 | 无；侧边栏多列任务看板，卡片=真实 agent 会话，支持 cron |
-| mino-better-sidebar | fork omdsh-dev/DSH-better-sidebar（4.9k★） | 评测通过，待发布链收编 | 无（sidebar_open 工具 opt-in 默认关）；按会话隔离的右编辑器侧栏，eval 5/5 PASS |
+| mino-better-sidebar | fork omdsh-dev/DSH-better-sidebar（4.9k★） | 推荐位 | 无（sidebar_open 工具 opt-in 默认关）；按会话隔离的右编辑器侧栏，eval 5/5 PASS，已入索引 62 件 |
 | mino-mcp-memory | 自研纯配置 bundle（插官方 dsh-mcp-client 行） | 已实测（plugweb bundles 层拉起 stdio server） | 需本机 node/npm；官方 memory 知识图谱 MCP |
 | mino-mcp-thinking | 自研纯配置 bundle | 已实测（bundle 拉起） | 需 node/npm；sequential-thinking 逐步思考 |
 | mino-mcp-chrome-devtools | 自研纯配置 bundle | 已实测（bundle 拉起） | 需 node/npm+Chrome；浏览器控制（高危面已标注） |
