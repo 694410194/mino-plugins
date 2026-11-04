@@ -63,6 +63,8 @@
 | mino-skill-commit | 自研 skill pack（ctx.skills provider） | 已实测（provider 注册+list/get 冒烟通过） | 无；commit-message 技能，rank 650 可被同名覆盖 |
 | mino-skill-mino-release | 自研 skill pack | 已实测（同上） | 无；mino-release 部署发布速查技能 |
 
+> 已剔除：mino-agent-team（自研纯配置挂载层）——0.2.5 上游把 agent-team 三件套转正并进默认组合，挂载职责消失；merge 官方行属耦合，不要。
+>
 > 已否决：dsh-super-code（dsh-xray C3 级：patch 运行时/改写系统提示/起网络服务/读凭据环境变量；21★ 单人作者、无第三方验证）。不并入推荐，避免品牌背书风险。
 >
 > **红线类（永不进精选，不管热度多高）**：改写压缩/上下文核心循环的（billion-context：空转扣费恶评，且其机制是禁用宿主 compaction 换自家层——核心手术位故障=烧 token）；以 order/无条件服从注入改写系统提示的"破甲"类（dsh-infinite-gen-4）；一切 C3 级运行时 patch。评判看**机制**不看出身：热度只证明装机量，代码扫描（缺 engines/直读 env/console.log）才是质量信号。
@@ -84,7 +86,7 @@
 > **dsh-our-free-model 2.1.0 实测（2026-11，本机中国直连出口）**：provider / 干净挂载（inject 只要 llm），live catalog 拉到 7 个免费车道模型 + 13 账号渠道。但匿名道**全军覆没**：beam-free=region-blocked（出口国家被拦），deepseek-v4.1-flash-free/mimo 等=429 全局限流（"subscribe to OpenCode Go"，retryAfter ~17.7h）。**结论：匿名道在此出口当前不可用，不替换 Magpie**；其剩余价值在账号渠道 hub（WorkBuddy 等登录池）与内嵌 Magpie 引擎跟进，待账号登录实测后再评。已装 plugweb 待复测（patch insert 行，dep ^2.1.0）。注：其 settings 面板会写 ~/.dsh/our-free-model/{catalog,availability,stats}.json。
 
 > **互斥/高危标注（Discover 元数据待办）**：QQ 三路（qqbot/im-QQ/qq-link+aurabot）同号互踢应标互斥；tavern ~58 工具与 bili 系 ~43 工具全量进每轮 schema 是实打实的 token 前缀成本，应标"重场景包"；pilot 真实输入控制+截图上云，应标"高危，先读说明"。
-| mino-agent-team | 自研纯配置 bundle | 已退役（private） | 0.2.5 上游把 agent-team 三件套转正并进默认组合，挂载职责消失；config 覆盖属产品组合层不归插件 |
+
 | mino-voice-input | 自研纯配置 bundle（官方 voice-input 四件套 insert） | 已实测（plugweb 真启零失败） | 首次使用下载 SenseVoice 运行时/模型（需网络） |
 | mino-distill | fork @loserfox/distill 0.1.0（BSD-3） | 已实测（plugweb 真启零失败） | 无；turn 结束后台 subagent 反思→自动写/更新 SKILL.md |
 | mino-team-conductor | fork dsh-team-conductor 1.6.0（MIT） | 已实测（plugweb 真启零失败） | 0.2.5 起官方默认 agent-team 即其后端（无需 mino-agent-team）；与官方 tool-agent-team 互斥（自带 team_*+别名面），patch 已含 disable；名册控制面/DoD 任务审议 |
