@@ -1,0 +1,5 @@
+# mino-connector-vault — bundle patch
+- insert:
+    - id: connector-vault
+      name: 'mino-connector-vault'
+      config: {}

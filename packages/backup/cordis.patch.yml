@@ -1,0 +1,5 @@
+# mino-connector-backup — bundle patch
+- insert:
+    - id: connector-backup
+      name: 'mino-connector-backup'
+      config: {}

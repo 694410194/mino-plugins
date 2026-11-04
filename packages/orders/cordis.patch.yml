@@ -1,0 +1,5 @@
+# mino-connector-orders — bundle patch
+- insert:
+    - id: connector-orders
+      name: 'mino-connector-orders'
+      config: {}

@@ -1,0 +1,5 @@
+# mino-connector-asr — bundle patch
+- insert:
+    - id: connector-asr
+      name: 'mino-connector-asr'
+      config: {}

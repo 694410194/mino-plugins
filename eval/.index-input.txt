@@ -83,3 +83,13 @@ https://mino.baby/git/old-disk
 https://mino.baby/git/photos
 https://mino.baby/git/qzone
 https://mino.baby/git/records
+
+https://mino.baby/git/orders
+https://mino.baby/git/contacts
+https://mino.baby/git/calendar
+https://mino.baby/git/docs
+https://mino.baby/git/asr
+https://mino.baby/git/vault
+https://mino.baby/git/ime
+https://mino.baby/git/ocr
+https://mino.baby/git/backup

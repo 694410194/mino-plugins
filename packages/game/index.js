@@ -4,7 +4,7 @@
  * 本插件解析 URL 参数并分页拉取官方接口，汇总各池抽数/五星/保底进度。
  * authkey 时效短（约一天），过期让用户重复制。
  */
-import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'node:fs'
+import { readFileSync, existsSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { homedir } from 'node:os'
 import { fileURLToPath } from 'node:url'
@@ -104,6 +104,75 @@ export function apply(ctx) {
       return { 导入时间: j.importedAt, ...gachaSummary(j.pools) }
     },
     presentCall: (a) => ({ card: 'generic', title: '看祈愿汇总', kind: 'other', rawInput: a }),
+  }))
+
+  ctx.tools.register(defineTool({
+    name: 'game_match',
+    description:
+      '记录王者荣耀（或其它游戏）战绩：把王者营地/战绩页的文本复制粘过来，' +
+      '逐场抓英雄/胜负/时间入本地库，可查英雄胜率。手动导入形态。',
+    parameters: {
+      text: { type: 'string', required: true, description: '战绩页复制的文本（含英雄名+胜/负+时间）' },
+      game: { type: 'string', description: '游戏名（默认 王者荣耀）' },
+    },
+    output: { schema: { type: 'object', additionalProperties: false, properties: { imported: { type: 'integer' } } },
+      render: (_a, v) => [{ type: 'text', text: `入库 ${v.imported} 场战绩` }] },
+    isConcurrencySafe: () => false,
+    async execute(args) {
+      let DatabaseSync
+      try { ({ DatabaseSync } = await import('node:sqlite')) } catch { throw new Error('game_match: 运行时缺 node:sqlite') }
+      mkdirSync(STORE, { recursive: true })
+      const db = new DatabaseSync(join(STORE, 'matches.db'))
+      db.exec('CREATE TABLE IF NOT EXISTS matches(game TEXT, hero TEXT, win INTEGER, time TEXT, raw TEXT)')
+      const ins = db.prepare('INSERT INTO matches(game,hero,win,time,raw) VALUES(?,?,?,?,?)')
+      const game = String(args.game || '王者荣耀')
+      let n = 0
+      db.exec('BEGIN')
+      try {
+        for (const line of String(args.text).split(/\r?\n/)) {
+          const l = line.trim()
+          if (l.length < 4) continue
+          const win = /胜利|赢|胜\b|victory/i.test(l) ? 1 : /失败|输|负|defeat/i.test(l) ? 0 : null
+          const date = l.match(/(20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}|\d{1,2}[-月/.]\d{1,2}|\d{1,2}:\d{2})/)?.[0] || ''
+          const hero = l.match(/(?:使用|英雄[:：]?)\s*([一-龥A-Za-z]{2,8})/)?.[1]
+            || l.match(/^([一-龥]{2,6})\s/)?.[1] || ''
+          if (win === null && !hero && !date) continue
+          ins.run(game, hero, win ?? -1, date, l.slice(0, 200))
+          n++
+          if (n > 50000) break
+        }
+        db.exec('COMMIT')
+      } finally { db.close() }
+      if (!n) throw new Error('game_match: 没解析出战绩行——把战绩页整段复制粘进来')
+      return { imported: n }
+    },
+    presentCall: (a) => ({ card: 'generic', title: '记战绩', kind: 'other', rawInput: a }),
+  }))
+
+  ctx.tools.register(defineTool({
+    name: 'match_stats',
+    description: '看已记的战绩统计：总场次/胜率/按英雄胜率排行。',
+    parameters: {},
+    output: { schema: { type: 'object', additionalProperties: true },
+      render: (_a, v) => [{ type: 'text', text: `共 ${v.total || 0} 场 胜率${v.winRate || '0%'}：` + (v.heroes || []).slice(0, 8).map(h => `${h.hero}${h.rate}%`).join('；') }] },
+    isConcurrencySafe: () => true,
+    async execute() {
+      let DatabaseSync
+      try { ({ DatabaseSync } = await import('node:sqlite')) } catch { throw new Error('match_stats: 运行时缺 node:sqlite') }
+      const dbFile = join(STORE, 'matches.db')
+      if (!existsSync(dbFile)) throw new Error('还没记过战绩，先用 game_match')
+      const db = new DatabaseSync(dbFile, { readOnly: true })
+      try {
+        const total = db.prepare('SELECT COUNT(*) c FROM matches').get().c
+        const wins = db.prepare('SELECT COUNT(*) c FROM matches WHERE win=1').get().c
+        const decided = db.prepare('SELECT COUNT(*) c FROM matches WHERE win>=0').get().c
+        const heroes = db.prepare(`SELECT hero, COUNT(*) c, SUM(CASE WHEN win=1 THEN 1 ELSE 0 END) w, SUM(CASE WHEN win>=0 THEN 1 ELSE 0 END) d
+          FROM matches WHERE hero!='' GROUP BY hero ORDER BY c DESC LIMIT 15`).all()
+          .map(h => ({ hero: h.hero, 场次: h.c, rate: h.d ? Math.round(h.w / h.d * 100) : null }))
+        return { total, winRate: decided ? `${Math.round(wins / decided * 100)}%` : '0%', heroes }
+      } finally { db.close() }
+    },
+    presentCall: (a) => ({ card: 'generic', title: '看战绩', kind: 'other', rawInput: a }),
   }))
 
   ctx.effect(() => ctx.skills.registerProvider(() => createSkillProvider(ctx)))

@@ -108,6 +108,13 @@ const LIST_SOURCES = {
     if (r.errno !== 0) throw new Error('网盘凭据无效或过期')
     return { 目录: decodeURIComponent(dir), 条目: (r.list || []).slice(0, 50).map(f => ({ 名: f.server_filename, 大小MB: Math.round(f.size / 1048576 * 10) / 10, 目录: !!f.isdir })) }
   },
+  // B站观看历史（凭据门）
+  async bili_history(c) {
+    const cookie = c.biliCookie || need('biliCookie', '"biliCookie":"SESSDATA=..."')
+    const r = await jget('https://api.bilibili.com/x/web-interface/history/cursor?ps=30', { Cookie: cookie, 'User-Agent': 'Mino/1.0' })
+    if (r.code !== 0) throw new Error(`B站接口拒绝：${r.message}`)
+    return { 条数: (r.data?.list || []).length, 观看历史: (r.data?.list || []).map(h => ({ title: h.title, up: h.owner?.name, 时间: new Date(h.view_at * 1000).toISOString().slice(0, 16).replace('T', ' '), bvid: h.history?.bvid })) }
+  },
   // Home Assistant 实体查询
   async ha_query(c, param) {
     const ha = c.homeassistant || need('homeassistant', '"homeassistant":{"url","token"}')
@@ -126,7 +133,7 @@ export function apply(ctx) {
     name: 'cloud_list',
     description: '从配好凭据的云端源拉明细列表：bili_fav(收藏夹内容,param=收藏夹id)、' +
       'weibo_fav(微博收藏)、douban(豆瓣标记,param=用户id)、netdisk_files(网盘文件,param=目录)、' +
-      'ha_query(智能家居实体,param=域如light)。',
+      'bili_history(B站观看历史)、ha_query(智能家居实体,param=域如light)。',
     parameters: {
       source: { type: 'string', required: true, description: LIST_NAMES.join('|') },
       param: { type: 'string', description: '源所需参数（收藏夹id/豆瓣uid/网盘目录/HA域）' },

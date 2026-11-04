@@ -3,7 +3,7 @@
  * 解析苹果健康导出 export.xml（iPhone 健康 App→导出健康数据→解压 ZIP），
  * 流式逐行解析（文件可能几个 GB），汇总步数/心率/睡眠。只读、本地。
  */
-import { createReadStream, existsSync, statSync, readFileSync } from 'node:fs'
+import { createReadStream, existsSync, statSync, readFileSync, mkdirSync } from 'node:fs'
 import { createInterface } from 'node:readline'
 import { join, dirname } from 'node:path'
 import { homedir } from 'node:os'
@@ -86,6 +86,51 @@ export function apply(ctx) {
       return await summarizeHealth(file, days)
     },
     presentCall: (a) => ({ card: 'generic', title: '汇总健康数据', kind: 'other', rawInput: a }),
+  }))
+
+  ctx.tools.register(defineTool({
+    name: 'health_import',
+    description:
+      '导入其它健康/运动 App 的导出数据：Keep/悦跑圈/美柚 等导出的 CSV/TXT' +
+      '（App 内"数据导出/隐私-下载个人信息"路径）。自动抓日期+数值行入本地库。',
+    parameters: {
+      path: { type: 'string', required: true, description: '导出的 .csv/.txt 文件路径' },
+      source: { type: 'string', description: '来源名（keep/yuepao/meiyou/其它）' },
+    },
+    output: { schema: { type: 'object', additionalProperties: false, properties: { imported: { type: 'integer' } } },
+      render: (_a, v) => [{ type: 'text', text: `入库 ${v.imported} 条健康记录` }] },
+    isConcurrencySafe: () => false,
+    async execute(args) {
+      let DatabaseSync
+      try { ({ DatabaseSync } = await import('node:sqlite')) } catch { throw new Error('health_import: 运行时缺 node:sqlite') }
+      const f = String(args.path || '').trim()
+      if (!existsSync(f)) throw new Error(`health_import: 文件不存在 ${f}`)
+      const src = String(args.source || 'manual')
+      const store = join(process.env.DSH_HOME || join(homedir(), '.dsh'), 'connector-health')
+      mkdirSync(store, { recursive: true })
+      const db = new DatabaseSync(join(store, 'health.db'))
+      db.exec('CREATE TABLE IF NOT EXISTS entries(date TEXT, metric TEXT, value REAL, unit TEXT, source TEXT, raw TEXT)')
+      const ins = db.prepare('INSERT INTO entries(date,metric,value,unit,source,raw) VALUES(?,?,?,?,?,?)')
+      let n = 0
+      db.exec('BEGIN')
+      try {
+        for (const line of readFileSync(f, 'utf8').split(/\r?\n/)) {
+          const l = line.trim()
+          const date = l.match(/(20\d{2})[-年/.](\d{1,2})[-月/.](\d{1,2})/)
+          const num = l.match(/(\d+(?:\.\d+)?)\s*(步|千卡|kcal|公里|km|kg|公斤|分钟|bpm|次)/i)
+          if (!date || !num) continue
+          const metric = l.match(/(步数|跑步|步行|骑行|体重|睡眠|心率|卡路里|消耗|运动|经期|距离)/)?.[1] || '记录'
+          ins.run(`${date[1]}-${date[2].padStart(2, '0')}-${date[3].padStart(2, '0')}`, metric,
+            parseFloat(num[1]), num[2].toLowerCase(), src, l.slice(0, 200))
+          n++
+          if (n > 200000) break
+        }
+        db.exec('COMMIT')
+      } finally { db.close() }
+      if (!n) throw new Error('health_import: 没解析出带日期+数值的记录行')
+      return { imported: n }
+    },
+    presentCall: (a) => ({ card: 'generic', title: '导健康数据', kind: 'other', rawInput: a }),
   }))
 
   ctx.effect(() => ctx.skills.registerProvider(() => createSkillProvider(ctx)))

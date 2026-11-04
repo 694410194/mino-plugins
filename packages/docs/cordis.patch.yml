@@ -1,0 +1,5 @@
+# mino-connector-docs — bundle patch
+- insert:
+    - id: connector-docs
+      name: 'mino-connector-docs'
+      config: {}

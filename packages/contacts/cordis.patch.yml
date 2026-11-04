@@ -1,0 +1,5 @@
+# mino-connector-contacts — bundle patch
+- insert:
+    - id: connector-contacts
+      name: 'mino-connector-contacts'
+      config: {}

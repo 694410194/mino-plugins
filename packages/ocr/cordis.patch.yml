@@ -1,0 +1,5 @@
+# mino-connector-ocr — bundle patch
+- insert:
+    - id: connector-ocr
+      name: 'mino-connector-ocr'
+      config: {}

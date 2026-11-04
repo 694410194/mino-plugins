@@ -803,6 +803,76 @@
         "verified",
         "manual-import"
       ]
+    },
+    "mino-connector-orders": {
+      "score": 66,
+      "category": "conn-finance",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-contacts": {
+      "score": 66,
+      "category": "conn-im",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-calendar": {
+      "score": 64,
+      "category": "conn-mail",
+      "labels": [
+        "verified",
+        "needs-config"
+      ]
+    },
+    "mino-connector-docs": {
+      "score": 66,
+      "category": "conn-docs",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-connector-asr": {
+      "score": 60,
+      "category": "conn-media",
+      "labels": [
+        "needs-setup",
+        "optional-heavy"
+      ]
+    },
+    "mino-connector-vault": {
+      "score": 64,
+      "category": "conn-browser",
+      "labels": [
+        "verified",
+        "manual-import",
+        "sensitive"
+      ]
+    },
+    "mino-connector-ime": {
+      "score": 62,
+      "category": "conn-system",
+      "labels": [
+        "verified",
+        "manual-import"
+      ]
+    },
+    "mino-connector-ocr": {
+      "score": 64,
+      "category": "conn-media",
+      "labels": [
+        "verified"
+      ]
+    },
+    "mino-connector-backup": {
+      "score": 64,
+      "category": "conn-device",
+      "labels": [
+        "verified"
+      ]
     }
   }
 }
