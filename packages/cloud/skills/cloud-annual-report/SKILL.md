@@ -12,6 +12,8 @@ metadata:
 
 ## 流程
 
+0. **可选出图**：把报告要点按 `poster-design` 技能写成自包含 HTML，调 `poster_render` 出 PNG 晒图。
+
 1. **确认数据**：相关工具（cloud_list/cloud_pull 各源明细）有数据才做；没有先引导导入。
 2. **取数**：调对应工具拉统计和明细。
 3. **写报告**：在数据同目录写 `<年份>-cloud报告.md`，结构：
