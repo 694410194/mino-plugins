@@ -1,0 +1,5 @@
+# proactive roots() → list() 兼容修复验证（2026-11）
+# 修复前实录：TypeError: ctx.agents.roots is not a function（compat-sweep-1）
+# 修复后期望：插件挂载、proactive_* 工具进 schema、普通模型调用不受影响
+{"id": "pv-warmup", "wait": 45}
+{"id": "pv-schema", "text": "你好", "assert": {"schema.present": ["proactive_set", "proactive_list"], "events.absent": ["session/error"], "modelCalls.max": 2, "status.final": "idle"}}

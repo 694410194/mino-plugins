@@ -1,0 +1,15 @@
+{
+  "suite": "eval/suites/proactive-verify.jsonl",
+  "profile": "plugweb",
+  "patch": "eval/patches/better-sidebar.yml",
+  "runtag": "dum0s",
+  "startedAt": "2026-11-04T00:32:54.288Z",
+  "probes": [],
+  "stats": {
+    "probes": 0,
+    "passAll": 0,
+    "fail": 0,
+    "flaky": 0
+  },
+  "fatal": "Error: dsh exited 1"
+}

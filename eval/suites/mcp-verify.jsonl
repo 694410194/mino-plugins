@@ -1,0 +1,4 @@
+# mcp-client 0.2.5 豁免后功能验证：peers 精确 pin 属上游打包形态（无 0.2.5 发行），
+# 官方豁免是唯一通道；验证目标=客户端在 0.2.5 上能拉起 MCP server 并暴露工具。
+{"id": "mcp-warmup", "wait": 45}
+{"id": "mcp-schema", "text": "你好", "assert": {"modelCalls.max": 2, "status.final": "idle"}}

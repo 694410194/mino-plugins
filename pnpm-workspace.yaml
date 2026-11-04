@@ -21,6 +21,7 @@ packages:
   - "!packages/tavern"
   - "!packages/whale-musume"
   - "!packages/chat-import"
+  - "!packages/better-sidebar"
   - "!packages/damage-pulse"
   - "!packages/drawio"
   - "!packages/knowledge-studio"

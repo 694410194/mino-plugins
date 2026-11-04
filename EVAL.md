@@ -257,3 +257,28 @@
   （`turn/end reason.kind=error`——eval 断言须看 reason 不是 turn/error 事件）；
   kernel.blocked 为暂态对账语义不属于释放范围；preset 不可判定的会话
   startupFailed 下仍保守阻断。
+
+## 0.2.5 全目录实测与扩线（2026-11-04，reports/compat-sweep-1、proactive-verify-2、mcp-verify-1）
+
+- **实测法**：31 件 `<0.2.3` stale-range 插件 + mcp-client 走 profile
+  `compatibility.json` 精确版本豁免强制装载 → boot + 模型调用实测。
+- **结果**：31 件全部干净装载（sweep 模型探针通过、142 工具在册）；
+  豁免只覆盖 0.2.5，非永久放行。
+- **真缺陷 1（已修）**：mino-proactive 0.1.0 调上游已删 API
+  `ctx.agents.roots()`（0.2.5 只有 `list()`+`session.header.parentSession`）。
+  修复=版本自适应枚举（roots 在则用，否则 list 滤 parentSession），
+  0.1.1 已发；proactive-verify-2 2/2 PASS（proactive_set/list 进 schema、
+  普通调用正常）。
+- **真缺陷 2（上游打包形态，豁免通道）**：`@deepseek-ai/dsh-mcp-client`
+  peers 精确 pin 同版本号（0.2.0-rc.2/0.2.2-alpha.3 均精确），上游未发
+  0.2.5 版 → 官方精确版本豁免是唯一通道（非 stale range）。
+  mcp-verify-1：豁免后 6 条 mcp-* 行全活，chrome-devtools server 实拉
+  30+ `mcp__chrome__*` 工具、共 193 工具在册 → **0.2.5 上功能实测正常**。
+- **真缺陷 3（环境/原生，维持 gated）**：mino-knowledge-studio 的
+  LadybugDB win32-x64 `lbugjs.node` DLL 初始化失败（提示 reinstall with
+  optional dependencies）——本机原生运行时问题，engines 不扩。
+- **experimental-agent-team / client-ui-agent-team**：profile 缺这两个
+  上游 experimental 包（非 mino 件），team-agent/team-ui 相关行未挂载。
+- **扩线**：31 件 `engines.dsh` 上界 `<0.2.3` → `<0.3.0`（oh-story、
+  whale-musume 多子句归并单区间）。profile 安装件仍为旧 manifest，
+  下次重装后 compatibility.json 里对应豁免可删。

@@ -1,0 +1,11 @@
+# better-sidebar 评测套件（2026-11-04）
+# 机制事实：sidebar_open 是 opt-in——agentOpenTools 默认 false，上游默认不注册；
+# 评测 overlay 用 config 种子开启。注册是惰性的：settings face 首次被读时门控
+# 同步，首个 settings.get 探针必须先于 schema 断言（v1/v2 已证默认态 absent）。
+# bs-warmup：mino-bot 的 memoryAdmission 在 kernel 未就绪窗口全局阻断模型调用
+# （"Memory admission blocked"），先等 bot kernel 就绪再进会话探针。
+{"id": "bs-warmup", "wait": 45}
+{"id": "bs-api-unauth", "http": {"path": "/sidebar/api/settings.get", "method": "POST", "headers": {"Content-Type": "application/json"}, "body": {}, "expectStatus": 403, "expectBody": "forbidden"}}
+{"id": "bs-api-authed", "http": {"path": "/sidebar/api/settings.get", "method": "POST", "auth": true, "headers": {"Content-Type": "application/json"}, "body": {}, "expectStatus": 200, "expectBody": "agentOpenTools"}}
+{"id": "bs-schema", "text": "你好", "assert": {"schema.present": ["sidebar_open"], "events.absent": ["session/error"], "modelCalls.max": 2, "status.final": "idle"}}
+{"id": "bs-open-tool", "text": "调用 sidebar_open 这个工具，target 参数填 all-tools.txt。直接调用工具，不要回复解释。", "assert": {"tools.called": ["sidebar_open"], "events.absent": ["session/error"], "modelCalls.max": 6, "status.final": "idle"}}
