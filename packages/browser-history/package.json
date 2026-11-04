@@ -1,0 +1,47 @@
+{
+  "name": "mino-connector-browser-history",
+  "version": "0.1.0",
+  "description": "浏览器历史连接器：只读本机 Chrome/Edge/Firefox/Brave 的浏览记录，查最近看过什么、统计常去站点，全本地处理。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "mino-connector",
+    "browser-history",
+    "chrome",
+    "edge",
+    "firefox"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "hostdeps.mjs",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.3.0",
+    "node": ">=22.13"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/browser-history"
+  },
+  "bugs": {
+    "url": "https://github.com/694410194/mino-plugins/issues"
+  }
+}

@@ -1,0 +1,6 @@
+# mino-connector-browser-history — bundle patch
+# 浏览器历史连接器（conn-browser）：node:sqlite 只读本机浏览记录，零依赖零二进制。
+- insert:
+    - id: connector-browser-history
+      name: 'mino-connector-browser-history'
+      config: {}

@@ -223,6 +223,13 @@
         "needs-config"
       ]
     },
+    "mino-connector-browser-history": {
+      "score": 60,
+      "category": "conn-browser",
+      "labels": [
+        "verified"
+      ]
+    },
     "mino-creative-studio": {
       "score": 64,
       "category": "skills",
