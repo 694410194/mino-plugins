@@ -839,8 +839,9 @@
       "score": 60,
       "category": "conn-media",
       "labels": [
-        "needs-setup",
-        "optional-heavy"
+        "needs-config",
+        "optional",
+        "heavy"
       ]
     },
     "mino-connector-vault": {
@@ -849,7 +850,7 @@
       "labels": [
         "verified",
         "manual-import",
-        "sensitive"
+        "high-risk"
       ]
     },
     "mino-connector-ime": {
