@@ -60,7 +60,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 |---|---|---|
 | github.com / raw.githubusercontent.com | **超时** | 不能当用户侧通道；开发 push 走本机代理 `127.0.0.1:7897`（`https_proxy=`） |
 | cdn.jsdelivr.net（gh 镜像） | 可用 | **已接入**：Discover 第二源 `cdn.jsdelivr.net/gh/694410194/mino-plugin-index@main/index.json`（插件页市场下拉可切换；推 GitHub 后 `purge.jsdelivr.net` 刷缓存） |
-| registry.npmjs.org / registry.npmmirror.com | 可用 | npm 通道备用：`npmjs.com` 注册页被反爬拦（代理出口 IP 亦 403），暂无 npm 账号 → **当前安装通道=自建 git**（`/git/` dumb-HTTP）；将来发 npmjs 后 npmmirror 自动同步，索引 per-version `registry` 填 npmmirror |
+| registry.npmjs.org / registry.npmmirror.com | 可用 | npm 通道备用：`npmjs.com` 注册页被反爬拦（代理出口 IP 亦 403），暂无 npm 账号 → 自家包安装通道=自建 git（`/git/` dumb-HTTP）。**第三方 npm 包已接入**（dsh-guizang-design）：`.index-input.txt` 直接写包名行，生成时带 `--registry https://registry.npmmirror.com/`，索引 per-version `registry` 落 npmmirror |
 | mino.baby | 可用 | **正式归宿（第一源）**：`mino.baby/plugins/index.json` + `/git/<name>` 每插件 bare 仓 dumb-HTTP 安装通道。⚠ 镜像不对称：jsdelivr 只镜像索引（图标相对路径自动连带），**安装仍走 mino.baby/git**——安装通道的冗余要 npm 才解得了 |
 
 ## 发布链（刚性顺序，勿跳步）
@@ -75,6 +75,10 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
    → `node eval/enrich-index.mjs <index.json>` 富化（内部过 `parseMarketIndex`
    校验）。跑前清 `eval/.plugin-market-cache/`，否则拿旧 clone 生成旧 pin；
    Windows 下 `TMPDIR` 指到 `D:\tmp`，杀软锁默认 Temp 会 EPERM 丢源。
+   清单混排两类源：`mino.baby/git/<name>`=自家包、`包名`=第三方 npm 包；
+   含 npm 行时生成器必须带 `--registry https://registry.npmmirror.com/`。
+   抽查：index 引用的每个 `icons/*` 文件必须已入库（mino-im 曾因漏交
+   文件导致图标 404）；npm 条目须带 per-version `registry` 字段。
 4. 三处落位：服务器 `/var/www/mino-home/plugins/index.json`（site/ 同步 +
    `deploy-site.sh`）、`694410194/mino-plugin-index` 仓（jsdelivr 第二源，
    推后 `purge.jsdelivr.net` 刷缓存）、mino-deploy 仓 `site/plugins/index.json`
@@ -183,6 +187,11 @@ locale 键必须全小写（`zh-cn`，`zh-CN` 会炸）。
   parser 丢弃**，不要发明 `x-*` 字段。
 - 官方 ui-plugin-market 实测消费：标签渲染成卡片 Tag、分类进过滤栏、
   `sortKeys` 支持按分排序（dsh-client-ui-plugin-market client.js 确认）。
+- **第三方署名真相源=包 manifest**：索引卡片的作者/链接取
+  `author`/`repository`/`homepage`。上游源包这三项必须指上游（脚本
+  `scripts/attribute-upstream.py` 批量补登；homepage 已合法指包内路径
+  的不动）；Mino 原创包不留 author 即可。annotation 的 labels 与生成器
+  labels 在 enrich 里按集合合并，互不覆盖。
 - 部署：`site/plugins/index.json` 随 sync.sh 上服务器；`build-site.py` 不碰它。
 
 ## 版本策略（与官方解耦，但不破坏生态兼容）
