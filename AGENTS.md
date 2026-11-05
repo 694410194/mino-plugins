@@ -74,7 +74,10 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 3. 工作站重生成索引：`plugin-market-generator` 跑 `eval/.index-input.txt`
    → `node eval/enrich-index.mjs <index.json>` 富化（内部过 `parseMarketIndex`
    校验）。跑前清 `eval/.plugin-market-cache/`，否则拿旧 clone 生成旧 pin；
-   Windows 下 `TMPDIR` 指到 `D:\tmp`，杀软锁默认 Temp 会 EPERM 丢源。
+   Windows 下 `TMP`/`TEMP` 指到 `D:\tmp\pmgtmp`（Node 读 TMP/TEMP，
+   `TMPDIR` 是 POSIX 变量无效），杀软锁 Temp 会随机 EPERM 丢源——
+   缓存累积成功源，反复重跑直到 `0 failed source(s)`；failed>0 的
+   产物绝不可用（exit code 1）。
    清单混排两类源：`mino.baby/git/<name>`=自家包、`包名`=第三方 npm 包；
    含 npm 行时生成器必须带 `--registry https://registry.npmmirror.com/`。
    抽查：index 引用的每个 `icons/*` 文件必须已入库（mino-im 曾因漏交
@@ -192,6 +195,15 @@ locale 键必须全小写（`zh-cn`，`zh-CN` 会炸）。
   `scripts/attribute-upstream.py` 批量补登；homepage 已合法指包内路径
   的不动）；Mino 原创包不留 author 即可。annotation 的 labels 与生成器
   labels 在 enrich 里按集合合并，互不覆盖。
+- **署名以包内 `NOTICE`/`LICENSE` 为实锤，不凭猜测**：vendor 进仓时
+  NOTICE 记了真实上游（`Fork of/Derived from <url>`），比 GitHub 搜索
+  猜出的仓名可靠——二批已更正三例凭猜错误：qq-console zjw0011→
+  shenhua725、browser yuxianglin/dsh-bridge-browser(404)→
+  omdsh-dev/dsh-browser、bili-live 仓改名 dsh-bili-danmaku-lite。
+  repository.url 指上游时删掉 `repository.directory`（那是 monorepo
+  子目录语义，上游仓没有该路径）。`mino.upstream` 记 `owner/repo`
+  血缘供 drift 追踪，connector 包驱动的外部引擎是运行时依赖不算
+  上游，不记。
 - 部署：`site/plugins/index.json` 随 sync.sh 上服务器；`build-site.py` 不碰它。
 
 ## 版本策略（与官方解耦，但不破坏生态兼容）
