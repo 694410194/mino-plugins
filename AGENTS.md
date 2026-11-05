@@ -116,6 +116,12 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
   `mino.baby/git/<name>` 行（git 安装=备份通道），npm 全量验证可装后
   才换包名行——换行前必须用 `npm install <name>` 实测 tarball 含
   `cordis.patch.yml`+声明的 main 文件。
+- **CI 首发通道**：`.github/workflows/npm-publish.yml`（workflow_dispatch，
+  支持 `only`/`dry_run` 输入）在 GitHub runner 上跑同一脚本——全量首发
+  走 CI（出口干净+官方正常发布者形态），日常增量可本机 `--only` 发。
+  凭据=repo secret `NPM_TOKEN`。包全部上 registry 后用 `npm trust github`
+  逐包配 trusted publisher（workflow 已预置 `id-token: write`），
+  迁 OIDC 免 token——bypass-2FA 直发 2027-01 废弃前的既定迁移路线。
 - **vendored 不可重建包**（browser/drawio/im/qqbot/task-board/voice）：
   发布同样可行——`publish-npm.mjs` 自动从 `dist` 分支回补 `lib/` 到
   工作区（gitignored 不污染 main），tarball 照常含产物。
