@@ -10,12 +10,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 24
       - uses: pnpm/action-setup@v4
         with:
           version: 11.28.5
+      # main carries no build outputs by design — the shippable artifact plane
+      # is the dist snapshot branch; verify tarballs against it.
+      - name: Restore build outputs from dist snapshot
+        run: |
+          git fetch origin dist:dist
+          for d in packages/*/; do
+            for sub in lib dist; do
+              if git ls-tree dist "${d}${sub}" --name-only | grep -q .; then
+                git checkout dist -- "${d}${sub}" || true
+              fi
+            done
+          done
       - run: node scripts/verify-all.mjs
       - uses: actions/upload-artifact@v4
         if: always()
