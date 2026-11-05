@@ -72,7 +72,7 @@ for (const [dir, m] of pkgs) {
     if (view === m.version) { skip.push(m.name); process.stdout.write(`SKIP ${m.name}@${m.version}\n`); continue }
   } catch { /* not published yet */ }
   let done = false, lastErr = ''
-  for (let attempt = 0; attempt < 4 && !done; attempt++) {
+  for (let attempt = 0; attempt < 3 && !done; attempt++) {
     try {
       run(`npm publish --registry ${REGISTRY} --access public --ignore-scripts --tag latest`, join(PKGS, dir))
       ok.push(`${m.name}@${m.version}`); done = true
@@ -80,7 +80,14 @@ for (const [dir, m] of pkgs) {
     } catch (e) {
       lastErr = String(e.stderr || e.message)
       if (/E429|rate limit/i.test(lastErr)) {
-        const wait = 600_000 * attempt + 60_000 // 10min cooldown after first retry
+        if (attempt === 2) {
+          // account-scoped quota: further packages will 429 too — bail out,
+          // the next scheduled run picks up where this one stopped.
+          console.log(`429 quota exhausted at ${m.name} — stopping run, retry later`)
+          writeFileSync(join(ROOT, 'eval/.publish-result.json'), JSON.stringify({ ok, fail: [...fail, `${m.name}: quota`], skip }, null, 2))
+          process.exit(0)
+        }
+        const wait = 300_000 * (attempt + 1)
         process.stdout.write(`429 ${m.name} wait ${wait / 1000}s\n`)
         await sleep(wait)
       } else break

@@ -7,6 +7,10 @@ name: npm-publish
 # (id-token: write is already granted).
 
 on:
+  schedule:
+    # bootstrap convergence: new-account publish quota is window-scoped;
+    # re-run every 4h until all packages are published (idempotent skips).
+    - cron: '23 */4 * * *'
   workflow_dispatch:
     inputs:
       only:
