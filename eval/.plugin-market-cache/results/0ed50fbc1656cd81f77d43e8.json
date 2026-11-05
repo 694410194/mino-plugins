@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-note-import","description":"笔记导入连接器：印象笔记enex/有道/为知导出的html/md入库全文检索。手动导入形态。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/note-import"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","note-import"]}}}

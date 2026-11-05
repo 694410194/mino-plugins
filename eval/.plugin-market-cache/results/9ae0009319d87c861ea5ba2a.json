@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-cloud","description":"云端账号连接器：微信读书划线/B站收藏/微博/百度网盘/immich/Home Assistant——凭据用户自己填配置文件，没填就给接入指引。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/cloud"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","cloud"]}}}

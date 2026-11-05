@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-company","description":"企业信息连接器：天眼查/企查查页面复制文本解析成企业卡库（法人/注册资本/状态）。手动导入形态。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/company"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","company"]}}}

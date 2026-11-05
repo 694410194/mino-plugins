@@ -1,1 +1,0 @@
-{"plugins":[{"name":"mino-comma","title":"mino-comma","description":"Mino sessionless proactive companion agent (inspired by AFK-surf/Comma)","versions":[{"version":"0.1.0","publishTimestamp":1793771229,"source":{"type":"git","url":"https://mino.baby/git/comma","commit":"93fac6b915e36409742e78c2880ae8a9abdbbd57"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}]}]}

@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-localsend","description":"文件传输连接器：LocalSend HTTP API 向局域网设备发文件/收文件状态。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/localsend"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","localsend"]}}}

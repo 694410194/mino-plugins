@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-music","description":"歌单连接器：读网易云歌单（公开列表无需凭据，私单给 cookie），整理收藏过的歌。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/music"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","music"]}}}

@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-gov","description":"政务连接器：12123违章/个税/社保公积金/地方通导出文本或CSV入本地库检索统计。手动导入形态。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/gov"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","gov"]}}}

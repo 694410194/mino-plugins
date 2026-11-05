@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-orders","description":"电商订单连接器：淘宝/京东/美团/拼多多/饿了么/闲鱼订单文本或导出文件导入本地库检索统计。手动导入形态。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/orders"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","orders"]}}}

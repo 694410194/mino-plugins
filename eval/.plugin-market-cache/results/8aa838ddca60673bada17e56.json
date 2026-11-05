@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-ime","description":"输入法词库连接器：导入词库转换工具产出的词条文本（搜狗/微软/QQ等），入本地库检索导出。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/ime"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","ime"]}}}

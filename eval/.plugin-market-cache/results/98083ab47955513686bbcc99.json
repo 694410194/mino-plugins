@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-invoice","description":"发票连接器：扫指定文件夹的 OFD/PDF 发票，提取抬头/金额/日期成清单。只读、本地。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/invoice"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","invoice"]}}}

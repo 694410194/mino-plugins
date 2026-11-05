@@ -1,1 +1,0 @@
-{"release":{"name":"mino-ops","version":{"version":"0.4.4","publishTimestamp":1793771238,"source":{"type":"git","url":"https://mino.baby/git/ops","commit":"21c412507643a46644401f6cf1276e61b18e1ce5"},"engines":{"dsh":">=0.2.0-rc.2 <0.3.0"}}}}

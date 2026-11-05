@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-ytdlp","description":"视频下载连接器：yt-dlp 封装，下载公开视频/音频到本地。自动探测或按需下载引擎。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/ytdlp"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","ytdlp"]}}}

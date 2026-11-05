@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-calendar","description":"日历连接器：ICS 文件导入本地日程库 + CalDAV 凭据门同步。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/calendar"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","calendar"]}}}

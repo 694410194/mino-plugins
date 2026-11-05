@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-dev-activity","description":"开发活动连接器：本机 git 提交记录 + shell 命令历史，看最近在写什么、跑过什么命令。只读、本地、零配置。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/dev-activity"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","dev-activity"]}}}

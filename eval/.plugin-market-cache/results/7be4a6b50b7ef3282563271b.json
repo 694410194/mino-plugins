@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-engine-assist","version":{"version":"0.1.0","publishTimestamp":1793847456,"source":{"type":"git","url":"https://mino.baby/git/engine-assist","commit":"720d6f3165d54e3ef4e9d645a3d5b46b41499e5a"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

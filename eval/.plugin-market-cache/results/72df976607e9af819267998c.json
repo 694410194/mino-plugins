@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-semsearch","description":"语义检索层：本地 llama-server 跑中文 embedding，把全部连接器语料编成向量索引，corpus 的关键词检索升级成「懂意思」的搜索。","metadata":{"keywords":["dsh","dsh-plugin","mino-connector","semantic","embedding","vector","memory"]}}}

@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-jobs","description":"招聘连接器：BOSS直聘等投递/沟通记录导出文本CSV入库，公司岗位追踪。手动导入形态。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/jobs"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","jobs"]}}}

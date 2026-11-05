@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-car","description":"车况连接器：里程/保养/违章/保险记录入库查询。手动导入形态。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/car"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","car"]}}}

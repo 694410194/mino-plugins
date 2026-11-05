@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-translate","description":"翻译连接器：MyMemory 免费接口 + deeplx 可选端点，文本翻译+截图OCR翻译管线。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/translate"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","translate"]}}}

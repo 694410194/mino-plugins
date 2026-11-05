@@ -1,0 +1,1 @@
+{"display":{"title":"mino-speak-up","description":"主动搭话（dsh-speak-up）：DSH 插件。没人在跟她说话的时候，她也会自己起个话头 —— 按你设的间隔掷一次本地骰子（不花模型），掷中了就走 DSH 自己的一轮（人格、历史、工具、记忆全都是她自己的）。","author":"Yuuyuko-uu","repository":{"url":"https://github.com/Yuuyuko-uu/dsh-speak-up"},"metadata":{"keywords":["deepseek-harness","dsh-plugin","initiative","proactive","ai-companion"]}}}

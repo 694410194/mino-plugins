@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-gzh","description":"公众号文章连接器：把微信公众号文章存成 markdown 留档，防原文被删。公开页面抓取，正文只在本机处理。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/gzh"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","gzh"]}}}

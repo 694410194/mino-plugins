@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-wechat","description":"微信本地语料连接器：定位 WeChat 数据目录/进程，封装导出引擎（wechat-dump-rs/PyWxDump）做内存取钥+库解密，明文落 chat.db 检索。特区解封，用户自己的数据。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/wechat"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","wechat"]}}}

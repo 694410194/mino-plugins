@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-game","description":"游戏数据连接器：原神祈愿记录（用户提供祈愿 URL）等用户侧游戏数据导入整理。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/game"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","game"]}}}

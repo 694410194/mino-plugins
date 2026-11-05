@@ -1,0 +1,1 @@
+{"release":{"name":"mino-whale-musume","version":{"version":"2.5.1","publishTimestamp":1793847471,"source":{"type":"git","url":"https://mino.baby/git/whale-musume","commit":"83ca3fd70898af76c519ea38a2d101b23bfbdc44"},"engines":{"dsh":">=0.1.0-rc.6 <0.3.0"}}}}

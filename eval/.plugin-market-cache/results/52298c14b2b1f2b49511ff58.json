@@ -1,1 +1,0 @@
-{"release":{"name":"mino-fish-memory","version":{"version":"1.6.0","publishTimestamp":1793771233,"source":{"type":"git","url":"https://mino.baby/git/fish-memory","commit":"259529b80e2df6e197a62da0d04364bece3380ac"},"engines":{"dsh":">=0.2.1-rc.2"}}}}

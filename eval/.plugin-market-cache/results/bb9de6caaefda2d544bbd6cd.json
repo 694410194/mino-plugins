@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-vault","description":"密码库连接器：读用户自己导出的 Bitwarden/KeePass CSV 入本地库检索。敏感数据不出本机。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/vault"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","vault"]}}}

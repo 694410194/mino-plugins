@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-game","version":{"version":"0.1.0","publishTimestamp":1793847456,"source":{"type":"git","url":"https://mino.baby/git/game","commit":"4a0ccad77aece0e93c6ddc8c976b1a0033f4ec31"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

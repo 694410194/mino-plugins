@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-collections","description":"收藏夹连接器：用户粘贴的链接清单（抖音/小红书/B站等分享文本）解析去重归类成收藏目录。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/collections"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","collections"]}}}

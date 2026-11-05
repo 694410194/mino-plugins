@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-meeting","description":"会议连接器：腾讯会议导出的纪要/字幕VTT/TXT入本地库检索。手动导入形态。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/meeting"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","meeting"]}}}

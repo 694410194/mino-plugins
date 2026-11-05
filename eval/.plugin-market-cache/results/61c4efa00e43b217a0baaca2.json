@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-edu","description":"教育连接器：作业帮/华为学习等学习记录与成绩单导出文本CSV入库。手动导入形态。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/edu"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","edu"]}}}

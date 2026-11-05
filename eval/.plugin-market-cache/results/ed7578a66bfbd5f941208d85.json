@@ -1,0 +1,1 @@
+{"display":{"title":"mino-connector-photos","description":"相册连接器：本地照片文件夹按时间/来源盘点 + immich 相册内容拉取。只读、本地。","repository":{"url":"https://github.com/694410194/mino-plugins","directory":"packages/photos"},"metadata":{"keywords":["dsh","dsh-plugin","mino-connector","photos"]}}}
