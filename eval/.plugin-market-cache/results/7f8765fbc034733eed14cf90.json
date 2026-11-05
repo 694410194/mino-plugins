@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-bills","version":{"version":"0.1.0","publishTimestamp":1793847452,"source":{"type":"git","url":"https://mino.baby/git/connector-bills","commit":"a390deadb2a8ec57c940efe2078b22792809082d"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

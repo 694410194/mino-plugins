@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-scrcpy","version":{"version":"0.1.0","publishTimestamp":1793847466,"source":{"type":"git","url":"https://mino.baby/git/scrcpy","commit":"35fa4a38233491ead7a3342596108b9e8842f2ca"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

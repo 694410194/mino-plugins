@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-calendar","version":{"version":"0.1.0","publishTimestamp":1793855775,"source":{"type":"git","url":"https://mino.baby/git/calendar","commit":"2554e8bd0935635b6d3adbe0d7f5bf28d04c6842"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

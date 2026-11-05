@@ -1,0 +1,1 @@
+{"release":{"name":"mino-mcp-memory","version":{"version":"0.1.0","publishTimestamp":1793855781,"source":{"type":"git","url":"https://mino.baby/git/mcp-memory","commit":"3835c4bc37ff08ea33ef59313f32513fb6f448d0"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

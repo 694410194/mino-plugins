@@ -31,11 +31,11 @@
       "versions": [
         {
           "version": "1.1.24",
-          "publishTimestamp": 1793847449,
+          "publishTimestamp": 1793855772,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/aurabot",
-            "commit": "5ee94381f83157d2f157dae0e3ae26289ec29c1d"
+            "commit": "329b3af8470d67ad773b7b1f3fac229f32cb1cb9"
           }
         }
       ]
@@ -69,11 +69,11 @@
       "versions": [
         {
           "version": "0.4.2",
-          "publishTimestamp": 1793847450,
+          "publishTimestamp": 1793855773,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/balance",
-            "commit": "733ebf2c5d1e7d5edbed14e5d9eba50b741a9b82"
+            "commit": "3109de421e5a9cda26c717734366acf6db96de26"
           }
         }
       ]
@@ -96,11 +96,11 @@
       "versions": [
         {
           "version": "0.28.2",
-          "publishTimestamp": 1793847450,
+          "publishTimestamp": 1793855773,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/better-sidebar",
-            "commit": "8809575d1e6a49ef280f3cb3574b8ccf3b35626a"
+            "commit": "7037e7d025628b89849dccd986ff5f09754f9ac8"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.1 <0.3.0-0"
@@ -143,11 +143,11 @@
       "versions": [
         {
           "version": "1.11.3",
-          "publishTimestamp": 1793847450,
+          "publishTimestamp": 1793855773,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/bili-humanism",
-            "commit": "3e7ff06d981fd41207340f98e6ca473fe125d7c4"
+            "commit": "f3522ff7397d0c5de0f810e895c4fdc11ad47649"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.2 <0.3.0"
@@ -160,9 +160,9 @@
       "title": "mino-bili-live",
       "description": "DSH 轻量 B站直播弹幕插件：看弹幕、授权发弹幕、挂机听、可选 AI 自动陪聊与可选语音转写；不常驻重进程，闲时几乎不占 CPU。",
       "author": "rentaoyan0628-collab",
-      "homepage": "https://github.com/rentaoyan0628-collab/dsh-bili-live",
+      "homepage": "https://github.com/rentaoyan0628-collab/dsh-bili-danmaku-lite",
       "repository": {
-        "url": "https://github.com/rentaoyan0628-collab/dsh-bili-live"
+        "url": "https://github.com/rentaoyan0628-collab/dsh-bili-danmaku-lite"
       },
       "metadata": {
         "keywords": [
@@ -189,11 +189,11 @@
       "versions": [
         {
           "version": "0.4.7",
-          "publishTimestamp": 1793847450,
+          "publishTimestamp": 1793855773,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/bili-live",
-            "commit": "30f1005442dea4cb4de165104b76f9de9a312c78"
+            "commit": "a611dae5dd364b7dfd572a88ed521b8b34ce328f"
           }
         }
       ]
@@ -227,11 +227,11 @@
       "versions": [
         {
           "version": "2.4.0",
-          "publishTimestamp": 1793847450,
+          "publishTimestamp": 1793855774,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/bili-scroll",
-            "commit": "e561c7bad5eb99987e9dfd89bd5ec79b3065d9b5"
+            "commit": "712ee1fceb8922cf6ac5c3519ef60f5f39cf5cb0"
           },
           "engines": {
             "dsh": ">=0.1.7-rc.1"
@@ -269,11 +269,11 @@
       "versions": [
         {
           "version": "0.4.6",
-          "publishTimestamp": 1793847450,
+          "publishTimestamp": 1793855774,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/bili-whale",
-            "commit": "c9f78089da81a25a479a90ed367d961121838a87"
+            "commit": "93dee95635006c0777a4e1dfb5ff4d037571b1c0"
           }
         }
       ]
@@ -350,11 +350,11 @@
       "versions": [
         {
           "version": "2.17.6",
-          "publishTimestamp": 1793847451,
+          "publishTimestamp": 1793855774,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/bridge",
-            "commit": "2410da393364c45c1bcaa2bed8439bcae3a93d83"
+            "commit": "614d362bbadb2c83d5448d1e224e43500d8e6b42"
           }
         }
       ]
@@ -364,18 +364,18 @@
       "title": "mino-browser",
       "description": "Bridge plugin: token-authenticated WebSocket carrier for the browser extension plus text-only browser_* tools that drive the user's Chrome via that extension",
       "author": "Yuxiang Lin",
-      "homepage": "https://github.com/yuxianglin/dsh-bridge-browser",
+      "homepage": "https://github.com/omdsh-dev/dsh-browser",
       "repository": {
-        "url": "https://github.com/yuxianglin/dsh-bridge-browser"
+        "url": "https://github.com/omdsh-dev/dsh-browser"
       },
       "versions": [
         {
           "version": "0.0.8",
-          "publishTimestamp": 1793847451,
+          "publishTimestamp": 1793855774,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/browser",
-            "commit": "20ce839c749eede2c8026c828e6715fcb661b0c5"
+            "commit": "bc808aae346cb0b18332fa43ad85198c55b8c96c"
           }
         }
       ],
@@ -441,11 +441,11 @@
       "versions": [
         {
           "version": "0.26.3",
-          "publishTimestamp": 1793847451,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/chat-import",
-            "commit": "81bb555103166bd6ca2152526ec628cbc196529c"
+            "commit": "12fa2792541434cd5c58a7edf3ec0dfeba52f02e"
           },
           "engines": {
             "dsh": ">=0.1.5-rc.1 >=0.1.0-rc.6 <0.3.0"
@@ -460,11 +460,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847452,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/comma",
-            "commit": "6a9a059928167e18e5edeec0f4320db9ced4fd7b"
+            "commit": "ad81b814350bf7cf3eca12de9521ef7c9d1126bd"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -512,11 +512,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847451,
+          "publishTimestamp": 1793855774,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/browser-history",
-            "commit": "8d19425ac32a27cc5dee9107d80dffc965264ce3"
+            "commit": "dbd8ee4b523d464e90bf85ff5b7ecfe7fa6f4914"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -528,9 +528,10 @@
       "name": "mino-connector-bills",
       "title": "mino-connector-bills",
       "description": "跨生态消费账单连接器：读你自己从支付宝/微信官方导出的账单文件，本地转成统一账目 + 分类汇总，数据不出本机。",
+      "author": "deb-sig",
+      "homepage": "https://github.com/deb-sig/double-entry-generator",
       "repository": {
-        "url": "https://github.com/694410194/mino-plugins",
-        "directory": "packages/connector-bills"
+        "url": "https://github.com/deb-sig/double-entry-generator"
       },
       "metadata": {
         "keywords": [
@@ -554,11 +555,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847452,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/connector-bills",
-            "commit": "a390deadb2a8ec57c940efe2078b22792809082d"
+            "commit": "ae09ae419f1893ed62f5186f868be13b6cbcb717"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -594,11 +595,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847456,
+          "publishTimestamp": 1793855779,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/files-search",
-            "commit": "a454d21df60b6cf129361910ad7c8d512a76267a"
+            "commit": "283910910da33a1787af5302b91da99ed543cb24"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -635,11 +636,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847464,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/portfolio",
-            "commit": "9ab38e44f57e8ee5a8428ba8bf2ba03f1e8ede1f"
+            "commit": "850259f4b2609ad2654a3f09bca669d3ce8df1a7"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -684,11 +685,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847452,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/creative-studio",
-            "commit": "01a67288da86ff8c1acb0a6f35e1eeca320bb985"
+            "commit": "dcb4ac6a7ef52e33211ba9c673782fd917efeb86"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -726,11 +727,11 @@
       "versions": [
         {
           "version": "4.3.2",
-          "publishTimestamp": 1793847453,
+          "publishTimestamp": 1793855777,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/damage-pulse",
-            "commit": "8c5f9cc4cbaff70264ef2ddb1ec377485aeb811e"
+            "commit": "8293efbf2be2d3856e9f0cdcd66e5a950eda0d93"
           },
           "engines": {
             "dsh": ">=0.1.0-rc.6 <0.3.0"
@@ -767,11 +768,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847455,
+          "publishTimestamp": 1793855779,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/drawio",
-            "commit": "0fefa068229f83016689aca4ea35a27de03f6577"
+            "commit": "00fb521d1d7a0558e5cd1dd602bbad63f24ee875"
           },
           "engines": {
             "dsh": ">=0.1.0-rc.6 <0.3.0"
@@ -807,11 +808,11 @@
       "versions": [
         {
           "version": "1.6.0",
-          "publishTimestamp": 1793847456,
+          "publishTimestamp": 1793855779,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/fish-memory",
-            "commit": "1416d64e3bf9ec69ef4abf9e712726266c9ce71c"
+            "commit": "5ab22d1168096d1a8881aed98b757a3e30382f63"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.2"
@@ -872,11 +873,11 @@
       "versions": [
         {
           "version": "5.9.2",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855780,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/im",
-            "commit": "3b5497a8a50cecd81cd57bc232b6293a92e826ee"
+            "commit": "c1745d635ccc1131bbc6e4c6c4be1e0d58b67757"
           }
         }
       ]
@@ -885,19 +886,19 @@
       "name": "mino-image",
       "title": "mino-image",
       "description": "Mino 图像生成插件 — DeepSeek Harness 对话内生图与修图，走 api.mino.baby 账户额度。Derived from dsh-image-gen (Apache-2.0).",
-      "author": "Mino",
+      "author": "shanliuling",
+      "homepage": "https://github.com/shanliuling/dsh-image-gen",
       "repository": {
-        "url": "https://github.com/694410194/mino-plugins",
-        "directory": "packages/image"
+        "url": "https://github.com/shanliuling/dsh-image-gen"
       },
       "versions": [
         {
           "version": "0.1.0-alpha.1",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855780,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/image",
-            "commit": "31d9deaf8ce23dcbae0dabf27b541d6d06c0b4e1"
+            "commit": "3934a80fb807618c39d7743b12e5739e125c21a5"
           }
         }
       ],
@@ -946,11 +947,11 @@
       "versions": [
         {
           "version": "0.6.3",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/knowledge-studio",
-            "commit": "c532c1b662cc6f9623cfe2382d8be86a4cfa6691"
+            "commit": "48d4174f2501ab2e50c1147ac96a0d19d7221902"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.2 <0.3.0-0"
@@ -963,10 +964,10 @@
       "title": "mino-mcp-brave-search",
       "description": "MCP 接入包：Brave Search MCP 服务器（stdio/npx，需 BRAVE_API_KEY，未配置时行自动停用）。安装即挂载一条 dsh-mcp-client 配置行。",
       "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iMTQiIGZpbGw9IiNmYjU0MmIiLz4KICA8cGF0aCBkPSJNMjQgMjJoLTZ2MTBoNnY2aDR2LTZoOHY2aDR2LTZoNlYyMmgtNnYtNmgtNHY2aC04di02aC00djZ6IiBmaWxsPSIjZmZmIi8+CiAgPHBhdGggZD0iTTMwIDQ0aDR2OGEyIDIgMCAwIDEtNCAwdi04eiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K",
+      "author": "modelcontextprotocol",
       "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/mcp-brave-search#readme",
       "repository": {
-        "url": "https://github.com/694410194/mino-plugins",
-        "directory": "packages/mcp-brave-search"
+        "url": "https://github.com/modelcontextprotocol/servers"
       },
       "metadata": {
         "keywords": [
@@ -990,11 +991,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847458,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/mcp-brave-search",
-            "commit": "c73251bc8e1e1cfe5aa839730f2df11d157e52bf"
+            "commit": "4454dda9af88493857f7bee817ad46db24870d6a"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -1007,10 +1008,10 @@
       "title": "mino-mcp-chrome-devtools",
       "description": "MCP 接入包：Chrome DevTools MCP 服务器（stdio/npx，控制本机 Chrome：导航/性能/网络/截图）。安装即挂载一条 dsh-mcp-client 配置行。",
       "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iMTQiIGZpbGw9IiMwZWE1ZTkiLz4KICA8cGF0aCBkPSJNMjQgMjJoLTZ2MTBoNnY2aDR2LTZoOHY2aDR2LTZoNlYyMmgtNnYtNmgtNHY2aC04di02aC00djZ6IiBmaWxsPSIjZmZmIi8+CiAgPHBhdGggZD0iTTMwIDQ0aDR2OGEyIDIgMCAwIDEtNCAwdi04eiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K",
+      "author": "ChromeDevTools",
       "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/mcp-chrome-devtools#readme",
       "repository": {
-        "url": "https://github.com/694410194/mino-plugins",
-        "directory": "packages/mcp-chrome-devtools"
+        "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp"
       },
       "metadata": {
         "keywords": [
@@ -1036,11 +1037,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847458,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/mcp-chrome-devtools",
-            "commit": "370d56bf7049acae04bbe9eed2ba6f89540dcdff"
+            "commit": "5fc401cce47c81be6f33ff16460633726840e20b"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -1053,10 +1054,10 @@
       "title": "mino-mcp-github",
       "description": "MCP 接入包：GitHub 官方远端 MCP 服务器（streamable-http，需 GITHUB_TOKEN，未配置时行自动停用）。安装即挂载一条 dsh-mcp-client 配置行。",
       "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iMTQiIGZpbGw9IiMyNDI5MmYiLz4KICA8cGF0aCBkPSJNMjQgMjJoLTZ2MTBoNnY2aDR2LTZoOHY2aDR2LTZoNlYyMmgtNnYtNmgtNHY2aC04di02aC00djZ6IiBmaWxsPSIjZmZmIi8+CiAgPHBhdGggZD0iTTMwIDQ0aDR2OGEyIDIgMCAwIDEtNCAwdi04eiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K",
+      "author": "github",
       "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/mcp-github#readme",
       "repository": {
-        "url": "https://github.com/694410194/mino-plugins",
-        "directory": "packages/mcp-github"
+        "url": "https://github.com/github/github-mcp-server"
       },
       "metadata": {
         "keywords": [
@@ -1079,11 +1080,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847458,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/mcp-github",
-            "commit": "2236ec5b93e37c2ad4c74e68762e53048f7f88e8"
+            "commit": "3a2f1e506506822c0b98732091217358158d9e74"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -1096,10 +1097,10 @@
       "title": "mino-mcp-memory",
       "description": "MCP 接入包：官方 memory 知识图谱服务器（stdio/npx，无需密钥）。安装即挂载一条 dsh-mcp-client 配置行。",
       "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iMTQiIGZpbGw9IiM0ZDZiZmUiLz4KICA8cGF0aCBkPSJNMjQgMjJoLTZ2MTBoNnY2aDR2LTZoOHY2aDR2LTZoNlYyMmgtNnYtNmgtNHY2aC04di02aC00djZ6IiBmaWxsPSIjZmZmIi8+CiAgPHBhdGggZD0iTTMwIDQ0aDR2OGEyIDIgMCAwIDEtNCAwdi04eiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K",
+      "author": "modelcontextprotocol",
       "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/mcp-memory#readme",
       "repository": {
-        "url": "https://github.com/694410194/mino-plugins",
-        "directory": "packages/mcp-memory"
+        "url": "https://github.com/modelcontextprotocol/servers"
       },
       "metadata": {
         "keywords": [
@@ -1121,11 +1122,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847458,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/mcp-memory",
-            "commit": "ff1a764f75fa76abe83d22f30492925653e0ad0e"
+            "commit": "3835c4bc37ff08ea33ef59313f32513fb6f448d0"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -1169,11 +1170,11 @@
       "versions": [
         {
           "version": "0.1.1",
-          "publishTimestamp": 1793847458,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/mcp-paper-search",
-            "commit": "5de07346912d9a34340771cb6176c7b51182b63d"
+            "commit": "07f232820520f838f5ef20fdacde33fb155c73d4"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -1186,10 +1187,10 @@
       "title": "mino-mcp-thinking",
       "description": "MCP 接入包：官方 sequential-thinking 逐步思考服务器（stdio/npx，无需密钥）。安装即挂载一条 dsh-mcp-client 配置行。",
       "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iMTQiIGZpbGw9IiM4YjVjZjYiLz4KICA8cGF0aCBkPSJNMjQgMjJoLTZ2MTBoNnY2aDR2LTZoOHY2aDR2LTZoNlYyMmgtNnYtNmgtNHY2aC04di02aC00djZ6IiBmaWxsPSIjZmZmIi8+CiAgPHBhdGggZD0iTTMwIDQ0aDR2OGEyIDIgMCAwIDEtNCAwdi04eiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K",
+      "author": "modelcontextprotocol",
       "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/mcp-thinking#readme",
       "repository": {
-        "url": "https://github.com/694410194/mino-plugins",
-        "directory": "packages/mcp-thinking"
+        "url": "https://github.com/modelcontextprotocol/servers"
       },
       "metadata": {
         "keywords": [
@@ -1211,11 +1212,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847458,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/mcp-thinking",
-            "commit": "4f10ef8a66ac0f524c8f75d1e6f216062cdd6e12"
+            "commit": "aff8b656de2c79743777babc020ea6c01fd57f35"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -1259,11 +1260,11 @@
       "versions": [
         {
           "version": "0.1.76",
-          "publishTimestamp": 1793847458,
+          "publishTimestamp": 1793855782,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/meme",
-            "commit": "64a10f0557c4a430435fa9ba78dd6eba578819ea"
+            "commit": "e8aedb723e873f266ff5ef165c172f0120893f11"
           }
         }
       ]
@@ -1296,11 +1297,11 @@
       "versions": [
         {
           "version": "0.8.5",
-          "publishTimestamp": 1793847459,
+          "publishTimestamp": 1793855782,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/mood",
-            "commit": "dab2be0d390609e81cab16e280072b0ca9131cc7"
+            "commit": "316150ac5fd49359a967b081f3a7cee517e1d743"
           }
         }
       ]
@@ -1337,11 +1338,11 @@
       "versions": [
         {
           "version": "0.1.2",
-          "publishTimestamp": 1793847459,
+          "publishTimestamp": 1793855782,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/notes",
-            "commit": "d2833f726c637987534a27522923127a715882b0"
+            "commit": "977493888712d5291adb874ed3a0efa9b3cb94a0"
           },
           "engines": {
             "dsh": ">=0.1.0-rc.6 <0.3.0"
@@ -1387,11 +1388,11 @@
       "versions": [
         {
           "version": "0.1.21",
-          "publishTimestamp": 1793847460,
+          "publishTimestamp": 1793855783,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/oh-story",
-            "commit": "4a8bfda50c3549ce027439588b36cb9fdc4bed9c"
+            "commit": "77a0583f554f2e61147e5664abedf591325f4f33"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
@@ -1428,11 +1429,11 @@
       "versions": [
         {
           "version": "1.2.7",
-          "publishTimestamp": 1793847461,
+          "publishTimestamp": 1793855785,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/open-sea",
-            "commit": "5a760a94daae64c37f6f611f589ef96907ab648a"
+            "commit": "fb7668d85cd3b1b62a9b20a092d1e8ed3baaccee"
           }
         }
       ]
@@ -1471,11 +1472,11 @@
       "versions": [
         {
           "version": "0.4.4",
-          "publishTimestamp": 1793847462,
+          "publishTimestamp": 1793855785,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/ops",
-            "commit": "00c3df7b4a25025e3cce02693ed48a26557ddbe6"
+            "commit": "fd3996543ea5bd11e2cde462b481a787f535ddd8"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
@@ -1521,11 +1522,11 @@
       "versions": [
         {
           "version": "0.1.0-alpha.2",
-          "publishTimestamp": 1793847462,
+          "publishTimestamp": 1793855786,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/persona",
-            "commit": "5cb2eecc9c5089b26401f5f208167d9225f7ea6f"
+            "commit": "12f20bf2d7fe2fb11115f8ac5285b19049f87abb"
           }
         }
       ]
@@ -1558,11 +1559,11 @@
       "versions": [
         {
           "version": "0.1.23",
-          "publishTimestamp": 1793847464,
+          "publishTimestamp": 1793855787,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/pet",
-            "commit": "0f8b3f3497e5c8e682bd17aae452055b8a1ca39a"
+            "commit": "66759c9a0244c9dd0246bc055dede637be0dcfb2"
           }
         }
       ]
@@ -1599,11 +1600,11 @@
       "versions": [
         {
           "version": "0.7.1",
-          "publishTimestamp": 1793847464,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/pilot",
-            "commit": "8dd5690b3a0e1f642b4199b805346e23a440c45a"
+            "commit": "d656eb6f8ef02d47b8203c52645059348f507224"
           }
         }
       ]
@@ -1612,10 +1613,10 @@
       "name": "mino-qq-console",
       "title": "mino-qq-console",
       "description": "把手机 QQ 变成 DeepSeek Harness 的遥控器 — 项目管理、会话绑定、任务确认、排队/引导/打断、实时流式进度、模型与推理强度、权限切换，以及完整的安装/卸载支持。",
-      "author": "zjw0011",
-      "homepage": "https://github.com/zjw0011/dsh-qq-console",
+      "author": "shenhua725",
+      "homepage": "https://github.com/shenhua725/dsh-qq-console",
       "repository": {
-        "url": "https://github.com/zjw0011/dsh-qq-console"
+        "url": "https://github.com/shenhua725/dsh-qq-console"
       },
       "metadata": {
         "keywords": [
@@ -1638,11 +1639,11 @@
       "versions": [
         {
           "version": "2.2.26",
-          "publishTimestamp": 1793847465,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/qq-console",
-            "commit": "27fb0731cababff737cb928b261c8e9b44fd234b"
+            "commit": "a04a826e0410bcf234e169fcf0b16e895171555b"
           }
         }
       ]
@@ -1674,11 +1675,11 @@
       "versions": [
         {
           "version": "1.5.0",
-          "publishTimestamp": 1793847465,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/qq-link",
-            "commit": "45b152104ace067b5f80164d2b59a327a6478b7c"
+            "commit": "0d55b7dc29cf113fd0b49068547591d290f79b75"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.2"
@@ -1728,11 +1729,11 @@
       "versions": [
         {
           "version": "0.5.6",
-          "publishTimestamp": 1793847465,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/qqbot",
-            "commit": "016a1a00c7b1def676721f6ebed5468dc94b99f5"
+            "commit": "df4b352d210fcade30f71e183109aa5bc3940e6f"
           }
         }
       ]
@@ -1776,11 +1777,11 @@
       "versions": [
         {
           "version": "0.19.1",
-          "publishTimestamp": 1793847465,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/rewind",
-            "commit": "a77f7d1f873220c4e7cef52c58f6bb873adc01b3"
+            "commit": "ff23794cb2c99f9be3693c2bef0e0b97560aaec9"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.1 <0.3.0-0"
@@ -1827,11 +1828,11 @@
       "versions": [
         {
           "version": "2.7.2",
-          "publishTimestamp": 1793847465,
+          "publishTimestamp": 1793855789,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/safety-net",
-            "commit": "a61926d5d8aa08dcb845923f09839257c945d9b5"
+            "commit": "cb4a968d55fa4d6e5c2d41ceeaa91ca07975dce3"
           }
         }
       ]
@@ -1869,11 +1870,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847465,
+          "publishTimestamp": 1793855789,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/scholar-suite",
-            "commit": "12d03f5f07104d54159283824fea01fc80e7c9b0"
+            "commit": "3bfaf8e948574645e8bf312ceea81a1f1068a8ac"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -1914,11 +1915,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855789,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-academic",
-            "commit": "add63831dd4fcaf1715cd5727b2965275ab2a22e"
+            "commit": "41330bc801d2ba30ec231aff994dffab81f3a0bf"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -1960,11 +1961,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855789,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-cnki",
-            "commit": "23fb9e5e3003123926ad3552c85eb3ccfd38cc32"
+            "commit": "83a4755e6944b3408a11a429bbd33a3ee9ffda00"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2002,11 +2003,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855789,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-commit",
-            "commit": "312fe36b76f910b74f91f2a2e9b21f18918e598e"
+            "commit": "aa37f378362332ade183f2c5f1dd0bb5db5662fe"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2046,11 +2047,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855789,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-drama",
-            "commit": "8426ee7d15e655df8d2ea8752155e913f23e7081"
+            "commit": "67c699e07cfa288827753b2b32df1bd0b05eb43a"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2090,11 +2091,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855790,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-duanju",
-            "commit": "28ba2f621674bf12c57359dfc6df9f2bee53b533"
+            "commit": "eedf54fb8d16b7ec5381f60cf609d45c6a557d9f"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2120,11 +2121,11 @@
       "versions": [
         {
           "version": "0.4.13",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855790,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-explorer",
-            "commit": "e80959c85c58c7b87466d3e1a486d687921202bb"
+            "commit": "236f626da0f8f62da0fdae76c66e9cc7790ea9cc"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.3"
@@ -2173,11 +2174,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855790,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-humanizer",
-            "commit": "ce7ac7918721e2b2bd289a0ea8a6629c8f414f4b"
+            "commit": "7bcebc567666ca2c4aabab64d18798a8bba530db"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2216,11 +2217,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855790,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-mino-release",
-            "commit": "c8de9c5ada031b512c43de222b43044d9db37b2c"
+            "commit": "ea7cf31ddcd370e53dd1d1021fc44809124137a7"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2262,11 +2263,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847468,
+          "publishTimestamp": 1793855791,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-nature",
-            "commit": "cc3bb583378df26bd42e087a00b2db6fbe48362a"
+            "commit": "a1ab449ed048a9f9f9adfd4e22542b0e1edbfc31"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2306,11 +2307,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847468,
+          "publishTimestamp": 1793855791,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-nsfc",
-            "commit": "8a932bd001f9f49e02d0db74441f6ff66d8c5fda"
+            "commit": "b532e133fb4bce44862ae0be2853f8e87e695830"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.2.3"
@@ -2350,11 +2351,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847468,
+          "publishTimestamp": 1793855791,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-paperjury",
-            "commit": "236380d33d061a59c9c8701792d8238e51032120"
+            "commit": "4395f46eb38c78d320cada3a6fd6a71359c7ee52"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2394,11 +2395,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847468,
+          "publishTimestamp": 1793855792,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-screenwriting",
-            "commit": "91ae2c05ef712b08a43fa455e7ff6ffd133c6ad7"
+            "commit": "7e67c6a64022ea0a90be960db9ebf7348204bd0f"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2437,11 +2438,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847468,
+          "publishTimestamp": 1793855792,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skill-script-review",
-            "commit": "3a92272f8a3ba66e7681b0000664775dd08df979"
+            "commit": "dd71beb025e9c6b8f929dc74621f57c34eafe86f"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2462,11 +2463,11 @@
       "versions": [
         {
           "version": "0.6.1",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855790,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skillhub",
-            "commit": "1869e0b63fe1002be2c0f4aedb0eb7bd496da118"
+            "commit": "b10b68e0ed845aa5b7167d1bf335a2225642d689"
           },
           "engines": {
             "dsh": ">=0.1.0-rc.6 <0.3.0"
@@ -2495,11 +2496,11 @@
       "versions": [
         {
           "version": "0.1.72",
-          "publishTimestamp": 1793847469,
+          "publishTimestamp": 1793855792,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/skin-market",
-            "commit": "0b575da8c2a33f04c95d00e7c695bbdb5ab16180"
+            "commit": "1aa2c118c7815cf28b7e4a8e11295038171ef7af"
           }
         }
       ],
@@ -2542,11 +2543,11 @@
       "versions": [
         {
           "version": "0.2.9",
-          "publishTimestamp": 1793847469,
+          "publishTimestamp": 1793855792,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/speak-up",
-            "commit": "a59e2c812a49996ebaeded7e73125438b2ee3e5a"
+            "commit": "b4674eddd95738d63976436d50c58b3d395df443"
           }
         }
       ]
@@ -2590,11 +2591,11 @@
       "versions": [
         {
           "version": "0.38.0",
-          "publishTimestamp": 1793847469,
+          "publishTimestamp": 1793855792,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/status",
-            "commit": "9e4cc4e72a2b5c531194b2e0f9a57c7de64128f9"
+            "commit": "224503364f9832fa80bbc9b55450faad9d225bb0"
           }
         }
       ]
@@ -2610,14 +2611,18 @@
         "zh": "监听单个 GitHub 仓库，把获授权的请求转为 Ticket，并在各自的 Mino 会话中执行。"
       },
       "author": "DeepSeek Harness Team",
+      "homepage": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+      "repository": {
+        "url": "https://github.com/deepseek-ai/dsh-superagent-prototype"
+      },
       "versions": [
         {
           "version": "0.1.1",
-          "publishTimestamp": 1793847469,
+          "publishTimestamp": 1793855793,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/superagent",
-            "commit": "e36caf9b1d9491c77dd1e5f9c9c2e0b5bbd622b8"
+            "commit": "f9a6bc20e27a5a73216fadbe7c7df14e0a4162dc"
           },
           "engines": {
             "dsh": "^0.2.1-alpha.2"
@@ -2652,11 +2657,11 @@
       "versions": [
         {
           "version": "0.4.13",
-          "publishTimestamp": 1793847469,
+          "publishTimestamp": 1793855793,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/task-board",
-            "commit": "e5e43a1342eb7fc82c52e3948c2fa7e6bbf920f5"
+            "commit": "e9909c110059ff37336cf2383e73be1bab8932a5"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.3"
@@ -2703,11 +2708,11 @@
       "versions": [
         {
           "version": "1.1.1",
-          "publishTimestamp": 1793847469,
+          "publishTimestamp": 1793855793,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/tavern",
-            "commit": "c42eb015d18cb2d16906498a64ddcb299bf41807"
+            "commit": "2d558267cfa11b03dd4f231ba3a1ac52ee27efe3"
           }
         }
       ]
@@ -2725,11 +2730,11 @@
       "versions": [
         {
           "version": "0.1.7",
-          "publishTimestamp": 1793847470,
+          "publishTimestamp": 1793855793,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/visualize",
-            "commit": "ff1dc52f9d0630948570b380ec717b7d26bebe26"
+            "commit": "32784cec261eb6b9db5db791189be95edb0e94e9"
           },
           "engines": {
             "dsh": "^0.1.0-rc.6 || ^0.2.0-rc.1 || ^0.2.1-0"
@@ -2779,11 +2784,11 @@
       "versions": [
         {
           "version": "0.5.4",
-          "publishTimestamp": 1793847470,
+          "publishTimestamp": 1793855793,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/voice",
-            "commit": "42f0b2dd176023ab4256591003665022c89a2f0a"
+            "commit": "092e2d1c3167cd3b368a2f4fdee4e3597cc7b295"
           }
         }
       ]
@@ -2819,11 +2824,11 @@
       "versions": [
         {
           "version": "2.5.1",
-          "publishTimestamp": 1793847471,
+          "publishTimestamp": 1793855795,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/whale-musume",
-            "commit": "83ca3fd70898af76c519ea38a2d101b23bfbdc44"
+            "commit": "aeae85e63dfea45bddf6807ca59f691cbffc8961"
           },
           "engines": {
             "dsh": ">=0.1.0-rc.6 <0.3.0"
@@ -2859,11 +2864,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847451,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/chat-export",
-            "commit": "80b1d6008114fd2cef8cd57241f8efc96675e472"
+            "commit": "100f3149e4fe9991c63da5aa09600e6a4500be87"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2898,11 +2903,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847451,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/cloud",
-            "commit": "4a5231e414da9a9477b8ef205fa5cc87ac9960e8"
+            "commit": "7e35472f2a49a1a72b56731ce65a55606509efb8"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2937,11 +2942,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847452,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/collections",
-            "commit": "6780cddcc6bfcee427d583355adf08fada812d95"
+            "commit": "664d5aecc74db6107d5d6adf101ab2dd778c0f08"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -2975,11 +2980,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847453,
+          "publishTimestamp": 1793855777,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/dev-activity",
-            "commit": "0513e6fcbc11c8eb5cfa963e37159ed42be68447"
+            "commit": "de5d77f5561d075cd1c46fc4578f0ce443abc2a3"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3015,11 +3020,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847456,
+          "publishTimestamp": 1793855779,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/game",
-            "commit": "4a0ccad77aece0e93c6ddc8c976b1a0033f4ec31"
+            "commit": "8ce367082701cc1e4177aad715d572cae94201a6"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3053,11 +3058,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847456,
+          "publishTimestamp": 1793855779,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/gzh",
-            "commit": "b39551757ad401c7f361a853d138b44e11c656be"
+            "commit": "3b02fbd4bed359aa433dc05493051bd15ed30fa3"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3092,11 +3097,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847456,
+          "publishTimestamp": 1793855779,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/health",
-            "commit": "69edd507c51ae4b7bf8c9102a34fd2f8fa084d51"
+            "commit": "84844f611ec96ffa4773a68340abccaf7e5a1e22"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3131,11 +3136,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/invoice",
-            "commit": "f2595bbc65a7e16579be8e63e3b49ebed1f7bc5e"
+            "commit": "82b32099041764f52fa9877a46de26865ddf73fa"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3169,11 +3174,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/legacy",
-            "commit": "29e3d6d565d114f7d6ce26c66f456e3c25ed32d0"
+            "commit": "78b6bc5854b063db2fa55d29df0da4d788715534"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3207,11 +3212,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/local-inventory",
-            "commit": "6641fd8aa6103ce20d7b9d5a8824cdf3b473cfcd"
+            "commit": "3836afcb04abce0b80941c2ca5c03a5609216d88"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3246,11 +3251,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/mail",
-            "commit": "e8b84632c5fbd32f6580de963834b401fe000850"
+            "commit": "dd43236928cff62fed3251361ba219657d9c1eda"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3285,11 +3290,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847459,
+          "publishTimestamp": 1793855782,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/music",
-            "commit": "6cf62992dde6af18987194301f8bd748446cc1d5"
+            "commit": "44b2fd2b7059d9d52570ea723c81451e4acd1e86"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3324,11 +3329,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847470,
+          "publishTimestamp": 1793855793,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/travel",
-            "commit": "5acea14b9d871f316b76a918d49e03a60ca85a89"
+            "commit": "edddd4cae1ac031b9c985445362bbc977435dffe"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3363,11 +3368,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847456,
+          "publishTimestamp": 1793855779,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/footprints",
-            "commit": "4ddc45c1fcfd4db1fdee3aa28b7e29f4b2613d41"
+            "commit": "205f350e26e95b87934dedeb61cbb2f950fd129f"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3402,11 +3407,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/kids-album",
-            "commit": "7fe1730ec4e0e25e730e195b6e18dbcf2e4186f7"
+            "commit": "6a9500da25e252dfdef9de208d347bb653e3ec8c"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3440,11 +3445,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847460,
+          "publishTimestamp": 1793855784,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/old-disk",
-            "commit": "58821a8bbda174b68c129356254adc830dd05b31"
+            "commit": "d53ee82c4a75617610246a1440d6cb6466e32e59"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3479,11 +3484,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847464,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/photos",
-            "commit": "e0485c3c0062fe3edae763a14f4d1fa15113bb9b"
+            "commit": "a489a6db766df2aa9e05e6a6c9d3d16d62eb9f2d"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3518,11 +3523,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847465,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/qzone",
-            "commit": "605547b146050f9d587ce29119050b238c338c41"
+            "commit": "80bef8b12641d660afb6143c450448206f6e121b"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3557,11 +3562,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847465,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/records",
-            "commit": "f55aa51954ee667e53e97cce244bd0fbea83291b"
+            "commit": "153a2e32df1afec786603ff4de1537c313c342fb"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3596,11 +3601,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847462,
+          "publishTimestamp": 1793855786,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/orders",
-            "commit": "9874473e9e3b94e96c7b98cc386415cf238bc59c"
+            "commit": "78cdfb7fbcd290f775d574b2559ebcdc52eab566"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3635,11 +3640,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847452,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/contacts",
-            "commit": "1b44141c30f0f85a4751f41c76b97b18227fcbe5"
+            "commit": "f8fd0be177f3874eea8da1b3389c8f5fbb402d0f"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3674,11 +3679,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847451,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/calendar",
-            "commit": "455f47488b4c45894ec049e1b67722f8c9050d5c"
+            "commit": "2554e8bd0935635b6d3adbe0d7f5bf28d04c6842"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3712,11 +3717,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847454,
+          "publishTimestamp": 1793855777,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/docs",
-            "commit": "026cdf4573dad88f8e75eaa99b249b7577c6a1f2"
+            "commit": "8c17268eb393e04cb51ec50ab8518fa0e8098028"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3752,11 +3757,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847449,
+          "publishTimestamp": 1793855772,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/asr",
-            "commit": "0b6abf711e5250fb4d4ac5f998f0b4a917d09c6a"
+            "commit": "783d64dc7c0a7f1cd08fdfc711befc85d2a47847"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3792,11 +3797,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847470,
+          "publishTimestamp": 1793855793,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/vault",
-            "commit": "4dda8ec3806fc9257b0301991e84423815a949a6"
+            "commit": "2a4a7acca408b56dfac0ac39b7977e509cb6071d"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3831,11 +3836,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/ime",
-            "commit": "e44154f2e084ae082f531d619ce0a550c82ea231"
+            "commit": "bd0b7f071fca5377f7ffb56352bc6ef7351ec33a"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3869,11 +3874,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847459,
+          "publishTimestamp": 1793855783,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/ocr",
-            "commit": "cf7ee688c065d603fec680b1e07724392d8dcf0f"
+            "commit": "8f1f54b9422e3ae580c9aa02deedbdaca33d3120"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3907,11 +3912,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847450,
+          "publishTimestamp": 1793855773,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/backup",
-            "commit": "5d4cd3528a9f9dac124aa4b8a2a21c3e629e8c72"
+            "commit": "8e64906aef1280b764590bdc9b874bcb7d1602a3"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3946,11 +3951,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847456,
+          "publishTimestamp": 1793855779,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/gov",
-            "commit": "acc7c5ff85a4d4648c0a21bfe2fdd65d55f27203"
+            "commit": "1adbcc2153dd6863078eff5ab59de3d62325c151"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -3985,11 +3990,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847456,
+          "publishTimestamp": 1793855779,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/edu",
-            "commit": "bc81f039be66142f987944306add1d471a987a83"
+            "commit": "817a9490476fbce7f5918432e76131d2f22bef55"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4024,11 +4029,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/jobs",
-            "commit": "b8f391cd969c5cbc07c48087cd0f190184c9a487"
+            "commit": "07981ef1c6b88e959a7f60a57a4ad561306c4b2d"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4063,11 +4068,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847452,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/company",
-            "commit": "68c065d2664d280e92db2e0bda24e6c7a40d4d9e"
+            "commit": "ded90d20b14a51bdbb3171d93ad3697d63b9fa09"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4102,11 +4107,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847451,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/car",
-            "commit": "1e0eb602eaad28a14e9304988129af2164fe0ab7"
+            "commit": "ae98e7299bf5b9a14f77ccfc4d2713b63fd1320f"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4141,11 +4146,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847458,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/meeting",
-            "commit": "6ad34b9bce6003558ff9a317614a241cc40a0a6e"
+            "commit": "e9d43f5a58069bb743fdd68374a254f2bb002c49"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4180,11 +4185,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847459,
+          "publishTimestamp": 1793855782,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/note-import",
-            "commit": "1969d33ff33d2c984539f0bdbb1d38badf9d2cbb"
+            "commit": "e97a2899d38651a22d94bfb9d95805e268f72fce"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4218,11 +4223,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847471,
+          "publishTimestamp": 1793855795,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/ytdlp",
-            "commit": "d040e619c5f46e19e0d3b8b773e0d3c53a582f84"
+            "commit": "e098769b8a0866a39427514cb368f92a93308e7d"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4256,11 +4261,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847457,
+          "publishTimestamp": 1793855781,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/localsend",
-            "commit": "fbd22c4795b9b914234b142d326a9d6a0cd2a3fc"
+            "commit": "b84683cbb4d866f78a02c0f1da121b93e1f44fa4"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4294,11 +4299,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855789,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/scrcpy",
-            "commit": "35fa4a38233491ead7a3342596108b9e8842f2ca"
+            "commit": "d10e9ec39040befcbc2681964c7a2710a7a86a9b"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4332,11 +4337,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847469,
+          "publishTimestamp": 1793855793,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/translate",
-            "commit": "e5116a93fc9d9d6baed5c4666b23386b3e8678a3"
+            "commit": "133d21f1bacf939cfd6d4e9e25b424df80a002fa"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4370,11 +4375,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847452,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/corpus",
-            "commit": "36cf78df62ef012a8a63612342c41b4c0d42f443"
+            "commit": "b634a87816d2def2c354d520cc84988e6e1b7320"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4408,11 +4413,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847459,
+          "publishTimestamp": 1793855782,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/memorial",
-            "commit": "01f70f6fb79b8cf55e077c4d30b6191a1641f4ab"
+            "commit": "faff04ecf788181ba9306c2d8cb22abda4c82ca2"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4447,11 +4452,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847470,
+          "publishTimestamp": 1793855794,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/wechat",
-            "commit": "4804b094cb229502affed1f8efb05a40119a1b76"
+            "commit": "58d0cca966f988ae2da692160f907c35dbd902c7"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4487,11 +4492,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847465,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/qq",
-            "commit": "6086226a555c4ac1fc98826105962eb7f3c95f20"
+            "commit": "9202795ba9b52fdbcddaddeb710962fb5d66521a"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4525,11 +4530,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847451,
+          "publishTimestamp": 1793855775,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/collab",
-            "commit": "f176e8b604db367b3f16656814e85bf58eec71eb"
+            "commit": "bdade82afad67f0c70f101e1dfcb2c94d841bf69"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4561,11 +4566,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847456,
+          "publishTimestamp": 1793855779,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/engine-assist",
-            "commit": "720d6f3165d54e3ef4e9d645a3d5b46b41499e5a"
+            "commit": "663fefdf9fbeac05864dcc4c9131b5db1897d0e6"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4599,11 +4604,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847466,
+          "publishTimestamp": 1793855789,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/semsearch",
-            "commit": "c5e302e730560894020e1b578f502b276b5e1666"
+            "commit": "910681b786ea3391d7e1cc1d8f3c4691262f30e0"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4635,11 +4640,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847465,
+          "publishTimestamp": 1793855788,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/poster",
-            "commit": "fab03fadde971cc111de6eb26ae2b847e7fab89a"
+            "commit": "7691bbfefdd2f5dc91f4a0d2aebf792744834a9a"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4671,11 +4676,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847452,
+          "publishTimestamp": 1793855776,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/credcheck",
-            "commit": "c31c65fa78c88452150883c18b1a8498073bb866"
+            "commit": "10a900aa0cabc844c274b8433083dc6e77ba2f61"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"
@@ -4707,11 +4712,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793847470,
+          "publishTimestamp": 1793855794,
           "source": {
             "type": "git",
             "url": "https://mino.baby/git/webwatch",
-            "commit": "4a710e5b7c2847271c2d72f5860db343b1c33ff2"
+            "commit": "0db64bf4e6cc23db2ba02bb7203c66527386b22d"
           },
           "engines": {
             "dsh": ">=0.2.2-alpha.1 <0.3.0"

@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-files-search","version":{"version":"0.1.0","publishTimestamp":1793847456,"source":{"type":"git","url":"https://mino.baby/git/files-search","commit":"a454d21df60b6cf129361910ad7c8d512a76267a"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

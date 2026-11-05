@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-chat-export","version":{"version":"0.1.0","publishTimestamp":1793847451,"source":{"type":"git","url":"https://mino.baby/git/chat-export","commit":"80b1d6008114fd2cef8cd57241f8efc96675e472"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

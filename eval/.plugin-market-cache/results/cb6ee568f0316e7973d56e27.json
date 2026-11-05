@@ -1,1 +1,0 @@
-{"release":{"name":"mino-damage-pulse","version":{"version":"4.3.2","publishTimestamp":1793847453,"source":{"type":"git","url":"https://mino.baby/git/damage-pulse","commit":"8c5f9cc4cbaff70264ef2ddb1ec377485aeb811e"},"engines":{"dsh":">=0.1.0-rc.6 <0.3.0"}}}}

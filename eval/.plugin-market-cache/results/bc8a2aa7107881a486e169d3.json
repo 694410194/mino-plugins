@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-qq","version":{"version":"0.1.0","publishTimestamp":1793855788,"source":{"type":"git","url":"https://mino.baby/git/qq","commit":"9202795ba9b52fdbcddaddeb710962fb5d66521a"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

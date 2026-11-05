@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-health","version":{"version":"0.1.0","publishTimestamp":1793847456,"source":{"type":"git","url":"https://mino.baby/git/health","commit":"69edd507c51ae4b7bf8c9102a34fd2f8fa084d51"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

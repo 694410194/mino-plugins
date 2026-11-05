@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-legacy","version":{"version":"0.1.0","publishTimestamp":1793855781,"source":{"type":"git","url":"https://mino.baby/git/legacy","commit":"78b6bc5854b063db2fa55d29df0da4d788715534"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

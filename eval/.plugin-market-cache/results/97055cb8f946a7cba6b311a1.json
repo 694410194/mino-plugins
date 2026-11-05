@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-gov","version":{"version":"0.1.0","publishTimestamp":1793855779,"source":{"type":"git","url":"https://mino.baby/git/gov","commit":"1adbcc2153dd6863078eff5ab59de3d62325c151"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

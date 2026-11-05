@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-meeting","version":{"version":"0.1.0","publishTimestamp":1793855781,"source":{"type":"git","url":"https://mino.baby/git/meeting","commit":"e9d43f5a58069bb743fdd68374a254f2bb002c49"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

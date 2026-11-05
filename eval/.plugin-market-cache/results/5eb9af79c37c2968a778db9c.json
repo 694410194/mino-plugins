@@ -1,1 +1,0 @@
-{"release":{"name":"mino-skill-commit","version":{"version":"0.1.0","publishTimestamp":1793847466,"source":{"type":"git","url":"https://mino.baby/git/skill-commit","commit":"312fe36b76f910b74f91f2a2e9b21f18918e598e"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}
