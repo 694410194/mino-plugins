@@ -44,5 +44,8 @@
       ]
     }
   },
-  "author": "Yuuyuko-uu"
+  "author": "Yuuyuko-uu",
+  "mino": {
+    "upstream": "Yuuyuko-uu/dsh-speak-up"
+  }
 }

@@ -3,12 +3,11 @@
   "version": "0.1.0-alpha.1",
   "description": "Mino 图像生成插件 — DeepSeek Harness 对话内生图与修图，走 api.mino.baby 账户额度。Derived from dsh-image-gen (Apache-2.0).",
   "type": "module",
-  "author": "Mino",
+  "author": "shanliuling",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/694410194/mino-plugins.git",
-    "directory": "packages/image"
+    "url": "https://github.com/shanliuling/dsh-image-gen"
   },
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",
@@ -86,5 +85,9 @@
     "tsdown": "^0.22.2",
     "typescript": "^6.0.3",
     "vitest": "^4.1.8"
+  },
+  "homepage": "https://github.com/shanliuling/dsh-image-gen",
+  "mino": {
+    "upstream": "shanliuling/dsh-image-gen"
   }
 }

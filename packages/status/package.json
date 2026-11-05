@@ -101,5 +101,8 @@
       "immediately": true
     }
   },
-  "license": "MIT"
+  "license": "MIT",
+  "mino": {
+    "upstream": "01Virex/dsh-status-rotator"
+  }
 }

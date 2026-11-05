@@ -54,5 +54,8 @@
     "url": "https://github.com/Alterssss/dsh-bili-whale"
   },
   "author": "Alterssss",
-  "homepage": "https://github.com/Alterssss/dsh-bili-whale"
+  "homepage": "https://github.com/Alterssss/dsh-bili-whale",
+  "mino": {
+    "upstream": "Alterssss/dsh-bili-whale"
+  }
 }

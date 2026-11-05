@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rentaoyan0628-collab/dsh-bili-live"
+    "url": "https://github.com/rentaoyan0628-collab/dsh-bili-danmaku-lite"
   },
   "type": "module",
   "main": "index.js",
@@ -60,5 +60,8 @@
     "lightweight"
   ],
   "author": "rentaoyan0628-collab",
-  "homepage": "https://github.com/rentaoyan0628-collab/dsh-bili-live"
+  "homepage": "https://github.com/rentaoyan0628-collab/dsh-bili-danmaku-lite",
+  "mino": {
+    "upstream": "rentaoyan0628-collab/dsh-bili-danmaku-lite"
+  }
 }

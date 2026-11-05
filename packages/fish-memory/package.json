@@ -53,5 +53,8 @@
       "optional": true
     }
   },
-  "author": "Yuuyuko-uu"
+  "author": "Yuuyuko-uu",
+  "mino": {
+    "upstream": "Yuuyuko-uu/dsh-fish-memory"
+  }
 }

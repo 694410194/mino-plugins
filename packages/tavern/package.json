@@ -49,5 +49,8 @@
     "type": "git",
     "url": "https://github.com/KamishiroRei/dsh-sillytavern"
   },
-  "homepage": "https://github.com/KamishiroRei/dsh-sillytavern"
+  "homepage": "https://github.com/KamishiroRei/dsh-sillytavern",
+  "mino": {
+    "upstream": "KamishiroRei/dsh-sillytavern"
+  }
 }

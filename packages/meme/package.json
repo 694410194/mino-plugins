@@ -68,5 +68,8 @@
   "peerDependencies": {
     "@deepseek-ai/dsh-tools": "*"
   },
-  "author": "yyh-001"
+  "author": "yyh-001",
+  "mino": {
+    "upstream": "yyh-001/dsh-meme"
+  }
 }

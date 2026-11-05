@@ -100,5 +100,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "license": "SEE LICENSE IN ASSET_LICENSE.md"
+  "license": "SEE LICENSE IN ASSET_LICENSE.md",
+  "mino": {
+    "upstream": "QCYTSN/dsh-dafeiyu"
+  }
 }

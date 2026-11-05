@@ -48,5 +48,8 @@
   "homepage": "https://github.com/momasiku/dsh-pilot#readme",
   "bugs": {
     "url": "https://github.com/momasiku/dsh-pilot/issues"
+  },
+  "mino": {
+    "upstream": "momasiku/dsh-pilot"
   }
 }

@@ -70,5 +70,8 @@
     "yaml": "2.8.1"
   },
   "author": "tencent-connect",
-  "homepage": "https://github.com/tencent-connect/dsh-qqbot"
+  "homepage": "https://github.com/tencent-connect/dsh-qqbot",
+  "mino": {
+    "upstream": "tencent-connect/dsh-qqbot"
+  }
 }

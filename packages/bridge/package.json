@@ -120,5 +120,8 @@
   "optionalDependencies": {
     "@tencent-connect/qqbot-connector": "^1.2.0"
   },
-  "author": "wenbin-wb"
+  "author": "wenbin-wb",
+  "mino": {
+    "upstream": "wenbin-wb/dsh-bridge"
+  }
 }

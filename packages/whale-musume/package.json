@@ -77,5 +77,8 @@
     "url": "https://github.com/Sutera-Diffusus/dsh-whale-musume/issues"
   },
   "homepage": "https://github.com/Sutera-Diffusus/dsh-whale-musume#readme",
-  "author": "Sutera-Diffusus"
+  "author": "Sutera-Diffusus",
+  "mino": {
+    "upstream": "Sutera-Diffusus/dsh-whale-musume"
+  }
 }

@@ -3,7 +3,7 @@
   "displayName": "DSH QQ 控制台 2.2",
   "description": "把手机 QQ 变成 DeepSeek Harness 的遥控器 — 项目管理、会话绑定、任务确认、排队/引导/打断、实时流式进度、模型与推理强度、权限切换，以及完整的安装/卸载支持。",
   "version": "2.2.26",
-  "author": "zjw0011",
+  "author": "shenhua725",
   "keywords": [
     "dsh-plugin",
     "deepseek-harness",
@@ -46,7 +46,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zjw0011/dsh-qq-console"
+    "url": "https://github.com/shenhua725/dsh-qq-console"
   },
-  "homepage": "https://github.com/zjw0011/dsh-qq-console"
+  "homepage": "https://github.com/shenhua725/dsh-qq-console",
+  "mino": {
+    "upstream": "shenhua725/dsh-qq-console"
+  }
 }

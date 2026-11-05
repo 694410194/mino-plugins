@@ -62,5 +62,8 @@
     "humanism",
     "local-first"
   ],
-  "author": "InariNGT-Ofiicial"
+  "author": "InariNGT-Ofiicial",
+  "mino": {
+    "upstream": "InariNGT-Ofiicial/dsh-bili-humanism"
+  }
 }

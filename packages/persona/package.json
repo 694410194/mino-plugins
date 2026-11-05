@@ -93,5 +93,8 @@
   "scripts": {
     "test": "node --test tests/settings-scope-compat.test.mjs tests/settings-atomic-write.test.mjs tests/client-write-flow.test.mjs tests/persona-switcher.test.mjs tests/memory-layered.test.mjs tests/latest-compat.test.mjs tests/subagent-skip.test.mjs tests/section-render.test.mjs && node --test tests/plugin-page.test.mjs && node --test tests/locale.test.mjs"
   },
-  "author": "Scorp1o117"
+  "author": "Scorp1o117",
+  "mino": {
+    "upstream": "Scorp1o117/dsh-soul-md"
+  }
 }

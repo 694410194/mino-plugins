@@ -57,5 +57,8 @@
   "keywords": [
     "deepseek-harness",
     "dsh-plugin"
-  ]
+  ],
+  "mino": {
+    "upstream": "Yuuyuko-uu/dsh-qq-link"
+  }
 }

@@ -34,5 +34,8 @@
     }
   },
   "license": "MIT",
-  "author": "MeteorNOX"
+  "author": "MeteorNOX",
+  "mino": {
+    "upstream": "MeteorNOX/DeepSeek-Balance-Whale-Widget"
+  }
 }

@@ -71,5 +71,13 @@
     "vitest": "4.1.8",
     "react-dom": "18.3.1",
     "@types/react-dom": "18.3.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deepseek-ai/dsh-superagent-prototype"
+  },
+  "homepage": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+  "mino": {
+    "upstream": "deepseek-ai/dsh-superagent-prototype"
   }
 }

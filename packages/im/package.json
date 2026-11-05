@@ -124,5 +124,8 @@
     "@tencent-qqmail/agently-cli": "^1.0.18",
     "sharp": "0.35.5"
   },
-  "homepage": "https://github.com/xmanrui/dsh-im"
+  "homepage": "https://github.com/xmanrui/dsh-im",
+  "mino": {
+    "upstream": "xmanrui/dsh-im"
+  }
 }

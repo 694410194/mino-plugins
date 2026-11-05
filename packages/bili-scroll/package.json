@@ -77,5 +77,8 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "author": "c1overzz"
+  "author": "c1overzz",
+  "mino": {
+    "upstream": "c1overzz/dsh-bili-scroll"
+  }
 }

@@ -68,5 +68,8 @@
     "node": ">=20"
   },
   "license": "MIT",
-  "author": "d-dev0101"
+  "author": "d-dev0101",
+  "mino": {
+    "upstream": "d-dev0101/open-sea-skin"
+  }
 }
