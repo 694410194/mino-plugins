@@ -117,3 +117,6 @@ https://mino.baby/git/webwatch
 
 # npm 源：第三方包，安装走 per-version registry（生成时用 --registry 指定 npmmirror）
 dsh-guizang-design
+dsh-media-desk
+dsh-context
+agentero-dsh

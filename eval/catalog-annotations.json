@@ -1043,6 +1043,25 @@
         "third-party",
         "needs-config"
       ]
+    },
+    "dsh-media-desk": {
+      "category": "media",
+      "labels": [
+        "third-party"
+      ]
+    },
+    "dsh-context": {
+      "category": "agent",
+      "labels": [
+        "third-party"
+      ]
+    },
+    "agentero-dsh": {
+      "category": "conn-reading",
+      "labels": [
+        "third-party",
+        "needs-config"
+      ]
     }
   }
 }
