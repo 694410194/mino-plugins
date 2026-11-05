@@ -55,7 +55,7 @@ export const Config = z.object({
   /** Seed loops upserted by name at every boot; runtime edits survive reseeding. */
   loops: z.array(z.object({
     name: z.string().min(1),
-    everyMinutes: z.number().min(1),
+    everyMinutes: z.number().min(5),
     prompt: z.string().min(1),
     enabled: z.boolean().default(true),
   })).default([]),

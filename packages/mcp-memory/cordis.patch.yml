@@ -11,3 +11,6 @@
         transport: stdio
         command: npx
         args: ['-y', '@modelcontextprotocol/server-memory@2.0.1']
+        env:
+          # 固定记忆文件位置：默认落在 npx 缓存目录里，清缓存会静默丢记忆
+          MEMORY_FILE_PATH: !!js (process.env.DSH_HOME || ((process.env.USERPROFILE || process.env.HOME) + '/.dsh')) + '/memory.jsonl'

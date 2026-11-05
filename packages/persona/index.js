@@ -632,7 +632,7 @@ function apply(ctx, config) {
   ctx.tools.register(defineTool({
     name: "memory_append",
     description:
-      "Append a dated Markdown block to your long-term memory. The target follows your CURRENT scope: the memory of the persona card active for this session, else the global memory. In layered mode, omit topic for always-visible core memory or pass a stable topic key for an on-demand topic file. Use it PROACTIVELY whenever you learn something worth keeping across sessions. Prefer small, self-contained entries over one giant dump.",
+      "Append a dated Markdown block to your CROSS-SESSION long-term memory (the durable archive — the only memory that survives into future sessions). The target follows your CURRENT scope: the memory of the persona card active for this session, else the global memory. In layered mode, omit topic for always-visible core memory or pass a stable topic key for an on-demand topic file. Use it PROACTIVELY whenever you learn something worth keeping across sessions. For session-only scratch notes use `remember` instead. Prefer small, self-contained entries over one giant dump.",
     parameters: {
       section: { type: "string", required: true, description: "Short heading for the entry, e.g. 用户偏好 / project decision. Use a stable name so related entries group together." },
       content: { type: "string", required: true, description: "The markdown text to remember. Keep it concise and self-contained." },

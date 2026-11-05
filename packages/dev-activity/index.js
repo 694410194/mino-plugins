@@ -67,7 +67,7 @@ export function apply(ctx) {
     },
     output: { schema: { type: 'object', additionalProperties: false, properties: {
       repos: { type: 'integer' }, commits: { type: 'array', items: { type: 'object', additionalProperties: true } } } },
-      render: (_a, v) => [{ type: 'text', text: `${v.repos} 个仓库，${v.commits.length} 条提交` }] },
+      render: (_a, v) => [{ type: 'text', text: `${v.repos} 个仓库，${v.commits.length} 条提交\n` + v.commits.map(c => `[${c.time}] ${c.repo} · ${c.author}: ${c.msg}`).join('\n') }] },
     isConcurrencySafe: () => true,
     async execute(args) {
       const home = homedir()
@@ -101,7 +101,7 @@ export function apply(ctx) {
     },
     output: { schema: { type: 'object', additionalProperties: false, properties: {
       entries: { type: 'array', items: { type: 'object', additionalProperties: true } }, count: { type: 'integer' } } },
-      render: (_a, v) => [{ type: 'text', text: `${v.count} 条命令历史` }] },
+      render: (_a, v) => [{ type: 'text', text: `${v.count} 条命令历史\n` + v.entries.map(e => `[${e.shell}] ${e.cmd}`).join('\n') }] },
     isConcurrencySafe: () => true,
     async execute(args) {
       const limit = Math.min(Number.isFinite(+args.limit) ? +args.limit : 40, 200)

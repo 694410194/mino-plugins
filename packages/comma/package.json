@@ -1,6 +1,6 @@
 {
   "name": "mino-comma",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "description": "Mino sessionless proactive companion agent (inspired by AFK-surf/Comma)",
   "type": "module",

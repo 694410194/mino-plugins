@@ -305,7 +305,7 @@ export class Runtime implements SourceHost {
     const loops = this.domain.table('loops')
     const now = Date.now()
     for (const [key, loop] of loops.entries()) {
-      if (!loop.enabled || now - (loop.lastRunAt ?? 0) < loop.everyMinutes * 60_000) continue
+      if (!loop.enabled || now - (loop.lastRunAt ?? 0) < Math.max(loop.everyMinutes, 5) * 60_000) continue
       await this.routerMessage(`[comma loop:${loop.name}] ${loop.prompt}`)
       await loops.update(key, l => ({ ...l, lastRunAt: now }))
     }
