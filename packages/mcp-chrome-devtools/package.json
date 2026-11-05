@@ -33,13 +33,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp"
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/mcp-chrome-devtools"
   },
   "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/mcp-chrome-devtools#readme",
   "icon": "icon.svg",
   "main": "index.js",
-  "author": "ChromeDevTools",
   "mino": {
-    "upstream": "ChromeDevTools/chrome-devtools-mcp"
+    "upstream": "chrome-devtools-mcp"
   }
 }

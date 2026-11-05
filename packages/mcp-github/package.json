@@ -32,12 +32,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/github/github-mcp-server"
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/mcp-github"
   },
   "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/mcp-github#readme",
   "icon": "icon.svg",
   "main": "index.js",
-  "author": "github",
   "mino": {
     "upstream": "github/github-mcp-server"
   }

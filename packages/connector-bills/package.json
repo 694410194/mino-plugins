@@ -39,13 +39,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/deb-sig/double-entry-generator"
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/connector-bills"
   },
   "bugs": {
     "url": "https://github.com/694410194/mino-plugins/issues"
   },
-  "author": "deb-sig",
-  "homepage": "https://github.com/deb-sig/double-entry-generator",
   "mino": {
     "upstream": "deb-sig/double-entry-generator"
   }

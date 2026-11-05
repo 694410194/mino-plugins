@@ -1,0 +1,6 @@
+mino-connector-bills
+====================
+
+Plugin code is original (Mino). Bundles a vendored binary:
+double-entry-generator (https://github.com/deb-sig/double-entry-generator),
+Apache-2.0 — see vendor/deg-LICENSE.txt.

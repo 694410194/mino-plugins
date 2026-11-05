@@ -201,9 +201,15 @@ locale 键必须全小写（`zh-cn`，`zh-CN` 会炸）。
   shenhua725、browser yuxianglin/dsh-bridge-browser(404)→
   omdsh-dev/dsh-browser、bili-live 仓改名 dsh-bili-danmaku-lite。
   repository.url 指上游时删掉 `repository.directory`（那是 monorepo
-  子目录语义，上游仓没有该路径）。`mino.upstream` 记 `owner/repo`
-  血缘供 drift 追踪，connector 包驱动的外部引擎是运行时依赖不算
-  上游，不记。
+  子目录语义，上游仓没有该路径）。
+- **署名禁止耦合**（2026-11-05 立）：`author`/`repository`/`homepage`
+  只描述本包的真实归属——fork/derived 包指上游作者与上游仓（代码血缘
+  即上游）；Mino 原创壳（connector 系、mcp-\* 壳、bills 等自写胶水）
+  author 留空、repository 指 monorepo+directory、上游一律记进
+  `mino.upstream`（官方血缘字段，索引/安装不消费）+ NOTICE/README，
+  **不得把上游作者塞进 author 或把 repository 指向上游仓**——壳的
+  代码不是上游写的。上游取值用包内实际消费物（npm 包名/仓路径），
+  不猜。
 - 部署：`site/plugins/index.json` 随 sync.sh 上服务器；`build-site.py` 不碰它。
 
 ## 版本策略（与官方解耦，但不破坏生态兼容）

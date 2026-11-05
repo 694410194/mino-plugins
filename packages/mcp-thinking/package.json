@@ -32,13 +32,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/modelcontextprotocol/servers"
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/mcp-thinking"
   },
   "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/mcp-thinking#readme",
   "icon": "icon.svg",
   "main": "index.js",
-  "author": "modelcontextprotocol",
   "mino": {
-    "upstream": "modelcontextprotocol/servers"
+    "upstream": "@modelcontextprotocol/server-sequential-thinking"
   }
 }
