@@ -36,7 +36,7 @@ for (const plugin of index.plugins) {
     ...plugin.metadata,
     category: a.category,
     labels: [...new Set([...(plugin.metadata?.labels ?? []), ...a.labels])],
-    sortKeys: { ...(plugin.metadata?.sortKeys ?? {}), score: a.score },
+    sortKeys: { ...(plugin.metadata?.sortKeys ?? {}), ...(a.score === undefined ? {} : { score: a.score }) },
   }
 }
 if (missing.length) console.warn('no annotation for:', missing.join(', '))

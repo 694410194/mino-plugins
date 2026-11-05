@@ -30,8 +30,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/694410194/mino-plugins.git",
-    "directory": "packages/im"
+    "url": "https://github.com/xmanrui/dsh-im"
   },
   "publishConfig": {
     "access": "public"
@@ -124,5 +123,6 @@
   "optionalDependencies": {
     "@tencent-qqmail/agently-cli": "^1.0.18",
     "sharp": "0.35.5"
-  }
+  },
+  "homepage": "https://github.com/xmanrui/dsh-im"
 }

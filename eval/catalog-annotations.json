@@ -131,6 +131,10 @@
     "manual-import": {
       "en": "Manual import",
       "zh-cn": "手动导入"
+    },
+    "third-party": {
+      "en": "Third-party",
+      "zh-cn": "第三方"
     }
   },
   "plugins": {
@@ -1031,6 +1035,13 @@
       "category": "conn-browser",
       "labels": [
         "verified"
+      ]
+    },
+    "dsh-guizang-design": {
+      "category": "skills",
+      "labels": [
+        "third-party",
+        "needs-config"
       ]
     }
   }

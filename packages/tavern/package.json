@@ -43,5 +43,11 @@
   "license": "MIT",
   "engines": {
     "node": ">=22.13.0"
-  }
+  },
+  "author": "KamishiroRei",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KamishiroRei/dsh-sillytavern"
+  },
+  "homepage": "https://github.com/KamishiroRei/dsh-sillytavern"
 }

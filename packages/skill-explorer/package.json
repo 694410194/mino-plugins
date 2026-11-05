@@ -85,5 +85,6 @@
   },
   "mino": {
     "upstream": "dsh-skill-explorer@0.4.13"
-  }
+  },
+  "author": "linxin666"
 }

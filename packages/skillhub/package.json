@@ -174,5 +174,6 @@
   },
   "mino": {
     "upstream": "@astron-team/skillhub-dsh@0.6.1"
-  }
+  },
+  "author": "astron-team"
 }

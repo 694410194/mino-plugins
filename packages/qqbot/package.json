@@ -45,8 +45,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/694410194/mino-plugins.git",
-    "directory": "packages/qqbot"
+    "url": "https://github.com/tencent-connect/dsh-qqbot"
   },
   "dsh": {
     "bundle": {
@@ -69,5 +68,7 @@
     "js-yaml": "^4.1.0",
     "qrcode": "^1.5.4",
     "yaml": "2.8.1"
-  }
+  },
+  "author": "tencent-connect",
+  "homepage": "https://github.com/tencent-connect/dsh-qqbot"
 }

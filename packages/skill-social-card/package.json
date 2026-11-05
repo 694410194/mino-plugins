@@ -34,12 +34,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/694410194/mino-plugins",
-    "directory": "packages/skill-commit"
+    "url": "https://github.com/op7418/dsh-guizang-design"
   },
-  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/skill-commit#readme",
+  "homepage": "https://github.com/op7418/dsh-guizang-design",
   "icon": "icon.svg",
   "mino": {
     "upstream": "op7418/dsh-guizang-design@d16cea6"
-  }
+  },
+  "author": "op7418"
 }

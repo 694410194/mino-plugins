@@ -201,5 +201,6 @@
   },
   "mino": {
     "upstream": "dsh-rewind-plugin@0.19.1"
-  }
+  },
+  "author": "SiriLee"
 }

@@ -223,5 +223,6 @@
   },
   "mino": {
     "upstream": "dsh-knowledge-studio@0.6.3"
-  }
+  },
+  "author": "eduwork"
 }

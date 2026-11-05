@@ -51,7 +51,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/694410194/mino-plugins.git",
-    "directory": "packages/bili-whale"
-  }
+    "url": "https://github.com/Alterssss/dsh-bili-whale"
+  },
+  "author": "Alterssss",
+  "homepage": "https://github.com/Alterssss/dsh-bili-whale"
 }

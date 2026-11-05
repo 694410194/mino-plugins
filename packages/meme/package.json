@@ -67,5 +67,6 @@
   },
   "peerDependencies": {
     "@deepseek-ai/dsh-tools": "*"
-  }
+  },
+  "author": "yyh-001"
 }

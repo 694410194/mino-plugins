@@ -58,5 +58,6 @@
     "url": "https://github.com/694410194/mino-plugins",
     "directory": "packages/team-conductor"
   },
-  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/team-conductor#readme"
+  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/team-conductor#readme",
+  "author": "dsh-team-conductor contributors"
 }

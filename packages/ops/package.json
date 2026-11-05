@@ -260,5 +260,6 @@
   },
   "mino": {
     "upstream": "cc-ops@0.4.4"
-  }
+  },
+  "author": "T-Auto"
 }

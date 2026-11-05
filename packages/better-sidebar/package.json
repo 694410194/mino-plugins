@@ -228,5 +228,6 @@
   },
   "mino": {
     "upstream": "dsh-better-sidebar@0.28.2"
-  }
+  },
+  "author": "omdsh-dev"
 }

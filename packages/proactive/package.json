@@ -64,8 +64,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/694410194/mino-plugins",
-    "directory": "packages/proactive"
+    "url": "https://github.com/john-walks-slow/dsh-proactive"
   },
-  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/proactive#readme"
+  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/proactive#readme",
+  "author": "john-walks-slow"
 }

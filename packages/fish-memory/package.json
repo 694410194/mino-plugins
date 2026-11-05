@@ -52,5 +52,6 @@
     "@deepseek-ai/dsh-llm": {
       "optional": true
     }
-  }
+  },
+  "author": "Yuuyuko-uu"
 }

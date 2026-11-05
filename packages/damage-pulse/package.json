@@ -203,5 +203,6 @@
   },
   "mino": {
     "upstream": "dsh-damage-pulse@4.3.2"
-  }
+  },
+  "author": "wssfk12138"
 }

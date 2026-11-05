@@ -53,5 +53,6 @@
   "homepage": "https://github.com/accomplish07zrh-eng/dsh-aurabot-qq",
   "engines": {
     "node": ">=22.13.0"
-  }
+  },
+  "author": "accomplish07zrh-eng"
 }

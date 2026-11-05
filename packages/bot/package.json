@@ -80,8 +80,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/694410194/mino-plugins",
-    "directory": "packages/bot"
+    "url": "https://github.com/MJ-CJM/DSH-Bot"
   },
-  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/bot#readme"
+  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/bot#readme",
+  "author": "MJ-CJM"
 }

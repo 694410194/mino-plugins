@@ -76,5 +76,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "author": "c1overzz"
 }

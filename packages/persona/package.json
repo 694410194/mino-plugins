@@ -56,7 +56,7 @@
     "examples",
     "vendor"
   ],
-  "homepage": "https://github.com/694410194/mino-plugins",
+  "homepage": "https://github.com/Scorp1o117/dsh-soul-md",
   "keywords": [
     "dsh",
     "dsh-plugin",
@@ -73,8 +73,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/694410194/mino-plugins.git",
-    "directory": "packages/persona"
+    "url": "https://github.com/Scorp1o117/dsh-soul-md"
   },
   "bugs": {
     "url": "https://github.com/694410194/mino-plugins/issues"
@@ -93,5 +92,6 @@
   },
   "scripts": {
     "test": "node --test tests/settings-scope-compat.test.mjs tests/settings-atomic-write.test.mjs tests/client-write-flow.test.mjs tests/persona-switcher.test.mjs tests/memory-layered.test.mjs tests/latest-compat.test.mjs tests/subagent-skip.test.mjs tests/section-render.test.mjs && node --test tests/plugin-page.test.mjs && node --test tests/locale.test.mjs"
-  }
+  },
+  "author": "Scorp1o117"
 }

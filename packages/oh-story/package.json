@@ -56,5 +56,11 @@
   "engines": {
     "node": ">=24.0.0",
     "dsh": ">=0.2.0-rc.2 <0.3.0"
-  }
+  },
+  "author": "zenstory-ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zenstory-ai/oh-story-dsh"
+  },
+  "homepage": "https://github.com/zenstory-ai/oh-story-dsh"
 }

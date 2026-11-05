@@ -36,8 +36,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/694410194/mino-plugins",
-    "directory": "packages/distill"
+    "url": "https://github.com/loserfox/distill"
   },
-  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/distill#readme"
+  "homepage": "https://github.com/694410194/mino-plugins/tree/main/packages/distill#readme",
+  "author": "loserfox"
 }

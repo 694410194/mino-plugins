@@ -33,5 +33,6 @@
       "patch": "./cordis.patch.yml"
     }
   },
-  "license": "MIT"
+  "license": "MIT",
+  "author": "MeteorNOX"
 }
