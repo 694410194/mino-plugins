@@ -3,7 +3,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 	var module = { exports: {} };
 	var exports = module.exports;
 	Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-	//#region src/client/locales-ja.ts
+	// src/client/locales-ja.ts
 	/**
 	* The ja (Japanese) dictionary for the betterSidebar namespace.
 	*
@@ -660,8 +660,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta メモリ",
 		pluginDshMemoryDeltaDesc: "セッションをまたぐ記憶：変化した部分だけを注入し（変化がなければ何も注入しません）、レビュー期日のリマインド、関連度順の検索、サイドバーのタブを備えます。"
 	};
-	//#endregion
-	//#region src/client/locales-de.ts
+	// src/client/locales-de.ts
 	/**
 	* German dictionary for better-sidebar.
 	*/
@@ -1305,8 +1304,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Gedächtnis",
 		pluginDshMemoryDeltaDesc: "Sitzungsübergreifendes Gedächtnis: nur Änderungen werden injiziert (nichts, wenn sich nichts geändert hat), mit Erinnerung an den Prüftermin, Relevanz-Suche und Sidebar-Tab."
 	};
-	//#endregion
-	//#region src/client/locales-fr.ts
+	// src/client/locales-fr.ts
 	/**
 	* French translation of the better-sidebar copy.
 	*
@@ -1956,8 +1954,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Mémoire",
 		pluginDshMemoryDeltaDesc: "Mémoire inter-sessions : seuls les changements sont injectés (rien du tout si rien ne change), avec rappel de révision, recherche classée par pertinence et onglet latéral."
 	};
-	//#endregion
-	//#region src/client/locales-pt.ts
+	// src/client/locales-pt.ts
 	const pt = {
 		files: "Arquivos",
 		guideDescFiles: "Navegue pela árvore do workspace; um clique abre a pré-visualização ou a edição",
@@ -2598,8 +2595,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Memória",
 		pluginDshMemoryDeltaDesc: "Memória entre sessões: injeta apenas o que mudou (nada quando nada mudou), com lembrete de revisão, busca por relevância e aba lateral."
 	};
-	//#endregion
-	//#region src/client/locales-ko.ts
+	// src/client/locales-ko.ts
 	/**
 	* Korean dictionary for the better-sidebar plugin (LOCALE_NS `betterSidebar`).
 	*
@@ -3248,8 +3244,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta 메모리",
 		pluginDshMemoryDeltaDesc: "세션 간 기억: 변경된 부분만 주입하고(변경이 없으면 아무것도 주입하지 않음), 검토 시점 알림, 관련도 정렬 검색, 사이드바 탭을 제공합니다."
 	};
-	//#endregion
-	//#region src/client/locales-ar.ts
+	// src/client/locales-ar.ts
 	/**
 	* The ar (Arabic) dictionary for the betterSidebar namespace.
 	*
@@ -3907,8 +3902,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta الذاكرة",
 		pluginDshMemoryDeltaDesc: "ذاكرة عبر الجلسات: يُحقن ما تغيّر فقط (ولا شيء عند عدم وجود تغيير)، مع تذكير بموعد المراجعة وبحث مرتّب حسب الصلة وتبويب في الشريط الجانبي."
 	};
-	//#endregion
-	//#region src/client/locales-hi.ts
+	// src/client/locales-hi.ts
 	/**
 	* The hi (Hindi) dictionary for the betterSidebar namespace.
 	*
@@ -4565,8 +4559,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta स्मृति",
 		pluginDshMemoryDeltaDesc: "सत्रों के बीच स्मृति: केवल बदला हुआ भाग इंजेक्ट होता है (कुछ न बदले तो कुछ नहीं), समीक्षा-तिथि अनुस्मारक, प्रासंगिकता-क्रमित खोज और साइडबार टैब के साथ।"
 	};
-	//#endregion
-	//#region src/client/locales-id.ts
+	// src/client/locales-id.ts
 	/**
 	* The id (Indonesian) dictionary for the betterSidebar namespace.
 	*
@@ -5221,8 +5214,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Memori",
 		pluginDshMemoryDeltaDesc: "Memori antar sesi: hanya yang berubah yang disuntikkan (tidak ada saat tidak ada perubahan), dengan pengingat tanggal tinjauan, pencarian berperingkat relevansi, dan tab bilah samping."
 	};
-	//#endregion
-	//#region src/client/locales-tr.ts
+	// src/client/locales-tr.ts
 	/**
 	* The tr (Turkish) dictionary for the betterSidebar namespace.
 	*
@@ -5879,8 +5871,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Bellek",
 		pluginDshMemoryDeltaDesc: "Oturumlar arası bellek: yalnızca değişenler enjekte edilir (değişiklik yoksa hiçbir şey), gözden geçirme tarihi hatırlatması, alaka sıralı arama ve kenar çubuğu sekmesi ile."
 	};
-	//#endregion
-	//#region src/client/locales-vi.ts
+	// src/client/locales-vi.ts
 	/**
 	* The vi (Vietnamese) dictionary for the betterSidebar namespace.
 	*
@@ -6537,8 +6528,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Bộ nhớ",
 		pluginDshMemoryDeltaDesc: "Bộ nhớ xuyên phiên: chỉ chèn phần đã thay đổi (không chèn gì nếu không có thay đổi), kèm nhắc ngày rà soát, tìm kiếm theo độ liên quan và tab thanh bên."
 	};
-	//#endregion
-	//#region src/client/locales-th.ts
+	// src/client/locales-th.ts
 	/**
 	* The th (Thai) dictionary for the betterSidebar namespace.
 	*
@@ -7195,8 +7185,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta หน่วยความจำ",
 		pluginDshMemoryDeltaDesc: "หน่วยความจำข้ามเซสชัน: ฉีดเฉพาะส่วนที่เปลี่ยนแปลง (ไม่มีการเปลี่ยนแปลงก็ไม่ฉีดเลย) พร้อมเตือนวันทบทวน ค้นหาตามความเกี่ยวข้อง และแท็บแถบข้าง"
 	};
-	//#endregion
-	//#region src/client/locales-ru.ts
+	// src/client/locales-ru.ts
 	/**
 	* Russian (ru) dictionary for the better-sidebar plugin.
 	*
@@ -7849,8 +7838,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Память",
 		pluginDshMemoryDeltaDesc: "Память между сессиями: внедряется только то, что изменилось (ничего, если ничего не менялось), с напоминанием о дате проверки, поиском по релевантности и вкладкой в боковой панели."
 	};
-	//#endregion
-	//#region src/client/locales-it.ts
+	// src/client/locales-it.ts
 	/**
 	* Italian copy for the sidebar. Key-set-equal to `zh` in `locales.ts`;
 	* consumed by the better-locale override store (see `locales.ts` for the
@@ -8498,8 +8486,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Memoria",
 		pluginDshMemoryDeltaDesc: "Memoria tra sessioni: inietta solo ciò che è cambiato (nulla se nulla è cambiato), con promemoria di revisione, ricerca per rilevanza e scheda laterale."
 	};
-	//#endregion
-	//#region src/client/locales-nl.ts
+	// src/client/locales-nl.ts
 	/**
 	* The nl (Dutch) dictionary for the betterSidebar namespace.
 	*
@@ -9155,8 +9142,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Geheugen",
 		pluginDshMemoryDeltaDesc: "Geheugen tussen sessies: alleen wat is gewijzigd wordt geïnjecteerd (niets als er niets is gewijzigd), met herinnering aan de controledatum, relevantiegerangschikt zoeken en een zijbalktabblad."
 	};
-	//#endregion
-	//#region src/client/locales-sv.ts
+	// src/client/locales-sv.ts
 	const sv = {
 		files: "Filer",
 		guideDescFiles: "Bläddra i arbetsytans filträd; klick öppnar förhandsvisning eller redigering",
@@ -9797,8 +9783,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Minne",
 		pluginDshMemoryDeltaDesc: "Minne mellan sessioner: endast det som ändrats injiceras (inget när inget ändrats), med påminnelse om granskningsdatum, relevanssorterad sökning och en sidopanelflik."
 	};
-	//#endregion
-	//#region src/client/locales-pl.ts
+	// src/client/locales-pl.ts
 	/**
 	* The pl (Polish) dictionary for the betterSidebar namespace.
 	*
@@ -10457,8 +10442,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta Pamięć",
 		pluginDshMemoryDeltaDesc: "Pamięć międzysesyjna: wstrzykiwane są tylko zmiany (nic, gdy nic się nie zmieniło), z przypomnieniem o terminie przeglądu, wyszukiwaniem według trafności i kartą w pasku bocznym."
 	};
-	//#endregion
-	//#region src/client/locales-zh-HK.ts
+	// src/client/locales-zh-HK.ts
 	/**
 	* The zh-HK (Traditional Chinese — Hong Kong) dictionary for the betterSidebar
 	* namespace.
@@ -11130,8 +11114,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta 記憶",
 		pluginDshMemoryDeltaDesc: "跨工作階段記憶：只注入有變動的部分（沒有變動則完全不注入），附到期覆核提醒、相關度排序檢索與側邊欄分頁。"
 	};
-	//#endregion
-	//#region src/client/locales-zh-TW.ts
+	// src/client/locales-zh-TW.ts
 	/**
 	* The zh-HK (Traditional Chinese — Hong Kong) dictionary for the betterSidebar
 	* namespace.
@@ -11803,8 +11786,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta 記憶",
 		pluginDshMemoryDeltaDesc: "跨工作階段記憶：只注入有變動的部分（沒有變動則完全不注入），附到期覆核提醒、相關度排序檢索與側邊欄分頁。"
 	};
-	//#endregion
-	//#region src/client/locales-zh-MO.ts
+	// src/client/locales-zh-MO.ts
 	/**
 	* The zh-HK (Traditional Chinese — Hong Kong) dictionary for the betterSidebar
 	* namespace.
@@ -12476,8 +12458,7 @@ globalThis.__dshChunks__["locale"] = (require) => {
 		pluginDshMemoryDeltaName: "dsh-memory-delta 記憶",
 		pluginDshMemoryDeltaDesc: "跨工作階段記憶：只注入有變動的部分（沒有變動則完全不注入），附到期覆核提醒、相關度排序檢索與側邊欄分頁。"
 	};
-	//#endregion
-	//#region src/client/chunks/locale.tsx
+	// src/client/chunks/locale.tsx
 	/**
 	* Lazy chunk entry: the 19 non-zh/en dictionaries (ja/de/fr/…/zh-HK/MO/TW —
 	* ~640KB of source). The sidebar's own `t()` only ever consults zh/en plus
@@ -12493,7 +12474,6 @@ globalThis.__dshChunks__["locale"] = (require) => {
 	*  this adds no runtime tie to the core bundle): a dictionary missing or
 	*  adding a key fails the build instead of silently falling back to en. */
 	const checked = (dict) => dict;
-	//#endregion
 	exports.localeDicts = {
 		ja: checked(ja),
 		de: checked(de),

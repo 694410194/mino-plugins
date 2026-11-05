@@ -17,7 +17,7 @@ import { foldSurface, isSurfaceEligibleType } from "@deepseek-ai/dsh-session/sur
 import { BlockAssembler, ReasoningEffortId, createUserMessage } from "@deepseek-ai/dsh-llm";
 import { installModelSelection } from "@deepseek-ai/dsh-agent";
 import { snapshotSubagentDescriptor } from "@deepseek-ai/dsh-subagent";
-//#region src/prefs-shared.ts
+// src/prefs-shared.ts
 /**
 * Shared "Side card" preference vocabulary (types + constants), consumed by
 * BOTH halves: the host registers the schemastery schema over these values
@@ -51,8 +51,7 @@ const SIDEBAR_PREFS_DEFAULTS = {
 	viewersEnabled: {},
 	pluginSettings: {}
 };
-//#endregion
-//#region src/config.ts
+// src/config.ts
 /**
 * Serializable configuration and defaults for the sidebar host half. Loader
 * schema validation normally fills defaults; {@link resolveSidebarConfig}
@@ -135,8 +134,7 @@ const Config = z.object({
 	...LimitsSchema.dict,
 	...volatilePrefs
 });
-//#endregion
-//#region src/git.ts
+// src/git.ts
 /**
 * Git operations for the sidebar source-control panel. Everything goes
 * through the system `git` binary spawned per request (no library, no state),
@@ -1147,8 +1145,7 @@ async function push(cwd, selected) {
 async function pull(cwd, selected) {
 	await runGit(await repoRoot(cwd, selected), ["pull", "--ff-only"]);
 }
-//#endregion
-//#region src/wire.ts
+// src/wire.ts
 /** One API failure with its wire code and HTTP status. */
 var SidebarError = class extends Error {
 	code;
@@ -1266,8 +1263,7 @@ function requireString(payload, key) {
 	if (typeof value !== "string" || value === "") throw new SidebarError("bad-request", `missing or invalid "${key}"`);
 	return value;
 }
-//#endregion
-//#region src/fs-tree.ts
+// src/fs-tree.ts
 /**
 * Single-level directory listing for the sidebar explorer.
 *
@@ -1569,8 +1565,7 @@ function requireAbsolute(path) {
 function messageOf(error) {
 	return error instanceof Error ? error.message : String(error);
 }
-//#endregion
-//#region src/session-path.ts
+// src/session-path.ts
 /** `\\wsl.localhost\<distro>` root of a Windows-hosted WSL workspace. */
 const WSL_LOCALHOST_ROOT = /^\\\\wsl\.localhost\\([^\\]+)(?:\\|$)/i;
 /**
@@ -1674,8 +1669,7 @@ function resolveSessionPath(cwd, target, platform = process.platform) {
 	}
 	return target;
 }
-//#endregion
-//#region src/path-security.ts
+// src/path-security.ts
 /**
 * Lexical path resolution for the sidebar's filesystem routes.
 *
@@ -1737,8 +1731,7 @@ function resolveTarget(cwd, target) {
 	const homeExpanded = target === "~" || target.startsWith("~/") || target.startsWith("~\\") ? join(homedir(), target.slice(1)) : target;
 	return requireAbsolute(resolveSessionPath(cwd, isAbsolute(homeExpanded) ? homeExpanded : join(cwd, homeExpanded)));
 }
-//#endregion
-//#region src/text-encoding.ts
+// src/text-encoding.ts
 /**
 * Text encoding detection/round-trip helpers for the host filesystem API.
 *
@@ -2191,8 +2184,7 @@ async function fileFormatOf(path) {
 		await handle.close();
 	}
 }
-//#endregion
-//#region src/fs-operations.ts
+// src/fs-operations.ts
 /**
 * File mutations for the sidebar (the upload route and the tree's renames,
 * deletes and mkdirs).
@@ -2535,8 +2527,7 @@ async function removeWorkspaceEntry(input) {
 	invalidateDirectoryCache(dirname(absolute));
 	return { path: absolute };
 }
-//#endregion
-//#region src/search-debug.ts
+// src/search-debug.ts
 /**
 * Gated debug instrumentation for the fs.search engine pipeline (host half).
 * Off by default: with DSH_SEARCH_DEBUG unset nothing is logged, nothing
@@ -2563,8 +2554,7 @@ function debugLog(msg) {
 	} catch {}
 	console.log(msg);
 }
-//#endregion
-//#region src/search-engines.ts
+// src/search-engines.ts
 /**
 * Optional native search engines (fd / ripgrep) behind the editor's file-name
 * search (fs.search). The probe runs lazily once per process: each candidate
@@ -3010,8 +3000,7 @@ async function runEngine(probe, root, query, maxMatches) {
 async function usableEngines() {
 	return (await probeEngines()).filter((probe) => !broken.has(probe.engine));
 }
-//#endregion
-//#region src/fs-search.ts
+// src/fs-search.ts
 const DEFAULT_MAX_MATCHES = 200;
 const DEFAULT_MAX_VISITED = 1e5;
 /**
@@ -3396,8 +3385,7 @@ function decodeHtmlUrl(pathname) {
 		}
 	};
 }
-//#endregion
-//#region src/bundle-route.ts
+// src/bundle-route.ts
 /**
 * Lazy chunk route: serves the client bundle's chunk scripts
 * (/sidebar/bundle/<name>.js). The official /plugins/<id>/client.js route
@@ -3530,8 +3518,7 @@ function registerBundleRoute(ctx, fence) {
 		handler: createBundleRouteHandler(fence)
 	});
 }
-//#endregion
-//#region src/fs-watch.ts
+// src/fs-watch.ts
 /**
 * Directory change watching behind the file tree's live refresh.
 *
@@ -3620,8 +3607,7 @@ function createDirectoryWatchers(push, onError) {
 		}
 	};
 }
-//#endregion
-//#region src/sidechat-push.ts
+// src/sidechat-push.ts
 /** Coalescing window for durable session appends. */
 const DURABLE_DEBOUNCE_MS = 60;
 /** Coalescing window for in-flight model deltas. */
@@ -3737,8 +3723,7 @@ var SidechatSocket = class {
 		this.onClosed();
 	}
 };
-//#endregion
-//#region src/open-external.ts
+// src/open-external.ts
 /**
 * External open actions for the file tree's "open with" menu: hand a path to
 * the OS file manager (reveal/select) or launch a URL scheme's registered
@@ -3983,8 +3968,7 @@ function launchExternal(action, value, options = {}) {
 	}
 	return launchChain(action, chain, options.spawn ?? spawn);
 }
-//#endregion
-//#region src/file-stream.ts
+// src/file-stream.ts
 /**
 * One-shot file streaming for the plugin's raw byte routes.
 *
@@ -4037,8 +4021,7 @@ async function streamFileToResponse(path, size, res, headers) {
 		node.destroy();
 	}
 }
-//#endregion
-//#region src/archive-tools.ts
+// src/archive-tools.ts
 /**
 * Archive packing by the system's own tool, not by a writer of ours.
 *
@@ -4528,8 +4511,7 @@ function createArchiveTasks(options = {}) {
 		}
 	}
 }
-//#endregion
-//#region src/git-graph.ts
+// src/git-graph.ts
 const MAX_OUTPUT = 8388608;
 const MAX_OFFSET = 1e4;
 const MAX_GRAPH_TAGS = 5e3;
@@ -4833,8 +4815,7 @@ async function gitGraph(cwd, options = {}, selectedRepo) {
 		snapshot: before.fingerprint
 	};
 }
-//#endregion
-//#region src/agent-opens.ts
+// src/agent-opens.ts
 /**
 * The model-facing `sidebar_open` tool and its delivery registry.
 *
@@ -5078,8 +5059,7 @@ function registerOpenTool(ctx, registry, resolveCwd, readPrefs) {
 		}
 	}));
 }
-//#endregion
-//#region src/sidechat-core.ts
+// src/sidechat-core.ts
 /** The durable thread-label prefix (also the row filter in the client list). */
 const SIDE_LABEL_PREFIX = "Side: ";
 /** The pinned label of a freshly created thread that no prompt has reached
@@ -6531,8 +6511,7 @@ function foldProcess(events, options) {
 		...lastEventTime === void 0 ? {} : { lastEventTime }
 	};
 }
-//#endregion
-//#region src/subagent-live-route.ts
+// src/subagent-live-route.ts
 /**
 * Build the live-preview routes bound to the plugin context.
 * @param ctx - host plugin context.
@@ -6575,8 +6554,7 @@ function buildSubagentLiveApi(ctx) {
 		return { live };
 	} };
 }
-//#endregion
-//#region src/team-routes.ts
+// src/team-routes.ts
 /** The CAS actions the wire accepts (mirrors the domain union). */
 const TASK_ACTIONS = /* @__PURE__ */ new Set([
 	"claim",
@@ -6694,8 +6672,7 @@ function buildTeamsApi(ctx) {
 		}
 	};
 }
-//#endregion
-//#region src/workflow-runs.ts
+// src/workflow-runs.ts
 /** The four recorded event types (prefix match keeps the scan cheap). */
 const EVENT_PREFIX = "tool-workflow/";
 /**
@@ -6789,8 +6766,7 @@ function seqOf(data) {
 	const seq = data.seq;
 	return typeof seq === "number" && Number.isSafeInteger(seq) && seq >= 0 ? seq : void 0;
 }
-//#endregion
-//#region src/workflow-routes.ts
+// src/workflow-routes.ts
 /** Per-session cap of mirrored live workflow events (a bounded, lossy ring). */
 const MIRROR_MAX_ENTRIES = 500;
 /**
@@ -6852,8 +6828,7 @@ function buildWorkflowsApi(ctx) {
 		return { runs };
 	} };
 }
-//#endregion
-//#region src/session-store.ts
+// src/session-store.ts
 /**
 * Read one persisted session's header and full event log.
 * @param persistence - the live `sessionPersistence` service.
@@ -6889,8 +6864,7 @@ async function readPersistedSessionOf(ctx, sessionId) {
 		return;
 	}
 }
-//#endregion
-//#region src/sidechat-routes.ts
+// src/sidechat-routes.ts
 /**
 * Side Chat routes of the /sidebar JSON API ('sidechat.start' /
 * 'sidechat.prompt' / 'sidechat.cancel' / 'sidechat.dispose' /
@@ -7490,8 +7464,7 @@ function selectionFields(selection) {
 		...selection.reasoningEffort === void 0 ? {} : { reasoningEffort: selection.reasoningEffort }
 	};
 }
-//#endregion
-//#region src/assistant-live.ts
+// src/assistant-live.ts
 /** Per-attempt buffer ceiling; beyond it the oldest deltas are dropped. */
 const LIVE_CHUNK_CAP = 4e3;
 /** A frame's `chunk` payload must be a JSON record to be worth buffering. */
@@ -7577,8 +7550,7 @@ function createAssistantLiveBuffer(ctx, cap = LIVE_CHUNK_CAP) {
 		}
 	};
 }
-//#endregion
-//#region src/changes-ops.ts
+// src/changes-ops.ts
 /** Recent-window bound: the lens shows the recent tail, not eternity. */
 const EVENTS_CAP = 4e3;
 /** How long one `wait: true` request parks before answering with the window. */
@@ -7659,8 +7631,7 @@ function createChangesOpsApi(ctx) {
 		}
 	};
 }
-//#endregion
-//#region src/commit-message.ts
+// src/commit-message.ts
 /**
 * Commit-message suggestion: the prompt contract and the model-route
 * vocabulary shared by the `git.suggest-message` host route (src/index.ts)
@@ -7870,8 +7841,7 @@ function buildCommitPrompt(language, files, diff) {
 function cleanSuggestion(text) {
 	return text.split("\n").filter((line) => !line.trimStart().startsWith("```")).join("\n").replace(/\r/g, "").split("\n").map((line) => line.trimEnd()).join("\n").trim();
 }
-//#endregion
-//#region src/fs-batch.ts
+// src/fs-batch.ts
 /**
 * Row bound of ONE `fs.trees` batch request.
 *
@@ -7882,8 +7852,7 @@ function cleanSuggestion(text) {
 * runtime dependencies so the browser bundle pulls nothing in with it.
 */
 const FS_TREES_MAX_PATHS = 64;
-//#endregion
-//#region src/active-worktree.ts
+// src/active-worktree.ts
 /**
 * Follow the linked git worktree a session is ACTUALLY working in.
 *
@@ -8333,8 +8302,7 @@ async function resolveActiveWorktreeRoot(ctx, sessionId, base, directoryEpoch) {
 	}, ACTIVE_ROOT_CACHE_MAX);
 	return root;
 }
-//#endregion
-//#region src/editor-limits.ts
+// src/editor-limits.ts
 /**
 * The one size constant both halves need, kept dependency-free on purpose.
 *
@@ -8382,8 +8350,7 @@ const PAGE_BYTES = 131072;
 * a string.
 */
 const WRITE_BODY_GUARD_BYTES = 8388608;
-//#endregion
-//#region src/index.ts
+// src/index.ts
 /**
 * dsh-better-sidebar host half: the /sidebar JSON API (explorer listing, file
 * read/write, git), the /sidebar/file media route (images), the /sidebar/html
@@ -9216,7 +9183,7 @@ function buildApi(ctx, resolved, getSettings, assistantLive, archiveTasks) {
 	};
 }
 /** The npm package name of this plugin, exactly as its Loader row declares it. */
-const SIDEBAR_PACKAGE_NAME = "mino-better-sidebar";
+const SIDEBAR_PACKAGE_NAME = "dsh-better-sidebar";
 /**
 * Profile entry id of the sibling `dsh-web-ui` right panel this sidebar yields
 * to when it is the active provider. Kept as a literal: it is that plugin's
@@ -9800,5 +9767,4 @@ async function attachAgentOpen(registry, ws, req) {
 		ws.close(1011, error instanceof Error ? error.message : String(error));
 	}
 }
-//#endregion
 export { Config, FS_TREES_MAX_PATHS, apply, contentDispositionOf, inject, mediaTypeForPath, name };

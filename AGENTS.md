@@ -220,3 +220,11 @@ locale 键必须全小写（`zh-cn`，`zh-CN` 会炸）。
   追踪；索引/安装不消费它。
 - **索引版本**：git commit-pinned，与包 version 无耦合；npm 通道启用后
   版本号才成硬约束。
+
+## 构建产物入库纪律（2026-11-05 立）
+
+- 市场 git 安装通道拿的是 git 树：凡 `package.json.main` 指向 `lib/`、`dist/`、`plugin/`、`native-dist/` 的包，产物必须随 src 一并提交（force-add，.gitignore 有意保留）。
+- 改了 src 的同提交必须 rebuild 并提交产物；验收命令 `node eval/verify-dist.mjs`（重建全部可建包+报 git 漂移，exit≠0 即产物陈旧）。
+- vendored 预构建包（有 lib 无 src）本体即真相源，verify 自动跳过。
+- 已知无法源码重建的包（vendor 时构建配置缺失，产物安装正确）：browser/drawio/im/qqbot/task-board/voice——从上游补 vendor 时连构建配置一起拿（better-sidebar 已示范：补 tsconfig+tsdown.config 后可重建）。
+- 服务器分裂脚本对 main 缺失的包打 WARN，发布时看到 WARN 不许放行。
