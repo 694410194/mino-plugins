@@ -65,13 +65,18 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 
 ## 发布链（刚性顺序，勿跳步）
 
-插件源码到用户可装之间是五段串联，任何一段没走完就停手 = 线上断链：
+插件源码到用户可装之间是六段串联，任何一段没走完就停手 = 线上断链：
 
 1. `git push origin main`（GitHub；直连 reset 时走 `127.0.0.1:7897` 代理）。
-2. 服务器跑 `sudo bash /opt/mino/managed/scripts/build-plugin-git-repos.sh`：
-   镜像 fetch GitHub → 全量重拆 `/var/www/git/<name>` 孤儿快照仓。
-   **重拆后全部快照 commit 失效**——索引里的旧 pin 立刻作废，下一步不可省。
-3. 工作站重生成索引：`plugin-market-generator` 跑 `eval/.index-input.txt`
+2. **dist 快照**：`node eval/dist.mjs`（重建可建包+快照全部产物到 `dist`
+   分支）→ `git push -f origin dist`。main 有任何构建相关变更都必须
+   先过这一步，服务器分裂只吃 dist。
+3. 服务器跑 `sudo bash /opt/mino/managed/scripts/build-plugin-git-repos.sh`：
+   镜像 fetch GitHub → 全量重拆 `/var/www/git/<name>` 孤儿快照仓（源自
+   `dist` 分支）。**重拆后全部快照 commit 失效**——索引里的旧 pin 立刻
+   作废，下一步不可省。分裂脚本对 `main` 文件缺失的包打 WARN——
+   看到 WARN 不许放行，先查产物是否进了 dist。
+4. 工作站重生成索引：`plugin-market-generator` 跑 `eval/.index-input.txt`
    → `node eval/enrich-index.mjs <index.json>` 富化（内部过 `parseMarketIndex`
    校验）。跑前清 `eval/.plugin-market-cache/`，否则拿旧 clone 生成旧 pin；
    Windows 下 `TMP`/`TEMP` 指到 `D:\tmp\pmgtmp`（Node 读 TMP/TEMP，
@@ -82,11 +87,11 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
    含 npm 行时生成器必须带 `--registry https://registry.npmmirror.com/`。
    抽查：index 引用的每个 `icons/*` 文件必须已入库（mino-im 曾因漏交
    文件导致图标 404）；npm 条目须带 per-version `registry` 字段。
-4. 三处落位：服务器 `/var/www/mino-home/plugins/index.json`（site/ 同步 +
+5. 三处落位：服务器 `/var/www/mino-home/plugins/index.json`（site/ 同步 +
    `deploy-site.sh`）、`694410194/mino-plugin-index` 仓（jsdelivr 第二源，
    推后 `purge.jsdelivr.net` 刷缓存）、mino-deploy 仓 `site/plugins/index.json`
    提交——三处必须同一份内容。
-5. `mino-plugin-releases` 手动 tgz 通道（`plugins-v*` tag）：非刚性但 docs
+6. `mino-plugin-releases` 手动 tgz 通道（`plugins-v*` tag）：非刚性但 docs
    页挂链接；`build-site.py` 里的 tag 必须指向已存在的 release——
    **先发 release 再改脚本**，顺序不能反。
 
@@ -227,10 +232,16 @@ locale 键必须全小写（`zh-cn`，`zh-CN` 会炸）。
 - **索引版本**：git commit-pinned，与包 version 无耦合；npm 通道启用后
   版本号才成硬约束。
 
-## 构建产物入库纪律（2026-11-05 立）
+## 产物解耦纪律（2026-11-05 立，取代初版"入库"口径）
 
-- 市场 git 安装通道拿的是 git 树：凡 `package.json.main` 指向 `lib/`、`dist/`、`plugin/`、`native-dist/` 的包，产物必须随 src 一并提交（force-add，.gitignore 有意保留）。
-- 改了 src 的同提交必须 rebuild 并提交产物；验收命令 `node eval/verify-dist.mjs`（重建全部可建包+报 git 漂移，exit≠0 即产物陈旧）。
-- vendored 预构建包（有 lib 无 src）本体即真相源，verify 自动跳过。
-- 已知无法源码重建的包（vendor 时构建配置缺失，产物安装正确）：browser/drawio/im/qqbot/task-board/voice——从上游补 vendor 时连构建配置一起拿（better-sidebar 已示范：补 tsconfig+tsdown.config 后可重建）。
-- 服务器分裂脚本对 main 缺失的包打 WARN，发布时看到 WARN 不许放行。
+- **main 零产物**：`src`+`build` 包的构建输出（lib/dist/plugin/native-dist）
+  一律不入 main（.gitignore 保留+不 force-add）；产物唯一载体 = `dist`
+  快照分支，由 `eval/dist.mjs` 生成。
+- **vendored 无 src 包的 lib 是上游产物源**（不是构建耦合），继续跟踪。
+- **改了 src 必须同轮 `eval/dist.mjs` 重生成并 `push -f origin dist`**，
+  否则服务器拆的还是旧快照=线上跑旧码。
+- 漂移自查：`node eval/verify-dist.mjs`（重建可建包+报 git 漂移）。
+- 已知无法源码重建的包（vendor 时构建配置缺失，产物经 dist 照常安装）：
+  browser/drawio/im/qqbot/task-board/voice——上游补 vendor 时连构建
+  配置一起拿（better-sidebar 已示范）。
+- 服务器分裂脚本对 `main` 文件缺失的包打 WARN，看到 WARN 不许放行。
