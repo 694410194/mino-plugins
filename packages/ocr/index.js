@@ -22,18 +22,31 @@ const defineTool = (await loadHostDeps()).defineTool
 
 const OCR_PS = `
 param([string]$img, [string]$out)
+$ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Runtime.WindowsRuntime
-$null = [Windows.Storage.StorageFile,Windows.Storage,ContentType=WindowsRuntime]
 $null = [Windows.Media.Ocr.OcrEngine,Windows.Foundation,ContentType=WindowsRuntime]
 $null = [Windows.Graphics.Imaging.BitmapDecoder,Windows.Foundation,ContentType=WindowsRuntime]
-$null = [Windows.Storage.Streams.RandomAccessStream,Windows.Storage.Streams,ContentType=WindowsRuntime]
+$null = [Windows.Storage.Streams.InMemoryRandomAccessStream,Windows.Storage.Streams,ContentType=WindowsRuntime]
+$null = [Windows.Storage.Streams.DataWriter,Windows.Storage.Streams,ContentType=WindowsRuntime]
+$null = [Windows.Globalization.Language,Windows.Foundation,ContentType=WindowsRuntime]
 function Await($op, $type) {
-  $task = [System.WindowsRuntimeSystemExtensions]::AsTask($op)
+  # PS5.1 can't bind the generic AsTask overload directly; resolve and instantiate it here.
+  $m = [System.WindowsRuntimeSystemExtensions].GetMethods() | Where-Object {
+    $_.Name -eq 'AsTask' -and $_.IsGenericMethod -and $_.GetParameters().Count -eq 1 -and
+    $_.GetParameters()[0].ParameterType.Name -like 'IAsyncOperation*' } | Select-Object -First 1
+  $task = $m.MakeGenericMethod($type).Invoke($null, @($op))
   $task.Wait()
   return $task.Result
 }
-$file = Await ([Windows.Storage.StorageFile]::GetFileFromPathAsync($img)) ([Windows.Storage.StorageFile])
-$stream = Await ($file.OpenAsync([Windows.Storage.FileAccessMode]::Read)) ([Windows.Storage.Streams.IRandomAccessStream])
+# StorageFile goes through the WinRT file broker which denies arbitrary paths;
+# read the bytes ourselves and hand the decoder an in-memory stream instead.
+$bytes = [System.IO.File]::ReadAllBytes($img)
+$stream = New-Object Windows.Storage.Streams.InMemoryRandomAccessStream
+$writer = New-Object Windows.Storage.Streams.DataWriter($stream)
+$writer.WriteBytes($bytes)
+$null = Await ($writer.StoreAsync()) ([System.UInt32])
+$null = Await ($stream.FlushAsync()) ([System.Boolean])
+$stream.Seek(0)
 $decoder = Await ([Windows.Graphics.Imaging.BitmapDecoder]::CreateAsync($stream)) ([Windows.Graphics.Imaging.BitmapDecoder])
 $bitmap = Await ($decoder.GetSoftwareBitmapAsync()) ([Windows.Graphics.Imaging.SoftwareBitmap])
 $engine = [Windows.Media.Ocr.OcrEngine]::TryCreateFromLanguage((New-Object Windows.Globalization.Language 'zh-Hans-CN'))

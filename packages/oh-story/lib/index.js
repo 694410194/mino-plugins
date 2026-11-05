@@ -926,7 +926,9 @@ async function startRole(runtime, role, request) {
       provider: "spawn",
       label: request.label,
       childId,
-      request: { parent: request.parent, prompt: request.prompt, maxDepth: request.maxDepth },
+      parent: request.parent,
+      prompt: request.prompt,
+      maxDepth: request.maxDepth,
       signal: request.signal,
       delivery: "caller"
     });

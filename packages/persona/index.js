@@ -358,7 +358,8 @@ function apply(ctx, config) {
   // If the host suppresses runtime contexts, preserve recall in its previous
   // system-prompt position. A registered but empty context is still present in
   // the assembly, so it does not trigger this fallback on ordinary turns.
-  ctx.on("system-prompt/assemble", (assembly, context) => {
+  ctx.on("system-prompt/assemble", async (_assembly, context, next) => {
+    const assembly = await next();
     if (!recallEnabled() || !wantsRecallContext() || !supportsRecallContext()
       || !Array.isArray(assembly.contexts) || !Array.isArray(assembly.sections)) return assembly;
     const recall = assembly.contexts.find((entry) => entry.name === SECTION_RECALL);
