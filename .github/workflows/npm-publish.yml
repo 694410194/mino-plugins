@@ -1,0 +1,57 @@
+name: npm-publish
+
+# Publishes distributable packages to registry.npmjs.org via eval/publish-npm.mjs.
+# Bootstrap auth: NPM_TOKEN secret (granular token, bypass-2FA).
+# After packages exist on npmjs, configure a trusted publisher per package
+# (npm trust github) and this workflow can drop the token for OIDC
+# (id-token: write is already granted).
+
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: 'comma-separated package dirs/names to publish (empty = all)'
+        required: false
+        default: ''
+      dry_run:
+        description: 'list what would publish without publishing'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # publish-npm.mjs restores build outputs from the `dist` branch
+      - name: Fetch dist snapshot branch
+        run: git fetch origin dist:dist
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.only }}" ]; then ARGS="--only ${{ inputs.only }}"; fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          node eval/publish-npm.mjs $ARGS
+
+      - name: Upload result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: publish-result
+          path: eval/.publish-result.json
+          if-no-files-found: ignore
