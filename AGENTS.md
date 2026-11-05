@@ -60,7 +60,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 |---|---|---|
 | github.com / raw.githubusercontent.com | **超时** | 不能当用户侧通道；开发 push 走本机代理 `127.0.0.1:7897`（`https_proxy=`） |
 | cdn.jsdelivr.net（gh 镜像） | 可用 | **已接入**：Discover 第二源 `cdn.jsdelivr.net/gh/694410194/mino-plugin-index@main/index.json`（插件页市场下拉可切换；推 GitHub 后 `purge.jsdelivr.net` 刷缓存） |
-| registry.npmjs.org / registry.npmmirror.com | 可用 | npm 通道备用：`npmjs.com` 注册页被反爬拦（代理出口 IP 亦 403），暂无 npm 账号 → 自家包安装通道=自建 git（`/git/` dumb-HTTP）。**第三方 npm 包已接入**（dsh-guizang-design）：`.index-input.txt` 直接写包名行，生成时带 `--registry https://registry.npmmirror.com/`，索引 per-version `registry` 落 npmmirror |
+| registry.npmjs.org / registry.npmmirror.com | 可用 | **npm 通道已开通**（账号 `wuyangji`，granular token bypass-2FA 在 `~/.npmrc`，~90 天有效期）。自家包发 npmjs → npmmirror 自动同步（分钟级），索引 per-version `registry` 填 npmmirror 即国内直连安装。git 通道保留为备份不退役。**第三方 npm 包已接入**（dsh-guizang-design）：`.index-input.txt` 直接写包名行，生成时带 `--registry https://registry.npmmirror.com/` |
 | mino.baby | 可用 | **正式归宿（第一源）**：`mino.baby/plugins/index.json` + `/git/<name>` 每插件 bare 仓 dumb-HTTP 安装通道。⚠ 镜像不对称：jsdelivr 只镜像索引（图标相对路径自动连带），**安装仍走 mino.baby/git**——安装通道的冗余要 npm 才解得了 |
 
 ## 发布链（刚性顺序，勿跳步）
@@ -94,6 +94,31 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 6. `mino-plugin-releases` 手动 tgz 通道（`plugins-v*` tag）：非刚性但 docs
    页挂链接；`build-site.py` 里的 tag 必须指向已存在的 release——
    **先发 release 再改脚本**，顺序不能反。
+
+### npm 通道（2026-11-05 开通）
+
+- **发布账号**：`wuyangji`（npmjs 独立账号体系，不支持 GitHub 登录）。
+  凭据 = granular access token + **bypass 2FA**（发布硬性要求：2FA 或
+  bypass token 二选一，批量发必须 bypass）。token 落 `~/.npmrc`，
+  过期/换 token 后 `npm config set //registry.npmjs.org/:_authToken=`。
+- **发布脚本**：`node eval/publish-npm.mjs [--dry-run] [--only a,b]`——
+  自动发现非 `private` 包、从 `dist` 分支回补缺失产物、幂等跳过已发版本、
+  `--ignore-scripts`（产物一律取自 dist 快照而非本地重建）+ `--tag latest`
+  （prerelease 版本必需）。结果落 `eval/.publish-result.json`。
+- **新账号限流是硬墙**：npmjs 对新账号 PUT 发布有严格速率限（首轮实测
+  ~10 个后连续 E429，60-240s 退避仍不解）。纪律：**限速发布，包间距
+  ≥60s，遇 E429 停手冷却 ≥10 分钟再续**；`npm view` 预检也会消耗额度，
+  不要密集轮询。
+- **版本纪律**：npm 版本不可覆盖——重发必须 bump version 且先
+  `eval/dist.mjs` + `push dist`（产物真源），再 `publish-npm.mjs`。
+  三者顺序：改码 → dist 快照 → npm 发布 → 索引 repin。
+- **索引双通道现状**：`.index-input.txt` 中自家包暂留
+  `mino.baby/git/<name>` 行（git 安装=备份通道），npm 全量验证可装后
+  才换包名行——换行前必须用 `npm install <name>` 实测 tarball 含
+  `cordis.patch.yml`+声明的 main 文件。
+- **vendored 不可重建包**（browser/drawio/im/qqbot/task-board/voice）：
+  发布同样可行——`publish-npm.mjs` 自动从 `dist` 分支回补 `lib/` 到
+  工作区（gitignored 不污染 main），tarball 照常含产物。
 
 配套红线：
 

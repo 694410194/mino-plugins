@@ -197,8 +197,7 @@
     "ladybugdb"
   ],
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "license": "MulanPSL-2.0 AND MIT",
   "dependencies": {
