@@ -1,0 +1,11 @@
+--- a/packages/ops/lib/discovery/index.js
++++ b/packages/ops/lib/discovery/index.js
+@@ -305,7 +305,7 @@
+         ctx.effect(() => onModesChange(ctx, refresh), 'dsh-ops: discovery mode observer');
+         // Observe in-place hooks and the default asynchronous Fiber.restart().
+         // Await the runtime result even though the pinned next() type says void.
+-        ctx.on('internal/update', async (_config, _noSave, next) => {
++        ctx.on('internal/update', async (_config, next) => {
+             try {
+                 return await next();
+             }
