@@ -139,9 +139,9 @@
 - vendored 包已剥 peer/devDeps（上游 dsh-type-meta 未公开发布，装不了；运行时 host 注入）
 - soul-md 内部命名空间保留上游名（数据兼容），仅包名/patch name 改 mino-persona
 - 本地分叉（对上游已报/待报 issue，重 vendor 时须回带）：
-  - `ops lib/discovery/index.js`：`internal/update` 监听器签名三参 `(_config,_noSave,next)` 改两参 `(_config,next)`——cordis 契约只有 `(resolvedConfig,next)`，`noSave` 只存在于 `Fiber.update(config,noSave)` 入口不进瀑布；上游 dsh-ops@0.4.4/master 同错未修，症状是全档 `settings.update` 抛 `next is not a function`（注意 lib/ 被 gitignore，此改动只存在工作区与 tgz 产物）
-  - `persona index.js`：`system-prompt/assemble` 监听器升三参 `(_assembly,context,next)` 并 `await next()` 取下游结果再变换——旧两参形不调 next 会 veto 整条装配瀑布
-  - `oh-story lib/index.js`：`startActivation` 入参 `spec.request.{parent,prompt}` 拍平为顶层 `spec.parent/prompt`——宿主契约读 `spec.parent.id`，上游 @oh-story/dsh@0.1.21/0.1.22 同错未修，症状 `Cannot read properties of undefined (reading 'id')`
+  - `ops lib/discovery/index.js`：`internal/update` 监听器签名三参 `(_config,_noSave,next)` 改两参 `(_config,next)`——cordis 4.0.5→4.0.6-alpha 之间砍掉 `noSave`（改走 `internal/commit`），上游按老契约写的监听器在 ≥4.0.6-alpha/4.1.0 上让全档 `settings.update` 抛 `next is not a function`（上游 issue T-Auto/dsh-ops#672 + PR#673 已提；注意 lib/ 被 gitignore，此改动只存在工作区与 tgz 产物）
+  - `persona index.js`：`system-prompt/assemble` 监听器升三参 `(_assembly,context,next)` 并 `await next()` 取下游结果再变换——旧两参形不调 next 会 veto 整条装配瀑布（上游新版已是三参，这等于回带上游修法）
+  - `oh-story lib/index.js`：`startActivation` 入参 `spec.request.{parent,prompt}` 拍平为顶层 `spec.parent/prompt`——宿主侧官方仓已把激活参数拍平（refactor 575606a3，发布在 0.2.2-rc 之后），上游插件还按嵌套形调，症状 `Cannot read properties of undefined (reading 'id')`（上游 issue/PR 见 zenstory-ai/oh-story-dsh）
 - qqbot 系库拉入含 build 脚本的传递依赖，已在 pnpm-workspace.yaml ignoredBuiltDependencies
 
 ### 发版与防护
