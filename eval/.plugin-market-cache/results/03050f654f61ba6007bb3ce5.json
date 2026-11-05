@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-semsearch","version":{"version":"0.1.0","publishTimestamp":1793855789,"source":{"type":"git","url":"https://mino.baby/git/semsearch","commit":"910681b786ea3391d7e1cc1d8f3c4691262f30e0"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

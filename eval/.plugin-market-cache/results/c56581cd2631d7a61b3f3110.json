@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-company","version":{"version":"0.1.0","publishTimestamp":1793871090,"source":{"type":"git","url":"https://mino.baby/git/company","commit":"d8d2979e5e27dfb0ddcbc1fe11c3144556531272"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

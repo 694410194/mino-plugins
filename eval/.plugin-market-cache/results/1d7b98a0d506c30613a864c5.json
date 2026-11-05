@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-jobs","version":{"version":"0.1.0","publishTimestamp":1793855781,"source":{"type":"git","url":"https://mino.baby/git/jobs","commit":"07981ef1c6b88e959a7f60a57a4ad561306c4b2d"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

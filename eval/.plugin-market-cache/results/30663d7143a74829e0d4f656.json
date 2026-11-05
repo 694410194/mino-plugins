@@ -1,0 +1,1 @@
+{"release":{"name":"mino-chat-import","version":{"version":"0.26.3","publishTimestamp":1793871089,"source":{"type":"git","url":"https://mino.baby/git/chat-import","commit":"cb924b80137ab27a80f1d5eeba24289840b8f57c"},"engines":{"dsh":">=0.1.5-rc.1 >=0.1.0-rc.6 <0.3.0"}}}}

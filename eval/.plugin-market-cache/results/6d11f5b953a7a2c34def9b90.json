@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-vault","version":{"version":"0.1.0","publishTimestamp":1793871109,"source":{"type":"git","url":"https://mino.baby/git/vault","commit":"4f82374367777be572bfc784caa5f76d7411bce2"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

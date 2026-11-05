@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-webwatch","version":{"version":"0.1.0","publishTimestamp":1793855794,"source":{"type":"git","url":"https://mino.baby/git/webwatch","commit":"0db64bf4e6cc23db2ba02bb7203c66527386b22d"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

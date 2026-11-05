@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-corpus","version":{"version":"0.1.0","publishTimestamp":1793855775,"source":{"type":"git","url":"https://mino.baby/git/corpus","commit":"b634a87816d2def2c354d520cc84988e6e1b7320"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}
