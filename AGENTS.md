@@ -61,7 +61,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 | github.com / raw.githubusercontent.com | **超时** | 不能当用户侧通道；开发 push 走本机代理 `127.0.0.1:7897`（`https_proxy=`） |
 | cdn.jsdelivr.net（gh 镜像） | 可用 | **已接入**：Discover 第二源 `cdn.jsdelivr.net/gh/694410194/mino-plugin-index@main/index.json`（插件页市场下拉可切换；推 GitHub 后 `purge.jsdelivr.net` 刷缓存） |
 | registry.npmjs.org / registry.npmmirror.com | 可用 | **npm 通道已开通**（账号 `wuyangji`，granular token bypass-2FA 在 `~/.npmrc`，~90 天有效期）。自家包发 npmjs → npmmirror 自动同步（分钟级），索引 per-version `registry` 填 npmmirror 即国内直连安装。git 通道保留为备份不退役。**第三方 npm 包已接入**（dsh-guizang-design）：`.index-input.txt` 直接写包名行，生成时带 `--registry https://registry.npmmirror.com/` |
-| mino.baby | 可用 | **正式归宿（第一源）**：`mino.baby/plugins/index.json` + `/git/<name>` 每插件 bare 仓 dumb-HTTP 安装通道。⚠ 镜像不对称：jsdelivr 只镜像索引（图标相对路径自动连带），**安装仍走 mino.baby/git**——安装通道的冗余要 npm 才解得了 |
+| mino.baby | 可用 | **正式归宿（第一源）**：`mino.baby/plugins/index.json` + `/git/<name>` 每插件 bare 仓 smart-HTTP（git-http-backend）安装通道。⚠ 镜像不对称：jsdelivr 只镜像索引（图标相对路径自动连带），**安装仍走 mino.baby/git**——安装通道的冗余要 npm 才解得了 |
 
 ## 发布链（刚性顺序，勿跳步）
 
@@ -202,8 +202,14 @@ api.github.com 0.02s）。**大文件只走 github→server 方向**：服务器
 大负载。插件安装源即此模式：`/var/www/git/mino-plugins.git` bare 镜像
 （服务器 fetch github + `update-server-info`）由
 `build-plugin-git-repos.sh` 重拆成 `/var/www/git/<name>` 每插件单仓孤儿
-快照，nginx `/git/` 只读 dumb-HTTP 对外，索引安装目标为
+快照，nginx `/git/` 只读 smart-HTTP（git-http-backend + fcgiwrap，
+`fastcgi_read_timeout 600s`）对外，索引安装目标为
 `git+https://mino.baby/git/<name>` commit 固定。
+⚠ smart-HTTP 下 `objects/<sha>` 静态路径恒 404，不是缺对象的证据；
+验证 pin 失效要用 `git fetch <url> <sha>` 看 `not our ref`。大仓
+（pet 61M/skill-nature 35M 级）单次 pack 传输超 60s，市场生成器必须
+`--timeout-ms ≥600000`；传输中段 `schannel: server closed abruptly`
+= 服务端/中间层断流，重跑靠 `.plugin-market-cache` 累积成功源。
 
 ## 产品分层事实（全量实测结论）
 
