@@ -39,7 +39,7 @@ When the thing to build is bigger than a chat card, such as a dashboard with fil
 
 Cards follow the DSH light or dark theme and, in the default style, its whale-blue palette (other styles below). When the chat column is too narrow, the **Open in new window** button at the right of the card header opens the card full-size in its own tab, themed as DSH was when you opened it and still running inside the same sandboxed iframe. Session replay restores cards from the persistent tool result, so the original fragment file does not need to remain on disk.
 
-A copy of each card's fragment is saved to `~/.dsh/visualize/sessions/<session id>/<title>-<hash>.<style>.html` (under `$DSH_HOME/visualize/` when `DSH_HOME` is set), one directory per conversation and never inside your project, so `git status` stays free of `viz/`. `update` patches that copy. Cards that older versions wrote under `viz/` in the workspace can still be updated in place. The plugin does not clean these files up; you can delete `~/.dsh/visualize/` at any time and existing conversations still replay their cards.
+A copy of each card's fragment is saved to `~/.mino/visualize/sessions/<session id>/<title>-<hash>.<style>.html` (under `$DSH_HOME/visualize/` when `DSH_HOME` is set), one directory per conversation and never inside your project, so `git status` stays free of `viz/`. `update` patches that copy. Cards that older versions wrote under `viz/` in the workspace can still be updated in place. The plugin does not clean these files up; you can delete `~/.mino/visualize/` at any time and existing conversations still replay their cards.
 
 By default DSH folds a finished turn's tool process. While it does, the turn's cards also appear under the final answer, so you see them without opening the process; with Work details set to Verbose they stay in place only.
 
@@ -47,7 +47,7 @@ By default DSH folds a finished turn's tool process. While it does, the turn's c
 
 The plugin ships five card styles; the default is `whale`. In DSH, open **More** (bottom left) → **Settings** → **Visualize**: each style shows a live preview card rendered in the current light or dark theme, and one click saves it. The next card uses it, without a restart.
 
-The page needs DSH 0.1.7 or later (the host's settings forms, `configForms`, and its `/api` routes; in 0.1.7, Settings sits at the bottom of the sidebar). Earlier versions either lack the page or show only the snippet below; add this to `<DSH_HOME>/profiles/web/cordis.patch.yml` (`~/.dsh/profiles/web/cordis.patch.yml` by default) instead:
+The page needs DSH 0.1.7 or later (the host's settings forms, `configForms`, and its `/api` routes; in 0.1.7, Settings sits at the bottom of the sidebar). Earlier versions either lack the page or show only the snippet below; add this to `<DSH_HOME>/profiles/web/cordis.patch.yml` (`~/.mino/profiles/web/cordis.patch.yml` by default) instead:
 
 ```yaml
 - id: dsh-visualize
@@ -75,7 +75,7 @@ Each card records the style it was created with in its persisted result and in i
 
 Write your preferences in plain language in a Markdown file, e.g. "dark green accent, titles under eight words, one decimal place". The plugin appends it after the built-in guide:
 
-- Global: `~/.dsh/visualize/style.md` (`$DSH_HOME/visualize/style.md` when `DSH_HOME` is set), for every session.
+- Global: `~/.mino/visualize/style.md` (`$DSH_HOME/visualize/style.md` when `DSH_HOME` is set), for every session.
 - Workspace: `<workspace>/.dsh/visualize-style.md`, for sessions in that workspace only.
 
 Both files can also be viewed and edited at the bottom of **Settings → Visualize** (also DSH 0.1.7+), one per workspace; saving an empty file deletes it.

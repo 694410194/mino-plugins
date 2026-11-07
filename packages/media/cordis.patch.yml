@@ -1,0 +1,9 @@
+- insert:
+    - id: mino-media
+      name: mino-media
+      config:
+        videoModel: ''
+        ttsModel: ''
+        ttsVoice: ''
+        sttModel: ''
+        musicModel: ''

@@ -84,7 +84,7 @@ export async function writeWorkspaceUpload(input: WorkspaceUploadInput): Promise
   }
   const target = join(base, ...segments)
   const safeTarget = await ensureWorkspaceWritePath(cwd, target)
-  const tmp = join(dirname(safeTarget), `.${basename(safeTarget)}.dsh-upload-${randomUUID()}.tmp`)
+  const tmp = join(dirname(safeTarget), `.${basename(safeTarget)}.mino-upload-${randomUUID()}.tmp`)
   await mkdir(dirname(safeTarget), { recursive: true })
   const stream = createWriteStream(tmp, { flags: 'wx' })
   // Resolves once the stream fully closes; created up front so a stream that
@@ -185,7 +185,7 @@ export async function writeWorkspaceText(input: WorkspaceWriteInput): Promise<{ 
   // pid-suffixed name is shared by every concurrent save to the same path,
   // letting two writers interleave into one temp file — and the failure-path
   // rm could delete the other writer's in-flight temp.
-  const tmp = join(dirname(absolute), `.${basename(absolute)}.dsh-sidebar-tmp-${randomUUID()}.tmp`)
+  const tmp = join(dirname(absolute), `.${basename(absolute)}.mino-sidebar-tmp-${randomUUID()}.tmp`)
   try {
     await mkdir(dirname(absolute), { recursive: true })
     await writeFile(tmp, encodeText(restoreEol(content, eol), encoding), { flag: 'wx' })

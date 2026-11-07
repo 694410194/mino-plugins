@@ -1,5 +1,5 @@
 {
-  "name": "mino-image",
+  "name": "dsh-image-gen",
   "version": "0.1.0-alpha.1",
   "description": "Mino 图像生成插件 — DeepSeek Harness 对话内生图与修图，走 api.mino.baby 账户额度。Derived from dsh-image-gen (Apache-2.0).",
   "type": "module",

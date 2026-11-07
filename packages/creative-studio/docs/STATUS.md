@@ -25,7 +25,7 @@ A 版全白只剩字幕；B/C 版全片泛粉且画面下部有漂移的"幽灵�
 
 | 能力 | 命令 | 实现与实测 |
 |---|---|---|
-| 视频抠像换背景 | `video-matte` | RVM ONNX（mobilenetv3 14MB / resnet50 102MB，首次自动下载到 `~/.dsh-creative-studio/models`）；RVM 循环状态 + `--alpha-smooth` 时域平滑；三种输出 composite/alpha(VP9 yuva420p)/mask；绿幕走 `--backend chromakey` 无模型。**实测 CPU 568×320 = 81 fps、720×1280 = 17 fps；换白底后画面四角 (90,91,98) → (255,255,255)** |
+| 视频抠像换背景 | `video-matte` | RVM ONNX（mobilenetv3 14MB / resnet50 102MB，首次自动下载到 `~/.mino-creative-studio/models`）；RVM 循环状态 + `--alpha-smooth` 时域平滑；三种输出 composite/alpha(VP9 yuva420p)/mask；绿幕走 `--backend chromakey` 无模型。**实测 CPU 568×320 = 81 fps、720×1280 = 17 fps；换白底后画面四角 (90,91,98) → (255,255,255)** |
 | 动效文字 | `video-text-anim` | 生成标准 ASS（10 预设：fade / 四向 slide / typewriter（逐字符 α 时间标签）/ pop / bounce / karaoke（\k 逐词、中文按字）/ lower-third），可只出 ASS 或直接烧入；安全区按竖版 20% / 横版 12% 留白。**客观验证：底部亮像素 0.0000 → 0.0101** |
 | 转场 | `video-join --transition` | 从 ffmpeg 自身枚举 **53 种** xfade（不写死）；5 个风格化预置：flash(fadewhite) / glitch(色偏+噪点→pixelize) / whip-pan(拖影→smoothleft) / soft-zoom(模糊→fade) / film-burn(暖偏+颗粒→fadeblack)，用 trim+效果+concat 实现局部效果，不依赖滤镜时间轴支持。**实测各 0.4s；3+3−0.6=5.44s 时长校验通过** |
 | 光效调色 | `video-fx --preset` | 13 预设（glow/bloom/soft-focus/leak/trail/grain/vignette/sharpen/warm/cool/teal-orange/film/punch），可串联，支持 `--lut`；`--compare` 出前后帧+接触表。**踩坑并修复**：初版用 `geq` 逐像素表达式生成光斑，CPU 上 10 分钟超时 → 改用 lavfi `gradients` + `shortest` + 输出端限时，降到 **0.4s** |

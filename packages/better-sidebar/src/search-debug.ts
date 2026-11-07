@@ -6,10 +6,10 @@
  * probe/search/engine-failure to `<config-dir>/search-debug.log` and mirrors
  * it to the host console.
  *
- * The log file lives under $DSH_HOME (the DSH config dir) when set, exactly
- * like pty-deps.ts resolves it; otherwise it falls back to `~/.dsh`. A
- * missing/unwritable log dir must never break a search — write errors are
- * swallowed.
+ * The log file lives under $MINO_HOME or $DSH_HOME (the config dir) when
+ * set, exactly like pty-deps.ts resolves it; otherwise it falls back to
+ * `~/.mino`. A missing/unwritable log dir must never break a search —
+ * write errors are swallowed.
  *
  * The flag is read once at module load: toggling it requires restarting the
  * host, the same as any other host-side change.
@@ -21,9 +21,8 @@ import { homedir } from 'node:os'
 const SEARCH_DEBUG = process.env.DSH_SEARCH_DEBUG === '1'
 
 const LOG_FILE = join(
-  process.env.DSH_HOME !== undefined && process.env.DSH_HOME.trim() !== ''
-    ? process.env.DSH_HOME
-    : join(homedir(), '.dsh'),
+  [process.env.MINO_HOME, process.env.DSH_HOME].find(v => v !== undefined && v.trim() !== '')
+    ?? join(homedir(), '.mino'),
   'search-debug.log',
 )
 

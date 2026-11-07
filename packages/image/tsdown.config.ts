@@ -9,7 +9,7 @@ const CLIENT_EXTERNALS = [
 ]
 
 const host: UserConfig = {
-  name: 'mino-image',
+  name: 'dsh-image-gen',
   entry: ['lib/types/index.js'],
   outDir: 'lib',
   format: ['esm'],
@@ -21,7 +21,7 @@ const host: UserConfig = {
 }
 
 const client: UserConfig = {
-  name: 'mino-image/client',
+  name: 'dsh-image-gen/client',
   entry: { client: 'lib/types/client/index.js' },
   outDir: 'lib',
   format: 'cjs',
@@ -37,7 +37,7 @@ const client: UserConfig = {
   },
   outputOptions: {
     entryFileNames: 'client.js',
-    banner: 'window.__ModuleLoader__.load({ id: "mino-image", factory: (require) => {',
+    banner: 'window.__ModuleLoader__.load({ id: "dsh-image-gen", factory: (require) => {',
     footer: 'return module.exports; } });',
     intro: 'var module = { exports: {} }; var exports = module.exports;',
   },

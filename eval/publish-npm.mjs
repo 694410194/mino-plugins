@@ -3,7 +3,8 @@
  *
  * What it does:
  *  1. Discovers every packages/<dir>/package.json, skips `private: true` (same
- *     index generator — private means "do not distribute").
+ *     index generator — private means "do not distribute") and packages with
+ *     `mino.upstream` — those carry upstream-owned npm names we must not squat.
  *  2. Restores lib//dist/ build outputs from the `dist` snapshot branch for
  *     packages whose declared `main` file is missing on disk (main stays clean;
  *     the tarball gets artifacts from the snapshot).
@@ -37,6 +38,7 @@ for (const dir of readdirSync(PKGS)) {
   if (!existsSync(pj)) continue
   const m = JSON.parse(readFileSync(pj, 'utf8'))
   if (m.private === true) continue
+  if (m.mino?.upstream) continue
   if (only && !only.includes(m.name) && !only.includes(dir)) continue
   pkgs.push([dir, m])
 }

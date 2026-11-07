@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-	id: "mino-skill-explorer",
+	id: "dsh-skill-explorer",
 	factory: (require) => {
 		var module = { exports: {} };
 		var exports = module.exports;

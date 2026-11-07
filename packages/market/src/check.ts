@@ -259,7 +259,7 @@ export interface CheckReport {
 export interface CheckOptions {
   /** DSH host install dir; auto-detected from the CLI entry or Desktop resources when omitted. */
   dshInstallDir?: string
-  /** Harness home for the home-level patch layer; defaults to $DSH_HOME or ~/.dsh. */
+  /** Harness home for the home-level patch layer; defaults to $DSH_HOME or ~/.mino. */
   homeDir?: string
 }
 

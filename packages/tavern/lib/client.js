@@ -11,7 +11,7 @@
  *   消息气泡 / 地图 / 角色卡 / 场景 / 日志 / 三栏舞台 / 设置页 / 样式 / apply
  */
 window.__ModuleLoader__.load({
-  id: 'mino-tavern',
+  id: 'dsh-sillytavern',
   factory: (require) => {
     var module = { exports: {} }
     var exports = module.exports

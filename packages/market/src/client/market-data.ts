@@ -580,7 +580,7 @@ export interface ListQuery {
  * standing in it."
  */
 export function isMarketItself(plugin: Pick<RegistryPlugin, 'name' | 'npm'>): boolean {
-  return plugin.name === 'dsh-market' || plugin.npm === 'dshmarket' || plugin.npm === 'mino-market'
+  return plugin.name === 'dsh-market' || plugin.npm === 'dshmarket' || plugin.npm === 'dshmarket'
 }
 
 /**

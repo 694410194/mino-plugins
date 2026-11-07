@@ -22,7 +22,7 @@ export interface Config {
     enabled?: boolean;
     /** Extra custom skill root directories. */
     customSkillDirs?: string[];
-    /** User dsh config root override (defaults to $DSH_HOME or ~/.dsh). */
+    /** User dsh config root override (defaults to $DSH_HOME or ~/.mino). */
     dshHome?: string;
     /** User agents config root override (defaults to $DSH_AGENTS_HOME or ~/.agents). */
     agentsHome?: string;

@@ -172,7 +172,7 @@ retract_import({ sessionId: "import-019f5f27-…" })
 
 `export_chat({ format: "claude", sessionId })` 把一条现有的 DSH 会话（导入的或原生的）序列化成 Claude Code JSONL transcript，可以直接 `--resume`。文件写到 `<outputDir>/<slug>/<uuid>.jsonl`（默认 `~/.claude/projects`），文件名是全新的 UUID v4，绝不覆盖已有文件。
 
-`format: "codex"` 与 `format: "kimi"` 分别写 Codex rollout JSONL 和 Kimi `wire.jsonl`。`format: "opencode"` 写一份 `opencode import <文件>` 能吃下的 JSON 文档（会话 info + messages + parts；id 前缀 `ses` / `msg` / `prt` 是 opencode 解码器的硬要求）。后三者默认写到 `~/.dsh/exports`，也可以用 `path: …` 指定目标。到这里，DSH↔Claude↔Codex↔Kimi↔opencode 的矩阵就补齐了（导入方向本来就有）。
+`format: "codex"` 与 `format: "kimi"` 分别写 Codex rollout JSONL 和 Kimi `wire.jsonl`。`format: "opencode"` 写一份 `opencode import <文件>` 能吃下的 JSON 文档（会话 info + messages + parts；id 前缀 `ses` / `msg` / `prt` 是 opencode 解码器的硬要求）。后三者默认写到 `~/.mino/exports`，也可以用 `path: …` 指定目标。到这里，DSH↔Claude↔Codex↔Kimi↔opencode 的矩阵就补齐了（导入方向本来就有）。
 
 每次导出都会在 `degradations` 字段里逐条列出**有损项**：孤儿工具结果、注入跳过、附件跳过；opencode 还多一项 `usage-unknown`——它要求 `cost` / `tokens`，而 DSH 会话日志不记录用量，所以只能写 0 并上报。绝不静默丢弃：
 
@@ -180,7 +180,7 @@ retract_import({ sessionId: "import-019f5f27-…" })
 export_chat({ format: "claude", sessionId: "import-019f5f27-…" })
 export_chat({ format: "codex", sessionId: "…", dryRun: true })
 export_chat({ format: "kimi", sessionId: "…", outputDir: "D:\backup\kimi" })
-export_chat({ format: "opencode", sessionId: "…" })   // → ~/.dsh/exports/<id>.opencode.json，随后：opencode import <文件>
+export_chat({ format: "opencode", sessionId: "…" })   // → ~/.mino/exports/<id>.opencode.json，随后：opencode import <文件>
 ```
 
 ### export_bundle / restore_bundle —— 便携 interchange bundle
@@ -190,7 +190,7 @@ export_chat({ format: "opencode", sessionId: "…" })   // → ~/.dsh/exports/<i
 `restore_bundle({ path })` 先校验指纹（文件损坏就大声报告，绝不静默还原），再走同一套幂等状态机导入：重复还原会跳过，`force: true` 另存副本，目录模式下逐个还原里面的 `.dshbundle.json`：
 
 ```
-export_bundle({ sessionId: "import-019f5f27-…" })                    // → ~/.dsh/exports/<id>.dshbundle.json
+export_bundle({ sessionId: "import-019f5f27-…" })                    // → ~/.mino/exports/<id>.dshbundle.json
 restore_bundle({ path: "D:\backup\sess.dshbundle.json" })            // A 机导出 → B 机还原
 restore_bundle({ path: "D:\backup\bundle-dir", preview: true })      // dry-run
 ```
@@ -224,12 +224,12 @@ doctor()
 npm 包里还附带一个小 CLI，不需要启动 DSH：
 
 ```
-npx dsh-chat-import export-md ~/.dsh/sessions/<workspace>/<session>/session.jsonl
+npx dsh-chat-import export-md ~/.mino/sessions/<workspace>/<session>/session.jsonl
 npx dsh-chat-import export-md <会话目录> --out session.md
 npx dsh-chat-import doctor
 ```
 
-`export-md` 把 DSH 会话日志渲染成可读的 Markdown，包括会话头、标题、user / assistant 文本、thinking、工具调用与结果。会话根跟随宿主的 `DSH_HOME`：桌面端是 `%APPDATA%\dsh-desktop\harness`，没有设置时用 `~/.dsh`（独立 CLI 就是这种情况）。`doctor` 读取 `$DSH_HOME/dsh-chat-import/imports.json` 与本地的 `sessions` 树，做一份轻量的健康汇总。
+`export-md` 把 DSH 会话日志渲染成可读的 Markdown，包括会话头、标题、user / assistant 文本、thinking、工具调用与结果。会话根跟随宿主的 `DSH_HOME`：桌面端是 `%APPDATA%\dsh-desktop\harness`，没有设置时用 `~/.mino`（独立 CLI 就是这种情况）。`doctor` 读取 `$DSH_HOME/dsh-chat-import/imports.json` 与本地的 `sessions` 树，做一份轻量的健康汇总。
 
 ### import_mcp —— MCP 镜像计划
 
@@ -269,8 +269,8 @@ dsh web 的左侧栏底部只有一个「导入会话」入口：**导入会话*
 | **DSH（V3 会话格式）** | 建一条可继续的 DSH 会话，会话日志按 **V3 代次**落盘（`session.v3.jsonl.zstd`）；header 的 `version` 与事件形状一起按 V3 产出，所以 V4 宿主上也能真写出 V3 日志。 |
 | **DSH（V4 会话格式）** | 同上，按 **V4 代次**落盘。**默认项跟随探测到的宿主版本**（V4 宿主默认选它）。 |
 | Claude Code | 转换后写进 `~/.claude/projects/<slug>/<uuid>.jsonl`；Claude Code 直接读该目录（`claude --resume` 打开）。 |
-| Codex / Kimi Code | 分别写成 Codex rollout JSONL / Kimi `wire.jsonl` 落到 `~/.dsh/exports/`，由你放进对应工具的 sessions 目录。 |
-| opencode | 写成 opencode JSON 落到 `~/.dsh/exports/`，随后用 `opencode import <文件>` 导入。 |
+| Codex / Kimi Code | 分别写成 Codex rollout JSONL / Kimi `wire.jsonl` 落到 `~/.mino/exports/`，由你放进对应工具的 sessions 目录。 |
+| opencode | 写成 opencode JSON 落到 `~/.mino/exports/`，随后用 `opencode import <文件>` 导入。 |
 
 来源与落点**都是 DSH、但代次不同**（V3 ↔ V4）时，底部会多出一个主按钮「**导入所选并归档旧会话 (N)**」：所选会话按目标代次导入，**导入成功**之后，才把对应的**源会话**在宿主里归档，作为迁移的收尾。归档是不可逆的隐藏动作（宿主没有取消归档的接口），所以**只有导入成功的条目才归档**：跳过和失败的条目原样保留，面板会点名「N 个旧会话未归档」。
 

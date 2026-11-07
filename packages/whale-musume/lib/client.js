@@ -12,7 +12,7 @@
  * 监听 whale-moe-prefs-change),使 bundle 安装方式同样自带设置面板。
  */
 window.__ModuleLoader__.load({
-  id: "mino-whale-musume",
+  id: "dsh-whale-musume",
   factory: (require) => {
     var module = { exports: {} };
     var exports = module.exports;

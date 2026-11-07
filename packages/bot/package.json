@@ -1,5 +1,5 @@
 {
-  "name": "mino-bot",
+  "name": "dsh-bot",
   "version": "0.1.2",
   "type": "module",
   "description": "个人 Agent 工作区（fork MJ-CJM/DSH-Bot 的 dsh-bot）：多个有名有姓的 Bot，各自人设、长期记忆、工具与技能，群组协作与任务交接，后台任务与凭据编辑。",

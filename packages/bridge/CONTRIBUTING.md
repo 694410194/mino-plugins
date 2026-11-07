@@ -49,7 +49,7 @@ bash scripts/dsh-compat-check.sh 0.2.0-rc.2
 
 - **产物不手改**：`client/client.js`、`lib/feishu/lark-bundled.mjs` 是构建产物，通过 `npm run build:*` 生成；
 - **审批归属模型**：IM 发起的轮次只在 IM 决议，Web 发起的只在 Web 弹窗；改审批相关代码前请先读 `conversation-bridge.js` 的 `_attachApprovalBridge` 注释；
-- **测试环境无关**：测试不得依赖外部网络或当前机器的 `~/.dsh` 数据（CI 是 Linux 沙箱无出网）；mock 优先提供内存服务注入点；
+- **测试环境无关**：测试不得依赖外部网络或当前机器的 `~/.mino` 数据（CI 是 Linux 沙箱无出网）；mock 优先提供内存服务注入点；
 - **中文为主**：代码注释与用户可见文案以中文为主。
 
 ## 提交规范

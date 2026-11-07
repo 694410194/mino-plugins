@@ -1,5 +1,5 @@
 {
-  "name": "mino-ops",
+  "name": "dsh-ops",
   "version": "0.4.4",
   "publishConfig": {
     "access": "public"

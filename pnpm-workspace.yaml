@@ -20,6 +20,8 @@ packages:
   - "!packages/status"
   - "!packages/tavern"
   - "!packages/whale-musume"
+  # 自建客户端打包 UI 插件：自带 node_modules 独立构建，同走 release tarball 通道
+  - "!packages/feiyu-garden"
   - "!packages/chat-import"
   - "!packages/better-sidebar"
   - "!packages/damage-pulse"

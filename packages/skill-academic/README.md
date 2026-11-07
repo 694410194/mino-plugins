@@ -1,4 +1,4 @@
-# mino-skill-academic
+# academic-research-skills
 
 Mino 精选 **skill 包**（社区 vendored fork）：学术论文全链技能（5 件）——deep-research、academic-paper、academic-paper-reviewer、academic-pipeline、sr-screener
 
@@ -18,7 +18,7 @@ skill pack bundle：包内 `skills/` 目录随包分发，插件通过官方
 ## 覆盖
 
 同名 skill 按层与 rank 解析：项目 `.dsh/skills`、`.agents/skills` 或
-`~/.dsh/skills` 中放同名目录即可覆盖市场包内容（provider rank 600 > 650）。
+`~/.mino/skills` 中放同名目录即可覆盖市场包内容（provider rank 600 > 650）。
 
 ## 注意
 

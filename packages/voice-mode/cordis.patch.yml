@@ -3,4 +3,4 @@
 # 普通会话 next() 直达、零开销（模式隔离，验收点 7）。
 - insert:
     - id: voice-mode
-      name: 'mino-voice-mode'
+      name: 'dsh-voice-mode'

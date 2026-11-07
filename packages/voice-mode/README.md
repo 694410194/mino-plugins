@@ -116,7 +116,7 @@ dsh plugin --profile web add dsh-voice-mode
 
 - dsh ≤ 0.1.5：设置 → Plugins → 插件配置 → 语音模式
 - dsh 0.1.6-alpha 及以后（含 0.1.7、0.2.0）：左侧 **Plugins** → 已安装的 `dsh-voice-mode` → 详情页「语音模式」卡片
-- dsh 0.1.7+ 起，设置保存在插件自有文件 `~/.dsh/voice-mode.settings.json`（`$DSH_HOME` 下），优先于 profile 配置里的同名键；首次运行会从旧 `settings.yaml(.imported)` 的 `voice-mode:` 段迁移一次；恢复默认请把该文件内容改成 `{}`（不要删除）。
+- dsh 0.1.7+ 起，设置保存在插件自有文件 `~/.mino/voice-mode.settings.json`（`$DSH_HOME` 下），优先于 profile 配置里的同名键；首次运行会从旧 `settings.yaml(.imported)` 的 `voice-mode:` 段迁移一次；恢复默认请把该文件内容改成 `{}`（不要删除）。
 
 
 | 键 | 默认 | 说明 |
@@ -179,7 +179,7 @@ dsh plugin --profile web add dsh-voice-mode
 
 ## 🔧 配置（bundle patch / settings.yaml）
 
-也可以直接编辑 `~/.dsh/settings.yaml` 的 `voice-mode:` 段（设置面板与 RPC 写的是同一份文档层）：
+也可以直接编辑 `~/.mino/settings.yaml` 的 `voice-mode:` 段（设置面板与 RPC 写的是同一份文档层）：
 
 ```yaml
 - id: voice-mode

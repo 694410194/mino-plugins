@@ -1,7 +1,7 @@
 /**
  * 富媒体过期清理 — 避免下载文件持续膨胀
  *
- * 下载目录 ~/.dsh-qqbot/media，文件写入后不再变更，故文件 mtime 即「下载时间」。
+ * 下载目录 ~/.mino-qqbot/media，文件写入后不再变更，故文件 mtime 即「下载时间」。
  * 清理时按文件 mtime 判断是否超过保留时长。
  */
 import { existsSync } from 'node:fs';

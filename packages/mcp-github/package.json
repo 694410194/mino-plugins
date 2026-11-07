@@ -1,5 +1,5 @@
 {
-  "name": "mino-mcp-github",
+  "name": "github-mcp-server",
   "version": "0.1.0",
   "description": "MCP 接入包：GitHub 官方远端 MCP 服务器（streamable-http，需 GITHUB_TOKEN，未配置时行自动停用）。安装即挂载一条 dsh-mcp-client 配置行。",
   "keywords": [

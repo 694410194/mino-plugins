@@ -52,7 +52,7 @@ dsh-sillytavern/
   docs/                                              [lead + 各自补充]
 ```
 
-## 数据布局（`~/.dsh/dsh-sillytavern/`，见 lib/paths.js）
+## 数据布局（`~/.mino/dsh-sillytavern/`，见 lib/paths.js）
 
 characters/ avatars/ worlds/ chats/ groups/ presets/ regex/ quick-replies/ personas/ trpg/
 settings.json bindings.json state.json

@@ -78,7 +78,7 @@ export function getProfileDir(baseDir: string = PLUGIN_ROOT): string | null {
 
 /** 反查 symlink 命中 profile；多 profile 共享源码时优先当前进程的 profile */
 function findProfileBySymlink(baseDir: string): string | null {
-  const home = process.env.DSH_HOME ?? resolve(os.homedir(), '.dsh');
+  const home = process.env.MINO_HOME ?? process.env.DSH_HOME ?? resolve(os.homedir(), '.mino');
   const profilesRoot = resolve(home, 'profiles');
   if (!existsSync(profilesRoot)) return null;
   let realBase: string;

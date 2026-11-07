@@ -2,7 +2,7 @@
  * PrefsStore — per-peer 会话偏好持久化（模型 + preset）
  *
  * 隔离文件 I/O 操作，便于单元测试时 mock。
- * 存储路径：~/.dsh-qqbot/model-prefs.json（全局共享，多实例/多进程共存）。
+ * 存储路径：~/.mino-qqbot/model-prefs.json（全局共享，多实例/多进程共存）。
  *
  * 并发安全（该文件存在多个写者——同进程多 bot 实例、跨进程多 profile）：
  * - 原子写：同目录临时文件 + rename，崩溃不留半份文件；

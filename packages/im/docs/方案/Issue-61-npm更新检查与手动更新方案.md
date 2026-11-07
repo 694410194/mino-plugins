@@ -443,7 +443,7 @@ dsh plugin --profile web add -w --save-exact @xmanrui/dsh-im@3.0.8 --registry=ht
 - 临时冲突的 `@xmanrui:registry` 会显示源冲突并移除安装操作；移除该测试配置后可重新检查。未改用户的 registry 配置。
 - 任意附加安装选项被 `bad-request` 拒绝，伪造确认被 `check-expired` 拒绝，跨源安装请求返回 HTTP 403。
 - 另用相同的全局安装 CLI 验证源码 profile：status/check 正常，但始终是 `source-install`、`canInstall:false`、`checkId:null`；伪造安装没有创建任务，清单和锁文件不变。
-- 日常 `~/.dsh/profiles/web` 和 `desktop` 仍通过 `link:<项目绝对路径>` 指向原源码目录，未替换为 npm 安装。
+- 日常 `~/.mino/profiles/web` 和 `desktop` 仍通过 `link:<项目绝对路径>` 指向原源码目录，未替换为 npm 安装。
 
 ### 证据与边界
 

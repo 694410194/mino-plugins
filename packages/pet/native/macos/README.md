@@ -38,7 +38,7 @@ PyObjC 在 macOS 26 上崩溃 → EPIPE 未捕获 → 整个 dsh 服务器退出
 - 全屏置顶：`NSWindow.CollectionBehavior` 的 `canJoinAllSpaces` +
   `fullScreenAuxiliary` + `stationary`，`NSWindow.Level.floating`，每 2 秒
   重新断言层级并 `orderFrontRegardless()`，全屏 App 下依然在前端
-- 布局持久化：`~/.dsh/mino-pet/layout.json`（与旧版同路径；首次启动
+- 布局持久化：`~/.mino/mino-pet/layout.json`（与旧版同路径；首次启动
   自动迁移旧 Qt 版 top-left 坐标到 AppKit bottom-left）
 - 权限（苹果官方接口）：UserNotifications 通知授权
   （SUCCESS/ERROR 脉冲时提示，同时按设置播放提示音）；
@@ -140,14 +140,14 @@ pnpm exec dsh plugin --profile web add ~/Downloads/mino-pet-<version>.tgz
 
 ```bash
 npm pack          # 生成 mino-pet-<version>.tgz
-# 把 tarball 路径写入 ~/.dsh/profiles/web/package.json 的 dependencies，
+# 把 tarball 路径写入 ~/.mino/profiles/web/package.json 的 dependencies，
 # 并把 mino-pet 加回 bundles 列表，然后解包到
-# ~/.dsh/profiles/web/node_modules/mino-pet
+# ~/.mino/profiles/web/node_modules/mino-pet
 ```
 
 ## 回退
 
 - 临时停用：dsh WebUI 设置里关闭 mino-pet，或右键宠物 → 本次关闭
-- 彻底移除：从 `~/.dsh/profiles/web/package.json` 删掉 mino-pet 依赖和
+- 彻底移除：从 `~/.mino/profiles/web/package.json` 删掉 mino-pet 依赖和
   bundle 项，删除 `node_modules/mino-pet`，重启 dsh 服务
 - 旧版插件如需找回，可从之前安装的 `.tgz` 或 npm 版本恢复

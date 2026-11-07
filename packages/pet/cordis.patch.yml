@@ -1,6 +1,6 @@
 - insert:
     - id: dsh-dafeiyu
-      name: 'mino-pet'
+      name: 'dsh-dafeiyu'
       config:
         enabled: true
         scale: 1

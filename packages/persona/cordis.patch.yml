@@ -1,14 +1,14 @@
-# mino-persona — bundle patch layer
+# dsh-soul-md — bundle patch layer
 #
 # Derived from dsh-soul-md. Declares the plugin as a Cordis loader entry:
-# `dsh plugin --profile <p> add mino-persona` installs and mounts it without
+# `dsh plugin --profile <p> add dsh-soul-md` installs and mounts it without
 # manual cordis.patch.yml edits.
 #
 # `config.cards`/`config.active` seed the official Mino card as the default
 # persona out of the box; users can still add/switch cards in 设置 → 人设卡.
 - insert:
     - id: soul-md
-      name: 'mino-persona'
+      name: 'dsh-soul-md'
       config:
         active: mino
         cards:

@@ -10,11 +10,11 @@ The **browser-operation bridge** for dsh: mounts a token-authenticated WebSocket
 
 | Key | Type | Default | Description |
 |---|---|---|---|
-| `token` | `string` | generated | Fixed bearer token. When absent, a token is generated on first boot, persisted at `~/.dsh/ext-bridge-token` (chmod 0600), and printed in the boot log. |
+| `token` | `string` | generated | Fixed bearer token. When absent, a token is generated on first boot, persisted at `~/.mino/ext-bridge-token` (chmod 0600), and printed in the boot log. |
 | `toolTimeoutMs` | `number` | 90000 | Per-tool-call budget, leaving time for the extension's 60-second approval window. |
 | `snapshotMaxChars` | `number` | 32000 | Upper bound on one rendered snapshot's characters, minimum 500 (also negotiated to the extension via `hello.ok` caps). |
 | `maxInteractiveItems` | `number` | 60 | Upper bound on interactive inventory items per snapshot. |
-| `sessionWorkspacePath` | `string` | `~/.dsh/browser-sessions` | Dedicated Host Workspace for extension-created sessions. The plugin creates and idempotently registers the directory on the first implicit `session.create`; the session cwd becomes this path, so the GUI shows a `browser-sessions` workspace group. Set `""` to keep sessions Ungrouped. |
+| `sessionWorkspacePath` | `string` | `~/.mino/browser-sessions` | Dedicated Host Workspace for extension-created sessions. The plugin creates and idempotently registers the directory on the first implicit `session.create`; the session cwd becomes this path, so the GUI shows a `browser-sessions` workspace group. Set `""` to keep sessions Ungrouped. |
 | `deferSessionCreate` | `boolean` | `true` | Sessions materialize only on the first message: `session.create` answers with a provisional id (nothing persisted), history reads empty, and the first `session.prompt` creates the real session (same id, original payload). Opening the panel without chatting leaves zero trace in the session store/GUI. |
 
 Workspace grouping is best-effort. If the composition has no workspace domain, directory creation fails, or `workspace.create` rejects the path, the plugin logs one warning and sends every session creation without an injected workspace so browser chat remains usable.
@@ -25,7 +25,7 @@ The remote installer downloads an installer-managed workspace, builds the plugin
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/Lum1104/dsh-browser/refs/heads/main/scripts/install.sh | bash
-cd ~/.dsh/dsh-browser && pnpm start
+cd ~/.mino/dsh-browser && pnpm start
 ```
 
 On Windows, run the PowerShell installer instead:
@@ -43,7 +43,7 @@ The workspace pins dsh 0.2.0-rc.2, the minimum supported runtime. Older DSH rele
 npx @deepseek-ai/dsh@0.2.0-rc.2 web
 ```
 
-The installer copies the unpacked extension to `~/.dsh/browser-extension` and opens `chrome://extensions`. Load that stable directory in Chrome and use the side panel. Loopback connections are discovered automatically and require no token entry; non-loopback deployments still require the configured bearer token.
+The installer copies the unpacked extension to `~/.mino/browser-extension` and opens `chrome://extensions`. Load that stable directory in Chrome and use the side panel. Loopback connections are discovered automatically and require no token entry; non-loopback deployments still require the configured bearer token.
 
 ## Security model
 
@@ -87,6 +87,6 @@ Each `respond` carries a globally unique transport id as well as the host intera
 
 - One active extension connection (a second window replaces the first).
 - Accessible cross-origin iframes are snapshotted and operated with stable `(frame, index)` addresses. Restricted or short-lived frames are reported as unavailable without failing the whole page snapshot.
-- Token rotation is manual (edit `~/.dsh/ext-bridge-token` or set `token` in config); no expiry.
+- Token rotation is manual (edit `~/.mino/ext-bridge-token` or set `token` in config); no expiry.
 - The Playwright-driven extension e2e self-skips without a usable Chromium executable or a built extension bundle.
 - Approval is enforced in the extension service worker rather than delegated to model behavior. A future dsh tool-pipeline integration may surface the same policy in other clients.

@@ -23,7 +23,7 @@
 
 - insert:
     - id: mcp-paper-search-pack
-      name: 'mino-mcp-paper-search'
+      name: 'paper-search-mcp'
     - id: mcp-paper-search
       name: '@deepseek-ai/dsh-mcp-client'
       config:

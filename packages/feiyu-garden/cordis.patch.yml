@@ -1,0 +1,6 @@
+# mino-feiyu-garden bundle patch —— 把「海蒂花园」叠加到 profile 组合上。
+# 单包双面：宿主半边（状态/路由/陪伴记账）+ 浏览器半边（侧栏行 + main 页）。
+# 安装：dsh plugin --profile web add mino-feiyu-garden
+- insert:
+    - id: feiyu-garden
+      name: 'mino-feiyu-garden'

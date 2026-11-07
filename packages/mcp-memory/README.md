@@ -1,4 +1,4 @@
-# mino-mcp-memory
+# @modelcontextprotocol/server-memory
 
 把官方 **memory 知识图谱 MCP 服务器**（`@modelcontextprotocol/server-memory`）接进
 harness：模型获得 `mcp__memory__*` 系列工具（实体/关系/观察的建查改删）。

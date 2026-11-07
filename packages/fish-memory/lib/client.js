@@ -1,6 +1,6 @@
 // DSH 鱼的记忆 · 客户端半边（设置左侧栏一项「鱼的记忆」）
 window.__ModuleLoader__.load({
-  id: 'mino-fish-memory',
+  id: 'dsh-fish-memory',
   factory: (require) => {
     var module = { exports: {} }
     var exports = module.exports

@@ -1,4 +1,4 @@
-// mino-mcp-paper-search runtime（自声明行加载本模块即挂 skills provider + patch 里 mcp-client 行拉起服务器） —— 把随包 skills/ 目录注册为 ctx.skills provider。
+// paper-search-mcp runtime（自声明行加载本模块即挂 skills provider + patch 里 mcp-client 行拉起服务器） —— 把随包 skills/ 目录注册为 ctx.skills provider。
 // 只依赖官方公开契约（ctx.skills.registerProvider / SkillProvider 接口），零内核改动。
 // 本文件在所有 skill-* 包之间保持逐字一致；改动请同步 templates/skill-pack（模板源）。
 import { readFileSync } from 'node:fs'

@@ -92,7 +92,7 @@ hides the `[target, marker]` span from the rendered transcript.
 ## Filesystem containment
 
 - **Store root**: `<dsh home>/rewind-snapshots/` by default (resolved via
-  `resolveDshHome`, so `$DSH_HOME` feeds the base and `~/.dsh` is the fallback);
+  `resolveDshHome`, so `$DSH_HOME` feeds the base and `~/.mino` is the fallback);
   the `snapshotDir` config overrides the whole path. The plugin reads no
   environment variable of its own. Deleting the root only removes file backups
   and the store rebuilds from scratch.

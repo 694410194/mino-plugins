@@ -12,7 +12,7 @@ import type {
 import type { SessionEventLike } from '@deepseek-ai/dsh-api-session-controller/client'
 import { META_KIND, META_KIND_BATCH } from '../shared.js'
 
-export const IMAGE_RESULT_NODE_KIND = 'mino-image-result'
+export const IMAGE_RESULT_NODE_KIND = 'dsh-image-gen-result'
 
 export interface ImageResultPresentation {
   readonly attachment: ImageAttachmentRef
@@ -34,7 +34,7 @@ export interface MinoImageResultData {
 declare module '@deepseek-ai/dsh-client-ui-chat/client' {
   interface ChatNodeDataMap {
     /** Successful Mino image results rendered as their own conversation rows. */
-    'mino-image-result': MinoImageResultData
+    'dsh-image-gen-result': MinoImageResultData
   }
 }
 
@@ -68,14 +68,14 @@ export function createImageResultDefinition(): ConversationNodeDefinition<ImageR
     start: (_context, match) => {
       if (match.event.type === 'tool/ptc-dispatch') {
         const results = imageResultsFromDispatch(match.event)
-        if (results.length === 0) throw new Error('mino-image-result start requires a plugin image dispatch')
+        if (results.length === 0) throw new Error('dsh-image-gen-result start requires a plugin image dispatch')
         return { results: results.map(result => ({ ...result, seq: match.event.seq })) }
       }
       if (match.event.type !== 'tool/result') {
-        throw new Error('mino-image-result start requires an image Tool result')
+        throw new Error('dsh-image-gen-result start requires an image Tool result')
       }
       const results = imageResultsFromMeta(match.event.data.meta)
-      if (results.length === 0) throw new Error('mino-image-result start requires an image Tool result')
+      if (results.length === 0) throw new Error('dsh-image-gen-result start requires an image Tool result')
       return { turn: match.event.data.turn, results: results.map(result => ({ ...result, seq: match.event.seq })) }
     },
     update: (context, match) => {
@@ -88,7 +88,7 @@ export function createImageResultDefinition(): ConversationNodeDefinition<ImageR
   }
 }
 
-function buildNode(context: ConversationNodeContext<ImageResultState>): ChatNode<'mino-image-result'> | null {
+function buildNode(context: ConversationNodeContext<ImageResultState>): ChatNode<'dsh-image-gen-result'> | null {
   const state = context.state
   const first = state?.results[0]
   if (state === undefined || first === undefined) return null

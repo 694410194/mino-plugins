@@ -54,7 +54,7 @@
   「服务器 `/var/www/git/*` pins 表 + 旧索引条目」补齐再 enrich，
   **残缺索引禁止上线**（pin 错=安装全断）。
 - **依赖外部 exe 的连接器必须含 engines.json 兜底**（D50 实锤）：
-  engine-assist 装的引擎登记在 `~/.dsh/engines.json` + `~/.dsh/engines/<name>/`，
+  engine-assist 装的引擎登记在 `~/.mino/engines.json` + `~/.mino/engines/<name>/`，
   只查 PATH+写死路径的连接器看不见它——装了等于没装。
   探测顺序：显式配置路径 → PATH → engines.json → engines/ 目录递归扫
   exe → 写死路径兜底。每家自包含 20 行，不共享模块。

@@ -1,9 +1,9 @@
-# mino-mcp-thinking：官方 sequential-thinking MCP 服务器接入（stdio，npx 拉起）。
+# @modelcontextprotocol/server-sequential-thinking：官方 sequential-thinking MCP 服务器接入（stdio，npx 拉起）。
 # 纯配置 bundle——只插入一条官方 dsh-mcp-client 行，零代码；卸载本包即移除该服务器。
 # 需要本机 node/npm。
 - insert:
     - id: mcp-thinking-pack
-      name: 'mino-mcp-thinking'
+      name: '@modelcontextprotocol/server-sequential-thinking'
     - id: mcp-thinking
       name: '@deepseek-ai/dsh-mcp-client'
       config:

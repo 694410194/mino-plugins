@@ -72,21 +72,21 @@ DSH → 插件 → DSH QQ 控制台 2.2 → 卸载。
 用户数据默认保留：
 
 ```text
-~/.dsh/qq-console-v2/
+~/.mino/qq-console-v2/
 ```
 
 重新安装后会继续使用绑定、排队和会话偏好。要彻底清空再手动删这个目录。
 
 ## 凭据
 
-- AppID 明文保存在 `~/.dsh/qq-console-v2/settings.json`；
+- AppID 明文保存在 `~/.mino/qq-console-v2/settings.json`；
 - AppSecret 先用 Windows DPAPI 加密成 `dpapi:v1:*`，再写入同一文件，
   只能由当前 Windows 用户解密；
 - 设置页只显示 AppID 和「已设置 / 未设置」，AppSecret 永不回显；
 - 插件启动、DSH 重启或插件重载时自动解密并连接；
 - 点「清除已保存凭据」会同时清除内存与落盘凭据并停止网关。
 
-WorkBuddy 缓存模型来自 `~/.dsh/.workbuddy-ai-catalog.json`。未登录 WorkBuddy
+WorkBuddy 缓存模型来自 `~/.mino/.workbuddy-ai-catalog.json`。未登录 WorkBuddy
 时仍可看到并配置这些模型，但要真正调用需先登录 WorkBuddy。宿主报告为不可
 路由的模型会被标成「未登录」并拦下选择；如果会话里已经存着这种模型，投递前
 会自动回退到能跑的模型，并在回执里说明换了哪只。

@@ -101,14 +101,14 @@ Open **设置 (Settings) → 表情包 (Memes)**:
 
 </details>
 
-The default scan directory is `~/.dsh/meme-packs`; settings live in `~/.dsh/dsh-expression.json` and survive upgrades. ZIP imports accept standard compression and plain image folders.
+The default scan directory is `~/.mino/meme-packs`; settings live in `~/.mino/dsh-expression.json` and survive upgrades. ZIP imports accept standard compression and plain image folders.
 
 **Send mode** only affects the AI: automatic follows the channel (Web marker, IM native image), text-only never sends images, image requires a real send every time. **Send chance** is off by default; when enabled, each turn rolls the selected chance to decide whether the AI proactively sends an image (automatic mode only), and a direct request for a meme always bypasses the roll. **QQ send size** is off by default; when enabled, QQ/IM sends a copy scaled to the selected long edge (300 px default), Web keeps the original, and GIF frames are preserved — the official QQ bot has no sticker message type, and smaller images are more likely to render as stickers instead of being stretched full-screen on tablets. **Layout** only affects rendering: side-by-side (default) or a full-width image row.
 
 ## Troubleshooting
 
 - **QQ renders memes as stretched photos** — the official QQ bot has no sticker message type, so large images are sent as photos. Turn on “QQ send size” and pick 300 px (200–450 works best); QQ/IM then sends a scaled copy while Web keeps the original. Scaling needs sharp, which dsh-im bundles; without it the original image is sent.
-- **Update failed / plugin disappeared** — click **Retry** in the marketplace; if it still fails, quit DSH completely and update again. On older versions, or if it keeps failing, run `pnpm add dsh-meme@latest` in the profile directory with DSH closed. Packs and settings live in `~/.dsh` and survive reinstalls. See the [troubleshooting guide](https://github.com/yyh-001/dsh-meme/blob/main/docs/troubleshooting.en.md).
+- **Update failed / plugin disappeared** — click **Retry** in the marketplace; if it still fails, quit DSH completely and update again. On older versions, or if it keeps failing, run `pnpm add dsh-meme@latest` in the profile directory with DSH closed. Packs and settings live in `~/.mino` and survive reinstalls. See the [troubleshooting guide](https://github.com/yyh-001/dsh-meme/blob/main/docs/troubleshooting.en.md).
 - **Restrictive network / marketplace unavailable** — mirrors are raced and the catalog is cached automatically; click **Retry**, then switch **Catalog source** to **Mirrors**. See the [troubleshooting guide](https://github.com/yyh-001/dsh-meme/blob/main/docs/troubleshooting.en.md).
 - **Phone / LAN / reverse proxy** — turn on **Allow LAN access** for LAN IPs; a reverse-proxy domain needs an explicit trusted host (`DSH_MEME_TRUSTED_HOSTS` or `allowedHosts`). See the [troubleshooting guide](https://github.com/yyh-001/dsh-meme/blob/main/docs/troubleshooting.en.md).
 

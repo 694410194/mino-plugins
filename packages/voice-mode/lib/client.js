@@ -1,4 +1,4 @@
-window.__ModuleLoader__.load({ id: "mino-voice-mode", factory: (require) => {
+window.__ModuleLoader__.load({ id: "dsh-voice-mode", factory: (require) => {
 var module = { exports: {} }; var exports = module.exports;
 "use strict";
 var __create = Object.create;

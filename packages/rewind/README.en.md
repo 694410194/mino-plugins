@@ -76,7 +76,7 @@ then install the new one.
 switched off in this plugin's configuration card. When off, no new snapshots
 are created; file changes made while off cannot be restored. Snapshots (the
 before-write backups) are stored under `<dsh home>/rewind-snapshots/`
-(the default is `~/.dsh/rewind-snapshots/`). For the **same session**, the plugin
+(the default is `~/.mino/rewind-snapshots/`). For the **same session**, the plugin
 deduplicates snapshots by content and keeps the newest 100 anchor groups.
 **Deleting that directory manually** only clears the file backups (chat rewinds are
 unaffected); the plugin can rebuild them automatically.

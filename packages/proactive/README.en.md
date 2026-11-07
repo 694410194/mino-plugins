@@ -67,7 +67,7 @@ Install from GitHub source (monorepo subdirectory; pnpm ≥10 requires allowing 
 dsh plugin --profile web add github:john-walks-slow/dsh-proactive#path:/packages/dsh-proactive
 # Prefer pinning a commit: github:john-walks-slow/dsh-proactive#<sha>&path:/packages/dsh-proactive
 # The first add is blocked by pnpm: add the package name pnpm prints to
-# allowBuilds in ~/.dsh/profiles/web/pnpm-workspace.yaml, then re-run
+# allowBuilds in ~/.mino/profiles/web/pnpm-workspace.yaml, then re-run
 ```
 
 Local development install (file: deps do not run prepare, build in the package directory first):

@@ -26,7 +26,7 @@ Remove: `npx @deepseek-ai/dsh@0.2.0-rc.2 plugin --profile web remove paper-searc
 
 The server loads `~/.config/paper-search-mcp/.env` itself at startup (see the project's [Environment Variables](https://github.com/openags/paper-search-mcp#environment-variables-env-file) section) — create that file and no dsh-side configuration is needed.
 
-DSH deliberately scrubs credential-shaped ambient env vars (and all `DSH_*` vars) from spawned children, so shell exports do **not** reach the server. To forward variables explicitly, override the `mcp-paper-search` row in `~/.dsh/profiles/<name>/cordis.patch.yml`. A config override replaces the entire object, so restate every field you want to keep:
+DSH deliberately scrubs credential-shaped ambient env vars (and all `DSH_*` vars) from spawned children, so shell exports do **not** reach the server. To forward variables explicitly, override the `mcp-paper-search` row in `~/.mino/profiles/<name>/cordis.patch.yml`. A config override replaces the entire object, so restate every field you want to keep:
 
 ```yaml
 - id: mcp-paper-search
@@ -57,7 +57,7 @@ The default `uvx paper-search-mcp` runs the PyPI package in a managed tool envir
 `skills/paper-search/SKILL.md` (in this repository) is a model-guidance skill (usage workflow, source table, tool mapping) — the MCP tools work without it. From the checkout:
 
 ```sh
-mkdir -p ~/.dsh/skills && cp -r dsh/skills/paper-search ~/.dsh/skills/
+mkdir -p ~/.mino/skills && cp -r dsh/skills/paper-search ~/.mino/skills/
 ```
 
 ## Naming and conflicts

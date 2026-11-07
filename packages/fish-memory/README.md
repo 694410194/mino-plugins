@@ -1,5 +1,5 @@
 > 本项目派生自 https://github.com/Yuuyuko-uu/dsh-fish-memory，原作者 Yuuyuko-uu。
-> Mino 集成改动：包名与 cordis.patch.yml 解析名改为 mino-fish-memory，补充 NOTICE；功能未修改。
+> Mino 集成改动：包名与 cordis.patch.yml 解析名改为 dsh-fish-memory，补充 NOTICE；功能未修改。
 
 # 🐋 鱼的记忆
 

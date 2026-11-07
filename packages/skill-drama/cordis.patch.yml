@@ -1,4 +1,4 @@
-# mino-skill-drama bundle patch：挂载 skill pack provider 行。
+# drama-skills bundle patch：挂载 skill pack provider 行。
 - insert:
     - id: skill-drama
-      name: "mino-skill-drama"
+      name: "drama-skills"

@@ -100,7 +100,7 @@ export default {
 
 | | |
 |---|---|
-| `api.config()` | 插件的整份配置（只读，看 `~/.dsh/plugins-data/aurabot/config.json`） |
+| `api.config()` | 插件的整份配置（只读，看 `~/.mino/plugins-data/aurabot/config.json`） |
 | `api.setConfig(patch)` | 改配置：传对象就深合并，传函数 `(cfg) => 新cfg` 就整个换 |
 | `api.settings()` | 这个模块的设置（`defaults` + 面板里填的） |
 | `api.saveSettings(patch)` | 改这个模块的设置 |

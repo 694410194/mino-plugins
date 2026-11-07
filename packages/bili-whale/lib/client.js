@@ -13,7 +13,7 @@
  *         ⚠️ 保存时提交**整份配置**（load 回来原样改几个键）→ 未显示的字段不会被抹掉 ✓
  */
 window.__ModuleLoader__.load({
-  id: "mino-bili-whale",
+  id: "dsh-bili-whale",
   factory: (require) => {
     const module = { exports: {} };
     const exports = module.exports;

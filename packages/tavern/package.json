@@ -1,5 +1,5 @@
 {
-  "name": "mino-tavern",
+  "name": "dsh-sillytavern",
   "version": "1.1.1",
   "description": "Mino SillyTavern-compatible preset: character cards, worldbooks, macros, MVU (fork of dsh-sillytavern)",
   "type": "module",

@@ -397,7 +397,7 @@ dsh plugin --profile desktop add "file:C:/Users/Little Alety/Documents/deepseek-
 $DSH_HOME/dsh-team-conductor/teams/<rootSessionId>.json
 ```
 
-`$DSH_HOME` 未设置时用 `~/.dsh`（`dshHome()` 处理 `~`、`~/...` 与普通路径）；文件名把 root id 中非 `[a-zA-Z0-9._-]` 的字符替换成 `_`，截到 200 字符。
+`$DSH_HOME` 未设置时用 `~/.mino`（`dshHome()` 处理 `~`、`~/...` 与普通路径）；文件名把 root id 中非 `[a-zA-Z0-9._-]` 的字符替换成 `_`，截到 200 字符。
 
 写入是**原子**的：先写 `<file>.tmp`，再 `rename` 覆盖（`writeStore()`）；读取容忍文件缺失或损坏——解析失败即当作空 store，不抛错。读路径还有一层按 `mtimeMs + size` 校验的**进程内缓存**（`blockedTarget()` / `resolveTarget()` 每次寻址都要读侧车，缓存把每条消息的同步磁盘读去掉）：缓存值按不可变处理，每次 `writeStore()` 都会刷新它，所以外部编辑器和本插件自己的写入都不会读到旧值。
 
@@ -513,7 +513,7 @@ source: { kind: 'subagent-settled', form: 'notice', summary: '<摘要行>', send
 
 ### 覆盖配置（profile patch 层）
 
-配置走 profile 的用户覆盖层即可，不必改 bundle：在 `~/.dsh/profiles/desktop/cordis.patch.yml` 追加
+配置走 profile 的用户覆盖层即可，不必改 bundle：在 `~/.mino/profiles/desktop/cordis.patch.yml` 追加
 
 ```yaml
 - id: team-conductor
@@ -847,7 +847,7 @@ npm publish              # publishConfig.access = public
 dsh plugin --profile desktop add "file:C:/Users/.../work/dsh-team-conductor"
 ```
 
-pnpm 会把这条 `file:` 规格原样写进 profile 的 `package.json`，于是 `dependencies` 里就出现了一个指向工作区的绝对路径。插件代码本身**没有任何硬编码路径**：侧车目录由 `$DSH_HOME`（缺省 `~/.dsh`）解析，其余全部相对当前进程。
+pnpm 会把这条 `file:` 规格原样写进 profile 的 `package.json`，于是 `dependencies` 里就出现了一个指向工作区的绝对路径。插件代码本身**没有任何硬编码路径**：侧车目录由 `$DSH_HOME`（缺省 `~/.mino`）解析，其余全部相对当前进程。
 
 发布之后换成版本规格即可摆脱本地路径：
 

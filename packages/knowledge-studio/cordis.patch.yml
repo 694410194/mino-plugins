@@ -4,5 +4,5 @@
       name: '@eduwork/dsh-artifact-services/dsh'
       config: {}
     - id: dsh-knowledge-studio
-      name: "mino-knowledge-studio"
+      name: "dsh-knowledge-studio"
       config: {}

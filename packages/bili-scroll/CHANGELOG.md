@@ -217,7 +217,7 @@ dsh plugin --profile web add dsh-bili-scroll
 
 以前那一轮用 `--profile headless` —— 那个 profile 只关了热重载和凭证，**工具一个没动**：
 文件读写、命令行、抓任意网页、子代理全在。而 DSH 的沙箱**只限制写、不限制读**，
-所以它能读 `~/.dsh/sessions/**`（你的全部对话）和凭证，B站 MCP 又在沙箱外 ⇒ "读到 → 发出去"这条链是通的。
+所以它能读 `~/.mino/sessions/**`（你的全部对话）和凭证，B站 MCP 又在沙箱外 ⇒ "读到 → 发出去"这条链是通的。
 
 现在：
 

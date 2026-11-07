@@ -40,7 +40,7 @@ export declare const ENGINE_COMMAND = "rewind-plugin";
 export interface RewindConfig {
     /** Checkpoint store root (exact path; beats the harness-home default). */
     readonly snapshotDir?: string;
-    /** Harness home override (`config.dshHome` > `$DSH_HOME` > `~/.dsh`); feeds the default snapshot/cleanup paths. */
+    /** Harness home override (`config.dshHome` > `$DSH_HOME` > `~/.mino`); feeds the default snapshot/cleanup paths. */
     readonly dshHome?: string;
     /** In-place content dedup (identical before-content → link). Default `true`. */
     readonly dedup?: boolean;

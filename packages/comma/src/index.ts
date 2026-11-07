@@ -25,7 +25,7 @@ export const Config = z.object({
     im: z.object({
       /** Explicit off switch; when on, an empty botId auto-pairs through listBots(). */
       enabled: z.boolean().default(true),
-      /** mino-im bot id in external-consumer exclusive mode; empty resolves config→state→listBots. */
+      /** @xmanrui/dsh-im bot id in external-consumer exclusive mode; empty resolves config→state→listBots. */
       botId: z.string().default(''),
     }).prefault({}),
   }).prefault({}),
@@ -39,7 +39,7 @@ export const Config = z.object({
     notifyMinIntervalMinutes: z.number().min(0).default(30),
   }).prefault({}),
   notify: z.object({
-    /** mino-im bot + saved delivery target for proactive pushes; both empty disables pushes. */
+    /** @xmanrui/dsh-im bot + saved delivery target for proactive pushes; both empty disables pushes. */
     botId: z.string().default(''),
     targetId: z.string().default(''),
   }).prefault({}),

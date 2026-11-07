@@ -17,4 +17,4 @@ skill pack bundle：包内 `skills/` 目录随包分发，插件通过官方
 ## 覆盖
 
 同名 skill 按层与 rank 解析：项目 `.dsh/skills`、`.agents/skills` 或
-`~/.dsh/skills` 下放同名 `commit-message` 即覆盖本包。
+`~/.mino/skills` 下放同名 `commit-message` 即覆盖本包。

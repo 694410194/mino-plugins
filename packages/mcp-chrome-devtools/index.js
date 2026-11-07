@@ -1,6 +1,6 @@
-// mino-mcp-chrome-devtools：纯配置 bundle 的标记行。实际能力由同 patch 插入的官方
+// chrome-devtools-mcp：纯配置 bundle 的标记行。实际能力由同 patch 插入的官方
 // dsh-mcp-client 行提供；本模块仅给 bundle 一个与包同名的稳定插件身份
 //（verify-all 要求 patch 含包名行），不注册任何贡献。
-export const name = 'mino-mcp-chrome-devtools'
+export const name = 'chrome-devtools-mcp'
 
 export function apply() {}

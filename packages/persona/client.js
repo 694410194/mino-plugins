@@ -8,7 +8,7 @@
  * Hand-written ModuleLoader bundle — no build step required.
  */
 window.__ModuleLoader__.load({
-  id: "mino-persona",
+  id: "dsh-soul-md",
   factory: (require) => {
     var module = { exports: {} };
     var exports = module.exports;

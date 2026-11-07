@@ -135,7 +135,7 @@ Agent 每次只指导一项操作，等你反馈后继续：打开「插件 → 
 如果皮肤冲突导致 DSH Web 页面无法操作，先停止当前 DSH Web 进程，再执行：
 
 ```bash
-~/.dsh/profiles/web/node_modules/.bin/dsh-skin-market-reset --profile web
+~/.mino/profiles/web/node_modules/.bin/dsh-skin-market-reset --profile web
 ```
 
 这个命令会关闭皮肤市场管理的皮肤并恢复默认外观，但保留已安装的皮肤包和皮肤市场。随后重新启动 DSH Web。官方 Desktop 不要执行这个 Web profile 命令，请在应用插件管理器或市场中停用冲突皮肤。

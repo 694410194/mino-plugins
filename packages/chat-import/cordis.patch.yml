@@ -1,3 +1,3 @@
 - insert:
     - id: import-claude
-      name: "mino-chat-import"
+      name: "dsh-chat-import"

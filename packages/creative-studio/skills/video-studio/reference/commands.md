@@ -58,7 +58,7 @@
 |---|---|
 | 默认后端（0.2.1 起） | `rembg` **逐帧通用抠像**：`--quality fast=u2net / auto=isnet-general-use / best=birefnet-general`，产品、物体、动物、人都能抠 |
 | 实测速度 | CPU + 720×1280：isnet ≈ **2.3 fps**（3 秒片约 40 秒）；birefnet 约 6 秒/帧，长片先 `--limit 3` 试跑 |
-| 人像后端 | `--backend rvm`（RVM ONNX，首次自动下载到 `~/.dsh-creative-studio/models`，mobilenetv3 14 MB / resnet50 102 MB）。**只适合画面里有人的素材**：拿它抠产品会得到全空遮罩 |
+| 人像后端 | `--backend rvm`（RVM ONNX，首次自动下载到 `~/.mino-creative-studio/models`，mobilenetv3 14 MB / resnet50 102 MB）。**只适合画面里有人的素材**：拿它抠产品会得到全空遮罩 |
 | 时间一致性 | 逐帧推理本身会闪，所以默认 `--alpha-smooth 0.25` 做 alpha 时域平滑；RVM 另带循环状态（r1i–r4i） |
 | 三种输出 | `composite`（换背景出成片，保留原音轨）/ `alpha`（透明通道 WebM，VP9+yuva420p）/ `mask`（黑白遮罩，灰阶 mp4） |
 | 背景 | `--bg-color white\|#1F6E43`、`--bg-image 背景图.jpg`（自动缩放） |

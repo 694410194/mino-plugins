@@ -1,5 +1,5 @@
 {
-  "name": "mino-mcp-thinking",
+  "name": "@modelcontextprotocol/server-sequential-thinking",
   "version": "0.1.0",
   "description": "MCP 接入包：官方 sequential-thinking 逐步思考服务器（stdio/npx，无需密钥）。安装即挂载一条 dsh-mcp-client 配置行。",
   "keywords": [

@@ -95,9 +95,9 @@ const SEARCH_SKIP_DIRS = new Set(SKIP_DIR_NAMES)
 
 /** Shorten an absolute search root for log lines: ~/ for the config home. */
 function relRoot(root: string): string {
-  const home = process.env.DSH_HOME !== undefined && process.env.DSH_HOME.trim() !== ''
-    ? process.env.DSH_HOME
-    : homedir()
+  const home = [process.env.MINO_HOME, process.env.DSH_HOME].find(
+    v => v !== undefined && v.trim() !== '',
+  ) ?? join(homedir(), '.mino')
   if (root === home) return '~'
   const boundary = home.endsWith(sep) ? home : home + sep
   return root.startsWith(boundary) ? `~${root.slice(home.length)}` : root

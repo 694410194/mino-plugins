@@ -8,7 +8,7 @@ import { join, resolve } from 'node:path'
 
 /** Default single-root Harness home. */
 export function defaultDshHome(): string {
-  return join(homedir(), '.dsh')
+  return join(homedir(), '.mino')
 }
 
 /** Expand the tilde forms supported by DSH configuration. */
@@ -19,16 +19,17 @@ export function expandHomePath(path: string): string {
 }
 
 /**
- * Resolve an explicit home, `DSH_HOME`, or the default to one normalized
- * absolute path. Blank environment values are unset, matching DSH alpha.
+ * Resolve an explicit home, `MINO_HOME`, `DSH_HOME`, or the default to one
+ * normalized absolute path. Blank environment values are unset; an existing
+ * `~/.dsh` is never adopted without an explicit pointer.
  */
 export function resolveDshHome(
   configured?: string,
   env: Record<string, string | undefined> = process.env,
 ): string {
-  const fromEnv = env.DSH_HOME
-  const selected = configured ?? (fromEnv !== undefined && fromEnv.trim().length > 0
-    ? fromEnv
-    : defaultDshHome())
+  const fromEnv = [env.MINO_HOME, env.DSH_HOME].find(
+    v => v !== undefined && v.trim().length > 0,
+  )
+  const selected = configured ?? fromEnv ?? defaultDshHome()
   return resolve(expandHomePath(selected))
 }

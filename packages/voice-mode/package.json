@@ -1,5 +1,5 @@
 {
-  "name": "mino-voice-mode",
+  "name": "dsh-voice-mode",
   "description": "全双工语音模式（fork dsh-voice-mode）：本地流式 ASR 写入可编辑草稿、逐句朗读带字幕、说话即打断（barge-in）、可选唤醒词。Edge 在线或本地 VITS/Kokoro TTS。",
   "icon": "./icon.svg",
   "version": "0.1.0",

@@ -101,14 +101,14 @@
 
 </details>
 
-默认扫描 `~/.dsh/meme-packs`，设置存 `~/.dsh/dsh-expression.json`，升级保留。ZIP 支持常规压缩和纯图片目录。
+默认扫描 `~/.mino/meme-packs`，设置存 `~/.mino/dsh-expression.json`，升级保留。ZIP 支持常规压缩和纯图片目录。
 
 **发送方式**只影响 AI：自动按渠道（Web 写标记、IM 发原图）、纯文字不发图、图片要求每次真发。**发图概率**默认关；打开后每轮按所选概率决定 AI 是否主动发图（仅「自动」发送方式生效），你明确要图时不受概率限制。**QQ 发图尺寸**默认关；打开后 QQ/IM 发送前把长边缩到所选尺寸（默认 300px），Web 聊天仍用原图，GIF 保留动画——QQ 官方机器人没有表情消息类型，缩小后更容易被客户端按表情渲染，平板端不会拉伸满屏。**表情排布**只影响前端：并排（默认）或图独占一行。
 
 ## 常见问题
 
 - **QQ 发表情被当大图拉伸** — QQ 官方机器人没有表情消息类型，大图会按图片消息渲染。设置页打开「QQ 发图尺寸」，选 300px（经验区间 200–450）后，QQ/IM 会发送缩小副本，Web 仍用原图；缩放需要 sharp，dsh-im 已自带，未安装时自动按原图发送。
-- **更新失败 / 插件消失** — 先在市场点「重试」；仍失败就完全退出 DSH 后再更新。更早版本或仍失败，退出 DSH 后在 profile 目录执行 `pnpm add dsh-meme@latest`。图库和设置都在 `~/.dsh`，重装不丢。详见 [排障手册](https://github.com/yyh-001/dsh-meme/blob/main/docs/troubleshooting.md)。
+- **更新失败 / 插件消失** — 先在市场点「重试」；仍失败就完全退出 DSH 后再更新。更早版本或仍失败，退出 DSH 后在 profile 目录执行 `pnpm add dsh-meme@latest`。图库和设置都在 `~/.mino`，重装不丢。详见 [排障手册](https://github.com/yyh-001/dsh-meme/blob/main/docs/troubleshooting.md)。
 - **国内网络 / 市场拉不到** — 默认多镜像竞速 + 磁盘缓存，通常无需配置；拉不到时先在发现页点「重试」，再把「图库目录源」切到「镜像源」。详见 [排障手册](https://github.com/yyh-001/dsh-meme/blob/main/docs/troubleshooting.md)。
 - **手机 / 局域网 / 反向代理** — 局域网 IP 访问在设置页打开「局域网访问图库」；反代域名需显式声明可信 Host（`DSH_MEME_TRUSTED_HOSTS` 或 `allowedHosts`）。详见 [排障手册](https://github.com/yyh-001/dsh-meme/blob/main/docs/troubleshooting.md)。
 

@@ -1,5 +1,5 @@
 {
-  "name": "mino-oh-story",
+  "name": "oh-story-dsh",
   "version": "0.1.21",
   "description": "Mino Oh Story: fiction/short-drama/interactive-game/video-recap production workbenches (fork of @oh-story/dsh, upstream zenstory-ai/oh-story-dsh)",
   "type": "module",

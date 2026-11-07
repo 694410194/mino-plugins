@@ -1,4 +1,4 @@
-# mino-mcp-github
+# github-mcp-server
 
 接入 **GitHub 官方远端 MCP 服务器**（`https://api.githubcopilot.com/mcp/`，
 Streamable HTTP）：模型获得 `mcp__github__*` 工具，覆盖仓库/issue/PR/代码搜索等

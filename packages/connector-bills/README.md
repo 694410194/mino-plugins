@@ -1,4 +1,4 @@
-# mino-connector-bills
+# double-entry-generator
 
 跨生态消费账单连接器。读**你自己**从支付宝/微信官方导出的账单文件，
 本地转成统一账目（beancount）并产出分类/月度汇总，喂给年度报告 skill。

@@ -1,6 +1,6 @@
 /** Locale dictionary for the Mino image plugin. */
 
-export const NS = 'mino-image'
+export const NS = 'dsh-image-gen'
 
 export const zh = {
   'settings.title': '图像生成',

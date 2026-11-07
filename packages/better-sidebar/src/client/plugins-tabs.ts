@@ -4,7 +4,7 @@
  * → the dashed card). Adding an entry: append one object here (unique
  * `id` = npm package name, `name` / `description` = i18n-friendly (add a
  * `pluginXxxName` / `pluginXxxDesc` key in locales.ts), `url` = GitHub repo,
- * `install` = the full one-line install script — it starts with `cd ~/.dsh`
+ * `install` = the full one-line install script — it starts with `cd ~/.mino`
  * so the install runs with the DSH home as the working directory). Data
  * integrity is guarded by `tests/plugin-list.spec.ts`.
  */
@@ -20,9 +20,9 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginSentinelDesc'),
     // The official one-line bundle-channel install (git source, build
     // artifacts committed — no build step needed). The `github:…` form is
-    // the upstream's documented command, `cd ~/.dsh` keeps the profile
+    // the upstream's documented command, `cd ~/.mino` keeps the profile
     // context consistent with the other entries.
-    install: 'cd ~/.dsh && dsh plugin --profile web add "github:fuhefei/dsh-sentinel#v0.7.0"',
+    install: 'cd ~/.mino && dsh plugin --profile web add "github:fuhefei/dsh-sentinel#v0.7.0"',
   },
   {
     id: '@dsh-external/ego-browser',
@@ -31,7 +31,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginEgoBrowserDesc'),
     // Registers a sidebar tab for the agent browser; optional peer of
     // better-sidebar (auto-tab when present, floating bubble when not).
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add git+https://github.com/Fisfzy/ego-browser.git',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add git+https://github.com/Fisfzy/ego-browser.git',
   },
   {
     id: '@modusensus/dsh-mneme',
@@ -42,7 +42,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     // (memories/entities/status/settings views) when better-sidebar is
     // present and keeps its standalone sidebar sheet as a fallback.
     // Published on npm (scoped); install the prerequisite first.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add @modusensus/dsh-mneme',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add @modusensus/dsh-mneme',
   },
   {
     id: 'dsh-agent-persona',
@@ -53,7 +53,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     // 「人设」tab (with its own settings page). The tab registers through this plugin's
     // service, so better-sidebar is installed first; the package is on npm, so the
     // install line needs no git form.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-agent-persona',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-agent-persona',
   },
   {
     id: 'dsh-better-overleaf',
@@ -62,7 +62,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginBetterOverleafDesc'),
     // Published on npm; peer-depends on dsh-better-sidebar (Overleaf tab),
     // so the install line installs the prerequisite first.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-better-overleaf',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-better-overleaf',
   },
   {
     id: 'dsh-dev-git-graph',
@@ -71,7 +71,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginDevGitGraphDesc'),
     // Optional peer of dsh-better-sidebar (native tab + DiffTab reuse when
     // present, overlay fallback when not); published on npm.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-dev-git-graph',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-dev-git-graph',
   },
   {
     id: 'dsh-docs-panel',
@@ -80,7 +80,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginDocsPanelDesc'),
     // dsh-docs-panel hard-depends on dsh-better-sidebar (required peer), so
     // the install line installs the prerequisite first, then the plugin.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-docs-panel',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-docs-panel',
   },
   {
     id: '@dsh-external/dsh-file-trace',
@@ -91,14 +91,14 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     // is present (optional peer), standalone floating window otherwise.
     // GitHub-sourced with committed lib/ — the pinned github: tag installs
     // without a local build.
-    install: "cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add '@dsh-external/dsh-file-trace@github:lhh010/dsh-file-trace#v0.3.24'",
+    install: "cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add '@dsh-external/dsh-file-trace@github:lhh010/dsh-file-trace#v0.3.24'",
   },
   {
     id: 'dsh-tylina',
     name: () => t('pluginTylinaName'),
     url: 'https://github.com/tylina/dsh-tylina',
     description: () => t('pluginTylinaDesc'),
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-tylina',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-tylina',
   },
   {
     id: 'dsh-flowglass',
@@ -107,7 +107,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginFlowglassDesc'),
     // Flowglass keeps its standalone drawer as a fallback and registers the
     // native tab automatically when better-sidebar is present.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-flowglass',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-flowglass',
   },
   {
     id: 'dsh-git-forge',
@@ -116,7 +116,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginGitForgeDesc'),
     // Peer-depends on dsh-better-sidebar (Git Forge tab). Install the
     // prerequisite first; the package is published on npm as dsh-git-forge.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-git-forge@1.0.0',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-git-forge@1.0.0',
   },
   {
     id: 'dsh-github-workbench',
@@ -126,7 +126,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     // Full GitHub workbench tab: remote repo tree + Issues/PRs/Actions tabs
     // with write support (create/comment/merge/re-run). lib/ is committed,
     // so the pinned github:-form install works without a local build.
-    install: 'cd ~/.dsh && dsh plugin --profile web add "github:meyaomiao/dsh-github-workbench#v0.1.0"',
+    install: 'cd ~/.mino && dsh plugin --profile web add "github:meyaomiao/dsh-github-workbench#v0.1.0"',
   },
   {
     id: 'dsh-ide-git',
@@ -139,7 +139,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     // entry), so the install line carries no prerequisite. A better-sidebar
     // that loads late takes the native registration down and hosts the tab
     // itself, so the two channels never draw the panel twice.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-ide-git',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-ide-git',
   },
   {
     id: 'dsh-memory-delta',
@@ -150,7 +150,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     // differential injection (only what changed), review-date reminders,
     // ranked search and a read-only sidebar tab. lib/ ships prebuilt, so the
     // pinned github:-form install needs no local build.
-    install: 'cd ~/.dsh && dsh plugin --profile web add "github:lpf20200901/dsh-memory-delta#v1.3.3"',
+    install: 'cd ~/.mino && dsh plugin --profile web add "github:lpf20200901/dsh-memory-delta#v1.3.3"',
   },
   {
     id: 'dsh-sidebar-qa',
@@ -159,7 +159,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginSidebarQaDesc'),
     // dsh-sidebar-qa hard-depends on dsh-better-sidebar (required peer), so
     // the install line installs the prerequisite first, then the plugin.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add git+https://github.com/ChenRuoT/dsh-sidebar-qa.git',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add git+https://github.com/ChenRuoT/dsh-sidebar-qa.git',
   },
   {
     id: 'dsh-sidenote',
@@ -168,7 +168,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginSidenoteDesc'),
     // dsh-sidenote hard-depends on dsh-better-sidebar (required peer), so
     // the install line installs the prerequisite first, then the plugin.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-sidenote',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-sidenote',
   },
   {
     id: 'dsh-server-deck',
@@ -178,7 +178,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     // Published on npm; dual-mount like flowglass — registers the native
     // "Servers" tab when better-sidebar is present, standalone drawer
     // otherwise. Install the prerequisite first.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-server-deck@latest',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-server-deck@latest',
   },
   {
     id: 'dsh-side-chat',
@@ -187,7 +187,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: 'Independent native DSH side conversation with a standalone split view and an optional Better Sidebar page; its own shortcut remains available in both modes.',
     // Better Sidebar is an optional peer: Side Chat remains fully usable on
     // its own, and registers this tab automatically when the peer is present.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add "github:xlennart/dsh-side-chat#v1.2.1"',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add "github:xlennart/dsh-side-chat#v1.2.1"',
   },
   {
     id: 'dsh-suhuang-scroll',
@@ -196,7 +196,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginSuhuangScrollDesc'),
     // Suhuang Scroll is a DSH Web plugin whose runtime console registers in
     // better-sidebar. Install the sidebar prerequisite before the npm package.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-suhuang-scroll',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-suhuang-scroll',
   },
   {
     id: 'dsh-ssh-tunnel',
@@ -205,7 +205,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     description: () => t('pluginSshTunnelDesc'),
     // Peer-depends on dsh-better-sidebar (SSH Tunnel tab + center terminal/SFTP).
     // Install the prerequisite first; the package is published on npm as dsh-ssh-tunnel.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-ssh-tunnel@1.0.0',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-ssh-tunnel@1.0.0',
   },
   {
     id: 'dsh-bilingual-reader',
@@ -215,7 +215,7 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     // Bilingual paper reading: a native-PDF tab with LLM selection translation,
     // isolated from the main conversation context. Hard-depends on the
     // better-sidebar tab service, so install the prerequisite first.
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add github:Johnblur/dsh-bilingual-reader',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add github:Johnblur/dsh-bilingual-reader',
   },
   {
     id: 'dsh-turn-outline',
@@ -228,6 +228,6 @@ export const builtinTabPlugins: readonly PluginEntry[] = [
     // `dsh-better-sidebar@^0.17.0 || ^0.18.0` and is co-tested on both
     // lines: better-sidebar 0.18.0 + DSH 0.1.2-rc.1 (since plugin 0.2.7)
     // and better-sidebar 0.17.1 + DSH 0.1.1-rc.x (stable).
-    install: 'cd ~/.dsh && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-turn-outline',
+    install: 'cd ~/.mino && dsh plugin --profile web add dsh-better-sidebar && dsh plugin --profile web add dsh-turn-outline',
   },
 ]

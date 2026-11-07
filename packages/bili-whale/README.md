@@ -26,7 +26,7 @@
 | **私信冷却** | **60 秒** | |
 | **撞 412/429** | 暂停 5/10/20/30 分钟 | 尊重平台，别硬顶 |
 
-**你自己的号够老、够干净？** 那就去 `~/.dsh/bili-whale.config.json` 里把 `risk` 那几个数调大 ✓
+**你自己的号够老、够干净？** 那就去 `~/.mino/bili-whale.config.json` 里把 `risk` 那几个数调大 ✓
 **新号别动** ✗ —— 默认值就是替你挡这一刀的 ✓
 
 ## 登录：扫码就行（不用再抄 Cookie）
@@ -121,7 +121,7 @@
 
 ### 2) 宿主自己的 `AGENTS.md`（兜底 / 通用底色）
 
-`~/.dsh/AGENTS.md` 会被 DSH **在所有会话里热加载** —— 所以它对**每一个** agent 生效，
+`~/.mino/AGENTS.md` 会被 DSH **在所有会话里热加载** —— 所以它对**每一个** agent 生效，
 不只对她 ✗ 想只改她就用上面的 `persona.md` ✓
 
 这里适合放**通用红线**（不说假话、不冒充你、不伤害第三方）和跨端的协作约定。
@@ -183,7 +183,7 @@ dsh plugin --profile desktop add "link:C:\path\to\dsh-bili-whale"
 > ✅ **保存即生效**：作息窗口 / 评论监听 / 直播间开关 / 消息推送 / 分享闸门，都是保存后立刻重算 ✓
 > ⚠️ 只有**换插件代码/版本**才需要重启 DSH（改配置不用 ✗）
 
-设置保存在 `~/.dsh/bili-whale.config.json`（**不含凭据**）；凭据单独在 `~/.bili-ai/credentials.json`，**永远不回显**。
+设置保存在 `~/.mino/bili-whale.config.json`（**不含凭据**）；凭据单独在 `~/.bili-ai/credentials.json`，**永远不回显**。
 
 ---
 
@@ -305,7 +305,7 @@ sudo apt install ffmpeg    # Debian / Ubuntu
 
 1. 环境变量 `FFMPEG`（指向绝对路径，比如 `D:\tools\ffmpeg.exe`）
 2. `PATH` 里的 `ffmpeg`
-3. `<插件目录>/bin/ffmpeg.exe` 或 `~/.dsh/bili-whale/bin/`
+3. `<插件目录>/bin/ffmpeg.exe` 或 `~/.mino/bili-whale/bin/`
 4. 装了**剪映**的话，它自带的 ffmpeg 也能用 ✓（兜底，不保证版本）
 
 许可证见 [`NOTICE.md`](NOTICE.md)（**LGPL，不随包分发**；自己放进 `bin/` 的请附其 LICENSE 与源码链接）。
@@ -364,7 +364,7 @@ sudo apt install ffmpeg    # Debian / Ubuntu
 | **有 ffmpeg** | 只有"抽帧看画面"用得到 | 装进 PATH，或用环境变量 `FFMPEG` 指定绝对路径；不装就跳过画面那一路，其余照常 |
 | **B 站账号 + 本机凭据文件** | 一切读写都靠它 | 无替代（这就是目标平台）|
 | **能 spawn 一个真 node** | 工具链全部是 `.mjs`，要 Node 跑 | **不能**用 Electron 主程序顶（会静默返回空输出 ✗）；插件自己找，找不到就在体检和设置页报错 |
-| **可写的专用工作目录** | 她的会话建在 `~/.dsh/whale-work` | 别用用户主目录（会触发工作区权限问题 ✗ v0.4.0 已改）|
+| **可写的专用工作目录** | 她的会话建在 `~/.mino/whale-work` | 别用用户主目录（会触发工作区权限问题 ✗ v0.4.0 已改）|
 
 **不依赖什么**：没有数据库、没有守护进程、没有框架、没有云服务。状态全在**几个普通文件**里
 （`quota.json` / `whale-log.jsonl` / 两本日记）—— 人随时能打开看，宿主可以整个换掉。

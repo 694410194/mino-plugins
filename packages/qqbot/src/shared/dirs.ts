@@ -2,13 +2,13 @@
  * 插件数据目录 — 单一事实源
  *
  * workspace / media / 模型偏好等子路径统一从 PLUGIN_HOME 派生，
- * 避免各模块各自 `resolve(homedir(), '.dsh-qqbot', ...)` 造成漂移。
+ * 避免各模块各自 `resolve(homedir(), '.mino-qqbot', ...)` 造成漂移。
  */
 import { homedir } from 'node:os';
 import { resolve } from 'node:path';
 
-/** 插件数据根目录（区别于宿主的 ~/.dsh） */
-export const PLUGIN_HOME = resolve(homedir(), '.dsh-qqbot');
+/** 插件数据根目录（区别于宿主的 ~/.mino） */
+export const PLUGIN_HOME = resolve(homedir(), '.mino-qqbot');
 
 /**
  * agent 工作目录：显式配置优先（空串视为未配置），缺省 PLUGIN_HOME/workspace。

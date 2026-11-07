@@ -59,7 +59,7 @@ try {
 $DSH_HOME/profiles/<实际 profile 名>/cordis.patch.yml
 ```
 
-未自定义 DSH 主目录时通常位于 `~/.dsh`；桌面启动器或自己的启动脚本若使用其他 `DSH_HOME`，须沿用那个目录。另一个终端里的环境变量不一定与已运行的桌面进程相同。不要修改已安装 npm 包内部的 `cordis.patch.yml`，因为它属于组合包自身、可能随更新替换。
+未自定义 DSH 主目录时通常位于 `~/.mino`；桌面启动器或自己的启动脚本若使用其他 `DSH_HOME`，须沿用那个目录。另一个终端里的环境变量不一定与已运行的桌面进程相同。不要修改已安装 npm 包内部的 `cordis.patch.yml`，因为它属于组合包自身、可能随更新替换。
 
 在 profile 的 patch 数组中，按已存在的 `id: bili-humanism` 设置 `config`。下面是最小配置示例，不需要另加 `insert` 行：
 

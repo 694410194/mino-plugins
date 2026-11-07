@@ -1,4 +1,4 @@
-# mino-skill-screenwriting
+# screenwriting-skills
 
 Mino 精选 **skill 包**（社区 vendored fork）：26 个编剧技能（sw-*），蒸馏自 47 本工艺书与 23 部公开剧本；sw-workflow 为编排器，含剧集 S0–S7 阶段表与 story-bible 约定。
 
@@ -18,4 +18,4 @@ skill pack bundle：包内 `skills/` 目录随包分发，插件通过官方
 ## 覆盖
 
 同名 skill 按层与 rank 解析：项目 `.dsh/skills`、`.agents/skills` 或
-`~/.dsh/skills` 下放同名 skill 即覆盖本包对应项。
+`~/.mino/skills` 下放同名 skill 即覆盖本包对应项。

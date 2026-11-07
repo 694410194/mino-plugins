@@ -30,7 +30,7 @@ const RENDER_DEBOUNCE_MS = 2_000
 
 type CommaDomain = Domain<typeof commaDomain>
 
-/** The `dshIm` proactive-delivery surface (mino-im contractVersion 1). */
+/** The `dshIm` proactive-delivery surface (@xmanrui/dsh-im contractVersion 1). */
 interface DshImSend {
   send(botId: string, targetId: string, text: string, options?: Record<string, unknown>): Promise<unknown>
 }
@@ -186,9 +186,9 @@ export class Runtime implements SourceHost {
     if (state.get(PAIRING_NAG_KEY)?.value === fingerprint) return
     await state.put(PAIRING_NAG_KEY, { key: PAIRING_NAG_KEY, value: fingerprint })
     const text = status === 'unavailable'
-      ? '[comma pairing] 还没有接入消息渠道（mino-im 未安装或没有可用 bot）。如果你想让我帮你盯消息，请提醒用户先装好并配好 IM 渠道，然后用 comma_im_pair 工具完成接管。'
+      ? '[comma pairing] 还没有接入消息渠道（@xmanrui/dsh-im 未安装或没有可用 bot）。如果你想让我帮你盯消息，请提醒用户先装好并配好 IM 渠道，然后用 comma_im_pair 工具完成接管。'
       : status === 'none'
-        ? '[comma pairing] IM 渠道已就绪但还没有可接管的 bot。请在 mino-im 里配好一个 bot（external-consumer 模式），然后用 comma_im_pair 完成接管。'
+        ? '[comma pairing] IM 渠道已就绪但还没有可接管的 bot。请在 @xmanrui/dsh-im 里配好一个 bot（external-consumer 模式），然后用 comma_im_pair 完成接管。'
         : `[comma pairing] 检测到多个可接管的 IM 账号：${candidates.join('、')}。请询问用户想让你盯哪一个，然后用 comma_im_pair 工具完成配对。`
     await this.routerMessage(text)
   }

@@ -462,7 +462,7 @@ export interface ExportChatParams {
   cwd?: string
   /** 输出文件路径（仅 codex / kimi / opencode；缺省 <outputDir>/<sessionId>.<ext>）。 */
   path?: string
-  /** 输出目录（claude 默认 ~/.claude/projects，文件写到 <outputDir>/<slug>/<uuid>.jsonl；其余默认 ~/.dsh/exports）。 */
+  /** 输出目录（claude 默认 ~/.claude/projects，文件写到 <outputDir>/<slug>/<uuid>.jsonl；其余默认 ~/.mino/exports）。 */
   outputDir?: string
   /** true 时不写盘，只序列化并返回目标路径与统计。 */
   dryRun?: boolean
@@ -526,7 +526,7 @@ export interface ExportBundleParams {
   sessionId: string
   /** 输出文件路径（缺省 <outputDir>/<sessionId>.dshbundle.json）。 */
   path?: string
-  /** 输出目录（默认 ~/.dsh/exports）。 */
+  /** 输出目录（默认 ~/.mino/exports）。 */
   outputDir?: string
   /** true 时不写盘，只序列化并返回目标路径与指纹。 */
   dryRun?: boolean

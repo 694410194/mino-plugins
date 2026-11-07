@@ -62,7 +62,7 @@
 
 ## 🗂️ 配置文件结构（config.json）
 
-多账号配置位于 `~/.dsh/dsh-bridge/config.json`，各平台从「单对象」升级为「账号数组 + 序号」：
+多账号配置位于 `~/.mino/dsh-bridge/config.json`，各平台从「单对象」升级为「账号数组 + 序号」：
 
 ```json
 {

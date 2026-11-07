@@ -1,4 +1,4 @@
-window.__ModuleLoader__.load({ id: "mino-bot", factory(require) {
+window.__ModuleLoader__.load({ id: "dsh-bot", factory(require) {
 var module = { exports: {} }; var exports = module.exports;
 "use strict";
 var __defProp = Object.defineProperty;

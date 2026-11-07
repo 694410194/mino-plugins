@@ -1,4 +1,4 @@
-# mino-mcp-thinking
+# @modelcontextprotocol/server-sequential-thinking
 
 接入官方 **sequential-thinking MCP 服务器**
 （`@modelcontextprotocol/server-sequential-thinking`）：模型获得

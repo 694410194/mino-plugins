@@ -5,12 +5,12 @@
     host: 127.0.0.1
     port: 0
 # eval-only: profile patch (Grok-Bot parity WIP) mounts kernel tool-agent-team AND
-# mino-team-conductor; both register spawn_teammate -> session scope collision.
+# dsh-team-conductor; both register spawn_teammate -> session scope collision.
 # team-conductor declares kernel team tools disabled in its own prompt contract,
 # so we disable the kernel row for eval sessions. Shared profile patch untouched.
 - id: tool-agent-team
   disabled: true
-# eval-only: mino-bot's MemoryAdmission kernel isn't initialized in this profile
+# eval-only: dsh-bot's MemoryAdmission kernel isn't initialized in this profile
 # yet (Grok-Bot parity WIP); it throws 'Memory admission blocked' on every turn.
 - id: bot
   disabled: true

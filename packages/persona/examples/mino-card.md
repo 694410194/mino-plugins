@@ -1,6 +1,6 @@
 # Mino 官方人设卡
 
-> 这是 `mino-persona` 的内置官方人设卡示例。复制本文件内容到
+> 这是 `dsh-soul-md` 的内置官方人设卡示例。复制本文件内容到
 > 设置 → 人设卡，保存为 `mino` 并设为默认即可使用。
 > 与 SillyTavern V2 `.persona.md` / JSON 角色卡生态兼容。
 

@@ -1,5 +1,5 @@
 {
-  "name": "mino-mcp-memory",
+  "name": "@modelcontextprotocol/server-memory",
   "version": "0.1.1",
   "description": "MCP 接入包：官方 memory 知识图谱服务器（stdio/npx，无需密钥）。安装即挂载一条 dsh-mcp-client 配置行。",
   "keywords": [

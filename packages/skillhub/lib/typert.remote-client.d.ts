@@ -3,7 +3,7 @@ import type {
   RemoteResult,
   TypertRemoteContribution,
 } from '@deepseek-ai/dsh-typert-protocol'
-import type { CatalogContext, CatalogLabels, CatalogPageResult, CatalogSort, ConversationDetail, ConversationManagementResult, HostCompatibility, HostExecutePlanRequest, HostInstallRequest, HostRecoveryRequest, InstallationTargetList, InstalledSkillDetail, InstalledSkillList, InstalledUpdateCheck, NativeOperation, RegistryConnectionTest, ReviewPage, SkillAvailability, SkillDetail, SkillList, SkillUsePreparation, SkillUseSelection, TogglePlanView, UninstallPlanView, UpgradePlanView, VersionPage } from 'mino-skillhub/types'
+import type { CatalogContext, CatalogLabels, CatalogPageResult, CatalogSort, ConversationDetail, ConversationManagementResult, HostCompatibility, HostExecutePlanRequest, HostInstallRequest, HostRecoveryRequest, InstallationTargetList, InstalledSkillDetail, InstalledSkillList, InstalledUpdateCheck, NativeOperation, RegistryConnectionTest, ReviewPage, SkillAvailability, SkillDetail, SkillList, SkillUsePreparation, SkillUseSelection, TogglePlanView, UninstallPlanView, UpgradePlanView, VersionPage } from '@astron-team/skillhub-dsh/types'
 import type { SessionId } from '@deepseek-ai/dsh-session/types'
 
 declare module '@deepseek-ai/dsh-typert-protocol' {

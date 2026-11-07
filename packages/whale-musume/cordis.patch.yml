@@ -6,4 +6,4 @@
 #     首次挂载自动唤醒看板娘;全部资源本地加载,无外部请求、无遥测。
 - insert:
     - id: dsh-whale-musume
-      name: 'mino-whale-musume'
+      name: 'dsh-whale-musume'

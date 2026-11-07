@@ -1,4 +1,4 @@
-window.__ModuleLoader__.load({id:"mino-oh-story",factory:(require)=>{var module={exports:{}};var exports=module.exports;
+window.__ModuleLoader__.load({id:"oh-story-dsh",factory:(require)=>{var module={exports:{}};var exports=module.exports;
 "use strict";
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;

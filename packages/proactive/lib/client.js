@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-	id: "mino-proactive",
+	id: "dsh-proactive",
 	factory: (require) => {
 		var module = { exports: {} };
 		var exports = module.exports;

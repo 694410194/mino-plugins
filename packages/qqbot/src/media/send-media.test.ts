@@ -87,8 +87,8 @@ describe('isWithinRoot / isPathAllowed（#94-4：符号链接绕过防护）', (
 });
 
 describe('resolveAgentCwd（agent 工作目录单一事实源）', () => {
-  it('未配置/空串 → 默认 ~/.dsh-qqbot/workspace（不随宿主进程 cwd）', () => {
-    const expected = resolve(homedir(), '.dsh-qqbot', 'workspace');
+  it('未配置/空串 → 默认 ~/.mino-qqbot/workspace（不随宿主进程 cwd）', () => {
+    const expected = resolve(homedir(), '.mino-qqbot', 'workspace');
     expect(resolveAgentCwd(undefined)).toBe(expected);
     expect(resolveAgentCwd('')).toBe(expected);
   });

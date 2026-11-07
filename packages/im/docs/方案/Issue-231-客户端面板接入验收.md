@@ -54,7 +54,7 @@
 
 ## 安装环境修复与清理
 
-桌面端最初无法启动，原因是 profile 中 pnpm 11 的安装产物与本机 pnpm 10 不兼容，以及内置插件仍链接至 DMG 挂载目录。先备份原 `node_modules` 和清单，再用当前包管理器恢复安装、将内置插件链接指向 `/Applications`，使用官方 DSH CLI 对齐 profile 插件列表。备份保存在 `~/.dsh/backups/issue-231-tauri-20260919-221817`。
+桌面端最初无法启动，原因是 profile 中 pnpm 11 的安装产物与本机 pnpm 10 不兼容，以及内置插件仍链接至 DMG 挂载目录。先备份原 `node_modules` 和清单，再用当前包管理器恢复安装、将内置插件链接指向 `/Applications`，使用官方 DSH CLI 对齐 profile 插件列表。备份保存在 `~/.mino/backups/issue-231-tauri-20260919-221817`。
 
 临时消费插件已通过官方 CLI 移除；临时目录 patch 已恢复；隔离旧版测试服务和一次性认证跳转服务已停止；测试触发的系统目录选择进程已清理。没有改动旧的 `/Applications/DSH Desktop.app`（`2.0.3`），也没有停止原有 3080 Web 服务。
 
@@ -66,7 +66,7 @@
 
 ## 后续：保留用户日常使用的桌面侧栏入口
 
-用户随后明确要求侧栏入口保留，不能在测试后移除。为此另装了本地持久接入插件 `dsh-im-desktop-panel`，源码独立保存在 `~/.dsh/local-plugins/dsh-im-desktop-panel`，通过官方 CLI 链接到 tauri profile 并加入 bundle 列表。它不修改应用签名文件，也不依赖临时测试目录。
+用户随后明确要求侧栏入口保留，不能在测试后移除。为此另装了本地持久接入插件 `dsh-im-desktop-panel`，源码独立保存在 `~/.mino/local-plugins/dsh-im-desktop-panel`，通过官方 CLI 链接到 tauri profile 并加入 bundle 列表。它不修改应用签名文件，也不依赖临时测试目录。
 
 该插件提供「DSH-IM」侧栏入口与完整面板，不包含验收控制按钮。只有桌面 iframe 启用侧栏并隐藏重复设置入口；同一 host 的普通浏览器仍保留「设置 → IM机器人」。旧版缺少 `dshImClient` 服务时，可选接入不会激活。
 

@@ -1,5 +1,5 @@
 /**
- * mino-connector-bills —— 跨生态消费账单连接器（warroom D38/D41，连接器生产线首件）。
+ * double-entry-generator —— 跨生态消费账单连接器（warroom D38/D41，连接器生产线首件）。
  *
  * 形态：cordis 插件 + vendored CLI（double-entry-generator, Apache-2.0）+ 随包年度报告 skill。
  * 三原则：只读（不写用户数据源）、本地（原始数据不出本机）、用户主动（文件路径用户给）。

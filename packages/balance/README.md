@@ -137,7 +137,7 @@ dsh-whale-widget/
 └── whale-widget-prompt.md    # 完整规格/维护提示词（面向二次开发）
 ```
 
-运行时数据（都放在 `$DSH_HOME`，默认 `~/.dsh`；用环境变量 `DSH_HOME` 可以改到别处）：
+运行时数据（都放在 `$DSH_HOME`，默认 `~/.mino`；用环境变量 `DSH_HOME` 可以改到别处）：
 
 | 文件 / 目录 | 用途 |
 |---|---|

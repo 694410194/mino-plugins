@@ -38,7 +38,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 官方栈：`plugin-market`（索引读取+兼容标注，服务无 HTTP 面，`detail-file`
 是唯一路由）+ `ui-plugin-market`（Plugins 页 Discover 标签）+ `plugin-manager`
 （`installBundle` 实际执行）+ `plugin_market` 工具（仅 Creator preset 子树注册）。
-**mino-market 保留**：官方栈索引只列 Mino 精选 40 个包，社区全量目录
+**dshmarket 保留**：官方栈索引只列 Mino 精选 40 个包，社区全量目录
 （awesome-dsh-plugin 注册表，非 format-1）只有它能读——两者互补并存：
 「发现」= 自有精选（mino.baby 通道），「插件市场」= 社区入口。
 其附带的 backup（profile 配置导出）/drain/channels 为额外功能。
@@ -85,7 +85,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
    产物绝不可用（exit code 1）。
    清单混排两类源：`mino.baby/git/<name>`=自家包、`包名`=第三方 npm 包；
    含 npm 行时生成器必须带 `--registry https://registry.npmmirror.com/`。
-   抽查：index 引用的每个 `icons/*` 文件必须已入库（mino-im 曾因漏交
+   抽查：index 引用的每个 `icons/*` 文件必须已入库（@xmanrui/dsh-im 曾因漏交
    文件导致图标 404）；npm 条目须带 per-version `registry` 字段。
 5. 三处落位：服务器 `/var/www/mino-home/plugins/index.json`（site/ 同步 +
    `deploy-site.sh`）、`694410194/mino-plugin-index` 仓（jsdelivr 第二源，
@@ -138,7 +138,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 
 ## plugweb 测试档（全插件实测基座）
 
-`C:\Users\69441\.dsh\profiles\plugweb`：29 个 file: tgz 依赖（全部 mino-* 插件
+`$DSH_HOME\profiles\plugweb`（本机 `DSH_HOME=C:\Users\69441\.dsh`，默认根为 `~/.mino`）：29 个 file: tgz 依赖（全部 mino-* 插件
 + `@deepseek-ai/dsh-mino` 账号层 bundle）+ `cordis.patch.yml` 补丁层
 （magpie provider、plugin-market 两行 insert、索引 URL）。
 
@@ -161,7 +161,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 - **会话持久路由**：session.header 记创建时刻的 provider/model；上游 provider
   没了后**每次 turn 都报 `NO_ADAPTER`**（comma-router 实测踩中）。修法：删掉
   旧 session 让插件按当前默认重建；长期应让 comma 支持 pin routerModel。
-- **`~/.dsh/sessions/<workspace>/` 下不能有非 session 目录**：扫描器校验
+- **`~/.mino/sessions/<workspace>/` 下不能有非 session 目录**：扫描器校验
   header id vs 目录名，改名/杂物目录=「corrupt session log」→ dsh-workspace
   插件报错 → workspaceRegistry 永不 provide → sessionController 及全部下游
   （superagent/comma/bridge/speak-up…）连锁 pending。备份移出 sessions 树。
@@ -256,7 +256,7 @@ locale 键必须全小写（`zh-cn`，`zh-CN` 会炸）。
   tuple 会让全部插件 gate 失败。`.mino.N` 就是我们的版本段——每次 Mino
   运行时发布 +1，上游 base 升级时归 1。代价：精确版本 peer（`=x.y.z`）
   会失配——区间声明才是社区常态，目前 40 精选零命中。
-- **mino-* 插件**：自有 semver，**不跟踪上游版本号**（`mino-qq-link 1.5.0`
+- **mino-* 插件**：自有 semver，**不跟踪上游版本号**（`dsh-qq-link 1.5.0`
   这类镜像上游号是历史遗留，下次 bump 起走自有线）。上游 parity 写进
   `package.json` 的 `mino.upstream`（如 `"dsh-qq-link@1.5.0"`），供 drift
   追踪；索引/安装不消费它。
@@ -276,3 +276,27 @@ locale 键必须全小写（`zh-cn`，`zh-CN` 会炸）。
   browser/drawio/im/qqbot/task-board/voice——上游补 vendor 时连构建
   配置一起拿（better-sidebar 已示范）。
 - 服务器分裂脚本对 `main` 文件缺失的包打 WARN，看到 WARN 不许放行。
+
+## 包身份分层纪律（2026-11-07 立，第三方改名事故）
+
+第三方包统一改上游原名后，`cordis.patch.yml` 里**只有 `name:` 跟包名**，
+其余字段各管各的，混改=事故：
+
+- **`name:`** = 挂载的包名，必须等于 package.json `name`（含 scoped 名）。
+- **`id:`** = 实例 id = settings 命名空间 + 用户 config 覆写键 +
+  `configForms.get/whileServed` 的字面量。改名不改 id，否则用户已存配置
+  变孤儿、设置卡失联。第三方包 vendored 时常已是上游风 id（dsh-*），
+  保持原样。
+- **`plugins.bundle.config` 的 `key:`** = bundle 包名（跟 name:）。
+- **`plugins.row.config` 的 `key:`** = `包名#行id`。
+- **client bundle `load({id:...})` 注册点** = 包名（arrive() 校验），
+  vendored 成品 bundle 要 sed 同步。
+- **`export const name`** = 插件服务名，第三方包跟上游名；pet 这类
+  内部标识（helper 名/日志目录/路由/settings ns）不动。
+- **去重守卫** `e.options.name === 'mino-x'` 保留旧名——升级期认老安装。
+- **`mino.upstream` 字段** = 第三方包唯一判定口径：`publish-npm.mjs`
+  按它排除（上游名不归我们发 npm）；排查第三方包也先查它。
+- **批量改名必须按长度降序替换且校验词边界**——`mino-im` 是
+  `mino-image` 前缀、`mino-voice` 是 `mino-voice-input` 前缀、
+  `mino-skill-humanizer` 是 `-zh` 前缀，裸替换啃出过
+  `@xmanrui/dsh-image`/`academic-humanizer-zh` 畸形名（已修）。

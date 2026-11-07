@@ -671,7 +671,7 @@ export class SessionManager {
     this.logger.info(`session removed: key=${key}`);
   }
 
-  /** Agent 工作目录：显式配置优先，缺省独立目录 ~/.dsh-qqbot/workspace（不随宿主进程 cwd） */
+  /** Agent 工作目录：显式配置优先，缺省独立目录 ~/.mino-qqbot/workspace（不随宿主进程 cwd） */
   private workspaceCache: string | undefined;
   private workspaceDir(): string {
     if (this.workspaceCache) return this.workspaceCache;

@@ -1,4 +1,4 @@
-# mino-skill-duanju bundle patch：挂载 skill pack provider 行。
+# short-drama bundle patch：挂载 skill pack provider 行。
 - insert:
     - id: skill-duanju
-      name: "mino-skill-duanju"
+      name: "short-drama"

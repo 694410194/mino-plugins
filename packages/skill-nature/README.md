@@ -1,4 +1,4 @@
-# mino-skill-nature
+# nature-skills
 
 Mino 精选 **skill 包**（社区 vendored fork）：Nature 风格学术技能（24 件）——检索/引用/精读卡/科研绘图/翻译/审稿/润色/社科写作/统计/声明等，nature-* 前缀自带命名空间
 
@@ -18,7 +18,7 @@ skill pack bundle：包内 `skills/` 目录随包分发，插件通过官方
 ## 覆盖
 
 同名 skill 按层与 rank 解析：项目 `.dsh/skills`、`.agents/skills` 或
-`~/.dsh/skills` 中放同名目录即可覆盖市场包内容（provider rank 600 > 650）。
+`~/.mino/skills` 中放同名目录即可覆盖市场包内容（provider rank 600 > 650）。
 
 ## 注意
 

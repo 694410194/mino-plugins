@@ -1,4 +1,4 @@
-# mino-skill-nsfc bundle patch：挂载 skill pack provider 行。
+# chinese-grant-writer-skills bundle patch：挂载 skill pack provider 行。
 - insert:
     - id: skill-nsfc
-      name: "mino-skill-nsfc"
+      name: "chinese-grant-writer-skills"

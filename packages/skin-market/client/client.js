@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-	id: "mino-skin-market",
+	id: "dsh-skin-market",
 	factory: (require) => {
 		var module = { exports: {} };
 		var exports = module.exports;

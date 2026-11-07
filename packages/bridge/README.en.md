@@ -265,7 +265,7 @@ Open **"Security"** tab to establish bank-grade protection for your local develo
 
 #### 3. 🛟 Triple Disaster Recovery (Never Locked Out)
 - **Host Physical Privilege**: PC localhost (`127.0.0.1`) enjoys permanent highest privilege, never locked;
-- **Terminal Emergency Reset**: Run `touch ~/.dsh/dsh-bridge/reset-auth` in terminal to reset passwords and security policy (takes effect on the next plugin start / DSH restart);
+- **Terminal Emergency Reset**: Run `touch ~/.mino/dsh-bridge/reset-auth` in terminal to reset passwords and security policy (takes effect on the next plugin start / DSH restart);
 - **Interactive Guidance**: Built-in interactive recovery guides on all auth pages.
 
 ---
@@ -442,7 +442,7 @@ Open **"Maintenance"** tab to monitor health and manage operations:
   <summary><b>Q4: Will chat sessions and configurations be lost after upgrading or restarting DSH?</b></summary>
   <br/>
 
-  1. **Persistent Configuration**: All credentials, allowlists, and passwords persist in `~/.dsh-bridge/`;
+  1. **Persistent Configuration**: All credentials, allowlists, and passwords persist in `~/.mino-bridge/`;
   2. **Session Context Recovery**: Session history is persisted by DSH core engine; resume conversations with `/resume` anytime;
   3. **Backup & Migration**: 1-click `.json` export/import in Maintenance tab.
 </details>

@@ -10,4 +10,4 @@
 # memeRoot,其他用户安装后指向不存在的目录,插件直接起不来。
 - insert:
     - id: dsh-expression
-      name: 'mino-meme'
+      name: 'dsh-meme'

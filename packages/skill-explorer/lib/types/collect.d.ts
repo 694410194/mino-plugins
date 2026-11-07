@@ -109,7 +109,7 @@ export interface CollectOptions {
     projectRoots?: string[];
     /** Extra custom skill roots (the plugin's own config plus every live provider row). */
     customSkillDirs?: string[];
-    /** User dsh config root (~/.dsh). */
+    /** User dsh config root (~/.mino). */
     dshHome: string;
     /** User agents config root (~/.agents). */
     agentsHome: string;

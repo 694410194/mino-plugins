@@ -40,7 +40,7 @@
  * fall back to zh. Legacy flat-array phrase lists are treated as thinking.
  */
 window.__ModuleLoader__.load({
-	id: "mino-status",
+	id: "dsh-status-rotator",
 	factory: (require) => {
 		var module = { exports: {} };
 		var exports = module.exports;

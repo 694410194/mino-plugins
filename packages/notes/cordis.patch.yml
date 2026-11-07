@@ -3,5 +3,5 @@
 # identity later patch layers use to override this row's whole `config`.
 - insert:
     - id: notes-export
-      name: "mino-notes"
+      name: "dsh-notes"
       config: {}

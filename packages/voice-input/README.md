@@ -9,10 +9,10 @@
 | `api-speech-to-text` | `dsh-experimental-api-speech-to-text` | Remote API 面 |
 | `ui-voice-input` | `dsh-experimental-client-ui-voice-input` | 输入栏语音输入 UI |
 
-与 `mino-voice`（TTS 朗读 + 可选云端 ASR）不冲突：本包是**按住说话/听写**的输入方向，
-mino-voice 是朗读输出方向。
+与 `dsh-voice`（TTS 朗读 + 可选云端 ASR）不冲突：本包是**按住说话/听写**的输入方向，
+dsh-voice 是朗读输出方向。
 
 ## 注意
 
 - experimental 包；首次使用会下载 SenseVoice 运行时与模型（需网络）。
-- 全双工对话（barge-in 打断、连续语音通话）看 `mino-voice-mode`。
+- 全双工对话（barge-in 打断、连续语音通话）看 `dsh-voice-mode`。

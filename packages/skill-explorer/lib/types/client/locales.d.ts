@@ -13,14 +13,14 @@ export declare const zh: {
     readonly 'group.project-dsh': "项目技能（.dsh/skills）";
     readonly 'group.project-agents': "项目技能（.agents/skills）";
     readonly 'group.custom': "自定义目录";
-    readonly 'group.user-dsh': "用户技能（~/.dsh/skills）";
+    readonly 'group.user-dsh': "用户技能（~/.mino/skills）";
     readonly 'group.user-agents': "用户技能（~/.agents/skills）";
     readonly 'group.runtime': "运行时注册";
     readonly 'groupHint.bundled': "DSH 内置与插件随附的全局技能";
     readonly 'groupHint.project-dsh': "存放于项目目录，作用于所在项目";
     readonly 'groupHint.project-agents': "存放于项目目录，作用于对应项目";
     readonly 'groupHint.custom': "customSkillDirs 自定义配置目录";
-    readonly 'groupHint.user-dsh': "全局技能（~/.dsh/skills），本机所有项目共享";
+    readonly 'groupHint.user-dsh': "全局技能（~/.mino/skills），本机所有项目共享";
     readonly 'groupHint.user-agents': "全局技能（~/.agents/skills），本机所有项目共享";
     readonly 'groupHint.runtime': "插件运行时代码内嵌注册";
     readonly 'list.loading': "加载中…";
@@ -51,7 +51,7 @@ export declare const zh: {
     readonly 'list.duplicate': "复制为模板";
     readonly 'list.duplicateFailed': "复制失败：{error}";
     readonly 'create.root': "创建位置";
-    readonly 'create.root.user': "用户技能（~/.dsh/skills，所有项目可用）";
+    readonly 'create.root.user': "用户技能（~/.mino/skills，所有项目可用）";
     readonly 'create.root.project': "项目技能（当前项目 .dsh/skills）";
     readonly 'create.name': "技能名（kebab-case，与文件目录同名）";
     readonly 'create.namePlaceholder': "如 my-workflow";

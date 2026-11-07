@@ -1,9 +1,9 @@
 # better-sidebar 候选评测 overlay：手动等价于包内 cordis.patch.yml 的 insert 行。
 # 挂在 profile patch 之后（eval-run 透传 --patch），不污染 plugweb 基线。
-# bot 修复后（mino-bot 0.1.2）不再需要禁用行——0.1.1 的持久阻断见 EVAL.md 定案。
+# bot 修复后（dsh-bot 0.1.2）不再需要禁用行——0.1.1 的持久阻断见 EVAL.md 定案。
 - insert:
     - id: better-sidebar
-      name: 'mino-better-sidebar'
+      name: 'dsh-better-sidebar'
       config:
         agentOpenTools: true
-      disabled: !!js "[...ctx.loader.entries()].some((e) => (e.options.name === 'dsh-better-sidebar' || e.options.name === 'mino-better-sidebar') && e.options.id !== 'better-sidebar' && !e.disabled)"
+      disabled: !!js "[...ctx.loader.entries()].some((e) => (e.options.name === 'dsh-better-sidebar') && e.options.id !== 'better-sidebar' && !e.disabled)"

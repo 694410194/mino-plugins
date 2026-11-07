@@ -1,0 +1,10 @@
+# mino-inference + mino-media 装载/调用验证套件（2026-11-05 首跑 3/3 PASS）。
+# plugweb 档装载新包的三个要点：① deps 用 file: 指向 packages/ 源码目录；
+# ② dsh.profile.bundles 名单必须登记包名否则 bundle patch 不应用（静默不激活）；
+# ③ defineTool 的 output.schema+render 必填。
+# 模型选择：SDK_PROVIDER/SDK_MODEL 环境变量。magpie(workbuddy) 日限流后
+# 可用 our-free-model 的 Kilo 免费道：SDK_MODEL=kilo-auto/free SDK_EFFORT=off
+#（our-free-model 部分模型不吃 reasoningEffort，off 必须带）。
+{"id": "media-schema", "text": "你好", "assert": {"schema.present": ["generate_video", "check_video", "speech_synthesize", "speech_transcribe", "generate_music", "generate_image", "edit_image"], "events.absent": ["session/error"]}}
+{"id": "media-video-call", "text": "调用 generate_video 工具生成一段 2 秒的猫视频", "assert": {"reply.match": "未配置|未启用|登录|模型|HTTP|失败|已生成|任务|视频", "modelCalls.max": 10}, "timeoutMs": 120000}
+{"id": "media-tts-call", "text": "调用 speech_synthesize 工具把「你好」合成语音", "assert": {"reply.match": "未配置|未启用|登录|模型|HTTP|失败|已合成|语音|音色", "modelCalls.max": 10}, "timeoutMs": 120000}

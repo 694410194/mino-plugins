@@ -1,5 +1,5 @@
 {
-  "name": "mino-mcp-chrome-devtools",
+  "name": "chrome-devtools-mcp",
   "version": "0.1.0",
   "description": "MCP 接入包：Chrome DevTools MCP 服务器（stdio/npx，控制本机 Chrome：导航/性能/网络/截图）。安装即挂载一条 dsh-mcp-client 配置行。",
   "keywords": [

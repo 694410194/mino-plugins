@@ -456,7 +456,7 @@
 
 ### 🔐 安全
 
-- **敏感文件落盘权限收紧为 0600**：`~/.dsh/dsh-bridge/config.json` 含平台 Bot Token、Cloudflare 隧道 JWT、访问密码哈希，此前以 umask 默认（0644/0664）落盘，**同机其他用户可读**；同目录的 `sessions.json` 早已正确使用 0600，属修一半。
+- **敏感文件落盘权限收紧为 0600**：`~/.mino/dsh-bridge/config.json` 含平台 Bot Token、Cloudflare 隧道 JWT、访问密码哈希，此前以 umask 默认（0644/0664）落盘，**同机其他用户可读**；同目录的 `sessions.json` 早已正确使用 0600，属修一半。
   - `writeConfig` 显式带 `mode: 0o600`（仅对新建文件生效）
   - 新增 `ensureConfigFileMode()`：启动时**幂等收敛存量宽松文件**（历史版本遗留的 0644 会被自动收紧）
   - 非 `ENOENT` 错误出声告警，不再静默放过（`EACCES`/`EIO` 意味着无法确认权限状态）
@@ -626,7 +626,7 @@
 ### ✨ 新功能
 
 - **cloudflared 运行时健康探针**：解析 cloudflared 自报 metrics 地址并每 30s 探活官方 `/ready`（判据与上游一致：HTTP 200 且 `readyConnections > 0`）。连续 3 次失败（约 90s）→ 面板状态可见降级「⚠️ 连接器已无健康边缘连接」；连续 10 次（约 5min）→ 判定假死、终止进程并走既有自愈链路强制重建。重建链路（含重启后握手失败）**永不进入终态**——网络恢复后会自动自愈，不再需要人工干预。
-- **cloudflared 输出落盘**：子进程输出写入 `~/.dsh/dsh-bridge/cloudflared.log`，超 5MB 自动轮转为 `.1`；隧道 Token 落盘前强制脱敏（含跨输出块切分、以及 Token 前缀残留等边界，确保任何 Token 片段都不落盘）。
+- **cloudflared 输出落盘**：子进程输出写入 `~/.mino/dsh-bridge/cloudflared.log`，超 5MB 自动轮转为 `.1`；隧道 Token 落盘前强制脱敏（含跨输出块切分、以及 Token 前缀残留等边界，确保任何 Token 片段都不落盘）。
 
 ### 🐞 修复
 
@@ -819,7 +819,7 @@
 ## [v2.9.0] - 2026-08-31
 
 > ⚠️ **升级前必读**：本次为大规模更新（覆盖安全加固、并发模型、代码结构重构），改动量远超以往版本，尽管已通过 165 项自动化测试与多轮实测，仍可能存在未知问题。建议：
-> - 升级前备份 `~/.dsh/dsh-bridge/config.json`（可在面板「运维监控 → 备份恢复」导出）；
+> - 升级前备份 `~/.mino/dsh-bridge/config.json`（可在面板「运维监控 → 备份恢复」导出）；
 > - 升级后重点验证：各 IM 平台收发消息、审批流程、隧道连接；
 > - 如遇异常可回退至 v2.8.7，并欢迎携带日志提交 Issue：https://github.com/wenbin-wb/dsh-bridge/issues
 >
@@ -833,7 +833,7 @@
   - 未设置任何密码时，备份导出/导入、隧道配置与启动、远程目录浏览、添加工作区、插件升级、重启 DSH 等高危操作强制要求先设置密码（**行为变更**）；
   - 本机特权 Token 端点（loopback-token）CORS 收敛：仅放行本插件生成的面板来源（回环 / 局域网 IP / 隧道地址），不再使用 `*`，收敛 Firefox/Safari 下的 drive-by 令牌窃取面；
   - 隧道令牌掩码保护：非管理员视图的 `******` 掩码回显不再覆盖真实 Token，未变更字段不上传；
-  - 登录页与锁屏页不再向访客泄露救急重置明文命令，改为指向文档；修正 README 救急路径笔误（`~/.dsh-bridge` → `~/.dsh/dsh-bridge`）。
+  - 登录页与锁屏页不再向访客泄露救急重置明文命令，改为指向文档；修正 README 救急路径笔误（`~/.mino-bridge` → `~/.mino/dsh-bridge`）。
 - **🐞 稳定性修复（含 eslint 静态分析新抓出的 4 个必崩 BUG）**：
   - 修复 iOS 16 等旧移动端浏览器访问面板发送消息报 `AbortSignal.any is not a function (internal)` 的问题：DSH 网页客户端用该 API 组合请求超时/取消信号，而 Safari 17.4 才支持；代理注入页自动补齐兼容垫片（服务端运行在低版本 Node <20.3 时同样自动垫片并告警引导升级）；
   - 修复微信入站媒体下载 100% 抛 ReferenceError（`downloadMedia` 缺失 `fetch()` 调用，旧测试未覆盖）；

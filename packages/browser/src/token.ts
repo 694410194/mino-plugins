@@ -45,7 +45,7 @@ export function verifyToken(expected: string, actual: string): boolean {
 
 /**
  * Path of the persisted token file under the dsh home.
- * @returns absolute path like `~/.dsh/ext-bridge-token`.
+ * @returns absolute path like `~/.mino/ext-bridge-token`.
  */
 export function tokenFilePath(): string {
   return dshHomePath(TOKEN_FILE_NAME)

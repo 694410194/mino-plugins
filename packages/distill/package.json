@@ -1,5 +1,5 @@
 {
-  "name": "mino-distill",
+  "name": "@loserfox/distill",
   "description": "会话蒸馏（fork @loserfox/distill）：turn 结束后后台 subagent 反思，自动把经验写成/更新成 SKILL.md —— 「带它走一遍就学会」的技能沉淀。",
   "version": "0.1.0",
   "type": "module",

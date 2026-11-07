@@ -1,4 +1,4 @@
-/** IM source kind: consumes inbound messages through the mino-im `dshIm` delivery service and registers them as Triggers. */
+/** IM source kind: consumes inbound messages through the @xmanrui/dsh-im `dshIm` delivery service and registers them as Triggers. */
 import type { Context } from '@deepseek-ai/cordis'
 import { z } from 'zod'
 import { key, type ChannelRef, type Trigger } from '../core/index.ts'
@@ -10,7 +10,7 @@ import { pause } from './poll.ts'
 export const SOURCE = 'im'
 const RETRY_MS = 15_000
 
-/** The `dshIm` same-host service surface this source uses (see mino-im PROACTIVE_DELIVERY contractVersion/inboundVersion 1). */
+/** The `dshIm` same-host service surface this source uses (see @xmanrui/dsh-im PROACTIVE_DELIVERY contractVersion/inboundVersion 1). */
 interface DshIm {
   contractVersion?: number
   inboundVersion?: number
@@ -116,13 +116,13 @@ export const imKind: SourceKind<ImConfig> = {
   kind: SOURCE,
   title: { zh: 'IM 渠道', en: 'IM channels' },
   description: {
-    zh: '通过 mino-im 的独占接收能力消费 IM 消息（目前支持飞书/Lark 账号，其他渠道随 mino-im 契约扩展）。',
-    en: 'Consumes IM messages through mino-im exclusive intake (Feishu/Lark accounts today; other channels as mino-im implements the contract).',
+    zh: '通过 @xmanrui/dsh-im 的独占接收能力消费 IM 消息（目前支持飞书/Lark 账号，其他渠道随 @xmanrui/dsh-im 契约扩展）。',
+    en: 'Consumes IM messages through @xmanrui/dsh-im exclusive intake (Feishu/Lark accounts today; other channels as @xmanrui/dsh-im implements the contract).',
   },
   schema: ImConfigSchema,
   fields: [
     { key: 'botId', type: 'text', label: { zh: '机器人账号', en: 'Bot account' },
-      hint: { zh: 'mino-im 中已连接的 botId；该账号需开启 external-consumer 独占接收模式。', en: 'A connected botId in mino-im; the account must run in external-consumer exclusive mode.' } },
+      hint: { zh: '@xmanrui/dsh-im 中已连接的 botId；该账号需开启 external-consumer 独占接收模式。', en: 'A connected botId in @xmanrui/dsh-im; the account must run in external-consumer exclusive mode.' } },
     { key: 'chats', type: 'rows', label: { zh: '接收的会话', en: 'Conversations' },
       columns: [
         { key: 'conversationId', type: 'text', label: { zh: '会话', en: 'Conversation' } },
@@ -144,7 +144,7 @@ export const imKind: SourceKind<ImConfig> = {
       imKind.scope!({ meta: { conversationId: address.conversationId ?? '', direct: address.direct === 'true' } }, config).listened,
     async send(_host, message) {
       const runtime = imRuntime
-      if (!runtime) throw new Error('im source is not connected to mino-im')
+      if (!runtime) throw new Error('im source is not connected to @xmanrui/dsh-im')
       const address = message.channel.address
       try {
         await runtime.dshim.replyChecked(address.botId ?? runtime.botId, replyFromAddress(address), message.text,
@@ -216,7 +216,7 @@ export const imKind: SourceKind<ImConfig> = {
   },
   environment: {
     variables: [
-      { key: 'DSH_SUPERAGENT_IM_BOT', description: { zh: 'mino-im 机器人账号', en: 'The mino-im bot account' } },
+      { key: 'DSH_SUPERAGENT_IM_BOT', description: { zh: '@xmanrui/dsh-im 机器人账号', en: 'The @xmanrui/dsh-im bot account' } },
       { key: 'DSH_SUPERAGENT_IM_CHAT', description: { zh: '接下工单的会话 ID', en: 'Conversation ID that started the ticket' } },
     ],
     values: ({ trigger }) => ({
@@ -258,7 +258,7 @@ async function consume(ctx: SourceContext, dshim: DshIm, signal: AbortSignal): P
   }
 }
 
-export const name = 'mino-superagent-im'
+export const name = 'dsh-superagent-im'
 export const inject = ['orchestrator']
 export function apply(ctx: Context): void {
   ctx.effect(() => ctx.orchestrator.sources.register(imKind), 'im: source kind')

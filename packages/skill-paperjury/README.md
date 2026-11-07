@@ -1,4 +1,4 @@
-# mino-skill-paperjury
+# paperjury
 
 Mino 精选 **skill 包**（社区 vendored fork）：投稿前 AI 审稿（1 件）——paperjury：多视角审稿人模拟 + 三模式 + 台账/再审，自带 references/configs/scripts 支撑树
 
@@ -18,4 +18,4 @@ skill pack bundle：包内 `skills/` 目录随包分发，插件通过官方
 ## 覆盖
 
 同名 skill 按层与 rank 解析：项目 `.dsh/skills`、`.agents/skills` 或
-`~/.dsh/skills` 中放同名目录即可覆盖市场包内容（provider rank 600 > 650）。
+`~/.mino/skills` 中放同名目录即可覆盖市场包内容（provider rank 600 > 650）。

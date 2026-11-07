@@ -1,4 +1,4 @@
-# mino-persona
+# dsh-soul-md
 
 > Mino 官方人设卡 + 长期记忆插件。Fork 自 [dsh-soul-md](https://github.com/Scorp1o117/dsh-soul-md)（MIT），见 NOTICE。
 > 内置官方人设卡示例见 `examples/mino-card.md`。

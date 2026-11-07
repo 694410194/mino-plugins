@@ -70,7 +70,7 @@ dsh plugin --profile desktop remove dsh-dafeiyu
 
 新的实时设置适配可保存今后的修改，**不会自动找回已经丢失的历史配置**。安装包含修复的版本后，在大肥鱼设置页重新设置并保存原来的角色大小、气泡大小等值，再重启验证。
 
-如果设置页暂时无法使用，可以在退出 Host 并备份用户配置后，将旧值合并到**对应 profile 的用户 patch**。默认位置为 `~/.dsh/profiles/web/cordis.patch.yml` 或 `~/.dsh/profiles/desktop/cordis.patch.yml`；设置了 `DSH_HOME` 时以该目录为准。
+如果设置页暂时无法使用，可以在退出 Host 并备份用户配置后，将旧值合并到**对应 profile 的用户 patch**。默认位置为 `~/.mino/profiles/web/cordis.patch.yml` 或 `~/.mino/profiles/desktop/cordis.patch.yml`；设置了 `DSH_HOME` 时以该目录为准。
 
 ```yaml
 - id: dsh-dafeiyu
@@ -105,7 +105,7 @@ Linux arm64 的 npm 包内没有对应的随架构 Helper，会回退到 `python
 
 ## 右键菜单改大小后重启回退（#95）
 
-0.1.23 起，插件会把右键菜单选择的大小、气泡大小和「减少动态」记到 `$DSH_HOME/dsh-dafeiyu/user-settings.json`（默认 `~/.dsh/dsh-dafeiyu/user-settings.json`）。这是 DSH `settings.update()` 写不进去时的兜底：
+0.1.23 起，插件会把右键菜单选择的大小、气泡大小和「减少动态」记到 `$DSH_HOME/dsh-dafeiyu/user-settings.json`（默认 `~/.mino/dsh-dafeiyu/user-settings.json`）。这是 DSH `settings.update()` 写不进去时的兜底：
 
 - 只要 DSH 里仍是选择时的旧值，helper 重启或 DSH 重启后仍沿用菜单选择；
 - 之后在 DSH 设置页改成新值时，兜底会自动清除，新值优先；

@@ -55,7 +55,7 @@ function run(label, command, commandArgs, cwd) {
 if (!skipInstall) run('pnpm install --frozen-lockfile', 'pnpm', ['install', '--frozen-lockfile'], root);
 else console.log('SKIP pnpm install --frozen-lockfile');
 
-run('build mino-image', 'pnpm', ['--filter', 'mino-image', 'run', 'build'], root);
+run('build dsh-image-gen', 'pnpm', ['--filter', 'dsh-image-gen', 'run', 'build'], root);
 run('check source client ids', process.execPath, [join(root, 'scripts', 'check-client-ids.cjs')], root);
 
 const packages = [];

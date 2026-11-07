@@ -1,7 +1,7 @@
 /**
  * Mino image plugin, browser half: promoted generated-image Chat rows, keyed
  * Tool view cards for the image tools, and the bundle configuration card.
- * Copy comes through the `mino-image` locale namespace; image bytes arrive
+ * Copy comes through the `dsh-image-gen` locale namespace; image bytes arrive
  * through the owner-supplied authorized `loadImage` loader.
  */
 import { useEffect, useRef, useState } from 'react'
@@ -36,7 +36,7 @@ import { conversationRegenerateRequest } from './conversation-regenerate.js'
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {
     /** Generated-image card, promoted row, and settings-page copy. */
-    'mino-image': MinoImageKey
+    'dsh-image-gen': MinoImageKey
   }
 }
 
@@ -49,17 +49,17 @@ interface ImageCardInjected {
 /** Business face injected into the bundle settings card. */
 interface SettingsInjected {
   readonly hooks: {
-    /** Live configuration snapshot for the `mino-image` namespace. */
+    /** Live configuration snapshot for the `dsh-image-gen` namespace. */
     readonly form: ConfigForm<Record<string, unknown>>
   }
   readonly setField: (field: string, value: unknown) => Promise<boolean>
   readonly unsetField: (field: string) => Promise<boolean>
 }
 
-type ImageCardProps = ToolCallViewProps & PropsLocale<'mino-image'> & InjectFace<ImageCardInjected>
-type ImageResultNodeProps = PropsRuntime<'conversation.chat.node', 'mino-image-result'> & PropsLocale<'mino-image'>
-type SettingsCardProps = PluginConfigViewProps & PropsLocale<'mino-image'> & InjectFace<SettingsInjected>
-type T = TranslateNS<'mino-image'>
+type ImageCardProps = ToolCallViewProps & PropsLocale<'dsh-image-gen'> & InjectFace<ImageCardInjected>
+type ImageResultNodeProps = PropsRuntime<'conversation.chat.node', 'dsh-image-gen-result'> & PropsLocale<'dsh-image-gen'>
+type SettingsCardProps = PluginConfigViewProps & PropsLocale<'dsh-image-gen'> & InjectFace<SettingsInjected>
+type T = TranslateNS<'dsh-image-gen'>
 
 /** Required browser services for the registrations and dictionaries. */
 export const inject = ['slots', 'locale', 'uiConversation', 'configForms']
@@ -119,15 +119,15 @@ const STYLE = `
 export function apply(ctx: ClientContext): void {
   ctx.effect(() => {
     const style = document.createElement('style')
-    style.dataset.plugin = 'mino-image'
+    style.dataset.plugin = 'dsh-image-gen'
     style.textContent = STYLE
     document.head.appendChild(style)
     return () => { style.remove() }
-  }, 'mino-image: styles')
-  ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'mino-image: dictionaries')
+  }, 'dsh-image-gen: styles')
+  ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'dsh-image-gen: dictionaries')
   ctx.effect(
     () => ctx.uiConversation.events.register(createImageResultDefinition()),
-    'mino-image: image result node',
+    'dsh-image-gen: image result node',
   )
   ctx.slots.inject('conversation.chat.node', () => ctx.slots.register({
     name: 'conversation.chat.node', key: IMAGE_RESULT_NODE_KIND, locale: NS,
@@ -143,17 +143,17 @@ export function apply(ctx: ClientContext): void {
     inject: (): ImageCardInjected => ({ promoted: true }),
   }, GeneratedImagesCard))
 
-  const form = ctx.configForms.get<Record<string, unknown>>('mino-image')
-  ctx.effect(() => ctx.configForms.whileServed(['mino-image'], () =>
+  const form = ctx.configForms.get<Record<string, unknown>>('dsh-image-gen')
+  ctx.effect(() => ctx.configForms.whileServed(['dsh-image-gen'], () =>
     ctx.slots.inject('plugins.bundle.config', () => ctx.slots.register({
-      name: 'plugins.bundle.config', key: 'mino-image', locale: NS,
+      name: 'plugins.bundle.config', key: 'dsh-image-gen', locale: NS,
       inject: (): SettingsInjected => ({
         hooks: { form },
         setField: (field, value) => form.set(field, value),
         unsetField: field => form.unset(field),
       }),
     }, MinoImageSettingsCard)),
-  ), 'mino-image: settings card')
+  ), 'dsh-image-gen: settings card')
 }
 
 /* ============================== Settings card ============================== */
@@ -381,7 +381,7 @@ function ImageResultCard({
     if (!url) return
     const a = document.createElement('a')
     a.href = url
-    a.download = activeAttachment?.name || `mino-image-${Date.now()}.png`
+    a.download = activeAttachment?.name || `dsh-image-gen-${Date.now()}.png`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)

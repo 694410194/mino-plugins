@@ -1,5 +1,5 @@
 {
-  "name": "mino-team-conductor",
+  "name": "dsh-team-conductor",
   "version": "0.1.0",
   "description": "官方 Agent Teams 的控制面（fork dsh-team-conductor）：名册总览、成员上下文压力、成员编辑（别名/描述/优先级/标签/token 预算/re-brief/retire/restore/compact/interrupt）、DoD 任务与完成审议、跨名册可续接子代理消息。",
   "type": "module",

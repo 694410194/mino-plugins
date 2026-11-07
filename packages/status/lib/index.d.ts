@@ -59,7 +59,7 @@ export declare const MIRROR_HASH_KEY: string;
 export declare const ARRAY_DELETED_KEY: string;
 /** 解析设置命名空间(兼容 dsh-settings 导出面收窄) */
 export declare function resolveSettingsNamespace(settingsModule: unknown, name: string): string;
-/** dsh 用户目录:$DSH_HOME 优先,缺省 ~/.dsh */
+/** dsh 用户目录:$DSH_HOME 优先,缺省 ~/.mino */
 export declare function dshHomeDirectory(): string;
 /** 外部词库文件路径:DSH_STATUS_ROTATOR_BANK 优先,否则 $DSH_HOME/status-rotator/phrases.json */
 export declare function externalBankPath(): string;

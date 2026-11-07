@@ -1,5 +1,5 @@
 {
-  "name": "mino-skill-script-review",
+  "name": "screenwriter-skill",
   "version": "0.1.0",
   "description": "Mino 精选 skill 包（上游 Vi7QY/screenwriter-skill）：短剧/漫剧编剧审稿技能——按头部平台内容负责人方法论审剧本、卡第一集生死线、给改稿方向。安装即注入 ctx.skills。",
   "keywords": [

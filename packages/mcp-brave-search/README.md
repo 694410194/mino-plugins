@@ -1,4 +1,4 @@
-# mino-mcp-brave-search
+# @modelcontextprotocol/server-brave-search
 
 接入 **Brave Search MCP 服务器**（`@modelcontextprotocol/server-brave-search`）：
 模型获得 `mcp__brave__brave_web_search` 等搜索工具，可作为内置 web 搜索之外的

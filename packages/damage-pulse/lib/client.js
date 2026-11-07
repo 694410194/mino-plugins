@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-	id: "mino-damage-pulse",
+	id: "dsh-damage-pulse",
 	factory: (require) => {
 		var module = { exports: {} };
 		var exports = module.exports;

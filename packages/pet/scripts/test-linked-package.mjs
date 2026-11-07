@@ -7,16 +7,16 @@ const input = process.argv[2]
 if (!input) throw new Error('usage: node scripts/test-linked-package.mjs <extracted-package-directory>')
 
 const packageDirectory = isAbsolute(input) ? input : resolve(process.cwd(), input)
-const directory = await mkdtemp(join(tmpdir(), 'mino-pet-linked-package-'))
+const directory = await mkdtemp(join(tmpdir(), 'dsh-dafeiyu-linked-package-'))
 const nodeModules = join(directory, 'node_modules')
-const link = join(nodeModules, 'mino-pet')
+const link = join(nodeModules, 'dsh-dafeiyu')
 const entry = join(directory, 'verify.mjs')
 
 try {
   await mkdir(nodeModules, { recursive: true })
   await symlink(packageDirectory, link, process.platform === 'win32' ? 'junction' : 'dir')
   await writeFile(entry, [
-    "import { Config } from 'mino-pet'",
+    "import { Config } from 'dsh-dafeiyu'",
     "if (!Config || !['function', 'object'].includes(typeof Config)) throw new Error('plugin Config did not load')",
     "process.stdout.write('linked package import passed\\n')",
   ].join('\n'))

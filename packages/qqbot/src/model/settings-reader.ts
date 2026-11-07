@@ -1,7 +1,7 @@
 /**
  * SettingsReader — settings.yaml 只读解析
  *
- * 从 ~/.dsh/settings.yaml 中读取模型配置信息。
+ * 从 ~/.mino/settings.yaml 中读取模型配置信息。
  * 只读，不修改 settings.yaml。
  */
 import { readFileSync, existsSync } from 'node:fs';
@@ -80,7 +80,10 @@ export class SettingsReader {
     if (this.settingsCache !== undefined) return this.settingsCache;
 
     try {
-      const settingsPath = resolve(homedir(), '.dsh', 'settings.yaml');
+      const home = [process.env.MINO_HOME, process.env.DSH_HOME].find(
+        v => v !== undefined && v.trim().length > 0,
+      ) ?? resolve(homedir(), '.mino');
+      const settingsPath = resolve(home, 'settings.yaml');
       if (!existsSync(settingsPath)) {
         this.settingsCache = null;
         return null;

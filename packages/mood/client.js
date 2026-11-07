@@ -21,7 +21,7 @@
  * ============================================================================
  */
 window.__ModuleLoader__.load({
-  id: 'mino-mood',
+  id: 'dsh-feiyu-mood',
   factory: (require) => {
     const React = require('react')
     const h = React.createElement

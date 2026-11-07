@@ -10,7 +10,7 @@
 //   是在这个环境里已经跑通的路子（不确定换 DSH 版本会不会变，见 README）。
 
 window.__ModuleLoader__.load({
-  id: 'mino-speak-up',
+  id: 'dsh-speak-up',
   factory: (require) => {
     var module = { exports: {} }
     var exports = module.exports

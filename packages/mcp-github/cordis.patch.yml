@@ -1,10 +1,10 @@
-# mino-mcp-github：GitHub 官方远端 MCP 服务器接入（streamable-http）。
+# github-mcp-server：GitHub 官方远端 MCP 服务器接入（streamable-http）。
 # 纯配置 bundle——只插入一条官方 dsh-mcp-client 行，零代码；卸载本包即移除该服务器。
 # 需要 GitHub PAT：未设 GITHUB_TOKEN 环境变量时该行自动停用（entry disabled: !!js），
 # 设好后重载/重启即生效。
 - insert:
     - id: mcp-github-pack
-      name: 'mino-mcp-github'
+      name: 'github-mcp-server'
     - id: mcp-github
       name: '@deepseek-ai/dsh-mcp-client'
       disabled: !!js "!process.env.GITHUB_TOKEN"

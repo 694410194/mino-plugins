@@ -1,5 +1,5 @@
 {
-  "name": "mino-proactive",
+  "name": "dsh-proactive",
   "version": "0.1.1",
   "description": "Host 级主动唤醒（fork dsh-proactive）：模型自订闹钟（单次/循环/cron+抖动）、冷会话到点 resume、安静时段与每日投递预算、静默唤醒墓碑折叠，自带闹钟管理面板。",
   "type": "module",

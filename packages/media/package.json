@@ -1,0 +1,61 @@
+{
+  "name": "mino-media",
+  "version": "0.1.0-alpha.1",
+  "description": "Mino 媒体生成插件——视频、语音合成、语音转写、音乐，经 mino-inference 服务走 Mino 账号额度。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "mino",
+    "video",
+    "tts",
+    "stt",
+    "music"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "hostdeps.mjs",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": ">=0.2.2-alpha.2 <0.3.0",
+    "@deepseek-ai/schemastery": ">=3.18.4 <4"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.3.0",
+    "node": ">=20.18"
+  },
+  "license": "MIT",
+  "mino": {
+    "kind": "dsh-plugin",
+    "platform": "all",
+    "upstream": "mino",
+    "category": "generation"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/media"
+  },
+  "bugs": {
+    "url": "https://github.com/694410194/mino-plugins/issues"
+  }
+}

@@ -7,7 +7,7 @@
  *   3. 管理 per-peer 的模型偏好（委托 PrefsStore）
  *
  * 优先级（从高到低）：
- *   per-peer 偏好（~/.dsh-qqbot/model-prefs.json）
+ *   per-peer 偏好（~/.mino-qqbot/model-prefs.json）
  *   > config 显式指定（cordis.yml 的 provider/model）
  *   > settings.yaml 的 agent-default-model（只读，作为默认兜底）
  *   > 宿主 agentDefaultModel 服务

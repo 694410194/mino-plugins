@@ -1,5 +1,5 @@
 > 本项目派生自 https://github.com/Yuuyuko-uu/dsh-speak-up，原作者 Yuuyuko-uu。
-> Mino 集成改动：包名与 cordis.patch.yml 解析名改为 mino-speak-up，补充 NOTICE；功能未修改。
+> Mino 集成改动：包名与 cordis.patch.yml 解析名改为 dsh-speak-up，补充 NOTICE；功能未修改。
 
 # dsh-speak-up（主动搭话）· 让它自己先开口
 

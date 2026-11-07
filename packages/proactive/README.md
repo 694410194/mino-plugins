@@ -67,7 +67,7 @@ GitHub 源码安装（monorepo 子目录；pnpm ≥10 需允许构建脚本）�
 dsh plugin --profile web add github:john-walks-slow/dsh-proactive#path:/packages/dsh-proactive
 # 建议钉住 commit：github:john-walks-slow/dsh-proactive#<sha>&path:/packages/dsh-proactive
 # 首次 add 会被 pnpm 拦截：把 pnpm 提示的包名加入
-# ~/.dsh/profiles/web/pnpm-workspace.yaml 的 allowBuilds 后重跑
+# ~/.mino/profiles/web/pnpm-workspace.yaml 的 allowBuilds 后重跑
 ```
 
 本地开发安装（file: 形式不跑 prepare，需先在包目录构建）：

@@ -608,7 +608,7 @@ export const ko: Record<string, string> = {
   pluginVideoPreviewDesc: 'better-sidebar 편집기에서 비디오 파일(.mp4/.webm/.mov/.mkv/.avi 등)을 인라인 미리보기합니다. HTTP Range(206)를 지원하는 /video 호스트 라우트를 내장하며, 진행 바를 드래그할 수 있고 파일 전체를 내려받기 전에 재생이 시작됩니다',
   pluginAudioDesc: 'better-sidebar 편집기에서 오디오 파일(.mp3/.wav/.flac/.ogg/.m4a/.aac/.opus)을 바로 미리 봅니다. 확대 가능한 파형 플레이어(클릭/드래그 탐색, A-B 반복, 채널 전환), 실시간 스펙트럼, 전체 파일 스펙트로그램을 제공하며 자체 미디어 라우트가 HTTP Range를 지원해 크기와 무관하게 탐색할 수 있습니다',
   pluginDevGitGraphDesc: 'A faithful vscode-git-graph port as a sidebar tab: the only entry is a native better-sidebar tab, auto-bound to the session workspace, full git operations (checkout/merge/rebase/push/tag/stash), light/dark theming, file diffs open in the built-in DiffTab; requires dsh-better-sidebar',
-  pluginDocsPanelDesc: 'DSH 사이드바의 "전역 문서": 전역 Markdown 메모로, 어떤 작업 공간에서든 언제든 읽을 수 있습니다. 목록을 클릭해 읽기, 마우스를 올리면 개요로 이동, Chrome / VS Code에서 외부 열기, 코드 복사. 디렉터리를 설정할 수 있습니다(기본 ~/.dsh/docs)',
+  pluginDocsPanelDesc: 'DSH 사이드바의 "전역 문서": 전역 Markdown 메모로, 어떤 작업 공간에서든 언제든 읽을 수 있습니다. 목록을 클릭해 읽기, 마우스를 올리면 개요로 이동, Chrome / VS Code에서 외부 열기, 코드 복사. 디렉터리를 설정할 수 있습니다(기본 ~/.mino/docs)',
   pluginTylinaDesc: '현재 세션의 작업 공간을 공유하는 Typst 문서 편집 도구: Typst 문서를 WYSIWYG으로 편집·조판하며, 논문, 보고서, 시험지, 이력서, 도표, 포스터, 악보, PPTX로 내보내는 슬라이드를 작성하고 조판할 수 있습니다',
   pluginEgoBrowserDesc: 'DeepSeek Harness용 에이전트 브라우저: 32개의 ego_* 도구가 실제 Chromium을 구동하며, 사이드바의 네이티브 «ego 브라우저» 탭에서 에이전트가 방문하는 모든 페이지를 실시간으로 볼 수 있습니다 — 클릭, 드래그, 타이핑으로 직접 조작할 수 있습니다. better-sidebar가 있으면 탭을 자동 등록하고, 없으면 플로팅 버블로 대체합니다',
   pluginBilingualReaderDesc: 'DSH 사이드바에서 PDF 읽기: 네이티브 PDF 표시, 텍스트를 선택해 LLM으로 번역, 컨텍스트 사용 및 메인 대화와 완전 격리',

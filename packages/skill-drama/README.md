@@ -1,4 +1,4 @@
-# mino-skill-drama
+# drama-skills
 
 Mino 精选 **skill 包**（社区 vendored fork）：AI 短剧/漫剧全流程 11 个技能：short-drama（编排）、novel-analyze、develop、write、assets、image-prompts、storyboard、video-prompts、produce、edit、review。
 
@@ -18,4 +18,4 @@ skill pack bundle：包内 `skills/` 目录随包分发，插件通过官方
 ## 覆盖
 
 同名 skill 按层与 rank 解析：项目 `.dsh/skills`、`.agents/skills` 或
-`~/.dsh/skills` 下放同名 skill 即覆盖本包对应项。
+`~/.mino/skills` 下放同名 skill 即覆盖本包对应项。

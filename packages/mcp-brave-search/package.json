@@ -1,5 +1,5 @@
 {
-  "name": "mino-mcp-brave-search",
+  "name": "@modelcontextprotocol/server-brave-search",
   "version": "0.1.0",
   "description": "MCP 接入包：Brave Search MCP 服务器（stdio/npx，需 BRAVE_API_KEY，未配置时行自动停用）。安装即挂载一条 dsh-mcp-client 配置行。",
   "keywords": [

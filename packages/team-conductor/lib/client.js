@@ -15,7 +15,7 @@
  * diagnosed with `curl` instead of by staring at the screen.
  */
 window.__ModuleLoader__.load({
-  id: "mino-team-conductor",
+  id: "dsh-team-conductor",
   factory: (require) => {
     const React = require("react");
 

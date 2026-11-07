@@ -3,16 +3,16 @@
 # refuses to start without stateDir.
 - insert:
     - id: dsh-superagent
-      name: mino-superagent
+      name: dsh-superagent
     - id: dsh-superagent-github
-      name: 'mino-superagent/github-watch'
+      name: 'dsh-superagent/github-watch'
     # Optional Feishu Source; requires configuring a bot CLI after enabling.
     - id: dsh-superagent-feishu
-      name: 'mino-superagent/feishu-watch'
+      name: 'dsh-superagent/feishu-watch'
       disabled: true
-    # Optional IM Source; requires mino-im with an external-consumer account.
+    # Optional IM Source; requires @xmanrui/dsh-im with an external-consumer account.
     - id: dsh-superagent-im
-      name: 'mino-superagent/im-watch'
+      name: 'dsh-superagent/im-watch'
       disabled: true
     # The agent preset of every Executor Session (WORKER_PRESET in src/app/sessions.ts); the main Session has its own, below.
     # It is DSH's `standard` preset with only what a worker needs, and a shell whose foreground command moves to a background job

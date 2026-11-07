@@ -1,4 +1,4 @@
-window.__ModuleLoader__.load({id:"mino-ops",factory:(require)=>{
+window.__ModuleLoader__.load({id:"dsh-ops",factory:(require)=>{
 const modules={"settings/runtime-contract.js":{imports:{},run(module,exports,require){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });

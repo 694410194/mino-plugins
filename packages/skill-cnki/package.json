@@ -1,5 +1,5 @@
 {
-  "name": "mino-skill-cnki",
+  "name": "cnki-skills",
   "version": "0.1.0",
   "description": "Mino 精选 skill 包（上游 cookjohn/cnki-skills）：知网 CNKI 浏览器操作技能 10 件——基础/高级检索、结果解析、翻页、详情、期刊检索/目录/索引、PDF/CAJ 下载、导出 Zotero/RIS。需配合 mcp-chrome-devtools 浏览器工具使用。",
   "keywords": [

@@ -32,7 +32,7 @@ export function isDshProfileName(profile: string): boolean {
 }
 
 /**
- * Resolve a profile name to its directory under DSH_HOME (default ~/.dsh).
+ * Resolve a profile name to its directory under DSH_HOME (default ~/.mino).
  * An explicit directory is used by hosts, such as DSH Desktop, that own the
  * active profile location rather than deriving it from process environment.
  */

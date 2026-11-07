@@ -1,4 +1,4 @@
-# mino-team-conductor bundle patch：挂载到官方 Agent Teams 引擎之上的控制面。
+# dsh-team-conductor bundle patch：挂载到官方 Agent Teams 引擎之上的控制面。
 #
 # 本插件自带 team_* 工具面 + 旧名别名（spawn_teammate/send_message 等），
 # 与官方 tool-agent-team 的工具面是互斥替代关系——同名工具同 scope 会
@@ -9,4 +9,4 @@
 
 - insert:
     - id: team-conductor
-      name: 'mino-team-conductor'
+      name: 'dsh-team-conductor'

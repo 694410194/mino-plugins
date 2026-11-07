@@ -1,4 +1,4 @@
-# mino-skill-cnki
+# cnki-skills
 
 Mino 精选 **skill 包**（社区 vendored fork）：知网 CNKI 技能（10 件）——检索/解析/翻页/详情/期刊/下载/导出 Zotero 全套浏览器操作流程
 
@@ -18,8 +18,8 @@ skill pack bundle：包内 `skills/` 目录随包分发，插件通过官方
 ## 覆盖
 
 同名 skill 按层与 rank 解析：项目 `.dsh/skills`、`.agents/skills` 或
-`~/.dsh/skills` 中放同名目录即可覆盖市场包内容（provider rank 600 > 650）。
+`~/.mino/skills` 中放同名目录即可覆盖市场包内容（provider rank 600 > 650）。
 
 ## 前置
 
-技能内容驱动 `mcp__chrome-devtools__*` 浏览器工具——需先安装 `mino-mcp-chrome-devtools`（同属精选索引）。知网下载/导出需用户自有知网账号登录态。
+技能内容驱动 `mcp__chrome-devtools__*` 浏览器工具——需先安装 `chrome-devtools-mcp`（同属精选索引）。知网下载/导出需用户自有知网账号登录态。

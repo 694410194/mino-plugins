@@ -9,7 +9,7 @@
  */
 
 window.__ModuleLoader__.load({
-  id: 'mino-qq-console',
+  id: 'dsh-qq-console-v2',
   factory(require) {
     var module = { exports: {} }
     var exports = module.exports

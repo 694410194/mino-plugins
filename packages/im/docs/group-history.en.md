@@ -135,7 +135,7 @@ Data is stored on the machine running DSH:
   group-files/            # Downloaded original group files
 ```
 
-Without a custom data directory, `DSH_HOME` defaults to `~/.dsh`. Each message has its own database row, including group identity, platform message ID, sender, timestamp, text, and attachment references. File contents live in `group-files/`, outside SQLite.
+Without a custom data directory, `DSH_HOME` defaults to `~/.mino`. Each message has its own database row, including group identity, platform message ID, sender, timestamp, text, and attachment references. File contents live in `group-files/`, outside SQLite.
 
 Records belong to the group independently of bots, AI Sessions, and workspaces. Bots using the same group identity and DSH data directory can read the same records. Changing Sessions/workspaces or deleting one bot does not delete the group archive. QQ app isolation and Discord thread isolation still apply; there is no automatic synchronization between machines.
 

@@ -15,7 +15,7 @@ import { deleteImageFromWorkspace, getDshWorkspaceRoots, saveImageToWorkspace } 
 export { Config } from './config.js'
 export { DELETE_ROUTE, GENERATE_ROUTE, IMAGE_ROUTE, SAVE_WORKSPACE_ROUTE, imageAttachmentFromMeta }
 
-export const name = 'mino-image'
+export const name = 'dsh-image-gen'
 export const inject = ['tools', 'attachments']
 
 interface GeneratedValue {
@@ -59,6 +59,28 @@ interface ToolExec {
   signal: AbortSignal
 }
 
+/** Subset of the mino-inference service this plugin consumes when present. */
+interface MinoInferenceFace {
+  baseURL: string
+  resolveAuth(): Promise<{ token: string; headers: Record<string, string> }>
+  rejectToken(token: string): Promise<void>
+}
+
+/** Shared inference layer; falls back to this plugin's own config when absent. */
+function minoInference(ctx: Context): MinoInferenceFace | undefined {
+  const service = ctx.get('minoInference') as MinoInferenceFace | undefined
+  if (service === undefined) return undefined
+  // Duck-typed seam: verify the members this plugin actually calls, so a
+  // stale mino-inference names the missing method instead of failing
+  // silently inside a tool call.
+  if (typeof service.baseURL !== 'string'
+    || typeof service.resolveAuth !== 'function'
+    || typeof service.rejectToken !== 'function') {
+    throw new Error('minoInference 服务契约不匹配：需要 baseURL/resolveAuth/rejectToken（mino-inference 版本过旧，请升级插件）。')
+  }
+  return service
+}
+
 export function apply(ctx: Context, config: Config = {}): void {
   // Volatile schema fields arrive as boxes whose `.get()` returns the current
   // snapshot, so a settings edit lands without restarting this fiber.
@@ -80,7 +102,7 @@ export function apply(ctx: Context, config: Config = {}): void {
     webCtx.effect(() => webCtx.webServer.register({
       kind: 'exact', path: IMAGE_ROUTE,
       handler: (req, res) => serveImage(req, res, { readImage: ref => ctx.attachments.readImage(ref) }),
-    }), 'mino-image: image route')
+    }), 'dsh-image-gen: image route')
     webCtx.effect(() => webCtx.webServer.register({
       kind: 'exact', path: DELETE_ROUTE,
       handler: (req, res) => serveDelete(req, res, {
@@ -89,7 +111,7 @@ export function apply(ctx: Context, config: Config = {}): void {
           return deleteImageFromWorkspace(filePath, new Set([...knownWorkspaceRoots, ...discovered, process.cwd()]))
         },
       }),
-    }), 'mino-image: delete route')
+    }), 'dsh-image-gen: delete route')
     webCtx.effect(() => webCtx.webServer.register({
       kind: 'exact', path: SAVE_WORKSPACE_ROUTE,
       handler: (req, res) => serveSaveWorkspace(req, res, {
@@ -113,7 +135,7 @@ export function apply(ctx: Context, config: Config = {}): void {
         },
         isSaveEnabled: () => current().saveToWorkspace !== false,
       }),
-    }), 'mino-image: save workspace route')
+    }), 'dsh-image-gen: save workspace route')
     webCtx.effect(() => webCtx.webServer.register({
       kind: 'exact', path: GENERATE_ROUTE,
       handler: (req, res) => serveGenerate(req, res, async body => {
@@ -129,13 +151,13 @@ export function apply(ctx: Context, config: Config = {}): void {
           createdAt: Date.now(),
         }
       }),
-    }), 'mino-image: generate route')
+    }), 'dsh-image-gen: generate route')
   })
 
   // A few lines of live image-tool context per model request.
   ctx.inject(['systemPrompt'], (promptCtx: Context) => {
     promptCtx.effect(() => promptCtx.systemPrompt.context({
-      name: 'mino-image:defaults',
+      name: 'dsh-image-gen:defaults',
       order: 59,
       text: () => {
         const model = current().model?.trim() || 'not configured'
@@ -146,7 +168,7 @@ export function apply(ctx: Context, config: Config = {}): void {
           'Minimal calls: generate_image({"prompt":"a sailboat"}); edit_image({"prompt":"make the sail blue"}).',
         ].join('\n')
       },
-    }), 'mino-image: tool context')
+    }), 'dsh-image-gen: tool context')
   })
 
   /** Shared per-item generation for generate_image and the batch loop. */
@@ -262,10 +284,12 @@ export function apply(ctx: Context, config: Config = {}): void {
         maxBytes: ctx.attachments.imageLimits.maxImageBytes,
         signal: exec.signal,
       })
-      const auth = await requireMinoAuth(ctx, channel.baseURL)
+      const service = minoInference(ctx)
+      const baseURL = service?.baseURL ?? channel.baseURL
+      const auth = service !== undefined ? await service.resolveAuth() : await requireMinoAuth(ctx, baseURL)
       const request = {
         auth,
-        baseURL: channel.baseURL,
+        baseURL,
         model: args.model ?? channel.editModel,
         prompt: args.prompt,
         sourceImages,
@@ -294,7 +318,9 @@ async function generateAndSave(
   knownRoots: Set<string>,
   config: Config,
 ): Promise<GeneratedValue> {
-  const auth = await requireMinoAuth(ctx, channel.baseURL)
+  const service = minoInference(ctx)
+  const baseURL = service?.baseURL ?? channel.baseURL
+  const auth = service !== undefined ? await service.resolveAuth() : await requireMinoAuth(ctx, baseURL)
   const model = args.model ?? channel.model
   const size = args.size ?? channel.size
   const quality = args.quality ?? channel.quality
@@ -303,7 +329,7 @@ async function generateAndSave(
       config.cloudTimeoutMs ?? DEFAULT_CLOUD_TIMEOUT_MS,
       exec.signal,
       signal => generateMinoImage({
-        auth, baseURL: channel.baseURL, model, prompt: args.prompt,
+        auth, baseURL, model, prompt: args.prompt,
         ...(size === undefined ? {} : { size }),
         ...(quality === undefined ? {} : { quality }),
         maxBytes: ctx.attachments.imageLimits.maxImageBytes,
@@ -324,7 +350,9 @@ function outputLabel(size?: string, quality?: string): string {
 /** Drop a rejected grant so the next attempt surfaces the sign-in flow. */
 async function reauthOnUnauthorized(ctx: Context, auth: { token: string }, error: unknown): Promise<void> {
   if (error instanceof HttpStatusError && error.status === 401) {
-    await rejectMinoToken(ctx, auth.token)
+    const service = minoInference(ctx)
+    if (service !== undefined) await service.rejectToken(auth.token)
+    else await rejectMinoToken(ctx, auth.token)
   }
 }
 
@@ -431,7 +459,7 @@ async function saveGenerated(
     value.savedTo = await saveImageToWorkspace({ workspaceRoot, folder: config.workspaceFolder, attachmentId: attachment.attachmentId, mediaType: generated.mediaType, data: generated.data, signal: exec.signal })
   } catch (error) {
     exec.signal.throwIfAborted()
-    ctx.logger.warn(`mino-image: failed to save image to workspace: ${error instanceof Error ? error.message : String(error)}`)
+    ctx.logger.warn(`dsh-image-gen: failed to save image to workspace: ${error instanceof Error ? error.message : String(error)}`)
     value.saveError = error instanceof Error ? error.message : String(error)
   }
   return value

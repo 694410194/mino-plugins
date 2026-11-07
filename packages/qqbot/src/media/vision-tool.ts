@@ -163,15 +163,14 @@ function expandHomePath(path: string): string {
 }
 
 /**
- * 解析 DSH_HOME 的优先级与跨平台处理：
- * 显式配置 > `$DSH_HOME`（空/空白视为未设置）> `~/.dsh`，展开 `~` 后 resolve 为绝对路径。
+ * 解析 Harness home 的优先级与跨平台处理：
+ * `$MINO_HOME` > `$DSH_HOME`（空/空白视为未设置）> `~/.mino`，展开 `~` 后 resolve 为绝对路径。
  */
 function resolveDshHome(): string {
-  const fromEnv = process.env.DSH_HOME;
-  const selected = fromEnv !== undefined && fromEnv.trim().length > 0
-    ? fromEnv
-    : join(homedir(), '.dsh');
-  return resolve(expandHomePath(selected));
+  const fromEnv = [process.env.MINO_HOME, process.env.DSH_HOME].find(
+    v => v !== undefined && v.trim().length > 0,
+  );
+  return resolve(expandHomePath(fromEnv ?? join(homedir(), '.mino')));
 }
 
 /**

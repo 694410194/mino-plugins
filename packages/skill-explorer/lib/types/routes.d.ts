@@ -31,7 +31,7 @@ export declare const ROUTES: {
 };
 /** Route family dependencies (tests inject fakes). */
 export interface SkillRoutesDeps {
-    /** User dsh config root (~/.dsh). */
+    /** User dsh config root (~/.mino). */
     dshHome: string;
     /** User agents config root (~/.agents). */
     agentsHome: string;

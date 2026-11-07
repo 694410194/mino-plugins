@@ -1,5 +1,5 @@
 {
-  "name": "mino-skill-social-card",
+  "name": "guizang-social-card-skill",
   "version": "0.1.0",
   "description": "小红书/公众号社交卡片生成技能包（vendored fork op7418/dsh-guizang-design，AGPL-3.0，上游另售商业授权——见 README 风险提示）",
   "keywords": [

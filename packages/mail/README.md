@@ -7,7 +7,7 @@
 - `mail_search`：按关键词搜邮件
 
 ## 凭据
-`~/.dsh/connector-mail.json`：`{"host":"imap.qq.com","port":993,"user":"...","pass":"授权码","tls":true}`
+`~/.mino/connector-mail.json`：`{"host":"imap.qq.com","port":993,"user":"...","pass":"授权码","tls":true}`
 QQ/163/Gmail 都在网页版邮箱设置里开 IMAP 生成授权码（不是登录密码）。
 
 ## 许可

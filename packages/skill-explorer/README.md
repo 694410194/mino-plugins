@@ -26,7 +26,7 @@ A visual Skill Explorer for DeepSeek Harness (DSH) Web GUI and desktop client: b
   own Plugins and Schedule pages; the page carries no back control of its own.
 - **Skills tab**: skills grouped by source (system bundled / project
   `.dsh/skills` / project `.agents/skills` / custom directories / user
-  `~/.dsh/skills` / user `~/.agents/skills` / runtime registered), with a
+  `~/.mino/skills` / user `~/.agents/skills` / runtime registered), with a
   search box that filters by name or description as you type (name hits listed
   first; Escape clears it) and stacks with the workspace picker. Each row shows
   description, when-to-use, invocation marks, an enable/disable switch
@@ -52,7 +52,7 @@ A visual Skill Explorer for DeepSeek Harness (DSH) Web GUI and desktop client: b
   instead of creating a file the model would never receive. An import only ever
   creates files: an existing skill is never overwritten.
 - **Create tab**: a form to create a new skill under the user root
-  (`~/.dsh/skills`) or the project root (`.dsh/skills`), generating a
+  (`~/.mino/skills`) or the project root (`.dsh/skills`), generating a
   standard SKILL.md.
 - **Edit tab**: opens from a row's edit action, reads the skill through the
   host (the list carries metadata only) and rewrites its description,
@@ -83,7 +83,7 @@ A visual Skill Explorer for DeepSeek Harness (DSH) Web GUI and desktop client: b
   model cannot receive.
 - A duplicate skill name resolves by the official source rank (project
   `.dsh/skills` 100, project `.agents/skills` 200, runtime 250, custom 300,
-  user `~/.dsh/skills` 400, user `.agents/skills` 500, bundled 600), so
+  user `~/.mino/skills` 400, user `.agents/skills` 500, bundled 600), so
   the row shown names the same skill the model receives.
 
 ## Install

@@ -1,5 +1,5 @@
 > 本项目派生自 https://github.com/Yuuyuko-uu/dsh-qq-link，原作者 Yuuyuko-uu。
-> Mino 集成改动：包名与 cordis.patch.yml 解析名改为 mino-qq-link，补充 NOTICE；功能未修改。
+> Mino 集成改动：包名与 cordis.patch.yml 解析名改为 dsh-qq-link，补充 NOTICE；功能未修改。
 
 # 通到 QQ（dsh-qq-link）
 
@@ -23,7 +23,7 @@
   **合并转发的聊天记录**（会去取内容压成「谁：说了什么」几行；**里面还套着转发也会展开**，最多 2 层）都会变成文字转给它。
   转发里的图跟着「收图」开关走：开着就收**第一层**那几张（跟顶层图共用张数上限），关着只记 `[图片]`；第二层起一律只记 `[图片]`。
 - **图片两个方向都能传**：你在 QQ 里发的图会转给它看；它这一轮里发的图也会发到 QQ。
-  收进来的图会在 `~/.dsh/qq-bridge-inbox/` 存一份，文字里带上路径。
+  收进来的图会在 `~/.mino/qq-bridge-inbox/` 存一份，文字里带上路径。
   回发同一张图时用的是这份**原图** —— DSH 自己那份副本会被重新编码，GIF 动图会变静态 webp。
 - **正文里写的 markdown 图也算**：它写 `![小肥鱼](_stickers/feiyu-test.webp)`（贴纸就是这么发的），
   会被读成本地图片发到 QQ，那串 markdown 不会露出来。相对路径按「图片根目录」找 —— **留空就行**，会自动用目标会话所在的那个工作区。
@@ -302,7 +302,7 @@ send_qzone_msg              发说说
 | 能力 | 用在哪 | 边界 |
 |---|---|---|
 | **网络** | 连你本机的 QQ 后端（默认 `127.0.0.1:3000`，NapCat / SnowLuma 的 OneBot 11 HTTP） | 只连你填的那个地址；不往别处发。收图时会去图床地址下载（QQ 消息里带的 url） |
-| **文件** | 收进来的图存在 `~/.dsh/qq-bridge-inbox/`；配置和状态在 `~/.dsh/`（`qq-bridge-config.json` / `qq-bridge-state.json`） | 只碰这两个地方；不扫别的目录 |
+| **文件** | 收进来的图存在 `~/.mino/qq-bridge-inbox/`；配置和状态在 `~/.mino/`（`qq-bridge-config.json` / `qq-bridge-state.json`） | 只碰这两个地方；不扫别的目录 |
 | **命令** | 只有你**自己填了**「语音转写命令」才会跑一条本地命令（比如 `python tools/asr_cli.py {file}`） | 不填就完全不跑；不装额外依赖 |
 | **凭据** | 「令牌」那一栏（QQ 后端的 access token），存在配置文件里 | 只用来连你自己填的那个后端；不要把它贴进公开 issue |
 | **公开发东西** | `qq_space_post` 能往你这个 QQ 号的空间里发说说 | 默认关（「允许发 QQ 空间动态」）；关着时一个请求都不发。开着就是**公开可见**，发出去得自己去删 |

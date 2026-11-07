@@ -160,13 +160,13 @@ retract_import({ sessionId: "import-019f5f27-…" })
 
 ### export_chat — DSH → Claude / Codex / Kimi / opencode (matrix export)
 
-`export_chat({ format: "claude", sessionId })` serializes an existing DSH session (imported or native) into a Claude Code JSONL transcript, ready for `--resume`. It is written to `<outputDir>/<slug>/<uuid>.jsonl` (default `~/.claude/projects`), with a fresh UUID v4 file name — an existing file is never overwritten. `format: "codex"` / `format: "kimi"` write Codex rollout JSONL / Kimi `wire.jsonl`; `format: "opencode"` writes the JSON document that `opencode import <file>` accepts (session info + messages + parts, ids prefixed `ses` / `msg` / `prt` as opencode's decoder requires). Those three default to `~/.dsh/exports`, or `path: …` to pick a target — completing the DSH↔Claude↔Codex↔Kimi↔opencode matrix (the import edges already exist). Every export lists its **lossy items** in a `degradations` field (orphan tool results, skipped injections, skipped attachments, and for opencode the `usage-unknown` item: opencode requires `cost`/`tokens` while DSH session logs carry no usage counters, so zeros are written and reported) — nothing is silently dropped:
+`export_chat({ format: "claude", sessionId })` serializes an existing DSH session (imported or native) into a Claude Code JSONL transcript, ready for `--resume`. It is written to `<outputDir>/<slug>/<uuid>.jsonl` (default `~/.claude/projects`), with a fresh UUID v4 file name — an existing file is never overwritten. `format: "codex"` / `format: "kimi"` write Codex rollout JSONL / Kimi `wire.jsonl`; `format: "opencode"` writes the JSON document that `opencode import <file>` accepts (session info + messages + parts, ids prefixed `ses` / `msg` / `prt` as opencode's decoder requires). Those three default to `~/.mino/exports`, or `path: …` to pick a target — completing the DSH↔Claude↔Codex↔Kimi↔opencode matrix (the import edges already exist). Every export lists its **lossy items** in a `degradations` field (orphan tool results, skipped injections, skipped attachments, and for opencode the `usage-unknown` item: opencode requires `cost`/`tokens` while DSH session logs carry no usage counters, so zeros are written and reported) — nothing is silently dropped:
 
 ```
 export_chat({ format: "claude", sessionId: "import-019f5f27-…" })
 export_chat({ format: "codex", sessionId: "…", dryRun: true })
 export_chat({ format: "kimi", sessionId: "…", outputDir: "D:\backup\kimi" })
-export_chat({ format: "opencode", sessionId: "…" })   // → ~/.dsh/exports/<id>.opencode.json, then: opencode import <file>
+export_chat({ format: "opencode", sessionId: "…" })   // → ~/.mino/exports/<id>.opencode.json, then: opencode import <file>
 ```
 
 ### export_bundle / restore_bundle — portable interchange bundle
@@ -174,7 +174,7 @@ export_chat({ format: "opencode", sessionId: "…" })   // → ~/.dsh/exports/<i
 `export_bundle({ sessionId })` writes a **`.dshbundle.json`** — an event-level lossless interchange bundle (protocol: [docs/INTERCHANGE.md](INTERCHANGE.md)) with double SHA-256 fingerprints (session-level + file-level) and machine-independent landing info (`originalCwd` + `landingHint`). `restore_bundle({ path })` verifies the fingerprints (corruption is reported loudly, never restored silently), then imports the session through the same idempotent state machine — repeat restores skip, `force: true` makes a copy, directory mode restores every `.dshbundle.json`:
 
 ```
-export_bundle({ sessionId: "import-019f5f27-…" })                    // → ~/.dsh/exports/<id>.dshbundle.json
+export_bundle({ sessionId: "import-019f5f27-…" })                    // → ~/.mino/exports/<id>.dshbundle.json
 restore_bundle({ path: "D:\backup\sess.dshbundle.json" })            // machine A → machine B
 restore_bundle({ path: "D:\backup\bundle-dir", preview: true })      // dry-run
 ```
@@ -206,12 +206,12 @@ It returns `{ ok, checks, issues, totals }` — useful after a large batch impor
 The npm package also ships a small standalone CLI (no DSH host required):
 
 ```
-npx dsh-chat-import export-md ~/.dsh/sessions/<workspace>/<session>/session.jsonl
+npx dsh-chat-import export-md ~/.mino/sessions/<workspace>/<session>/session.jsonl
 npx dsh-chat-import export-md <session-dir> --out session.md
 npx dsh-chat-import doctor
 ```
 
-`export-md` renders a DSH session log as readable Markdown (session header, title, user/assistant text, thinking, tool calls and results). The sessions root follows the host's `DSH_HOME` (`%APPDATA%\dsh-desktop\harness` for the desktop app; `~/.dsh` when unset, e.g. the standalone CLI). `doctor` reads `$DSH_HOME/dsh-chat-import/imports.json` and the local `sessions` tree for a lightweight health summary.
+`export-md` renders a DSH session log as readable Markdown (session header, title, user/assistant text, thinking, tool calls and results). The sessions root follows the host's `DSH_HOME` (`%APPDATA%\dsh-desktop\harness` for the desktop app; `~/.mino` when unset, e.g. the standalone CLI). `doctor` reads `$DSH_HOME/dsh-chat-import/imports.json` and the local `sessions` tree for a lightweight health summary.
 
 ### import_mcp — MCP mirror plan
 
@@ -245,8 +245,8 @@ The top row reads **From <source> Import to <target>**: the left dropdown picks 
 | **DSH (V3 session format)** | Creates a resumable DSH session whose log is written as a **V3 generation** (`session.v3.jsonl.zstd`): the header's `version` and the event shape are produced together, so a V4 host genuinely writes a V3 log. |
 | **DSH (V4 session format)** | Same, written as a **V4 generation**. The **default follows the detected host version** (a V4 host selects this one). |
 | Claude Code | The transcript is converted and written into `~/.claude/projects/<slug>/<uuid>.jsonl`; Claude Code reads that directory directly (`claude --resume`). |
-| Codex / Kimi Code | Written as a Codex rollout JSONL / Kimi `wire.jsonl` under `~/.dsh/exports/` for you to move into that tool's sessions directory. |
-| opencode | Written as opencode JSON under `~/.dsh/exports/`, to be imported with `opencode import <file>`. |
+| Codex / Kimi Code | Written as a Codex rollout JSONL / Kimi `wire.jsonl` under `~/.mino/exports/` for you to move into that tool's sessions directory. |
+| opencode | Written as opencode JSON under `~/.mino/exports/`, to be imported with `opencode import <file>`. |
 
 When **both the source and the target are DSH and the generations differ** (V3 ↔ V4), the bottom bar grows a second primary button — **"Import selected and archive old sessions (N)"**: the selected sessions are imported in the target generation, and each matching **source session** is archived in the host once its import succeeded (the finishing touch of a migration). Archiving is an irreversible hide (the host exposes no unarchive API), so **only entries whose import succeeded are archived** — skipped / failed ones stay exactly as they were, and the panel names the count ("N old session(s) left unarchived").
 

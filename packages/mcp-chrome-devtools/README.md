@@ -1,4 +1,4 @@
-# mino-mcp-chrome-devtools
+# chrome-devtools-mcp
 
 接入 **Chrome DevTools MCP 服务器**（`chrome-devtools-mcp`）：模型获得
 `mcp__chrome__*` 工具，可驱动本机 Chrome 做页面导航、点击填表、性能追踪、

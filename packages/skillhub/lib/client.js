@@ -1,4 +1,4 @@
-window.__ModuleLoader__.load({id:"mino-skillhub",factory:(require)=>{var module={exports:{}};var exports=module.exports;
+window.__ModuleLoader__.load({id:"@astron-team/skillhub-dsh",factory:(require)=>{var module={exports:{}};var exports=module.exports;
 var __create = Object.create;
 var __getProtoOf = Object.getPrototypeOf;
 var __defProp = Object.defineProperty;
@@ -41932,10 +41932,10 @@ var _astron_team_skillhub_dsh_skillhub_testRegistryConnection_result$schema = ()
   elapsedMs: exports_external.number()
 });
 var TYPERT_REMOTE = {
-  package: "mino-skillhub",
+  package: "@astron-team/skillhub-dsh",
   descriptors: [
     {
-      id: "mino-skillhub#skillhub/acknowledgeConversationDetail",
+      id: "@astron-team/skillhub-dsh#skillhub/acknowledgeConversationDetail",
       service: "skillhub",
       namespace: "skillhub",
       method: "acknowledgeConversationDetail",
@@ -41956,7 +41956,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/acknowledgeConversationDetail:selectionRef",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/acknowledgeConversationDetail:selectionRef",
             create: _astron_team_skillhub_dsh_skillhub_acknowledgeConversationDetail_parameter_0$schema
           }
         },
@@ -41966,20 +41966,20 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/acknowledgeConversationDetail:detailToken",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/acknowledgeConversationDetail:detailToken",
             create: _astron_team_skillhub_dsh_skillhub_acknowledgeConversationDetail_parameter_1$schema
           }
         }
       ],
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub#skillhub/acknowledgeConversationDetail:result",
+        typeSymbol: "@astron-team/skillhub-dsh#skillhub/acknowledgeConversationDetail:result",
         create: _astron_team_skillhub_dsh_skillhub_acknowledgeConversationDetail_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 1075, column: 3 }
     },
     {
-      id: "mino-skillhub#skillhub/beginConversationManagement",
+      id: "@astron-team/skillhub-dsh#skillhub/beginConversationManagement",
       service: "skillhub",
       namespace: "skillhub",
       method: "beginConversationManagement",
@@ -42000,7 +42000,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/beginConversationManagement:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/beginConversationManagement:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_beginConversationManagement_parameter_0$schema
           }
         },
@@ -42010,7 +42010,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/beginConversationManagement:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/beginConversationManagement:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_beginConversationManagement_parameter_1$schema
           }
         },
@@ -42020,7 +42020,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/beginConversationManagement:action",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/beginConversationManagement:action",
             create: _astron_team_skillhub_dsh_skillhub_beginConversationManagement_parameter_2$schema
           }
         },
@@ -42030,7 +42030,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/beginConversationManagement:version",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/beginConversationManagement:version",
             create: _astron_team_skillhub_dsh_skillhub_beginConversationManagement_parameter_3$schema
           }
         },
@@ -42040,7 +42040,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/beginConversationManagement:requestKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/beginConversationManagement:requestKey",
             create: _astron_team_skillhub_dsh_skillhub_beginConversationManagement_parameter_4$schema
           }
         }
@@ -42048,13 +42048,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#ConversationManagementResult",
+        typeSymbol: "@astron-team/skillhub-dsh/types#ConversationManagementResult",
         create: _astron_team_skillhub_dsh_skillhub_beginConversationManagement_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 1586, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/beginInstalledUpdateScan",
+      id: "@astron-team/skillhub-dsh#skillhub/beginInstalledUpdateScan",
       service: "skillhub",
       namespace: "skillhub",
       method: "beginInstalledUpdateScan",
@@ -42075,7 +42075,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/beginInstalledUpdateScan:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/beginInstalledUpdateScan:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_beginInstalledUpdateScan_parameter_0$schema
           }
         }
@@ -42083,13 +42083,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub#skillhub/beginInstalledUpdateScan:result",
+        typeSymbol: "@astron-team/skillhub-dsh#skillhub/beginInstalledUpdateScan:result",
         create: _astron_team_skillhub_dsh_skillhub_beginInstalledUpdateScan_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 551, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/checkAvailability",
+      id: "@astron-team/skillhub-dsh#skillhub/checkAvailability",
       service: "skillhub",
       namespace: "skillhub",
       method: "checkAvailability",
@@ -42110,7 +42110,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/checkAvailability:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/checkAvailability:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_checkAvailability_parameter_0$schema
           }
         },
@@ -42120,7 +42120,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/checkAvailability:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/checkAvailability:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_checkAvailability_parameter_1$schema
           }
         }
@@ -42128,13 +42128,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#SkillAvailability",
+        typeSymbol: "@astron-team/skillhub-dsh/types#SkillAvailability",
         create: _astron_team_skillhub_dsh_skillhub_checkAvailability_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 347, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/checkInstalledUpdateScan",
+      id: "@astron-team/skillhub-dsh#skillhub/checkInstalledUpdateScan",
       service: "skillhub",
       namespace: "skillhub",
       method: "checkInstalledUpdateScan",
@@ -42155,7 +42155,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/checkInstalledUpdateScan:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/checkInstalledUpdateScan:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_checkInstalledUpdateScan_parameter_0$schema
           }
         },
@@ -42165,7 +42165,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/checkInstalledUpdateScan:scanId",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/checkInstalledUpdateScan:scanId",
             create: _astron_team_skillhub_dsh_skillhub_checkInstalledUpdateScan_parameter_1$schema
           }
         },
@@ -42175,7 +42175,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/checkInstalledUpdateScan:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/checkInstalledUpdateScan:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_checkInstalledUpdateScan_parameter_2$schema
           }
         }
@@ -42183,13 +42183,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#InstalledUpdateCheck",
+        typeSymbol: "@astron-team/skillhub-dsh/types#InstalledUpdateCheck",
         create: _astron_team_skillhub_dsh_skillhub_checkInstalledUpdateScan_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 657, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/checkUpdate",
+      id: "@astron-team/skillhub-dsh#skillhub/checkUpdate",
       service: "skillhub",
       namespace: "skillhub",
       method: "checkUpdate",
@@ -42210,7 +42210,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/checkUpdate:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/checkUpdate:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_checkUpdate_parameter_0$schema
           }
         },
@@ -42220,7 +42220,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/checkUpdate:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/checkUpdate:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_checkUpdate_parameter_1$schema
           }
         }
@@ -42228,13 +42228,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#InstalledUpdateCheck",
+        typeSymbol: "@astron-team/skillhub-dsh/types#InstalledUpdateCheck",
         create: _astron_team_skillhub_dsh_skillhub_checkUpdate_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 672, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/checkVersionUpdate",
+      id: "@astron-team/skillhub-dsh#skillhub/checkVersionUpdate",
       service: "skillhub",
       namespace: "skillhub",
       method: "checkVersionUpdate",
@@ -42255,7 +42255,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/checkVersionUpdate:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/checkVersionUpdate:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_checkVersionUpdate_parameter_0$schema
           }
         },
@@ -42265,7 +42265,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/checkVersionUpdate:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/checkVersionUpdate:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_checkVersionUpdate_parameter_1$schema
           }
         },
@@ -42275,7 +42275,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/checkVersionUpdate:version",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/checkVersionUpdate:version",
             create: _astron_team_skillhub_dsh_skillhub_checkVersionUpdate_parameter_2$schema
           }
         }
@@ -42283,13 +42283,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#InstalledUpdateCheck",
+        typeSymbol: "@astron-team/skillhub-dsh/types#InstalledUpdateCheck",
         create: _astron_team_skillhub_dsh_skillhub_checkVersionUpdate_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 677, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/confirmConversationManagement",
+      id: "@astron-team/skillhub-dsh#skillhub/confirmConversationManagement",
       service: "skillhub",
       namespace: "skillhub",
       method: "confirmConversationManagement",
@@ -42310,7 +42310,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/confirmConversationManagement:confirmationRef",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/confirmConversationManagement:confirmationRef",
             create: _astron_team_skillhub_dsh_skillhub_confirmConversationManagement_parameter_0$schema
           }
         },
@@ -42320,7 +42320,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/confirmConversationManagement:confirmed",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/confirmConversationManagement:confirmed",
             create: _astron_team_skillhub_dsh_skillhub_confirmConversationManagement_parameter_1$schema
           }
         }
@@ -42328,13 +42328,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#ConversationManagementResult",
+        typeSymbol: "@astron-team/skillhub-dsh/types#ConversationManagementResult",
         create: _astron_team_skillhub_dsh_skillhub_confirmConversationManagement_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 1599, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/endInstalledUpdateScan",
+      id: "@astron-team/skillhub-dsh#skillhub/endInstalledUpdateScan",
       service: "skillhub",
       namespace: "skillhub",
       method: "endInstalledUpdateScan",
@@ -42355,7 +42355,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/endInstalledUpdateScan:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/endInstalledUpdateScan:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_endInstalledUpdateScan_parameter_0$schema
           }
         },
@@ -42365,20 +42365,20 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/endInstalledUpdateScan:scanId",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/endInstalledUpdateScan:scanId",
             create: _astron_team_skillhub_dsh_skillhub_endInstalledUpdateScan_parameter_1$schema
           }
         }
       ],
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub#skillhub/endInstalledUpdateScan:result",
+        typeSymbol: "@astron-team/skillhub-dsh#skillhub/endInstalledUpdateScan:result",
         create: _astron_team_skillhub_dsh_skillhub_endInstalledUpdateScan_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 666, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/executePlan",
+      id: "@astron-team/skillhub-dsh#skillhub/executePlan",
       service: "skillhub",
       namespace: "skillhub",
       method: "executePlan",
@@ -42399,7 +42399,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub/types#HostExecutePlanRequest",
+            typeSymbol: "@astron-team/skillhub-dsh/types#HostExecutePlanRequest",
             create: _astron_team_skillhub_dsh_skillhub_executePlan_parameter_0$schema
           }
         }
@@ -42407,13 +42407,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub#skillhub/executePlan:result",
+        typeSymbol: "@astron-team/skillhub-dsh#skillhub/executePlan:result",
         create: _astron_team_skillhub_dsh_skillhub_executePlan_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 860, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/getCompatibility",
+      id: "@astron-team/skillhub-dsh#skillhub/getCompatibility",
       service: "skillhub",
       namespace: "skillhub",
       method: "getCompatibility",
@@ -42421,13 +42421,13 @@ var TYPERT_REMOTE = {
       parameters: [],
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#HostCompatibility",
+        typeSymbol: "@astron-team/skillhub-dsh/types#HostCompatibility",
         create: _astron_team_skillhub_dsh_skillhub_getCompatibility_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 177, column: 3 }
     },
     {
-      id: "mino-skillhub#skillhub/getContext",
+      id: "@astron-team/skillhub-dsh#skillhub/getContext",
       service: "skillhub",
       namespace: "skillhub",
       method: "getContext",
@@ -42435,13 +42435,13 @@ var TYPERT_REMOTE = {
       parameters: [],
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#CatalogContext",
+        typeSymbol: "@astron-team/skillhub-dsh/types#CatalogContext",
         create: _astron_team_skillhub_dsh_skillhub_getContext_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 187, column: 3 }
     },
     {
-      id: "mino-skillhub#skillhub/getInstalledDetail",
+      id: "@astron-team/skillhub-dsh#skillhub/getInstalledDetail",
       service: "skillhub",
       namespace: "skillhub",
       method: "getInstalledDetail",
@@ -42462,7 +42462,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/getInstalledDetail:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/getInstalledDetail:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_getInstalledDetail_parameter_0$schema
           }
         },
@@ -42472,7 +42472,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/getInstalledDetail:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/getInstalledDetail:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_getInstalledDetail_parameter_1$schema
           }
         }
@@ -42480,13 +42480,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#InstalledSkillDetail",
+        typeSymbol: "@astron-team/skillhub-dsh/types#InstalledSkillDetail",
         create: _astron_team_skillhub_dsh_skillhub_getInstalledDetail_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 534, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/getOperation",
+      id: "@astron-team/skillhub-dsh#skillhub/getOperation",
       service: "skillhub",
       namespace: "skillhub",
       method: "getOperation",
@@ -42507,7 +42507,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/getOperation:operationId",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/getOperation:operationId",
             create: _astron_team_skillhub_dsh_skillhub_getOperation_parameter_0$schema
           }
         },
@@ -42517,20 +42517,20 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/getOperation:hostInstanceId",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/getOperation:hostInstanceId",
             create: _astron_team_skillhub_dsh_skillhub_getOperation_parameter_1$schema
           }
         }
       ],
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub#skillhub/getOperation:result",
+        typeSymbol: "@astron-team/skillhub-dsh#skillhub/getOperation:result",
         create: _astron_team_skillhub_dsh_skillhub_getOperation_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 1148, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/getSkillDetail",
+      id: "@astron-team/skillhub-dsh#skillhub/getSkillDetail",
       service: "skillhub",
       namespace: "skillhub",
       method: "getSkillDetail",
@@ -42542,7 +42542,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/getSkillDetail:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/getSkillDetail:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_getSkillDetail_parameter_0$schema
           }
         },
@@ -42552,7 +42552,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/getSkillDetail:namespace",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/getSkillDetail:namespace",
             create: _astron_team_skillhub_dsh_skillhub_getSkillDetail_parameter_1$schema
           }
         },
@@ -42562,7 +42562,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/getSkillDetail:slug",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/getSkillDetail:slug",
             create: _astron_team_skillhub_dsh_skillhub_getSkillDetail_parameter_2$schema
           }
         },
@@ -42572,7 +42572,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/getSkillDetail:version",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/getSkillDetail:version",
             create: _astron_team_skillhub_dsh_skillhub_getSkillDetail_parameter_3$schema
           }
         }
@@ -42580,13 +42580,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#SkillDetail",
+        typeSymbol: "@astron-team/skillhub-dsh/types#SkillDetail",
         create: _astron_team_skillhub_dsh_skillhub_getSkillDetail_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 226, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/getStatus",
+      id: "@astron-team/skillhub-dsh#skillhub/getStatus",
       service: "skillhub",
       namespace: "skillhub",
       method: "getStatus",
@@ -42594,13 +42594,13 @@ var TYPERT_REMOTE = {
       parameters: [],
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub#skillhub/getStatus:result",
+        typeSymbol: "@astron-team/skillhub-dsh#skillhub/getStatus:result",
         create: _astron_team_skillhub_dsh_skillhub_getStatus_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 144, column: 3 }
     },
     {
-      id: "mino-skillhub#skillhub/listCatalog",
+      id: "@astron-team/skillhub-dsh#skillhub/listCatalog",
       service: "skillhub",
       namespace: "skillhub",
       method: "listCatalog",
@@ -42612,7 +42612,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listCatalog:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listCatalog:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_listCatalog_parameter_0$schema
           }
         },
@@ -42622,7 +42622,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listCatalog:query",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listCatalog:query",
             create: _astron_team_skillhub_dsh_skillhub_listCatalog_parameter_1$schema
           }
         },
@@ -42632,7 +42632,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listCatalog:page",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listCatalog:page",
             create: _astron_team_skillhub_dsh_skillhub_listCatalog_parameter_2$schema
           }
         },
@@ -42642,7 +42642,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub/types#CatalogSort",
+            typeSymbol: "@astron-team/skillhub-dsh/types#CatalogSort",
             create: _astron_team_skillhub_dsh_skillhub_listCatalog_parameter_3$schema
           }
         }
@@ -42650,13 +42650,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#CatalogPageResult",
+        typeSymbol: "@astron-team/skillhub-dsh/types#CatalogPageResult",
         create: _astron_team_skillhub_dsh_skillhub_listCatalog_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 209, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/listCatalogByLabel",
+      id: "@astron-team/skillhub-dsh#skillhub/listCatalogByLabel",
       service: "skillhub",
       namespace: "skillhub",
       method: "listCatalogByLabel",
@@ -42668,7 +42668,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listCatalogByLabel:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listCatalogByLabel:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_listCatalogByLabel_parameter_0$schema
           }
         },
@@ -42678,7 +42678,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listCatalogByLabel:query",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listCatalogByLabel:query",
             create: _astron_team_skillhub_dsh_skillhub_listCatalogByLabel_parameter_1$schema
           }
         },
@@ -42688,7 +42688,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listCatalogByLabel:page",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listCatalogByLabel:page",
             create: _astron_team_skillhub_dsh_skillhub_listCatalogByLabel_parameter_2$schema
           }
         },
@@ -42698,7 +42698,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub/types#CatalogSort",
+            typeSymbol: "@astron-team/skillhub-dsh/types#CatalogSort",
             create: _astron_team_skillhub_dsh_skillhub_listCatalogByLabel_parameter_3$schema
           }
         },
@@ -42708,7 +42708,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listCatalogByLabel:label",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listCatalogByLabel:label",
             create: _astron_team_skillhub_dsh_skillhub_listCatalogByLabel_parameter_4$schema
           }
         }
@@ -42716,13 +42716,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#CatalogPageResult",
+        typeSymbol: "@astron-team/skillhub-dsh/types#CatalogPageResult",
         create: _astron_team_skillhub_dsh_skillhub_listCatalogByLabel_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 219, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/listInstalled",
+      id: "@astron-team/skillhub-dsh#skillhub/listInstalled",
       service: "skillhub",
       namespace: "skillhub",
       method: "listInstalled",
@@ -42743,7 +42743,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listInstalled:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listInstalled:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_listInstalled_parameter_0$schema
           }
         }
@@ -42751,13 +42751,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#InstalledSkillList",
+        typeSymbol: "@astron-team/skillhub-dsh/types#InstalledSkillList",
         create: _astron_team_skillhub_dsh_skillhub_listInstalled_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 289, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/listInstallTargets",
+      id: "@astron-team/skillhub-dsh#skillhub/listInstallTargets",
       service: "skillhub",
       namespace: "skillhub",
       method: "listInstallTargets",
@@ -42778,7 +42778,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listInstallTargets:detailToken",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listInstallTargets:detailToken",
             create: _astron_team_skillhub_dsh_skillhub_listInstallTargets_parameter_0$schema
           }
         }
@@ -42786,13 +42786,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#InstallationTargetList",
+        typeSymbol: "@astron-team/skillhub-dsh/types#InstallationTargetList",
         create: _astron_team_skillhub_dsh_skillhub_listInstallTargets_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 1085, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/listLabels",
+      id: "@astron-team/skillhub-dsh#skillhub/listLabels",
       service: "skillhub",
       namespace: "skillhub",
       method: "listLabels",
@@ -42804,7 +42804,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listLabels:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listLabels:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_listLabels_parameter_0$schema
           }
         }
@@ -42812,13 +42812,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#CatalogLabels",
+        typeSymbol: "@astron-team/skillhub-dsh/types#CatalogLabels",
         create: _astron_team_skillhub_dsh_skillhub_listLabels_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 214, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/listReviews",
+      id: "@astron-team/skillhub-dsh#skillhub/listReviews",
       service: "skillhub",
       namespace: "skillhub",
       method: "listReviews",
@@ -42830,7 +42830,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listReviews:detailToken",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listReviews:detailToken",
             create: _astron_team_skillhub_dsh_skillhub_listReviews_parameter_0$schema
           }
         },
@@ -42840,7 +42840,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listReviews:page",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listReviews:page",
             create: _astron_team_skillhub_dsh_skillhub_listReviews_parameter_1$schema
           }
         }
@@ -42848,13 +42848,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#ReviewPage",
+        typeSymbol: "@astron-team/skillhub-dsh/types#ReviewPage",
         create: _astron_team_skillhub_dsh_skillhub_listReviews_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 282, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/listSkills",
+      id: "@astron-team/skillhub-dsh#skillhub/listSkills",
       service: "skillhub",
       namespace: "skillhub",
       method: "listSkills",
@@ -42866,7 +42866,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listSkills:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listSkills:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_listSkills_parameter_0$schema
           }
         },
@@ -42876,7 +42876,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listSkills:query",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listSkills:query",
             create: _astron_team_skillhub_dsh_skillhub_listSkills_parameter_1$schema
           }
         }
@@ -42884,13 +42884,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#SkillList",
+        typeSymbol: "@astron-team/skillhub-dsh/types#SkillList",
         create: _astron_team_skillhub_dsh_skillhub_listSkills_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 198, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/listVersions",
+      id: "@astron-team/skillhub-dsh#skillhub/listVersions",
       service: "skillhub",
       namespace: "skillhub",
       method: "listVersions",
@@ -42902,7 +42902,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listVersions:detailToken",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listVersions:detailToken",
             create: _astron_team_skillhub_dsh_skillhub_listVersions_parameter_0$schema
           }
         },
@@ -42912,7 +42912,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/listVersions:page",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/listVersions:page",
             create: _astron_team_skillhub_dsh_skillhub_listVersions_parameter_1$schema
           }
         }
@@ -42920,13 +42920,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#VersionPage",
+        typeSymbol: "@astron-team/skillhub-dsh/types#VersionPage",
         create: _astron_team_skillhub_dsh_skillhub_listVersions_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 275, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/openConversationDetail",
+      id: "@astron-team/skillhub-dsh#skillhub/openConversationDetail",
       service: "skillhub",
       namespace: "skillhub",
       method: "openConversationDetail",
@@ -42947,7 +42947,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/openConversationDetail:selectionRef",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/openConversationDetail:selectionRef",
             create: _astron_team_skillhub_dsh_skillhub_openConversationDetail_parameter_0$schema
           }
         }
@@ -42955,13 +42955,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#ConversationDetail",
+        typeSymbol: "@astron-team/skillhub-dsh/types#ConversationDetail",
         create: _astron_team_skillhub_dsh_skillhub_openConversationDetail_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 1024, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/prepareSkillUse",
+      id: "@astron-team/skillhub-dsh#skillhub/prepareSkillUse",
       service: "skillhub",
       namespace: "skillhub",
       method: "prepareSkillUse",
@@ -42982,7 +42982,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareSkillUse:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareSkillUse:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_prepareSkillUse_parameter_0$schema
           }
         },
@@ -42992,7 +42992,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareSkillUse:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareSkillUse:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_prepareSkillUse_parameter_1$schema
           }
         }
@@ -43000,13 +43000,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#SkillUsePreparation",
+        typeSymbol: "@astron-team/skillhub-dsh/types#SkillUsePreparation",
         create: _astron_team_skillhub_dsh_skillhub_prepareSkillUse_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 458, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/prepareToggle",
+      id: "@astron-team/skillhub-dsh#skillhub/prepareToggle",
       service: "skillhub",
       namespace: "skillhub",
       method: "prepareToggle",
@@ -43027,7 +43027,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareToggle:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareToggle:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_prepareToggle_parameter_0$schema
           }
         },
@@ -43037,7 +43037,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareToggle:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareToggle:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_prepareToggle_parameter_1$schema
           }
         },
@@ -43047,7 +43047,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareToggle:desiredState",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareToggle:desiredState",
             create: _astron_team_skillhub_dsh_skillhub_prepareToggle_parameter_2$schema
           }
         }
@@ -43055,13 +43055,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#TogglePlanView",
+        typeSymbol: "@astron-team/skillhub-dsh/types#TogglePlanView",
         create: _astron_team_skillhub_dsh_skillhub_prepareToggle_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 747, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/prepareUninstall",
+      id: "@astron-team/skillhub-dsh#skillhub/prepareUninstall",
       service: "skillhub",
       namespace: "skillhub",
       method: "prepareUninstall",
@@ -43082,7 +43082,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareUninstall:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareUninstall:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_prepareUninstall_parameter_0$schema
           }
         },
@@ -43092,7 +43092,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareUninstall:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareUninstall:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_prepareUninstall_parameter_1$schema
           }
         }
@@ -43100,13 +43100,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#UninstallPlanView",
+        typeSymbol: "@astron-team/skillhub-dsh/types#UninstallPlanView",
         create: _astron_team_skillhub_dsh_skillhub_prepareUninstall_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 781, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/prepareUpgrade",
+      id: "@astron-team/skillhub-dsh#skillhub/prepareUpgrade",
       service: "skillhub",
       namespace: "skillhub",
       method: "prepareUpgrade",
@@ -43127,7 +43127,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareUpgrade:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareUpgrade:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_prepareUpgrade_parameter_0$schema
           }
         },
@@ -43137,7 +43137,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareUpgrade:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareUpgrade:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_prepareUpgrade_parameter_1$schema
           }
         }
@@ -43145,13 +43145,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#UpgradePlanView",
+        typeSymbol: "@astron-team/skillhub-dsh/types#UpgradePlanView",
         create: _astron_team_skillhub_dsh_skillhub_prepareUpgrade_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 705, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/prepareVersionUpgrade",
+      id: "@astron-team/skillhub-dsh#skillhub/prepareVersionUpgrade",
       service: "skillhub",
       namespace: "skillhub",
       method: "prepareVersionUpgrade",
@@ -43172,7 +43172,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareVersionUpgrade:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareVersionUpgrade:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_prepareVersionUpgrade_parameter_0$schema
           }
         },
@@ -43182,7 +43182,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareVersionUpgrade:itemKey",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareVersionUpgrade:itemKey",
             create: _astron_team_skillhub_dsh_skillhub_prepareVersionUpgrade_parameter_1$schema
           }
         },
@@ -43192,7 +43192,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/prepareVersionUpgrade:version",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/prepareVersionUpgrade:version",
             create: _astron_team_skillhub_dsh_skillhub_prepareVersionUpgrade_parameter_2$schema
           }
         }
@@ -43200,13 +43200,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#UpgradePlanView",
+        typeSymbol: "@astron-team/skillhub-dsh/types#UpgradePlanView",
         create: _astron_team_skillhub_dsh_skillhub_prepareVersionUpgrade_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 710, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/recoverOperation",
+      id: "@astron-team/skillhub-dsh#skillhub/recoverOperation",
       service: "skillhub",
       namespace: "skillhub",
       method: "recoverOperation",
@@ -43227,20 +43227,20 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub/types#HostRecoveryRequest",
+            typeSymbol: "@astron-team/skillhub-dsh/types#HostRecoveryRequest",
             create: _astron_team_skillhub_dsh_skillhub_recoverOperation_parameter_0$schema
           }
         }
       ],
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub#skillhub/recoverOperation:result",
+        typeSymbol: "@astron-team/skillhub-dsh#skillhub/recoverOperation:result",
         create: _astron_team_skillhub_dsh_skillhub_recoverOperation_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 1188, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/reopenConversationDetail",
+      id: "@astron-team/skillhub-dsh#skillhub/reopenConversationDetail",
       service: "skillhub",
       namespace: "skillhub",
       method: "reopenConversationDetail",
@@ -43261,7 +43261,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/reopenConversationDetail:callId",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/reopenConversationDetail:callId",
             create: _astron_team_skillhub_dsh_skillhub_reopenConversationDetail_parameter_0$schema
           }
         },
@@ -43271,7 +43271,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/reopenConversationDetail:selectionRef",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/reopenConversationDetail:selectionRef",
             create: _astron_team_skillhub_dsh_skillhub_reopenConversationDetail_parameter_1$schema
           }
         }
@@ -43279,13 +43279,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#ConversationDetail",
+        typeSymbol: "@astron-team/skillhub-dsh/types#ConversationDetail",
         create: _astron_team_skillhub_dsh_skillhub_reopenConversationDetail_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 1041, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/selectSkillUse",
+      id: "@astron-team/skillhub-dsh#skillhub/selectSkillUse",
       service: "skillhub",
       namespace: "skillhub",
       method: "selectSkillUse",
@@ -43306,7 +43306,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/selectSkillUse:sourceRevision",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/selectSkillUse:sourceRevision",
             create: _astron_team_skillhub_dsh_skillhub_selectSkillUse_parameter_0$schema
           }
         },
@@ -43316,7 +43316,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/selectSkillUse:namespace",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/selectSkillUse:namespace",
             create: _astron_team_skillhub_dsh_skillhub_selectSkillUse_parameter_1$schema
           }
         },
@@ -43326,7 +43326,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/selectSkillUse:slug",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/selectSkillUse:slug",
             create: _astron_team_skillhub_dsh_skillhub_selectSkillUse_parameter_2$schema
           }
         }
@@ -43334,13 +43334,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#SkillUseSelection",
+        typeSymbol: "@astron-team/skillhub-dsh/types#SkillUseSelection",
         create: _astron_team_skillhub_dsh_skillhub_selectSkillUse_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 413, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/startInstall",
+      id: "@astron-team/skillhub-dsh#skillhub/startInstall",
       service: "skillhub",
       namespace: "skillhub",
       method: "startInstall",
@@ -43361,7 +43361,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub/types#HostInstallRequest",
+            typeSymbol: "@astron-team/skillhub-dsh/types#HostInstallRequest",
             create: _astron_team_skillhub_dsh_skillhub_startInstall_parameter_0$schema
           }
         }
@@ -43369,13 +43369,13 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub#skillhub/startInstall:result",
+        typeSymbol: "@astron-team/skillhub-dsh#skillhub/startInstall:result",
         create: _astron_team_skillhub_dsh_skillhub_startInstall_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 1130, column: 9 }
     },
     {
-      id: "mino-skillhub#skillhub/testRegistryConnection",
+      id: "@astron-team/skillhub-dsh#skillhub/testRegistryConnection",
       service: "skillhub",
       namespace: "skillhub",
       method: "testRegistryConnection",
@@ -43387,7 +43387,7 @@ var TYPERT_REMOTE = {
           source: "json",
           codec: {
             mode: "strict",
-            typeSymbol: "mino-skillhub#skillhub/testRegistryConnection:inputUrl",
+            typeSymbol: "@astron-team/skillhub-dsh#skillhub/testRegistryConnection:inputUrl",
             create: _astron_team_skillhub_dsh_skillhub_testRegistryConnection_parameter_0$schema
           }
         }
@@ -43395,7 +43395,7 @@ var TYPERT_REMOTE = {
       cancellation: { parameter: "signal" },
       result: {
         mode: "strict",
-        typeSymbol: "mino-skillhub/types#RegistryConnectionTest",
+        typeSymbol: "@astron-team/skillhub-dsh/types#RegistryConnectionTest",
         create: _astron_team_skillhub_dsh_skillhub_testRegistryConnection_result$schema
       },
       sourceLocation: { file: "packages/plugin/src/host/index.ts", line: 150, column: 9 }
@@ -49068,7 +49068,7 @@ async function apply(ctx) {
     ctx2.slots.inject("plugins.bundle.config", () => availability2.enable("configuration"));
     ctx2.slots.inject("plugins.bundle.config", () => ctx2.slots.register({
       name: "plugins.bundle.config",
-      key: "mino-skillhub"
+      key: "@astron-team/skillhub-dsh"
     }, () => /* @__PURE__ */ jsx_runtime34.jsx(ConfigPage, {
       form,
       testConnection: (url2, signal) => ctx2.remote.skillhub.testRegistryConnection(url2, signal)

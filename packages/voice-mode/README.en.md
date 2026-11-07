@@ -128,7 +128,7 @@ If a wake word is configured, you land in standby first (the status bar prompts 
 
 - dsh ≤ 0.1.5: Settings → Plugins → plugin config → voice mode
 - dsh 0.1.6-alpha and later (incl. 0.1.7 / 0.2.0): left sidebar **Plugins** → the installed `dsh-voice-mode` → the "Voice Mode" card on its detail page
-- On dsh 0.1.7+ the values are stored in the plugin's own file `~/.dsh/voice-mode.settings.json` (under `$DSH_HOME`) and take precedence over same-named keys in the profile config. The first run migrates the old `voice-mode:` block from `settings.yaml(.imported)` once. To reset, set the file's content to `{}` (do not delete it).
+- On dsh 0.1.7+ the values are stored in the plugin's own file `~/.mino/voice-mode.settings.json` (under `$DSH_HOME`) and take precedence over same-named keys in the profile config. The first run migrates the old `voice-mode:` block from `settings.yaml(.imported)` once. To reset, set the file's content to `{}` (do not delete it).
 
 
 ### Full 25-key settings table
@@ -192,7 +192,7 @@ Effect timing, in four tiers: ① immediately — shortcut / composer shortcut /
 
 ## 🔧 Configuration (bundle patch / settings.yaml)
 
-You can also edit the `voice-mode:` section of `~/.dsh/settings.yaml` directly (the GUI card and RPC write to the same document layer):
+You can also edit the `voice-mode:` section of `~/.mino/settings.yaml` directly (the GUI card and RPC write to the same document layer):
 
 ```yaml
 - id: voice-mode

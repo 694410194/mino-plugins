@@ -7,7 +7,7 @@
 - `cloud_pull`：从指定源拉摘要（weread 书单/bili 收藏夹/网盘用量/immich 相册/HA 实体统计）
 
 ## 凭据
-`~/.dsh/connector-cloud.json`：
+`~/.mino/connector-cloud.json`：
 ```json
 {"wereadCookie":"...", "biliCookie":"SESSDATA=...", "weiboCookie":"...",
  "netdiskCookie":"...", "immich":{"url":"http://:2283","key":"..."},

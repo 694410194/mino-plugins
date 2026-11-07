@@ -7,7 +7,7 @@ description: 凭据门源怎么配/怎么验：cloud/mail/music 的凭据文件�
 
 凭据门源（需要用户自己账号的）配错了用户只会看到一堆失败——先用本件验一遍。
 
-## 凭据文件（都在 `~/.dsh/`）
+## 凭据文件（都在 `~/.mino/`）
 
 - `connector-cloud.json`：`wereadCookie`（微信读书）/ `biliCookie`（B站 SESSDATA）/
   `weiboCookie` / `netdiskCookie` / `immich{url,key}` / `homeassistant{url,token}` /

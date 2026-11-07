@@ -152,7 +152,7 @@ Desktop 自带命令从 `0.2.0-rc.2` 起是另一个**离线维护入口**：先
 页面因皮肤冲突而无法操作时，先停止对应 DSH Web 进程，再运行：
 
 ```bash
-~/.dsh/profiles/web/node_modules/.bin/dsh-skin-market-reset --profile web
+~/.mino/profiles/web/node_modules/.bin/dsh-skin-market-reset --profile web
 ```
 
 重新启动后确认市场管理的皮肤已停用、默认外观恢复，安装包和无关插件保留。官方 Desktop 的恢复使用应用自身插件管理器，不运行上面的 Web 急救命令。

@@ -98,7 +98,7 @@ QQ 必须单独验证：同一实体群、同一条消息，两个不同应用�
 
 ## 4. SQLite 与文件目录
 
-统一放在插件公共数据目录，不分散到各渠道、各机器人的目录。路径沿用现有全局设置的 DSH Home 解析规则：配置的 `dshHome` → `DSH_HOME` → `~/.dsh`。
+统一放在插件公共数据目录，不分散到各渠道、各机器人的目录。路径沿用现有全局设置的 DSH Home 解析规则：配置的 `dshHome` → `DSH_HOME` → `~/.mino`。
 
 ```text
 <DSH_HOME>/integrations/dsh-im/

@@ -1,4 +1,4 @@
-# mino-skill-social-card
+# guizang-social-card-skill
 
 小红书图文卡片 / Live Photo / 公众号封面生成技能包。
 

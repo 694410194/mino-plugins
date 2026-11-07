@@ -204,8 +204,8 @@ function selfUpdateMessage(spec: string): string {
   const remedyEn = version === ''
     ? ''
     : ` That command writes ${target} into the lockfile while it may still be inside the fresh-release wait: pnpm then verifies the whole lockfile, so **every** plugin install/update is refused (#944).${pinnedVersion ? ` If that happens, append \` || ${version}\` to the row for \`${name}\` under minimumReleaseAgeExclude in the profile's pnpm-workspace.yaml — inside the quotes when the row is quoted, and in a new row only if none exists. Do not add a second row for the same name: pnpm reads only the first (#883).` : ' If that happens, wait the version out before the next operation; a temporary exclusion goes into this profile\'s minimumReleaseAgeExclude.'}`
-  const before = `市场不能在自己的请求里更新自己：桌面端的移除会先把市场从正在运行的组合里摘掉，补装那一步就执行不到了（#900），而应用内的「设置 → 插件」没有更新入口（#909）。要更新${version === '' ? '' : ` 到 ${version}`}：完全退出 DSH Desktop，在 profile 目录执行 \`pnpm add ${target} --config.minimum-release-age=0\`（没有 pnpm 时用 \`npx pnpm add …\`），然后重新启动。Windows 的 profile 一般在 %USERPROFILE%\\.dsh\\profiles\\desktop。`
-  const after = `The market cannot update itself: the desktop app unloads it from the running composition first, so the reinstall never runs (#900), and the app's Settings → Plugins has no update entry (#909). To update${version === '' ? '' : ` to ${version}`}: quit DSH Desktop completely, run \`pnpm add ${target} --config.minimum-release-age=0\` in the profile directory (use \`npx pnpm add …\` if pnpm is not installed), then start DSH again. On Windows the profile is usually %USERPROFILE%\\.dsh\\profiles\\desktop.`
+  const before = `市场不能在自己的请求里更新自己：桌面端的移除会先把市场从正在运行的组合里摘掉，补装那一步就执行不到了（#900），而应用内的「设置 → 插件」没有更新入口（#909）。要更新${version === '' ? '' : ` 到 ${version}`}：完全退出 DSH Desktop，在 profile 目录执行 \`pnpm add ${target} --config.minimum-release-age=0\`（没有 pnpm 时用 \`npx pnpm add …\`），然后重新启动。Windows 的 profile 一般在 %USERPROFILE%\\.mino\\profiles\\desktop。`
+  const after = `The market cannot update itself: the desktop app unloads it from the running composition first, so the reinstall never runs (#900), and the app's Settings → Plugins has no update entry (#909). To update${version === '' ? '' : ` to ${version}`}: quit DSH Desktop completely, run \`pnpm add ${target} --config.minimum-release-age=0\` in the profile directory (use \`npx pnpm add …\` if pnpm is not installed), then start DSH again. On Windows the profile is usually %USERPROFILE%\\.mino\\profiles\\desktop.`
   return `${before}${remedyZh} / ${after}${remedyEn}`
 }
 
@@ -304,7 +304,7 @@ async function updateMarketInPlace(
     return {
       application: 'failed',
       error: {
-        message: `文件正被打开着，这一步没有换上。市场启动就会再占用这些文件，再点更新也换不上。请完全退出 DSH Desktop，在 profile 目录执行 \`pnpm add ${spec}\`（没有 pnpm 时用 \`npx pnpm add …\`），然后重新启动。Windows 的 profile 一般在 %USERPROFILE%\\.dsh\\profiles\\desktop。 / files are held open, so this step did not apply. Starting the market loads those files again, so clicking Update after a restart cannot replace them. Quit DSH Desktop completely, run \`pnpm add ${spec}\` in the profile directory (use \`npx pnpm add …\` if pnpm is not installed), then start DSH again. On Windows the profile is usually %USERPROFILE%\\.dsh\\profiles\\desktop.`,
+        message: `文件正被打开着，这一步没有换上。市场启动就会再占用这些文件，再点更新也换不上。请完全退出 DSH Desktop，在 profile 目录执行 \`pnpm add ${spec}\`（没有 pnpm 时用 \`npx pnpm add …\`），然后重新启动。Windows 的 profile 一般在 %USERPROFILE%\\.mino\\profiles\\desktop。 / files are held open, so this step did not apply. Starting the market loads those files again, so clicking Update after a restart cannot replace them. Quit DSH Desktop completely, run \`pnpm add ${spec}\` in the profile directory (use \`npx pnpm add …\` if pnpm is not installed), then start DSH again. On Windows the profile is usually %USERPROFILE%\\.mino\\profiles\\desktop.`,
       },
       packageResult: { exitCode: run.exitCode || 1, output },
     }

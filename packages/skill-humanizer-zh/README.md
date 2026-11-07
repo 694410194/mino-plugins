@@ -1,4 +1,4 @@
-# mino-skill-humanizer-zh
+# humanizer-zh
 
 中文「去 AI 味」编辑技能包。
 

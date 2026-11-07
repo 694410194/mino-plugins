@@ -3,7 +3,7 @@
  *
  * 下载后仅通过本地绝对路径提示模型，由模型通过 qqbot_describe_image / ffmpeg / tool-fs 等工具自行分析，
  *
- * 下载目录固定为 ~/.dsh-qqbot/media，
+ * 下载目录固定为 ~/.mino-qqbot/media，
  * 文件名用时间戳+随机数防重名，不依赖 agent cwd，便于 qqbot_describe_image / tool-fs 等工具稳定访问。
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -177,7 +177,7 @@ async function download(url: string, maxBytes: number): Promise<Buffer> {
 /**
  * 下载消息中的富媒体附件（image/video/file）到本地
  *
- * 下载目录固定为 ~/.dsh-qqbot/media，文件名用时间戳+随机数防重名。
+ * 下载目录固定为 ~/.mino-qqbot/media，文件名用时间戳+随机数防重名。
  * 下载失败不阻断（由调用方回退描述）。
  */
 export async function downloadMediaAttachments(

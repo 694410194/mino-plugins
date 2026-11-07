@@ -149,7 +149,7 @@ new WorkspaceStore(paths.workspaces, { defaultWorkspace, ungroupedWorkspace })
 
 中英文 README 的默认工作区说明同步明确为：
 
-> 新机器人默认使用 `$DSH_HOME/im`（未设置时为 `~/.dsh/im`）。机器人或对话实际选用该目录时自动创建，新会话显示在「未分组」。全部使用其他工作区时，不会仅因启动插件而创建该目录。
+> 新机器人默认使用 `$DSH_HOME/im`（未设置时为 `~/.mino/im`）。机器人或对话实际选用该目录时自动创建，新会话显示在「未分组」。全部使用其他工作区时，不会仅因启动插件而创建该目录。
 
 验收标准：**用其他工作区的用户不再反复看到多余空目录；使用默认工作区的用户，新增机器人、查看菜单、聊天、切换目录和绑定已有会话保持正常。**
 
@@ -189,7 +189,7 @@ new WorkspaceStore(paths.workspaces, { defaultWorkspace, ungroupedWorkspace })
 
 草稿 PR：[PR #260](https://github.com/xmanrui/dsh-im/pull/260)。代码提交：`8b5314b`。首轮 [CI 运行](https://github.com/xmanrui/dsh-im/actions/runs/35895674545) 的 Linux 全量检查与 Windows 专项检查均通过。
 
-真实渠道使用已获授权的“今天是牢梁”私聊。为保留用户实际 `~/.dsh/im` 中已有文件，验证版本临时使用独立的默认目录根；机器人账号和渠道数据目录沿用原配置。先确认运行时实际加载 PR 构建，再执行以下场景。
+真实渠道使用已获授权的“今天是牢梁”私聊。为保留用户实际 `~/.mino/im` 中已有文件，验证版本临时使用独立的默认目录根；机器人账号和渠道数据目录沿用原配置。先确认运行时实际加载 PR 构建，再执行以下场景。
 
 | 场景 | 已观察结果 |
 | --- | --- |

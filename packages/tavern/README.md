@@ -42,7 +42,7 @@ cmd /c mklink /J "%USERPROFILE%\.dsh\profiles\web\node_modules\dsh-sillytavern" 
 
 | 字段 | 默认 | 说明 |
 |---|---|---|
-| \`dataRoot\` | \`~/.dsh/dsh-sillytavern\` | 插件自己的数据目录 |
+| \`dataRoot\` | \`~/.mino/dsh-sillytavern\` | 插件自己的数据目录 |
 | \`sillyTavernRoot\` | \`''\` | ST 安装目录；配置后首次启动自动导入 |
 | \`autoBind\` | \`true\` | 新会话自动绑定上次的角色卡 |
 | \`maxWorldInfoDepth\` | \`4\` | 世界书递归扫描深度 |
@@ -59,7 +59,7 @@ cmd /c mklink /J "%USERPROFILE%\.dsh\profiles\web\node_modules\dsh-sillytavern" 
 ## 数据目录
 
 \`\`\`
-~/.dsh/dsh-sillytavern/
+~/.mino/dsh-sillytavern/
   characters/     角色卡（ST V2 JSON，带完整 extensions）
   avatars/        头像原图
   worlds/         世界书（ST 原生 { entries: {...} } 格式）

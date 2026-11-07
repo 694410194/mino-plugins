@@ -1,9 +1,9 @@
-# mino-mcp-chrome-devtools：Chrome DevTools MCP 服务器接入（stdio，npx 拉起）。
+# chrome-devtools-mcp：Chrome DevTools MCP 服务器接入（stdio，npx 拉起）。
 # 纯配置 bundle——只插入一条官方 dsh-mcp-client 行，零代码；卸载本包即移除该服务器。
 # 需要本机 node/npm + Chrome；服务器拉起失败只记日志不影响 harness。
 - insert:
     - id: mcp-chrome-devtools-pack
-      name: 'mino-mcp-chrome-devtools'
+      name: 'chrome-devtools-mcp'
     - id: mcp-chrome-devtools
       name: '@deepseek-ai/dsh-mcp-client'
       config:

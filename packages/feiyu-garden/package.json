@@ -1,0 +1,64 @@
+{
+  "name": "mino-feiyu-garden",
+  "version": "0.1.0",
+  "description": "海蒂花园 — 鲸鱼娘的养成工作台：一面可以看海、喂她、摸她、看她日记的侧栏页。Feiyu Garden, a companion workbench for your whale: ocean scenes, feeding, mood, diary.",
+  "type": "module",
+  "main": "src/host.js",
+  "exports": {
+    ".": "./src/host.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    },
+    "engines": {
+      "dsh": ">=0.2.1-rc.5 <0.3.0"
+    }
+  },
+  "engines": {
+    "node": ">=20.18",
+    "dsh": ">=0.2.1-rc.5 <0.3.0"
+  },
+  "files": [
+    "src",
+    "lib",
+    "icon.svg",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "companion",
+    "whale"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/694410194/mino-plugins.git",
+    "directory": "packages/feiyu-garden"
+  },
+  "bugs": {
+    "url": "https://github.com/694410194/mino-plugins/issues"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.10"
+  }
+}

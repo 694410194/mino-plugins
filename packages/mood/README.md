@@ -1,5 +1,5 @@
 > 本项目派生自 https://github.com/Yuuyuko-uu/dsh-feiyu-mood，原作者 Yuuyuko-uu。
-> Mino 集成改动：包名与 cordis.patch.yml 解析名改为 mino-mood，补充 NOTICE；功能未修改。
+> Mino 集成改动：包名与 cordis.patch.yml 解析名改为 dsh-feiyu-mood，补充 NOTICE；功能未修改。
 
 # dsh-feiyu-mood ｜ 鱼的心情
 
@@ -205,9 +205,9 @@ dsh plugin --profile desktop add dsh-feiyu-mood
 | 设置页里 | 每份一个会话列表，能加能删 | 每份一个工作区下拉，选一次就够 |
 | 适合 | 一个工作区里有好几个伙伴，各聊各的 | 一个工作区就是一个人，不想每次新开会话都去加一遍 |
 
-工作区怎么认：DSH 把会话存在 `~/.dsh/sessions/<工作区目录名>/<会话id>/`，所以**工作区标识就是中间那层目录名**
-（例如 `--C-Users-Administrator-Desktop-~9C7C~9C7C~7A9D-dsh--`）。设置页下拉**只列 `~/.dsh/sessions/` 下真实存在的目录**
-（DSH 自己写下的那个名字），不会凭路径再造一个 0 会话的重复项；可读路径用 `~/.dsh/storages/workspace.json`
+工作区怎么认：DSH 把会话存在 `~/.mino/sessions/<工作区目录名>/<会话id>/`，所以**工作区标识就是中间那层目录名**
+（例如 `--C-Users-Administrator-Desktop-~9C7C~9C7C~7A9D-dsh--`）。设置页下拉**只列 `~/.mino/sessions/` 下真实存在的目录**
+（DSH 自己写下的那个名字），不会凭路径再造一个 0 会话的重复项；可读路径用 `~/.mino/storages/workspace.json`
 里登记过的路径反查，查不到就直接显示目录名。
 
 > 切回会话模式时，原来绑的会话还在，不用重新加。

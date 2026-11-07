@@ -3,4 +3,4 @@
 # 声明在 package.json 的 dsh.bundle.patch 中,使 `dsh plugin add` 可直接安装。
 - insert:
     - id: status-rotator
-      name: 'mino-status'
+      name: 'dsh-status-rotator'

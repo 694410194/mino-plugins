@@ -1,5 +1,5 @@
 - insert:
-    - id: mino-image
-      name: mino-image
+    - id: dsh-image-gen
+      name: dsh-image-gen
       config:
         model: ''

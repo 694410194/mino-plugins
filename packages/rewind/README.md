@@ -69,7 +69,7 @@ dsh plugin --profile <name> add dsh-rewind-plugin@<版本>
 
 ## 存储管理
 
-**快照备份**（默认开启）：用于文件还原；可在本插件的配置卡片中关闭。关闭后不再创建新的快照，关闭期间的文件改动无法还原。快照存储于 `<dsh home>/rewind-snapshots/`（默认 `~/.dsh/rewind-snapshots/`）。手动删除该目录仅清除文件备份（对话回退不受影响），插件可自动重建。
+**快照备份**（默认开启）：用于文件还原；可在本插件的配置卡片中关闭。关闭后不再创建新的快照，关闭期间的文件改动无法还原。快照存储于 `<dsh home>/rewind-snapshots/`（默认 `~/.mino/rewind-snapshots/`）。手动删除该目录仅清除文件备份（对话回退不受影响），插件可自动重建。
 
 **全局自动清理**（默认关闭）：把长期不活跃的会话快照整目录移除，不影响活动会话与对话日志。可在配置卡片查看与配置（自动清理开关、失活天数），也可用 `/snapshot-auto-cleanup` 命令查看、设置和运行。详见：[快照自动清理](docs/snapshot-auto-cleanup.zh.md)。
 

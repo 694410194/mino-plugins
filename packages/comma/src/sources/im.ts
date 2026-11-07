@@ -1,4 +1,4 @@
-/** IM source: consumes inbound messages through the mino-im `dshIm` exclusive-consumer contract. */
+/** IM source: consumes inbound messages through the @xmanrui/dsh-im `dshIm` exclusive-consumer contract. */
 import type { Context } from '@deepseek-ai/cordis'
 import { z } from 'zod'
 import type { BotResolution } from '../resolve.ts'
@@ -7,7 +7,7 @@ import type { Source, SourceHost } from '../source.ts'
 export const IM_SOURCE = 'im'
 const RETRY_MS = 15_000
 
-/** The `dshIm` same-host service surface (mino-im contractVersion/inboundVersion 1). */
+/** The `dshIm` same-host service surface (@xmanrui/dsh-im contractVersion/inboundVersion 1). */
 interface DshIm {
   contractVersion?: number
   inboundVersion?: number
@@ -48,7 +48,7 @@ export interface ImSourceConfig {
   botId: string
 }
 
-/** Requires mino-im with the account in external-consumer exclusive mode. */
+/** Requires @xmanrui/dsh-im with the account in external-consumer exclusive mode. */
 export function imSource(
   ctx: Context,
   config: ImSourceConfig,
@@ -60,7 +60,7 @@ export function imSource(
       while (!signal.aborted) {
         const dshim = ctx.get('dshIm') as DshIm | undefined
         if (!dshim?.consumeInbound) {
-          host.logger.info('mino-comma im: mino-im not installed; retrying')
+          host.logger.info('mino-comma im: @xmanrui/dsh-im not installed; retrying')
           await host.pairingStatus('unavailable')
           await pause(RETRY_MS, signal)
           continue

@@ -7,7 +7,7 @@
 # Activate with: dsh plugin --profile web add link:/home/jean/program/dsh-drawio
 - insert:
     - id: dsh-drawio
-      name: "mino-drawio"
+      name: "dsh-drawio"
       config:
         # Agent-visible drawio tools. '*' = expose all built-ins; [] = none.
         # Built-ins: drawio_validate, drawio_render, drawio_template.

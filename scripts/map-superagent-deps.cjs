@@ -1,4 +1,4 @@
-// Point mino-superagent's @deepseek-ai/* devDeps at the sibling
+// Point dsh-superagent's @deepseek-ai/* devDeps at the sibling
 // mino-agent checkout so tsc/tsdown can resolve upstream types.
 const fs = require('fs')
 const path = require('path')
@@ -7,7 +7,7 @@ const map = JSON.parse(fs.readFileSync('/tmp/dsh-pkg-map.json', 'utf8'))
 const pkgPath = path.join(__dirname, '..', 'packages', 'superagent', 'package.json')
 const j = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
 
-j.name = 'mino-superagent'
+j.name = 'dsh-superagent'
 j.description = 'Mino proactive companion agent (fork of dsh-superagent)'
 const missing = []
 for (const dep of Object.keys(j.devDependencies || {})) {

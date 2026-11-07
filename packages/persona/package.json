@@ -1,5 +1,5 @@
 {
-  "name": "mino-persona",
+  "name": "dsh-soul-md",
   "version": "0.1.0-alpha.3",
   "description": "Mino 人设卡 + 长期记忆插件（fork 自 dsh-soul-md，MIT）：设置页人设卡管理、会话级切换、工作区绑定、AI 自演化人设与记忆。",
   "type": "module",

@@ -1,9 +1,9 @@
-# mino-mcp-memory：官方 memory 知识图谱 MCP 服务器接入（stdio，npx 拉起）。
+# @modelcontextprotocol/server-memory：官方 memory 知识图谱 MCP 服务器接入（stdio，npx 拉起）。
 # 纯配置 bundle——只插入一条官方 dsh-mcp-client 行，零代码；卸载本包即移除该服务器。
 # 需要本机 node/npm（npx 首次运行会下载服务器包）。
 - insert:
     - id: mcp-memory-pack
-      name: 'mino-mcp-memory'
+      name: '@modelcontextprotocol/server-memory'
     - id: mcp-memory
       name: '@deepseek-ai/dsh-mcp-client'
       config:

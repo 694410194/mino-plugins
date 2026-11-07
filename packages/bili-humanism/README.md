@@ -159,7 +159,7 @@ dsh plugin --profile web add github:InariNGT-Ofiicial/dsh-bili-humanism#v1.8.0
 
 > 先读取 bili_humanism_guide，再读取这个 BV。告诉我材料覆盖到哪里。若有值得记录的认识，用证据手账写入本地收件箱；如果没有，不必硬写。区分事实、作者观点和你的推测。
 
-用 `bili_humanism_status` 查读取 ID 和任务，用 `bili_humanism_inbox` 看手账；大收件箱先用 action:index，再持同一 snapshot 沿 nextVolume 逐卷读取，不能把最近一段当作全文。数据默认在 `$DSH_HOME/bili-humanism/`，未设置 DSH_HOME 时在 `~/.dsh/bili-humanism/`。`inbox.html` 可以在 DSH 文件预览或浏览器中打开；同目录的 `inbox.md` 是文字版。两者没有外部资源请求。手账默认每天最多两篇（Asia/Shanghai），有新认识才写；同一来源与相同规范化正文的重试复用已有记录。全文与各卷均对照完整索引核验，单卷不超过 24 KiB／350 行，损坏或缺漏明确报错。旧版遗漏导出的条目会从账本恢复，详见[手账分卷与完整性](docs/JOURNALS.md)。
+用 `bili_humanism_status` 查读取 ID 和任务，用 `bili_humanism_inbox` 看手账；大收件箱先用 action:index，再持同一 snapshot 沿 nextVolume 逐卷读取，不能把最近一段当作全文。数据默认在 `$DSH_HOME/bili-humanism/`，未设置 DSH_HOME 时在 `~/.mino/bili-humanism/`。`inbox.html` 可以在 DSH 文件预览或浏览器中打开；同目录的 `inbox.md` 是文字版。两者没有外部资源请求。手账默认每天最多两篇（Asia/Shanghai），有新认识才写；同一来源与相同规范化正文的重试复用已有记录。全文与各卷均对照完整索引核验，单卷不超过 24 KiB／350 行，损坏或缺漏明确报错。旧版遗漏导出的条目会从账本恢复，详见[手账分卷与完整性](docs/JOURNALS.md)。
 
 ## 已实现与限制
 

@@ -1,4 +1,4 @@
-# mino-skill-nsfc
+# chinese-grant-writer-skills
 
 国自然（NSFC）/ 社科基金申请书写作 skill 包，上游
 [HuiyuLi-2000/Chinese-Grant-Writer-Skills](https://github.com/HuiyuLi-2000/Chinese-Grant-Writer-Skills)
@@ -15,5 +15,5 @@
 
 ## 安装
 
-插件市场搜 `nsfc`，或 `dsh bundle add mino-skill-nsfc`。
+插件市场搜 `nsfc`，或 `dsh bundle add chinese-grant-writer-skills`。
 文献检索脚本可选装 `requirements.txt` 依赖后使用；无依赖时按内置检索策略走。

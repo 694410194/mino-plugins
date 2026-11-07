@@ -1048,8 +1048,8 @@ Thanks to [@Dong09](https://github.com/Dong09) for the Matrix conversation-conte
 
 ### Changed / 变更
 
-- 新机器人默认工作目录由 Host 当前目录改为 `$DSH_HOME/im`，未设置时使用 `~/.dsh/im`，默认目录自动创建；显式 `workspace` 优先，`dshHome` 可覆盖环境变量。默认目录中的新 Session 保持「未分组」，切换到其他目录时继续使用原工作区分组机制，切回默认目录后新 Session 恢复未分组。已有机器人的目录和历史 Session 不自动迁移；各机器人仍独立保存聊天与 Session 的绑定。
-  New bots default to `$DSH_HOME/im` instead of the Host's current directory, falling back to `~/.dsh/im`; the default directory is created automatically. Explicit `workspace` takes precedence, and `dshHome` overrides the environment variable. New Sessions in the default directory remain ungrouped, while other directories retain workspace grouping. Existing bot directories and historical Sessions are not migrated, and each bot retains independent chat-to-Session bindings.
+- 新机器人默认工作目录由 Host 当前目录改为 `$DSH_HOME/im`，未设置时使用 `~/.mino/im`，默认目录自动创建；显式 `workspace` 优先，`dshHome` 可覆盖环境变量。默认目录中的新 Session 保持「未分组」，切换到其他目录时继续使用原工作区分组机制，切回默认目录后新 Session 恢复未分组。已有机器人的目录和历史 Session 不自动迁移；各机器人仍独立保存聊天与 Session 的绑定。
+  New bots default to `$DSH_HOME/im` instead of the Host's current directory, falling back to `~/.mino/im`; the default directory is created automatically. Explicit `workspace` takes precedence, and `dshHome` overrides the environment variable. New Sessions in the default directory remain ungrouped, while other directories retain workspace grouping. Existing bot directories and historical Sessions are not migrated, and each bot retains independent chat-to-Session bindings.
 
 ### Fixed / 修复
 
@@ -1218,8 +1218,8 @@ Thanks to [@Dong09](https://github.com/Dong09) for the Matrix conversation-conte
 
 ### Fixed / 修复
 
-- 机器人消息语言改为跟随 DeepSeek Harness 的界面语言，不再需要在 Host 配置中手动设置 `language`（[#185](https://github.com/xmanrui/dsh-im/issues/185)）。语言按「插件 `language` 配置 → DSH 语言设置项 → 设置页实际生效的界面语言」顺序解析，并把最后一项持久化到 `~/.dsh/integrations/dsh-im/interface-language.json`，因此界面语言来自浏览器语言列表、以及 Host 重启后尚无浏览器连接时，机器人仍以该语言回复。切换语言即时生效：无需重启 Host，Telegram 命令菜单也会重新下发，无需重连机器人。中文仍是兜底语言，已显式配置 `language` 的用户行为不变。
-  Bot message language now follows the DeepSeek Harness interface language instead of requiring a manual `language` entry in the Host config ([#185](https://github.com/xmanrui/dsh-im/issues/185)). It resolves from the plugin's `language` option, then DSH's Language setting, then the interface language the settings page is actually rendered in, and it persists that last layer to `~/.dsh/integrations/dsh-im/interface-language.json` — so a browser-derived interface language, and a Host restart before any browser connects, both keep answering in the reader's language. Switching applies live: no Host restart, and the Telegram command menu is re-sent without reconnecting the bot. Chinese remains the fallback, and an explicitly configured `language` behaves exactly as before.
+- 机器人消息语言改为跟随 DeepSeek Harness 的界面语言，不再需要在 Host 配置中手动设置 `language`（[#185](https://github.com/xmanrui/dsh-im/issues/185)）。语言按「插件 `language` 配置 → DSH 语言设置项 → 设置页实际生效的界面语言」顺序解析，并把最后一项持久化到 `~/.mino/integrations/dsh-im/interface-language.json`，因此界面语言来自浏览器语言列表、以及 Host 重启后尚无浏览器连接时，机器人仍以该语言回复。切换语言即时生效：无需重启 Host，Telegram 命令菜单也会重新下发，无需重连机器人。中文仍是兜底语言，已显式配置 `language` 的用户行为不变。
+  Bot message language now follows the DeepSeek Harness interface language instead of requiring a manual `language` entry in the Host config ([#185](https://github.com/xmanrui/dsh-im/issues/185)). It resolves from the plugin's `language` option, then DSH's Language setting, then the interface language the settings page is actually rendered in, and it persists that last layer to `~/.mino/integrations/dsh-im/interface-language.json` — so a browser-derived interface language, and a Host restart before any browser connects, both keep answering in the reader's language. Switching applies live: no Host restart, and the Telegram command menu is re-sent without reconnecting the bot. Chinese remains the fallback, and an explicitly configured `language` behaves exactly as before.
 
   感谢 [@grloper](https://github.com/grloper) 的贡献（[#189](https://github.com/xmanrui/dsh-im/pull/189)）。Thanks to [@grloper](https://github.com/grloper) for [#189](https://github.com/xmanrui/dsh-im/pull/189).
 

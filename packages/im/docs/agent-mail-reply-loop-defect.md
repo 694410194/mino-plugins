@@ -21,7 +21,7 @@ Sent 文件夹实测（UTC）：
 | 6 | 16:51:14 | 观察期间新增 |
 | 7 | 16:52:07 | 观察期间新增，之后停止 |
 
-约 20 分钟内从 3 封增至 7 封。本机**无** dsh-im 进程、`~/.dsh/logs/` 无相关日志，
+约 20 分钟内从 3 封增至 7 封。本机**无** dsh-im 进程、`~/.mino/logs/` 无相关日志，
 说明发送方在另一台机器/另一个会话上运行。
 
 ## 2. 根因
@@ -81,7 +81,7 @@ I have the mailbox credentials and protocol. Let me verify the account identity 
 - 新发：`POST .../messages/send` body `{to:[{email}], subject, body, body_format}`
 - 必带 `Authorization: Bearer <token>` 与 UA
   `agently-cli/1.0.15 (windows/amd64; agent/workbuddy)`（UA 错误会被拒为 `unsupported client`）
-- token 存于 `~/.dsh/.credentials.yaml` 的
+- token 存于 `~/.mino/.credentials.yaml` 的
   `DSH_EMAIL_PASSWORD_9B295EF4019BFD69361B3151`，值为 JSON：`{address, accessToken, refreshToken}`
 - scopes：`alias:read mail:delete mail:read mail:send`
 - 限流：**10 req/min、200 req/hour、daily_send_quota 50**，超限返回 `429 Too Many Requests`

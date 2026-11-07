@@ -39,7 +39,7 @@
 
 ## 3. 状态文件
 
-- 路径：`api.dataDir('purpose', 'purpose-state.json')` → `~/.dsh/plugins-data/aurabot/purpose/purpose-state.json`
+- 路径：`api.dataDir('purpose', 'purpose-state.json')` → `~/.mino/plugins-data/aurabot/purpose/purpose-state.json`
 - 结构照 surfcore 引擎（`createPurposeState`）：`version, day, countToday, lastRunAt, lastAttemptAt, lastSentAt, lastOutcome('sent'|'silent'|'failed'|'delivery-failed'|'interrupted'|'pending'), lastPurpose, lastText, nextFireAt, attempts, drives{9维0~1}, drivesAt, lastEmotion(+Text), lastGoalId, lastMaterialCount, lastCandidateCount, goals[], observations[], pending[], history[], lastSkip`
 - goals 条目：`id, owner('self'|'owner'|'member'|'media'), domain(9 need), object{type,name}, intent, evidence[≤4], confidence, value, urgency, risk, action, nextStep, status('hypothesis'|'active'|'confirmed'|'rejected'|'done'|'expired'), emotion, createdAt, lastSeenAt, expiresAt, attempts, sightings, source`
 - 另有 `purpose/nudge.json`（追问去重标记，非引擎字段，勿展示）。

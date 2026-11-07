@@ -34,7 +34,7 @@ Router Session 上挂了 4 个 agent 作用域工具（`agent.ctx.tools.register
 - `comma_im_pair`：查看/选择 comma 接管的 IM bot；配对写 `state` 表
   持久化，未接管的源在下一次重试（~15s）生效
 
-配对受阻时（mino-im 未装、没有可用 bot、多候选歧义）不再只写日志：
+配对受阻时（@xmanrui/dsh-im 未装、没有可用 bot、多候选歧义）不再只写日志：
 按状态指纹**去重后**往 Router Session 注入一条提示消息，由陪伴人格
 向用户解释并引导用 `comma_im_pair` 完成选择；成功配对后指纹复位，
 再次受阻会重新提示。
@@ -59,7 +59,7 @@ Router Session 上挂了 4 个 agent 作用域工具（`agent.ctx.tools.register
 ## 前置条件
 
 - 存储域 `comma`（自动建库，无需动作）
-- IM 源与推送通道依赖 **mino-im**（`dshIm` 服务契约）；不装 mino-im 也能跑，
+- IM 源与推送通道依赖 **@xmanrui/dsh-im**（`dshIm` 服务契约）；不装 @xmanrui/dsh-im 也能跑，
   只是没有入站源和外推
 
 ## 开发

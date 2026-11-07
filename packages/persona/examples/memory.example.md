@@ -12,4 +12,4 @@
 
 ## 项目决策
 
-- 2026-08-15：GitHub 凭据统一存进 `~/.dsh/.credentials.yaml`，settings 里只写引用名
+- 2026-08-15：GitHub 凭据统一存进 `~/.mino/.credentials.yaml`，settings 里只写引用名

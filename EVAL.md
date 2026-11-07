@@ -15,15 +15,15 @@
 
 ### 插件级已知 bug
 - **billion-context（黑名单，非精选但红线备案）**：#156 小模型对确定性失败的 compress 参数原样重试、烧满 10 轮真实上游调用=空转扣费实锤；#103 图片计价错用 node.tokens → 负 messageTokens → 会话永久卡死；另有 rollout 灰度分桶（服务端不可见开关）
-- **mino-pet(dsh-dafeiyu)**：#88 Windows 首启 108MB 自解压+60s 超时+杀软扫描→角色不出现；#39 缺依赖启动失败/WSL2 卡死系统；#76 迁移丢角色尺寸配置
-- **mino-voice(dsh-voice)**：#9794 edge-tts DRM 升 v2（SEC_MS_GEC 复合摘要+MUID 改 Cookie）→ 旧实现全 403。【我们探针产出过 jiayou.mp3 → 实测再定】
-- **mino-im(@xmanrui/dsh-im)**：#7590 未声明 webServer inject → 0.1.7 起激活失败（我们 lineage 不同，待验）
-- **mino-qqbot(tencent-connect)**：C2C 消息收不到；#82 时间戳丢；#16 无主动推送钩子；#43 cwd/preset 配置被框架层吃掉（插件内兜底 workaround）
-- **mino-tavern(KamishiroRei/dsh-sillytavern)**：ST 血缘。上游 MUV 系曾泄 worldbook/nsfw 进非酒馆会话（隔离 bug）→ 必测：非酒馆会话工具/schema 是否被污染
-- **mino-browser(dsh-browser)**：#108 **任意已装扩展可 chrome-extension:// Origin 免 token 连接**（认证绕过）；#134 0.2.1-rc.3 peer arity；#96/97 bridge 发现 CORS。我们的 fork 已加 when 门控
-- **mino-bridge(dsh-bridge)**：#82 session-strip 路径不匹配 → /api/session/list 全量传输+~8.5s 重连循环；#77 实时状态 0.2.1-rc.2 坏；#76 adminToken CORS 拒→管理操作静默失败；#75 无密码开隧道静默失败
-- **mino-oh-story**：#50 snapshot.queue TypeError 崩工作台槽（0.1.10 已修）
-- **mino-whale-musume**：#3 设置入口死链（文本匹配图标按钮）；bundle 模式缺设置面板；#32 engines.dsh 未覆盖 0.2.1-rc.3（我们已扩到 0.2.2-alpha.2）
+- **dsh-dafeiyu(dsh-dafeiyu)**：#88 Windows 首启 108MB 自解压+60s 超时+杀软扫描→角色不出现；#39 缺依赖启动失败/WSL2 卡死系统；#76 迁移丢角色尺寸配置
+- **dsh-voice(dsh-voice)**：#9794 edge-tts DRM 升 v2（SEC_MS_GEC 复合摘要+MUID 改 Cookie）→ 旧实现全 403。【我们探针产出过 jiayou.mp3 → 实测再定】
+- **@xmanrui/dsh-im(@xmanrui/dsh-im)**：#7590 未声明 webServer inject → 0.1.7 起激活失败（我们 lineage 不同，待验）
+- **@tencent-connect/dsh-qqbot(tencent-connect)**：C2C 消息收不到；#82 时间戳丢；#16 无主动推送钩子；#43 cwd/preset 配置被框架层吃掉（插件内兜底 workaround）
+- **dsh-sillytavern(KamishiroRei/dsh-sillytavern)**：ST 血缘。上游 MUV 系曾泄 worldbook/nsfw 进非酒馆会话（隔离 bug）→ 必测：非酒馆会话工具/schema 是否被污染
+- **@yuxianglin/dsh-bridge-browser(dsh-browser)**：#108 **任意已装扩展可 chrome-extension:// Origin 免 token 连接**（认证绕过）；#134 0.2.1-rc.3 peer arity；#96/97 bridge 发现 CORS。我们的 fork 已加 when 门控
+- **@wenbin_wb/dsh-bridge(dsh-bridge)**：#82 session-strip 路径不匹配 → /api/session/list 全量传输+~8.5s 重连循环；#77 实时状态 0.2.1-rc.2 坏；#76 adminToken CORS 拒→管理操作静默失败；#75 无密码开隧道静默失败
+- **oh-story-dsh**：#50 snapshot.queue TypeError 崩工作台槽（0.1.10 已修）
+- **dsh-whale-musume**：#3 设置入口死链（文本匹配图标按钮）；bundle 模式缺设置面板；#32 engines.dsh 未覆盖 0.2.1-rc.3（我们已扩到 0.2.2-alpha.2）
 - **fish-memory**：上游 1.3.6 修：session.v4 识别、{{...}} 模板注入崩（interpolate:false）、purgeEpoch 竞态、remember 全局注册（我们已改 agent/created）、子代理排除。【我们的 fork 是否含 1.3.5/1.3.6 修复待核】
 - **speak-up**：0.2.9 已移植（issue #8：时间行+冷却按真说话）
 - **qq-link**：1.5.0 已移植（issue #29：戳一戳+管理接口只认本人+搭车注入分类）
@@ -144,9 +144,9 @@
 ## 13 个 vendored 社区 fork 实测（reports/run-mvyyrvp6 + boot 证据）
 
 装载修复（vendoring 时引入的问题，已修）：
-- **ops cordis.patch.yml**：`name: "mino-ops"/mode-*` 是非法 YAML（引号没包住斜杠）→ 全改为 `"mino-ops/mode-*"`。上游 vendoring 重命名时把 unquoted scalar 截断进引号。
+- **ops cordis.patch.yml**：`name: "dsh-ops"/mode-*` 是非法 YAML（引号没包住斜杠）→ 全改为 `"dsh-ops/mode-*"`。上游 vendoring 重命名时把 unquoted scalar 截断进引号。
 - **5 包版本门拒载**：peerDependencies/engines.dsh 声明停在 `0.2.1-rc.*`（drawio/notes 还是 `0.1.0-rc.6` 时代）→ 追加已验证线 `>=0.2.2-alpha.1 <0.2.3`（AGENTS.md 扩线策略）。
-- **skillhub**：lib/*.js 内嵌 TYPERT manifest `package: "@astron-team/skillhub-dsh"` 没跟着改名 → typert-loader 拒注册。改 `mino-skillhub`。
+- **skillhub**：lib/*.js 内嵌 TYPERT manifest `package: "@astron-team/skillhub-dsh"` 没跟着改名 → typert-loader 拒注册。改 `@astron-team/skillhub-dsh`。
 - **safety-net**：root 入口是 OpenCode 插件（`{server}` 导出形状），DSH 适配器在 `dist/deepseek-harness/index.js` → 补 `"./deepseek-harness"` exports 子路径，patch row 指向它。
 - **dsh-artifact-services**（knowledge-studio 附属）：需 `DSH_OFFICE_NODE` env → eval harness 注入 primary-runtime 自带 node。
 
@@ -192,9 +192,9 @@
 1. `build-plugin-git-repos.sh`（给新包铸 snapshot 裸仓——commit sha 只能在服务器现场产生）
 2. 重新生成 index.json + `node eval/enrich-index.mjs`（annotations 已备齐 47 条）
 
-## mino-better-sidebar 评测（0.28.2 vendored fork，2026-11-04，reports/better-sidebar-v5）
+## dsh-better-sidebar 评测（0.28.2 vendored fork，2026-11-04，reports/better-sidebar-v5）
 
-- **vendoring 变更**：包名 → `mino-better-sidebar`；`lib/index.js` 仅一处功能改名
+- **vendoring 变更**：包名 → `dsh-better-sidebar`；`lib/index.js` 仅一处功能改名
   `SIDEBAR_PACKAGE_NAME`（ownEntryId 按 `options.name` 反查 loader 行，不改设置面失效）；
   cordis.patch.yml row name 改 + 双挂载守卫扩为同时匹配 `dsh-/mino-` 两名；
   `engines.dsh >=0.2.1-rc.1 <0.3.0-0`；`mino.upstream=dsh-better-sidebar@0.28.2`。其余零改动。
@@ -224,7 +224,7 @@
    notes、oh-story、comma、scholar-suite、ops 五个 mode、token-monitor、damage-pulse、
    distill、team-conductor、proactive）。按 AGENTS 扩线纪律需全目录复测扩门，
    否则 0.2.5 装机用户装精选=静默不挂载。
-2. **mino-bot 0.1.1 memoryAdmission 对非 bot 会话持久全局阻断**：`agent/pre-step`
+2. **dsh-bot 0.1.1 memoryAdmission 对非 bot 会话持久全局阻断**：`agent/pre-step`
    + `llm/stream` 闸在 `assertAllowed` 抛 `Memory admission blocked`，
    turn/end reason=error、模型零调用。45s 预热不恢复 = 非启动竞态是持久态
    （kernel 未就绪/被 blocked 即永锁；`startupFailed` 放行需 presetKnown+非 bot 前缀）。
@@ -233,11 +233,11 @@
    同类面：bot 在用户装机精选目录内（index 含它）——若线上形态同此，
    用户正常会话在 kernel 未就绪期间同样被锁，按事故级处理立案。
 
-### mino-bot 阻断根因定案与修复（0.1.2，2026-11-04，reports/bot-dbg2、bot-fix-a/b/c）
+### dsh-bot 阻断根因定案与修复（0.1.2，2026-11-04，reports/bot-dbg2、bot-fix-a/b/c）
 
 - **根因 1（触发源）**：`owner-lease.js ensureLeaseDirectory` 对 `resolve()`
   出的绝对路径 `split('/')`——Windows 返回 `\` 分隔 → 整串当一个组件 →
-  单级 `mkdir` 深路径必 ENOENT。`~/.dsh/dsh-bot/memory-owner` 永远建不起来，
+  单级 `mkdir` 深路径必 ENOENT。`~/.mino/dsh-bot/memory-owner` 永远建不起来，
   bot 存储在 Windows 上**首 boot 必死**（Linux 上 `resolve` 出 `/` 路径正常，
   上游 dsh-bot@0.6.3 的 Windows 潜伏 bug）。修：split 兼容双分隔符。
 - **根因 2（全局锁）**：`4d13aa2` 的 startupFailed 放行门
@@ -264,7 +264,7 @@
   `compatibility.json` 精确版本豁免强制装载 → boot + 模型调用实测。
 - **结果**：31 件全部干净装载（sweep 模型探针通过、142 工具在册）；
   豁免只覆盖 0.2.5，非永久放行。
-- **真缺陷 1（已修）**：mino-proactive 0.1.0 调上游已删 API
+- **真缺陷 1（已修）**：dsh-proactive 0.1.0 调上游已删 API
   `ctx.agents.roots()`（0.2.5 只有 `list()`+`session.header.parentSession`）。
   修复=版本自适应枚举（roots 在则用，否则 list 滤 parentSession），
   源码版本 bump 0.1.1（包未跟踪未发布，索引不含）；proactive-verify-2
@@ -274,7 +274,7 @@
   0.2.5 版 → 官方精确版本豁免是唯一通道（非 stale range）。
   mcp-verify-1：豁免后 6 条 mcp-* 行全活，chrome-devtools server 实拉
   30+ `mcp__chrome__*` 工具、共 193 工具在册 → **0.2.5 上功能实测正常**。
-- **真缺陷 3（环境/原生，维持 gated）**：mino-knowledge-studio 的
+- **真缺陷 3（环境/原生，维持 gated）**：dsh-knowledge-studio 的
   LadybugDB win32-x64 `lbugjs.node` DLL 初始化失败（提示 reinstall with
   optional dependencies）——本机原生运行时问题，engines 不扩。
 - **experimental-agent-team / client-ui-agent-team**：profile 缺这两个

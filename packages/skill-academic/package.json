@@ -1,5 +1,5 @@
 {
-  "name": "mino-skill-academic",
+  "name": "academic-research-skills",
   "version": "0.1.0",
   "description": "Mino 精选 skill 包（上游 Imbad0202/academic-research-skills，5.5万★）：学术论文全链 5 技能——deep-research（13 agent 深研）、academic-paper（12 agent 写作流水线）、academic-paper-reviewer（5 席审稿团）、academic-pipeline（端到端编排）、sr-screener（系统综述筛选）。安装即注入 ctx.skills。",
   "keywords": [

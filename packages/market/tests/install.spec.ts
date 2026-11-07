@@ -1278,7 +1278,7 @@ describe("pnpm's own error survives to the surface (#244/#192/#138)", () => {
     // What the market actually gets on stderr: dsh's wrapper line, byte-for-byte
     // identical for every possible cause. This is the "stack tail" three
     // separate reports describe seeing in the UI.
-    stderr: 'dsh: pnpm failed in profile directory ~/.dsh/profiles/web',
+    stderr: 'dsh: pnpm failed in profile directory ~/.mino/profiles/web',
     stdout: '',
   }
 

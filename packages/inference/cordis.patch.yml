@@ -1,0 +1,5 @@
+- insert:
+    - id: mino-inference
+      name: mino-inference
+      config:
+        baseURL: ''

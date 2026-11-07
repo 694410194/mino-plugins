@@ -148,7 +148,7 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
       const dshim = host.ctx.get('dshIm') as DshImDiscovery | undefined
       const candidates = dshim?.listBots !== undefined ? await dshim.listBots() : []
       if (args.botId === undefined) {
-        return { paired: current, candidates, hint: candidates.length ? 'call again with botId to select one' : 'no IM bot is configured in mino-im yet' }
+        return { paired: current, candidates, hint: candidates.length ? 'call again with botId to select one' : 'no IM bot is configured in @xmanrui/dsh-im yet' }
       }
       if (!candidates.includes(args.botId)) return { error: 'unknown-bot', paired: current, candidates }
       await state.put(SELECTED_BOT_KEY, { key: SELECTED_BOT_KEY, value: args.botId })

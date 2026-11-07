@@ -5,7 +5,7 @@
 #
 # 示例（用户 profile 的 cordis.patch.yml）：
 #   - id: voice
-#     name: 'mino-voice'
+#     name: 'dsh-voice'
 #     config:
 #       asrEngine: groq                 # groq | openai | custom（voice_stt 用）
 #       # asrApiKey: gsk_...            # 推荐改用环境变量 DSH_VOICE_ASR_KEY
@@ -16,7 +16,7 @@
 #
 - insert:
     - id: voice
-      name: 'mino-voice'
+      name: 'dsh-voice'
       config:
         asrEngine: groq
         asrModel: whisper-large-v3-turbo

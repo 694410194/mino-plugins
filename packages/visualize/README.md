@@ -39,7 +39,7 @@ dsh plugin --profile web add @nagi-ovo/dsh-visualize
 
 卡片会跟随 DSH 的明暗主题，默认风格使用鲸鱼蓝配色（其他风格见下文）。聊天栏放不下时，点卡片标题行右侧的「在新窗口打开」按钮，可以在新标签页里全尺寸查看，页面沿用打开那一刻的主题，内容仍在同样的 sandboxed iframe 里运行。会话重放时，页面从持久化的工具结果恢复，不依赖原始 fragment 文件仍然存在。
 
-每张卡片的 fragment 另存一份到 `~/.dsh/visualize/sessions/<会话 id>/<标题>-<hash>.<style>.html`（设置了 `DSH_HOME` 时在 `$DSH_HOME/visualize/` 下），按会话分开，不写进你的项目目录，`git status` 不会出现 `viz/`。`update` 改写的就是这份文件。旧版本写在工作区 `viz/` 下的卡片仍然可以 `update`，原地修改。插件不会自动清理这些文件，需要时可以直接删除 `~/.dsh/visualize/`，已有会话的卡片照常重放。
+每张卡片的 fragment 另存一份到 `~/.mino/visualize/sessions/<会话 id>/<标题>-<hash>.<style>.html`（设置了 `DSH_HOME` 时在 `$DSH_HOME/visualize/` 下），按会话分开，不写进你的项目目录，`git status` 不会出现 `viz/`。`update` 改写的就是这份文件。旧版本写在工作区 `viz/` 下的卡片仍然可以 `update`，原地修改。插件不会自动清理这些文件，需要时可以直接删除 `~/.mino/visualize/`，已有会话的卡片照常重放。
 
 DSH 默认会把已完成回合的工具过程折叠起来。折叠时，这一轮画出的卡片会再显示在最终回答下方，不用展开过程也能看到；「工作步骤展示」选「完全展开」时则只在原位显示。
 
@@ -47,7 +47,7 @@ DSH 默认会把已完成回合的工具过程折叠起来。折叠时，这一�
 
 插件内置 5 种卡片风格，默认是 `whale`。在 DSH 里点左下角「更多」→「设置」→「可视化」，每种风格都有一张按当前明暗主题实时渲染的预览卡，点一下就保存，下一张卡片立即生效，不用重启。
 
-这个页面需要 DSH 0.1.7 及以上（宿主的设置表单 `configForms` 和 `/api` 路由；0.1.7 里「设置」在侧边栏左下角）。更早的版本里页面要么不出现，要么只给出下面的写法，请直接在 `<DSH_HOME>/profiles/web/cordis.patch.yml`（默认 `~/.dsh/profiles/web/cordis.patch.yml`）里加：
+这个页面需要 DSH 0.1.7 及以上（宿主的设置表单 `configForms` 和 `/api` 路由；0.1.7 里「设置」在侧边栏左下角）。更早的版本里页面要么不出现，要么只给出下面的写法，请直接在 `<DSH_HOME>/profiles/web/cordis.patch.yml`（默认 `~/.mino/profiles/web/cordis.patch.yml`）里加：
 
 ```yaml
 - id: dsh-visualize
@@ -75,7 +75,7 @@ DSH 默认会把已完成回合的工具过程折叠起来。折叠时，这一�
 
 在 Markdown 文件里用自然语言写下你的偏好，例如「主色用墨绿，标题不超过 12 个字，数字保留一位小数」。插件会把它附加在内置风格说明之后：
 
-- 全局：`~/.dsh/visualize/style.md`（设置了 `DSH_HOME` 时是 `$DSH_HOME/visualize/style.md`），所有会话生效。
+- 全局：`~/.mino/visualize/style.md`（设置了 `DSH_HOME` 时是 `$DSH_HOME/visualize/style.md`），所有会话生效。
 - 工作区：`<工作区>/.dsh/visualize-style.md`，只在这个工作区的会话里生效。
 
 这两个文件也可以在「设置 → 可视化」下方直接查看和编辑（同样需要 DSH 0.1.7+），每个工作区一个；内容清空后保存会删除文件。

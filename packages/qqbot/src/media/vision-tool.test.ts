@@ -1,5 +1,5 @@
 /**
- * ensureVisionInputModal 写 ~/.dsh/settings.yaml 的回归用例（D1）
+ * ensureVisionInputModal 写 ~/.mino/settings.yaml 的回归用例（D1）
  *
  * 该文件是宿主用户级配置、多写者共存，补写必须满足：文档保真（注释/锚点/其他
  * 命名空间的值原样保留）、原子写、读写窗口内被外部改动则放弃。

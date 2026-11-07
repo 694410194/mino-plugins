@@ -17,7 +17,7 @@ accountStateDir: /your/private/shared-account-state
 
 授权文件在每次网络请求前重读，设 `enabled: false` 或删除文件可阻止后续请求。关闭配置开关并重载会移除工具；仍在执行的任务应先取消。已经发出的请求可能生效。
 
-账号状态默认在 `$DSH_HOME/bili-humanism-accounts/账号UID/`，未设置 DSH_HOME 时在 `~/.dsh/` 下。同一账号的所有 profile 必须共用 `accountStateDir`，才能共享互斥、额度与暂停。不能改路径或删账本绕过暂停；原 agent 的写入与调度须由使用者先停用，本插件不会自动停止外部程序。
+账号状态默认在 `$DSH_HOME/bili-humanism-accounts/账号UID/`，未设置 DSH_HOME 时在 `~/.mino/` 下。同一账号的所有 profile 必须共用 `accountStateDir`，才能共享互斥、额度与暂停。不能改路径或删账本绕过暂停；原 agent 的写入与调度须由使用者先停用，本插件不会自动停止外部程序。
 
 ## 本地授权文件
 

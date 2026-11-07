@@ -8,7 +8,7 @@
 
 - **Web 聊天**:把 `[表情: 描述]` 整段写进回复,不要把路径贴进回复。
 - **dsh-im 的 IM 会话**:候选行带 `path=`,原样传给 `dsh_im_return_file`。
-- **QQ 官方机器人(dsh-qqbot 插件)**:工具表里有 `qqbot_send_file` 时,不要写 `[表情:]` 标记——把挑中候选的 **`absPath` 绝对路径传给 `qqbot_send_file` 的 `file_path`**,正文只写普通文字。它默认启用路径白名单(media + agent cwd + `sendFile.extraRoots`);被拒时提示用户在 dsh-qqbot 配置的 `sendFile.extraRoots` 里加入图库目录(通常 `~/.dsh/meme-packs`)。
+- **QQ 官方机器人(dsh-qqbot 插件)**:工具表里有 `qqbot_send_file` 时,不要写 `[表情:]` 标记——把挑中候选的 **`absPath` 绝对路径传给 `qqbot_send_file` 的 `file_path`**,正文只写普通文字。它默认启用路径白名单(media + agent cwd + `sendFile.extraRoots`);被拒时提示用户在 dsh-qqbot 配置的 `sendFile.extraRoots` 里加入图库目录(通常 `~/.mino/meme-packs`)。
 - **QQ 发图尺寸**:设置页打开后,IM 的 `path` 和 Web 的 `absPath` 已经是缩到 200-450px 的发送副本(在图库目录的 `.send-cache/` 下),照常原样传给 `dsh_im_return_file` / `qqbot_send_file`,不要再自己缩图或改回图库原图。Web 候选的 `path` 仍是原图出处。没装 sharp 时按原图发送。
 
 ## 2. path 约定
@@ -21,7 +21,7 @@
 
 ## 4. 收藏落点
 
-上传/AI 学图统一落「我的收藏」稳定图库(`~/.dsh/meme-packs/dsh-meme-user`,自动启用)。当前图库在内置包(插件目录)内时写入会被自动重定向——插件升级不清空收藏;内置图库只读。
+上传/AI 学图统一落「我的收藏」稳定图库(`~/.mino/meme-packs/dsh-meme-user`,自动启用)。当前图库在内置包(插件目录)内时写入会被自动重定向——插件升级不清空收藏;内置图库只读。
 
 ## 5. 工具速查
 

@@ -4,4 +4,4 @@
 # resolves `require.resolve('<row-name>/package.json')` to find the package.
 - insert:
     - id: dsh-rewind-plugin
-      name: "mino-rewind"
+      name: "dsh-rewind-plugin"
