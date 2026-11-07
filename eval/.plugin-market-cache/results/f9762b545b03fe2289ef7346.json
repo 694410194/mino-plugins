@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-footprints","version":{"version":"0.1.0","publishTimestamp":1793871094,"source":{"type":"git","url":"https://mino.baby/git/footprints","commit":"ce842c89aa5c699b044ee5bf82251e6cadc3ffdf"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

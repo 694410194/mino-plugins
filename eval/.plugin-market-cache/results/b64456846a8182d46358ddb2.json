@@ -1,0 +1,1 @@
+{"release":{"name":"@modelcontextprotocol/server-memory","version":{"version":"0.1.1","publishTimestamp":1794028818,"source":{"type":"git","url":"https://mino.baby/git/mcp-memory","commit":"8f2298606377c7955e271dd7cee5eac8425fe930"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

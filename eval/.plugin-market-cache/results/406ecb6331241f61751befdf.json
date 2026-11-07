@@ -1,0 +1,1 @@
+{"release":{"name":"github-mcp-server","version":{"version":"0.1.0","publishTimestamp":1794028818,"source":{"type":"git","url":"https://mino.baby/git/mcp-github","commit":"511909f56c801b16e53999b6cdcb740c07a0765a"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

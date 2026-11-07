@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-backup","version":{"version":"0.1.0","publishTimestamp":1793871086,"source":{"type":"git","url":"https://mino.baby/git/backup","commit":"7da736a506d3bf424a01fd2cba7adf3348bab828"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

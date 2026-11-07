@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-photos","version":{"version":"0.1.0","publishTimestamp":1794028825,"source":{"type":"git","url":"https://mino.baby/git/photos","commit":"d99ea533d0647d9bcfbbda25464bcb5979d37ce1"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-gzh","version":{"version":"0.1.0","publishTimestamp":1794028815,"source":{"type":"git","url":"https://mino.baby/git/gzh","commit":"9f4452d8295f6af31d9ae0447daccd464d8005f7"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

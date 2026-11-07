@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-music","version":{"version":"0.1.0","publishTimestamp":1794028819,"source":{"type":"git","url":"https://mino.baby/git/music","commit":"5febd97dc1501e3fceabde9fd4e7540e0bb6e5f0"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

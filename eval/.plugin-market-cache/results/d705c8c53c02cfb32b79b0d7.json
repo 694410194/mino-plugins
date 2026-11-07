@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-ocr","version":{"version":"0.1.0","publishTimestamp":1794028820,"source":{"type":"git","url":"https://mino.baby/git/ocr","commit":"537fd92ad63943a75edaaad9fb455b6376473c33"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

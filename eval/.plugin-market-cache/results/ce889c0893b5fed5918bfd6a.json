@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-cloud","version":{"version":"0.1.0","publishTimestamp":1793871089,"source":{"type":"git","url":"https://mino.baby/git/cloud","commit":"09cefaa3d522cf18f56cf622576dd4f33528ea68"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

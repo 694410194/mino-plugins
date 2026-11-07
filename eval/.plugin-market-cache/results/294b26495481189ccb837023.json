@@ -1,0 +1,1 @@
+{"release":{"name":"dsh-better-sidebar","version":{"version":"0.28.2","publishTimestamp":1794028807,"source":{"type":"git","url":"https://mino.baby/git/better-sidebar","commit":"e8568a2cf469024cb0b1c22d2677cd50e5c5eb19"},"engines":{"dsh":">=0.2.1-rc.1 <0.3.0-0"}}}}

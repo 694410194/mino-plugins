@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-collections","version":{"version":"0.1.0","publishTimestamp":1794028810,"source":{"type":"git","url":"https://mino.baby/git/collections","commit":"b2fc7a78e397acc2ca74c751861cbcaa5b3f6be8"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

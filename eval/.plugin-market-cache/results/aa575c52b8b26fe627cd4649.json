@@ -1,0 +1,1 @@
+{"release":{"name":"dsh-ops","version":{"version":"0.4.4","publishTimestamp":1794028823,"source":{"type":"git","url":"https://mino.baby/git/ops","commit":"9911fdf7aadbc6ae84d7007a104f5f7cec1659f5"},"engines":{"dsh":">=0.2.0-rc.2 <0.3.0"}}}}

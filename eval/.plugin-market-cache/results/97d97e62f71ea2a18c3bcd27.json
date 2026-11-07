@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-old-disk","version":{"version":"0.1.0","publishTimestamp":1794028821,"source":{"type":"git","url":"https://mino.baby/git/old-disk","commit":"447aa1ec41e240f95eceee3423cc3414e9e2edc2"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

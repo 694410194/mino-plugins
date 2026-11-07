@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-ytdlp","version":{"version":"0.1.0","publishTimestamp":1794028835,"source":{"type":"git","url":"https://mino.baby/git/ytdlp","commit":"3abc84e7b00fbfd616b8ed890438f8b12b959711"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

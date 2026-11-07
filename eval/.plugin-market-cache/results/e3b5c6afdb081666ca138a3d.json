@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-asr","version":{"version":"0.1.0","publishTimestamp":1794028806,"source":{"type":"git","url":"https://mino.baby/git/asr","commit":"d54cfff57ee6923afd20e42218941b98fa380734"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

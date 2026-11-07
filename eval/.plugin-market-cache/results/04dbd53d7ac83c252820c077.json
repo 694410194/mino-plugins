@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-dev-activity","version":{"version":"0.1.1","publishTimestamp":1794028812,"source":{"type":"git","url":"https://mino.baby/git/dev-activity","commit":"242e42b06be4b3ca180b3d0e432cbdaaa8b31236"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

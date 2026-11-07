@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-wechat","version":{"version":"0.1.0","publishTimestamp":1794028834,"source":{"type":"git","url":"https://mino.baby/git/wechat","commit":"d32c784e40c849d358da9798886574578a016f69"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

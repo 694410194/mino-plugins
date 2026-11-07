@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-mail","version":{"version":"0.1.0","publishTimestamp":1794028818,"source":{"type":"git","url":"https://mino.baby/git/mail","commit":"6e407d7e539849a4f37e9e4405ebab3492f74a10"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

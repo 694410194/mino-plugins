@@ -1,0 +1,1 @@
+{"release":{"name":"dsh-notes","version":{"version":"0.1.2","publishTimestamp":1794028819,"source":{"type":"git","url":"https://mino.baby/git/notes","commit":"94cb4253625828951f9be3a636a6ae4ffba61e6a"},"engines":{"dsh":">=0.1.0-rc.6 <0.3.0"}}}}

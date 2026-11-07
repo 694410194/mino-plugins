@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-qzone","version":{"version":"0.1.0","publishTimestamp":1794028826,"source":{"type":"git","url":"https://mino.baby/git/qzone","commit":"8092383e6ee0ffc6cedc16d76dc3e06c9f22b61a"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

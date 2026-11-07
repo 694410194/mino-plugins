@@ -1,0 +1,1 @@
+{"release":{"name":"cnki-skills","version":{"version":"0.1.0","publishTimestamp":1794028828,"source":{"type":"git","url":"https://mino.baby/git/skill-cnki","commit":"39f1b76d17e0e7a2382f9ddf2ce289725bae2fde"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-local-inventory","version":{"version":"0.1.0","publishTimestamp":1794028817,"source":{"type":"git","url":"https://mino.baby/git/local-inventory","commit":"ad76272fe494e8c7f6b8c59879c54a905b48afbb"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

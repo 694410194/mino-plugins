@@ -1,1 +1,0 @@
-{"release":{"name":"mino-connector-invoice","version":{"version":"0.1.0","publishTimestamp":1793871096,"source":{"type":"git","url":"https://mino.baby/git/invoice","commit":"dfb506a692ffb606517f3ac0166a11d01846e754"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}
