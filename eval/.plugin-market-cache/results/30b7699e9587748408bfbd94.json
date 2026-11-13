@@ -1,0 +1,1 @@
+{"release":{"name":"screenwriter-skill","version":{"version":"0.1.0","publishTimestamp":1794580214,"source":{"type":"git","url":"https://mino.baby/git/skill-script-review","commit":"1a9001c4f7c84db087c9f5a2062b494b0d31a378"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

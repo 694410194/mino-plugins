@@ -1,0 +1,1 @@
+{"release":{"name":"chrome-devtools-mcp","version":{"version":"0.1.0","publishTimestamp":1794580202,"source":{"type":"git","url":"https://mino.baby/git/mcp-chrome-devtools","commit":"235635bd0aae4f149344dd04fdf9fc4b403acabc"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

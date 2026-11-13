@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-ime","version":{"version":"0.1.0","publishTimestamp":1794580201,"source":{"type":"git","url":"https://mino.baby/git/ime","commit":"8d03deb7d2caa269e1eccb5d0d7e926d33746044"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

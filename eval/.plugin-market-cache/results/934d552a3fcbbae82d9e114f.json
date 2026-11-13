@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-browser-history","version":{"version":"0.1.0","publishTimestamp":1794580194,"source":{"type":"git","url":"https://mino.baby/git/browser-history","commit":"7f20538cfbcc33969d02323298d478d11fc711c9"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

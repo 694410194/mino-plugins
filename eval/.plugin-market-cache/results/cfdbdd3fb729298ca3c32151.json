@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-contacts","version":{"version":"0.1.0","publishTimestamp":1794580196,"source":{"type":"git","url":"https://mino.baby/git/contacts","commit":"93628d91398e712b592aeb309d4efc9ded680170"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

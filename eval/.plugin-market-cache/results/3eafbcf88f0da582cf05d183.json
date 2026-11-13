@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-note-import","version":{"version":"0.1.0","publishTimestamp":1794580204,"source":{"type":"git","url":"https://mino.baby/git/note-import","commit":"71eb64d07692f17abc5d9572a8a6bd1b2f93e2f1"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

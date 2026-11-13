@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-records","version":{"version":"0.1.0","publishTimestamp":1794580210,"source":{"type":"git","url":"https://mino.baby/git/records","commit":"6dae68a4d3dec86ce4db0feafd1fa69f1ee67370"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

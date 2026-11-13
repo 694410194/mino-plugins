@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-orders","version":{"version":"0.1.0","publishTimestamp":1794580207,"source":{"type":"git","url":"https://mino.baby/git/orders","commit":"40876059238de35003beef6662c690c01ddf0aef"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

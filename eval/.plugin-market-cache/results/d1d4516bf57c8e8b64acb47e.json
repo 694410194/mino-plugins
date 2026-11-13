@@ -1,0 +1,1 @@
+{"release":{"name":"double-entry-generator","version":{"version":"0.1.0","publishTimestamp":1794580195,"source":{"type":"git","url":"https://mino.baby/git/connector-bills","commit":"4412387658f471c7b2ea95f58e445fe99156d65b"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

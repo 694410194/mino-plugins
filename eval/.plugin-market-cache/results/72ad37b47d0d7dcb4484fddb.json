@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-travel","version":{"version":"0.1.0","publishTimestamp":1794580215,"source":{"type":"git","url":"https://mino.baby/git/travel","commit":"82c5ffb395c19941648f244e12175df9bc1c3111"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

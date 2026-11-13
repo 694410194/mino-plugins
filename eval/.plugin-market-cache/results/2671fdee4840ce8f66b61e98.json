@@ -1,0 +1,1 @@
+{"release":{"name":"dsh-drawio","version":{"version":"0.1.0","publishTimestamp":1794580199,"source":{"type":"git","url":"https://mino.baby/git/drawio","commit":"0043a90cff6c4141af346b45173ee25fdb7f64ad"},"engines":{"dsh":">=0.1.0-rc.6 <0.3.0"}}}}

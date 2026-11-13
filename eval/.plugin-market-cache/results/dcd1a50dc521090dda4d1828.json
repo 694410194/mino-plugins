@@ -1,0 +1,1 @@
+{"release":{"name":"@astron-team/skillhub-dsh","version":{"version":"0.6.1","publishTimestamp":1794580212,"source":{"type":"git","url":"https://mino.baby/git/skillhub","commit":"e6ca3179871d8d02e7172619afae742fccd5c16a"},"engines":{"dsh":">=0.1.0-rc.6 <0.3.0"}}}}

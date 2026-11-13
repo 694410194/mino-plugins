@@ -1,0 +1,1 @@
+{"release":{"name":"dsh-rewind-plugin","version":{"version":"0.19.1","publishTimestamp":1794580210,"source":{"type":"git","url":"https://mino.baby/git/rewind","commit":"b14e7c8e1e3ce6d7e4de86fddba65a57c257ce0b"},"engines":{"dsh":">=0.2.1-rc.1 <0.3.0-0"}}}}

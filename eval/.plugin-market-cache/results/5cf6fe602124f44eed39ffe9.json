@@ -1,0 +1,1 @@
+{"release":{"name":"dsh-damage-pulse","version":{"version":"4.3.2","publishTimestamp":1794580197,"source":{"type":"git","url":"https://mino.baby/git/damage-pulse","commit":"dae3cd2b5423a0e5f05f849e77e11efdbea827ae"},"engines":{"dsh":">=0.1.0-rc.6 <0.3.0"}}}}

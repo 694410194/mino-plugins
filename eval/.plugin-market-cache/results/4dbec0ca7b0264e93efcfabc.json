@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-localsend","version":{"version":"0.1.0","publishTimestamp":1794580202,"source":{"type":"git","url":"https://mino.baby/git/localsend","commit":"2058be561240c169c4b14e08a68e28a5c4e79fbc"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

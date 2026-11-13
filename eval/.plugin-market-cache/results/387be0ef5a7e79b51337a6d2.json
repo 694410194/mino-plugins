@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-credcheck","version":{"version":"0.1.0","publishTimestamp":1794580196,"source":{"type":"git","url":"https://mino.baby/git/credcheck","commit":"4fd071c899584da6359704bbffbf903b04400e2b"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

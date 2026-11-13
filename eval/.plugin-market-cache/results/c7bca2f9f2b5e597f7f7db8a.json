@@ -1,0 +1,1 @@
+{"release":{"name":"mino-connector-portfolio","version":{"version":"0.1.0","publishTimestamp":1794580210,"source":{"type":"git","url":"https://mino.baby/git/portfolio","commit":"38254d73717d1e335c12040156d2962b740f379e"},"engines":{"dsh":">=0.2.2-alpha.1 <0.3.0"}}}}

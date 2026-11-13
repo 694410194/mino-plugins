@@ -1,0 +1,1 @@
+{"release":{"name":"dsh-visualize","version":{"version":"0.1.7","publishTimestamp":1794580216,"source":{"type":"git","url":"https://mino.baby/git/visualize","commit":"8bb3ef1d451ab6069a2fa6c9b63f349366bcd94f"},"engines":{"dsh":"^0.1.0-rc.6 || ^0.2.0-rc.1 || ^0.2.1-0"}}}}
