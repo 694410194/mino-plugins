@@ -15,7 +15,7 @@
 | mino-comma | 自研 sessionless 主动陪伴（AFK-surf/Comma 启发） | 已实测（plugweb 常驻运行，router 会话+事项域起） | 零配置可跑；接源需 @xmanrui/dsh-im botId（external-consumer 独占），推送出口需 notify.botId+targetId；worker 委派未落地 |
 | mino-feiyu-garden | 自研「海蒂花园」养鱼工作台（media-desk 仅审美参考，未集成） | 已实测（plugweb 侧栏行+main 页渲染、状态路由、喂食/摸头/改名动作全过） | 无；状态落 `DSH_HOME \|\| ~/.mino` 下 feiyu-garden/；客户端早抓+乐观态抗 socket 池拥挤 |
 | dsh-sillytavern | fork KamishiroRei/dsh-sillytavern | 推荐位 | 无（预设选“酒馆跑团”）；ST V2/V3/PNG 卡+世界书+MVU |
-| dshmarket | fork dshmarket | 已退役（private，不进索引） | 打开未经精选闸门的全量社区目录（billion-context 等拒收件直达用户），与精选通道定位冲突；保留源码仅作社区目录读口参考 |
+| dshmarket | fork dshmarket | **是**（内置 bundle 层，仍 private 不进索引——市场不能安装自身） | 社区全量目录 + backup/drain/channels；`plugins.item` 顶层卡片复用其市场页；注意其目录未经精选闸门，与 mino.baby 精选通道（「发现」）互补并存 |
 | dsh-aurabot-qq | fork dsh-aurabot-qq | 推荐位 | OneBot/NapCat 个人号；QQ 鱼本体（聊天/表情/语音/记事/空间/B站/唱歌，模块化） |
 | dsh-qq-link | fork Yuuyuko-uu/dsh-qq-link（插件许可 1.2） | 推荐位 | OneBot 11/NapCat；QQ 双向桥 |
 | dsh-speak-up | fork Yuuyuko-uu/dsh-speak-up（同上许可） | 推荐位 | 无；主动搭话（本地掷骰子触发） |

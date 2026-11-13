@@ -35,6 +35,7 @@ packages:
   - "!packages/skill-explorer"
   - "!packages/skillhub"
   - "!packages/task-board"
+  - "!packages/today"
   - "!packages/visualize"
   # Pure-config MCP bundles and skill packs: release-tarball-only, zero deps,
   # kept out of the frozen workspace install like the community forks.

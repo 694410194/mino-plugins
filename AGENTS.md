@@ -49,8 +49,9 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
 - 生成器：`mino-agent/apps/plugin-market-generator`（官方，tsx 源码直跑：
   `pnpm exec tsx src/bin.ts --input <list> --output <index.json> --title <t>`），
   输入每行一个 npm 包名或公开 Git 仓 URL；Git 源按 workspace glob/`dsh.bundle`
-  扫描包，**`private: true` 的包会被跳过**——private 在本仓的语义是"不分发"
-  （comma=WIP、market=退役），workspace 排除走 `pnpm-workspace.yaml` 负向 glob。
+  扫描包，**`private: true` 的包会被跳过**——private 在本仓的语义是"不进市场索引
+  /不发 npm"（comma=WIP；market 是内置随发行——桌面 profile bundle 层，不经过索引），
+  workspace 排除走 `pnpm-workspace.yaml` 负向 glob。
 - 发布物：`github.com/694410194/mino-plugin-index`（index.json + icons/，
   与源仓 mino-plugins 分离，产物不进源仓）。
 
