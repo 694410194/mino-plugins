@@ -143,22 +143,40 @@ export function apply(ctx: ClientContext): void {
     inject: (): ImageCardInjected => ({ promoted: true }),
   }, GeneratedImagesCard))
 
+  const t = ctx.locale.bind(NS)
   const form = ctx.configForms.get<Record<string, unknown>>('dsh-image-gen')
-  ctx.effect(() => ctx.configForms.whileServed(['dsh-image-gen'], () =>
-    ctx.slots.inject('plugins.bundle.config', () => ctx.slots.register({
+  const settingsFace = (): SettingsInjected => ({
+    hooks: { form },
+    setField: (field, value) => form.set(field, value),
+    unsetField: field => form.unset(field),
+  })
+  ctx.effect(() => ctx.configForms.whileServed(['dsh-image-gen'], () => {
+    const offItem = ctx.slots.inject('plugins.item', () => ctx.slots.register({
+      name: 'plugins.item', id: 'dsh-image-gen', order: 50, locale: NS,
+      label: () => t('settings.title'),
+      inject: settingsFace,
+    }, MinoImageItemEntry))
+    const offBundle = ctx.slots.inject('plugins.bundle.config', () => ctx.slots.register({
       name: 'plugins.bundle.config', key: 'dsh-image-gen', locale: NS,
-      inject: (): SettingsInjected => ({
-        hooks: { form },
-        setField: (field, value) => form.set(field, value),
-        unsetField: field => form.unset(field),
-      }),
-    }, MinoImageSettingsCard)),
-  ), 'dsh-image-gen: settings card')
+      inject: settingsFace,
+    }, MinoImageSettingsCard))
+    return () => { offItem(); offBundle() }
+  }), 'dsh-image-gen: settings card')
 }
 
 /* ============================== Settings card ============================== */
 
-function MinoImageSettingsCard(props: SettingsCardProps) {
+/**
+ * The `plugins.item` entry beside the official settings cards: the card's
+ * one-liner in its summary view, the shared form on its page without the
+ * heading the page already draws.
+ */
+function MinoImageItemEntry(props: SettingsCardProps) {
+  if (props.view === 'summary') return <>{props.t('settings.desc')}</>
+  return <MinoImageSettingsCard {...props} heading={false} />
+}
+
+function MinoImageSettingsCard(props: SettingsCardProps & { readonly heading?: boolean }) {
   const { t } = props
   const snapshot = props.useForm((state: ConfigFormSnapshot<Record<string, unknown>> | undefined) => state)
   const [draft, setDraft] = useState<Record<string, unknown>>({})
@@ -189,8 +207,10 @@ function MinoImageSettingsCard(props: SettingsCardProps) {
   }
 
   return <section className="mino-ig-settings" aria-label={t('settings.title')}>
-    <h3>{t('settings.title')}</h3>
-    <p className="mino-ig-desc">{t('settings.desc')}</p>
+    {props.heading === false ? null : <>
+      <h3>{t('settings.title')}</h3>
+      <p className="mino-ig-desc">{t('settings.desc')}</p>
+    </>}
     {!writable ? <p className="mino-ig-note">{t('settings.readOnly')}</p> : null}
     <div className="mino-ig-field">
       <label htmlFor="mino-ig-model">{t('settings.field.model')}</label>
