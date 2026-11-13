@@ -79,11 +79,12 @@ describe('dsh.client.inject', () => {
     const used = servicesUsed()
     const provided = new Set(declared.map(seam => SEAM_PROVIDES[seam]))
     // `effect` and `on` are cordis's own, not seams; `settingsScope`,
-    // `pluginNavigation` and `layout` are injected nested precisely so their
-    // absence does not gate the entry — `layout` only steers the opt-in
-    // sidebar page (#846), `pluginNavigation` only adds a menu entry on hosts
-    // that have it.
-    const ownedByCordis = new Set(['effect', 'on', 'settingsScope', 'pluginNavigation', 'layout'])
+    // `pluginNavigation`, `layout` and `configForms` are injected nested
+    // precisely so their absence does not gate the entry — `layout` only
+    // steers the opt-in sidebar page (#846), `pluginNavigation` only adds a
+    // menu entry on hosts that have it, `configForms` only mounts the
+    // plugin-market index-sources card where that namespace is served.
+    const ownedByCordis = new Set(['effect', 'on', 'settingsScope', 'pluginNavigation', 'layout', 'configForms'])
     const missing = [...used].filter(service => !provided.has(service) && !ownedByCordis.has(service))
     expect(missing).toEqual([])
   })

@@ -2,8 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import { SettingsProvider, type SettingsNamespace } from '@deepseek-ai/dsh-settings'
+import { Context, Service } from '@deepseek-ai/cordis'
+import type { SettingsNamespace } from '@deepseek-ai/dsh-settings'
 import { dshHostInfo, setLauncherInstallAnchorSource } from '../src/dsh-install.ts'
 
 const state = vi.hoisted(() => ({
@@ -453,17 +453,66 @@ describe('unconfigured allowRestart stays undefined so detection can decide (#22
 })
 
 // Only storage is substituted: namespace resolution, describe, writes and
-// scoped disposal all run through the host's real SettingsProvider/Cordis.
+// scoped disposal all run through the same Cordis lifecycle a real service
+// uses. `SettingsProvider` was removed upstream after 0.1.7 — the structural
+// surface the market and this spec need is implemented here directly.
 describe('host settings registration (#516)', () => {
   const ns = 'dsh-market' as SettingsNamespace
   let root: Context
   let document: Record<string, unknown>
 
-  class MemorySettings extends SettingsProvider {
+  interface RegisteredScope {
+    data: Record<string, unknown>
+    schema: { shape?: Record<string, unknown> }
+    listeners: Set<() => void>
+  }
+
+  class MemorySettings extends Service {
+    static provide = 'settings'
     readonly writable = true
+    private scopes = new Map<string, RegisteredScope>()
+
+    constructor(ctx: Context) {
+      super(ctx, 'settings')
+      ctx.effect(() => () => this.scopes.clear())
+    }
+
     async load() { return document }
     async persist(namespace: SettingsNamespace, section: Record<string, unknown>) {
       document = { ...document, [namespace]: structuredClone(section) }
+    }
+
+    register(namespace: string, schema: RegisteredScope['schema'], options: { base: Record<string, unknown> }) {
+      const saved = (document[namespace] ?? {}) as Record<string, unknown>
+      const scope: RegisteredScope = {
+        data: { ...options.base, ...saved },
+        schema,
+        listeners: new Set(),
+      }
+      this.scopes.set(namespace, scope)
+      // The registered namespace retires with the registering fiber — the
+      // same scoping the old service had: `describe()` reflects a disposed
+      // plugin's namespaces no more than a live host's would.
+      this.ctx.effect(() => () => { this.scopes.delete(namespace); return undefined as void })
+      return {
+        get: () => scope.data,
+        watch: (listener: () => void) => { scope.listeners.add(listener) },
+      }
+    }
+
+    describe() {
+      return [...this.scopes].map(([scopeNs, scope]) => ({
+        ns: scopeNs,
+        schema: { refs: { fields: { dict: scope.schema.shape ?? {} } } },
+      }))
+    }
+
+    async update(namespace: string, patch: Record<string, unknown>) {
+      const scope = this.scopes.get(namespace)
+      if (scope === undefined) return
+      Object.assign(scope.data, patch)
+      await this.persist(namespace as SettingsNamespace, scope.data)
+      for (const listener of scope.listeners) listener()
     }
   }
 
@@ -477,7 +526,7 @@ describe('host settings registration (#516)', () => {
 
   async function settings() {
     await vi.waitFor(() => { expect(root.get('settings')).toBeDefined() })
-    return root.get('settings') as SettingsProvider
+    return root.get('settings') as InstanceType<typeof MemorySettings>
   }
 
   function desktop() {

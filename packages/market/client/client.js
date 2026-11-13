@@ -976,7 +976,18 @@ window.__ModuleLoader__.load({ id: "dshmarket", factory: (require) => {
 			hostRecoveryRestore: "恢复配置",
 			hostRecoveryRestored: "已恢复 {0} 条设置。刷新页面就能看到。",
 			hostRecoveryFail: "恢复失败：",
-			hostRecoveryNote: "恢复前会自动存快照，随时能退回。"
+			hostRecoveryNote: "恢复前会自动存快照，随时能退回。",
+			pluginsItemSummary: "浏览并安装社区目录中的插件。",
+			pluginMarketItemTitle: "发现源",
+			pluginMarketItemSummary: "「发现」页读取的插件索引地址。",
+			pluginMarketIndexesLabel: "索引地址（每行一个 URL）",
+			pluginMarketIndexesLoading: "正在加载索引设置…",
+			pluginMarketIndexesUnavailable: "宿主尚未提供插件市场设置。",
+			pluginMarketIndexesReadOnly: "索引地址由配置文件提供，只读。",
+			pluginMarketIndexesSave: "保存",
+			pluginMarketIndexesSaving: "保存中…",
+			pluginMarketIndexesSaved: "已保存",
+			pluginMarketIndexesRejected: "索引地址未能保存，请检查格式后重试。"
 		};
 		const en = {
 			nav: "Plugin Market",
@@ -1758,7 +1769,18 @@ window.__ModuleLoader__.load({ id: "dshmarket", factory: (require) => {
 			hostRecoveryRestore: "Restore configuration",
 			hostRecoveryRestored: "Restored {0} settings. Refresh the page to see them.",
 			hostRecoveryFail: "Restore failed: ",
-			hostRecoveryNote: "A snapshot is taken first, so you can roll this back."
+			hostRecoveryNote: "A snapshot is taken first, so you can roll this back.",
+			pluginsItemSummary: "Browse and install plugins from the community catalog.",
+			pluginMarketItemTitle: "Discover sources",
+			pluginMarketItemSummary: "The index addresses the Discover tab reads.",
+			pluginMarketIndexesLabel: "Index URLs (one per line)",
+			pluginMarketIndexesLoading: "Loading index settings…",
+			pluginMarketIndexesUnavailable: "The host has not provided plugin market settings.",
+			pluginMarketIndexesReadOnly: "Index URLs come from a profile file and are read-only.",
+			pluginMarketIndexesSave: "Save",
+			pluginMarketIndexesSaving: "Saving…",
+			pluginMarketIndexesSaved: "Saved",
+			pluginMarketIndexesRejected: "The index URLs could not be saved. Check the format and try again."
 		};
 		const ja = {
 			nav: "プラグインマーケット",
@@ -2538,7 +2560,18 @@ window.__ModuleLoader__.load({ id: "dshmarket", factory: (require) => {
 			hostRecoveryRestore: "設定を復元",
 			hostRecoveryRestored: "{0} 件の設定を復元しました。ページを更新すると表示されます。",
 			hostRecoveryFail: "復元に失敗しました：",
-			hostRecoveryNote: "復元の前にスナップショットが自動で保存されるため、元に戻せます。"
+			hostRecoveryNote: "復元の前にスナップショットが自動で保存されるため、元に戻せます。",
+			pluginsItemSummary: "コミュニティカタログからプラグインを探してインストールします。",
+			pluginMarketItemTitle: "Discover ソース",
+			pluginMarketItemSummary: "「Discover」タブが読むインデックスのアドレスです。",
+			pluginMarketIndexesLabel: "インデックス URL（1 行に 1 件）",
+			pluginMarketIndexesLoading: "インデックス設定を読み込み中…",
+			pluginMarketIndexesUnavailable: "ホストがプラグインマーケット設定を提供していません。",
+			pluginMarketIndexesReadOnly: "インデックス URL はプロファイル由来のため読み取り専用です。",
+			pluginMarketIndexesSave: "保存",
+			pluginMarketIndexesSaving: "保存中…",
+			pluginMarketIndexesSaved: "保存しました",
+			pluginMarketIndexesRejected: "インデックス URL を保存できませんでした。形式を確認して再試行してください。"
 		};
 		// src/catalog-local-match.ts
 		/**
@@ -18231,6 +18264,58 @@ window.__ModuleLoader__.load({ id: "dshmarket", factory: (require) => {
 		* same string as the locale namespace (`dsh-market`) this file uses for copy.
 		*/
 		const MARKET_PACKAGE_NAME = "dshmarket";
+		/**
+		* The `plugin-market` namespace's index-source editor on its `plugins.item`
+		* page: one URL per line, saved as the `indexes` array the Discover tab's
+		* plugin-market reads.
+		*/
+		function PluginMarketIndexesCard(props) {
+			const { t, form } = props;
+			const snapshot = (0, react.useSyncExternalStore)((listener) => form.subscribe(listener), () => form.getSnapshot());
+			const [text, setText] = (0, react.useState)("");
+			const [saving, setSaving] = (0, react.useState)(false);
+			const [message, setMessage] = (0, react.useState)();
+			(0, react.useEffect)(() => {
+				setText((snapshot.value?.indexes ?? []).join("\n"));
+			}, [snapshot.value]);
+			if (snapshot.status !== "ready") return (0, react.createElement)("p", { className: Market_module_css_default.note }, t(snapshot.status === "loading" ? "pluginMarketIndexesLoading" : "pluginMarketIndexesUnavailable"));
+			const writable = snapshot.writable === true;
+			const save = async () => {
+				setSaving(true);
+				setMessage(void 0);
+				const urls = text.split("\n").map((line) => line.trim()).filter((line) => line.length > 0);
+				const ok = await form.set("indexes", urls);
+				setSaving(false);
+				setMessage(t(ok ? "pluginMarketIndexesSaved" : "pluginMarketIndexesRejected"));
+			};
+			return (0, react.createElement)("section", null, (0, react.createElement)("label", { htmlFor: "dsh-market-indexes" }, t("pluginMarketIndexesLabel")), (0, react.createElement)("textarea", {
+				id: "dsh-market-indexes",
+				value: text,
+				disabled: !writable,
+				rows: 4,
+				style: {
+					display: "block",
+					boxSizing: "border-box",
+					width: "100%",
+					marginTop: 6,
+					padding: 8
+				},
+				onChange: (event) => {
+					setText(event.target.value);
+				}
+			}), writable ? null : (0, react.createElement)("p", { className: Market_module_css_default.note }, t("pluginMarketIndexesReadOnly")), (0, react.createElement)("div", { style: {
+				display: "flex",
+				alignItems: "center",
+				gap: 10,
+				marginTop: 12
+			} }, (0, react.createElement)("button", {
+				type: "button",
+				disabled: !writable || saving,
+				onClick: () => {
+					save();
+				}
+			}, t(saving ? "pluginMarketIndexesSaving" : "pluginMarketIndexesSave")), message ? (0, react.createElement)("span", null, message) : null));
+		}
 		const name = "dsh-market";
 		const inject = [
 			"slots",
@@ -18440,6 +18525,32 @@ window.__ModuleLoader__.load({ id: "dshmarket", factory: (require) => {
 			ctx.slots.inject("plugins.tab", () => {
 				entries.markPluginsTab();
 				sidebar?.refresh();
+			});
+			ctx.slots.inject("plugins.item", () => ctx.slots.register({
+				name: "plugins.item",
+				id: NS,
+				order: 60,
+				label: () => t("nav"),
+				locale: NS,
+				inject: () => ({ t })
+			}, (ownerProps = {}) => ownerProps.view === "summary" ? t("pluginsItemSummary") : buildMarketElement({ surface: "plugins" })));
+			ctx.inject(["configForms"], (scoped) => {
+				const forms = scoped.configForms;
+				if (forms === void 0) return;
+				forms.whileServed(["plugin-market"], () => {
+					const off = ctx.slots.inject("plugins.item", () => ctx.slots.register({
+						name: "plugins.item",
+						id: "plugin-market",
+						order: 55,
+						label: () => t("pluginMarketItemTitle"),
+						locale: NS,
+						inject: () => ({ t })
+					}, (ownerProps = {}) => ownerProps.view === "summary" ? t("pluginMarketItemSummary") : (0, react.createElement)(PluginMarketIndexesCard, {
+						t,
+						form: forms.get("plugin-market")
+					})));
+					return typeof off === "function" ? off : () => {};
+				});
 			});
 			const Toast = () => (0, react.createElement)(InstallToast, { t });
 			ctx.slots.inject("shell.overlay", () => ctx.slots.register({

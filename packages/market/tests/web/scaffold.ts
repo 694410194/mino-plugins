@@ -75,7 +75,7 @@ export interface WebScaffold {
    * anonymous client that fix exists to refuse — use this for every
    * Node-side call, and bare `fetch` only to assert that refusal.
    */
-  api(path: string, init?: RequestInit): Promise<Response>
+  api(path: string, init?: RequestInit & { cache?: 'default' | 'no-store' | 'reload' | 'no-cache' | 'force-cache' | 'only-if-cached' }): Promise<Response>
   /** Stop dsh and boot it again on the same DSH_HOME, same port. */
   restart(): Promise<void>
   /**
@@ -688,7 +688,7 @@ export async function launchMarketScaffold(options: ScaffoldOptions = {}): Promi
     baseUrl,
     get processLaunchUrl() { return processLaunchUrl },
     home,
-    api: (path: string, init: RequestInit = {}): Promise<Response> => {
+    api: (path: string, init: RequestInit & { cache?: 'default' | 'no-store' | 'reload' | 'no-cache' | 'force-cache' | 'only-if-cached' } = {}): Promise<Response> => {
       const headers = new Headers(init.headers)
       if (sessionCookie !== null) headers.set('cookie', sessionCookie)
       return fetch(`${baseUrl}${path}`, { ...init, headers })

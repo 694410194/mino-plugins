@@ -5,7 +5,7 @@
  * client/client.js; the only externals are the loader module table's react
  * entries.
  */
-import { createElement as h } from 'react'
+import { createElement as h, useEffect, useState, useSyncExternalStore } from 'react'
 import type { ReactNode } from 'react'
 import * as primitives from '@deepseek-ai/dsh-client-ui-primitives'
 import { missingIcons } from './icons.ts'
@@ -92,6 +92,58 @@ interface LayoutService {
 interface SlotsService {
   inject(slot: string, register: () => unknown): void
   register(meta: Record<string, unknown>, component: () => unknown): unknown
+}
+
+/** The subset of the host `configForms` service the index-sources card touches. */
+interface ConfigFormsLite {
+  get(namespace: string): ConfigFormLite
+  whileServed(namespaces: readonly string[], register: () => () => void): () => void
+}
+
+/** One served settings namespace as the card drives it. */
+interface ConfigFormLite {
+  getSnapshot(): { status: string; value?: { indexes?: string[] }; writable?: boolean }
+  subscribe(listener: () => void): () => void
+  set(field: string, value: unknown): Promise<boolean>
+}
+
+/**
+ * The `plugin-market` namespace's index-source editor on its `plugins.item`
+ * page: one URL per line, saved as the `indexes` array the Discover tab's
+ * plugin-market reads.
+ */
+function PluginMarketIndexesCard(props: { t: Translate; form: ConfigFormLite }): ReactNode {
+  const { t, form } = props
+  const snapshot = useSyncExternalStore((listener: () => void) => form.subscribe(listener), () => form.getSnapshot())
+  const [text, setText] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [message, setMessage] = useState<string>()
+  useEffect(() => { setText((snapshot.value?.indexes ?? []).join('\n')) }, [snapshot.value])
+  if (snapshot.status !== 'ready') {
+    return h('p', { className: css.note },
+      t(snapshot.status === 'loading' ? 'pluginMarketIndexesLoading' : 'pluginMarketIndexesUnavailable'))
+  }
+  const writable = snapshot.writable === true
+  const save = async () => {
+    setSaving(true)
+    setMessage(undefined)
+    const urls = text.split('\n').map((line: string) => line.trim()).filter((line: string) => line.length > 0)
+    const ok = await form.set('indexes', urls)
+    setSaving(false)
+    setMessage(t(ok ? 'pluginMarketIndexesSaved' : 'pluginMarketIndexesRejected'))
+  }
+  return h('section', null,
+    h('label', { htmlFor: 'dsh-market-indexes' }, t('pluginMarketIndexesLabel')),
+    h('textarea', {
+      id: 'dsh-market-indexes', value: text, disabled: !writable, rows: 4,
+      style: { display: 'block', boxSizing: 'border-box', width: '100%', marginTop: 6, padding: 8 },
+      onChange: (event: { target: { value: string } }) => { setText(event.target.value) },
+    }),
+    writable ? null : h('p', { className: css.note }, t('pluginMarketIndexesReadOnly')),
+    h('div', { style: { display: 'flex', alignItems: 'center', gap: 10, marginTop: 12 } },
+      h('button', { type: 'button', disabled: !writable || saving, onClick: () => { void save() } },
+        t(saving ? 'pluginMarketIndexesSaving' : 'pluginMarketIndexesSave')),
+      message ? h('span', null, message) : null))
 }
 
 /** The client cordis context shape this plugin relies on (structural: the
@@ -454,6 +506,46 @@ function mountMarket(ctx: MarketClientContext): void {
   ctx.slots.inject('plugins.tab', () => {
     entries.markPluginsTab()
     sidebar?.refresh()
+  })
+
+  // The market's own card in the Plugins page's built-in group: `plugins.item`
+  // entries render as a card whose page this draws with the market's own
+  // element — the same surface as the tab, reachable from the card list too.
+  // Detection is the slot, as everywhere else here.
+  ctx.slots.inject('plugins.item', () => ctx.slots.register({
+    name: 'plugins.item',
+    id: NS,
+    order: 60,
+    label: () => t('nav'),
+    locale: NS,
+    inject: () => ({ t }),
+  }, (ownerProps: { view?: string } = {}) => ownerProps.view === 'summary'
+    ? t('pluginsItemSummary')
+    : buildMarketElement({ surface: 'plugins' })))
+
+  // The official plugin-market's index sources on a sibling card: the account
+  // layer ships the `plugin-market` row (Discover's backend), whose `indexes`
+  // are a served settings namespace. `configForms` is a nested inject, like
+  // `layout` above — a host without the settings service keeps the whole
+  // plugin mounted and simply skips this card.
+  ;(ctx as unknown as {
+    inject(services: string[], callback: (scoped: { configForms?: ConfigFormsLite }) => void): void
+  }).inject(['configForms'], (scoped) => {
+    const forms = scoped.configForms
+    if (forms === undefined) return
+    forms.whileServed(['plugin-market'], () => {
+      const off = ctx.slots.inject('plugins.item', () => ctx.slots.register({
+        name: 'plugins.item',
+        id: 'plugin-market',
+        order: 55,
+        label: () => t('pluginMarketItemTitle'),
+        locale: NS,
+        inject: () => ({ t }),
+      }, (ownerProps: { view?: string } = {}) => ownerProps.view === 'summary'
+        ? t('pluginMarketItemSummary')
+        : h(PluginMarketIndexesCard, { t, form: forms.get('plugin-market') }))) as unknown
+      return typeof off === 'function' ? off as () => void : () => {}
+    })
   })
 
   const Toast = () => h(InstallToast, { t })

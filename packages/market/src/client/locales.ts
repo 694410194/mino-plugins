@@ -806,6 +806,17 @@ export const zh = {
   hostRecoveryRestored: '已恢复 {0} 条设置。刷新页面就能看到。',
   hostRecoveryFail: '恢复失败：',
   hostRecoveryNote: '恢复前会自动存快照，随时能退回。',
+  pluginsItemSummary: '浏览并安装社区目录中的插件。',
+  pluginMarketItemTitle: '发现源',
+  pluginMarketItemSummary: '「发现」页读取的插件索引地址。',
+  pluginMarketIndexesLabel: '索引地址（每行一个 URL）',
+  pluginMarketIndexesLoading: '正在加载索引设置…',
+  pluginMarketIndexesUnavailable: '宿主尚未提供插件市场设置。',
+  pluginMarketIndexesReadOnly: '索引地址由配置文件提供，只读。',
+  pluginMarketIndexesSave: '保存',
+  pluginMarketIndexesSaving: '保存中…',
+  pluginMarketIndexesSaved: '已保存',
+  pluginMarketIndexesRejected: '索引地址未能保存，请检查格式后重试。',
 }
 
 /** A dictionary key; zh is the source of truth, en mirrors it 1:1. */
@@ -1601,6 +1612,17 @@ export const en: Record<MarketKey, string> = {
   hostRecoveryRestored: 'Restored {0} settings. Refresh the page to see them.',
   hostRecoveryFail: 'Restore failed: ',
   hostRecoveryNote: 'A snapshot is taken first, so you can roll this back.',
+  pluginsItemSummary: 'Browse and install plugins from the community catalog.',
+  pluginMarketItemTitle: 'Discover sources',
+  pluginMarketItemSummary: 'The index addresses the Discover tab reads.',
+  pluginMarketIndexesLabel: 'Index URLs (one per line)',
+  pluginMarketIndexesLoading: 'Loading index settings…',
+  pluginMarketIndexesUnavailable: 'The host has not provided plugin market settings.',
+  pluginMarketIndexesReadOnly: 'Index URLs come from a profile file and are read-only.',
+  pluginMarketIndexesSave: 'Save',
+  pluginMarketIndexesSaving: 'Saving…',
+  pluginMarketIndexesSaved: 'Saved',
+  pluginMarketIndexesRejected: 'The index URLs could not be saved. Check the format and try again.',
 }
 
 export const ja: Record<MarketKey, string> = {
@@ -2382,4 +2404,15 @@ export const ja: Record<MarketKey, string> = {
   hostRecoveryRestored: '{0} 件の設定を復元しました。ページを更新すると表示されます。',
   hostRecoveryFail: '復元に失敗しました：',
   hostRecoveryNote: '復元の前にスナップショットが自動で保存されるため、元に戻せます。',
+  pluginsItemSummary: 'コミュニティカタログからプラグインを探してインストールします。',
+  pluginMarketItemTitle: 'Discover ソース',
+  pluginMarketItemSummary: '「Discover」タブが読むインデックスのアドレスです。',
+  pluginMarketIndexesLabel: 'インデックス URL（1 行に 1 件）',
+  pluginMarketIndexesLoading: 'インデックス設定を読み込み中…',
+  pluginMarketIndexesUnavailable: 'ホストがプラグインマーケット設定を提供していません。',
+  pluginMarketIndexesReadOnly: 'インデックス URL はプロファイル由来のため読み取り専用です。',
+  pluginMarketIndexesSave: '保存',
+  pluginMarketIndexesSaving: '保存中…',
+  pluginMarketIndexesSaved: '保存しました',
+  pluginMarketIndexesRejected: 'インデックス URL を保存できませんでした。形式を確認して再試行してください。',
 }

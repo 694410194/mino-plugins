@@ -32,14 +32,14 @@ function writeProfile(manifest: unknown): string {
   return dir
 }
 
-describe('DSH home resolution (dsh-v0.1.2-alpha.1)', () => {
+describe('DSH home resolution (mino home adaptation)', () => {
   it.each([
     ['undefined', undefined],
     ['empty', ''],
     ['whitespace', ' \t '],
   ])('treats %s DSH_HOME as unset', (_label, value) => {
     const env = value === undefined ? {} : { DSH_HOME: value }
-    const expected = join(homedir(), '.dsh')
+    const expected = join(homedir(), '.mino')
 
     expect(resolveDshHome(undefined, env)).toBe(expected)
     if (value === undefined) delete process.env.DSH_HOME
