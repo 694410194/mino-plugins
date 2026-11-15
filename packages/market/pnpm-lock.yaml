@@ -84,6 +84,9 @@ importers:
       katex:
         specifier: ^0.18.7
         version: 0.18.10
+      lightningcss:
+        specifier: ^1.32.0
+        version: 1.33.0
       mdast-util-from-markdown:
         specifier: ^2.0.3
         version: 2.1.0
