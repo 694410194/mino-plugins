@@ -1,0 +1,35 @@
+{
+  "name": "mino-content-ops",
+  "version": "0.1.0",
+  "description": "内容运营技能包：信息采集（AIHOT+热榜）、对标视频拆解、文风指纹模仿、视频复刻（vendored video-shotcraft 全套工作台）——真实素材端到端验证",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-skill",
+    "skills",
+    "video",
+    "copywriting",
+    "wechat"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "private": true,
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-alpha.1 <0.3.0"
+  },
+  "author": "wuyangji"
+}

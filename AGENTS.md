@@ -182,6 +182,13 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
   从 D: 启动落到 `D:\Users\...`；锁是 proper-lockfile 进程内登记，
   清 stateDir 不能解"already held"，要找真占用或换路径。
 - **测试纪律**：插件验收必须真实 agent 对话 + 原始事件流，不只看 UI 装载。
+- **依赖完整性与本机无关（D91）**：构建配置文件（`tsdown.config.*` 等）的裸
+  import 必须在该包**自己的** package.json 声明——本机能构建可能只是旧
+  node_modules 残留顶着，CI 全新安装必炸。交付前跑：`grep -rhoP
+  "(?<=from ')(?:[^./]|\.[^/])[^'"]*" packages/<pkg>/*.config.*` 与
+  deps 比对差集为空。**workspace 排除包**（market/today 等，根
+  `pnpm-workspace.yaml` 负向 glob）各持独立 lockfile，根目录 install
+  扫不到，要 `cd packages/<pkg>` 单独跑。
 - **启动必须带 `--no-open`**（web-app 官方 flag，`dsh --profile plugweb --no-open`）：
   不带则每次 boot 弹默认浏览器攒一排 token 过期黑屏页（`DSH_SDK_NO_BROWSER`
   对 web 档无效）。新 token 见 stdout `dsh web: http://...?token=...`，

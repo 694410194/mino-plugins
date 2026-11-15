@@ -1,0 +1,11 @@
+# 上游 .gitignore 只排除"本机链接生成产物"（public/* 与 src/*index 由脚本生成）。
+# 本包按已生成快照分发，需要全量内容——用 .npmignore 覆盖 .gitignore。
+node_modules/
+.check/
+.parity/
+.render-public/
+.dev.pid
+.dev.log
+*.tsbuildinfo
+dist/
+exports/
