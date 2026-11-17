@@ -13,7 +13,7 @@
 | dsh-dafeiyu | fork dsh-dafeiyu | 推荐位 | Python + PySide6；鲸鱼素材保留可切换，默认 Mino 帧 |
 | dsh-superagent | fork 官方 superagent 原型 + im-watch 源 | 实验向推荐位 | SETUP 向导：bot 账号+准入名单+stateDir；源码在本仓用 tsdown 构建 |
 | mino-comma | 自研 sessionless 主动陪伴（AFK-surf/Comma 启发） | 已实测（plugweb 常驻运行，router 会话+事项域起） | 零配置可跑；接源需 @xmanrui/dsh-im botId（external-consumer 独占），推送出口需 notify.botId+targetId；worker 委派未落地 |
-| mino-brief | 自研早晚简报（固定简报员会话+宿主 schedule daily 条目） | 待实测（plugweb 合成未跑） | 零配置可跑；定时条目共用户可暂停/删除（删后 tombstone 不复活）；投递软依赖 mino-today 的 today_post |
+| mino-brief | 自研早晚简报（固定简报员会话+宿主 schedule daily 条目） | 已实测（plugweb：preset 会话建成、双 daily 入宿主 catalog、21:00/21:12 两次准点投递、persona+时区齐、装 mino-today 后 today_post/diary_write 到达会话工具面、无内容时按设计静默收尾） | 零配置可跑；定时条目用户可暂停/删除（删后 tombstone 不复活）；投递软依赖 mino-today 的 today_post |
 | mino-feiyu-garden | 自研「海蒂花园」养鱼工作台（media-desk 仅审美参考，未集成） | 已实测（plugweb 侧栏行+main 页渲染、状态路由、喂食/摸头/改名动作全过） | 无；状态落 `DSH_HOME \|\| ~/.mino` 下 feiyu-garden/；客户端早抓+乐观态抗 socket 池拥挤 |
 | dsh-sillytavern | fork KamishiroRei/dsh-sillytavern | 推荐位 | 无（预设选“酒馆跑团”）；ST V2/V3/PNG 卡+世界书+MVU |
 | dshmarket | fork dshmarket | **是**（内置 bundle 层，仍 private 不进索引——市场不能安装自身） | 社区全量目录 + backup/drain/channels；`plugins.item` 顶层卡片复用其市场页；注意其目录未经精选闸门，与 mino.baby 精选通道（「发现」）互补并存 |
