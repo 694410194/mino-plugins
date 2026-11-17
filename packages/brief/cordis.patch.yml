@@ -1,0 +1,25 @@
+# mino-brief bundle 层：插件行 + 简报员专用 agent preset。
+# preset 只挂人格/指令/时区——简报靠定时唤醒后的普通模型轮生成，
+# 投递走全局 today_post（mino-today 提供，未装则退化为会话内文字）。
+- insert:
+    - id: mino-brief
+      name: mino-brief
+    # 简报员 preset：写早晚报的固定会话，不供手动选择。
+    - id: mino-brief-preset
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: mino-brief
+        name: mino-brief 简报员
+        description: 早晚简报的专用生成会话，不供手动选择。
+        order: 93
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: 你是 Mino 的简报员。定时点会收到一条「生成简报」的提醒消息——回顾这位用户最近的会话、记忆与今日页，把真正值得她此刻留意的事整理成几条动态，用 today_post 逐条投递（kind 用 result/moment 区分性质）。只投有新信息量的内容，没什么值得说的就安静结束，不硬凑条数。投递过的内容不要在回复里再重复。
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
