@@ -90,10 +90,10 @@ function SuggestionChips({ item, t, actions }: { item: FeedItem; t: Translate; a
   )
 }
 
-function FeedCard({ item, t, now, actions, onDelete }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void }) {
+function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void }) {
   const [confirming, setConfirming] = useState(false)
   return (
-    <li className={css.feedCard} data-kind={item.kind}>
+    <li className={css.feedCard} data-kind={item.kind} data-pinned={item.pinned || undefined}>
       <div className={css.feedHead}>
         <span className={css.feedKind} data-kind={item.kind}>
           <span className={css.feedKindIcon}>{KIND_ICON[item.kind]}</span>
@@ -101,6 +101,32 @@ function FeedCard({ item, t, now, actions, onDelete }: { item: FeedItem; t: Tran
         </span>
         {item.source ? <span className={css.chip} data-tone="source">{item.source}</span> : null}
         <span className={css.feedTime}>{relTime(item.at, now)}</span>
+        <button
+          type="button"
+          className={css.miniButton}
+          title={item.pinned ? t('feed.unpin') : t('feed.pin')}
+          onClick={() => onPin(item.id, !item.pinned)}
+        >{item.pinned ? '📌' : '📍'}</button>
+        <button
+          type="button"
+          className={css.miniButton}
+          data-active={item.feedback === 'up' || undefined}
+          title={t('feed.up')}
+          onClick={() => onFeedback(item.id, 'up')}
+        >👍</button>
+        <button
+          type="button"
+          className={css.miniButton}
+          data-active={item.feedback === 'down' || undefined}
+          title={t('feed.down')}
+          onClick={() => onFeedback(item.id, 'down')}
+        >👎</button>
+        <button
+          type="button"
+          className={css.miniButton}
+          title={t('feed.notInterested')}
+          onClick={() => onFeedback(item.id, 'not_interested')}
+        >⊘</button>
         {item.sessionId ? (
           <button
             type="button"
@@ -140,14 +166,19 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
     if (!summary) return []
     const map = new Map<string, FeedGroup>()
     for (const item of summary.items) {
-      const batch = batchOf(item.at)
       const day = dayKey(new Date(item.at))
-      const key = `${day}-${batch}`
-      const label = `${t(`feed.group.${batch}`)} · ${Number(day.slice(5, 7))}/${Number(day.slice(8, 10))}`
+      const batch = batchOf(item.at)
+      // 显式 batchId 的分组优先（简报/关注的成批产出），否则回落时段分桶。
+      // 键以日期开头，保证跨天排序仍由天主导。
+      const key = item.batchId ? `${day}|批|${item.batchId}` : `${day}|${batch}`
+      const label = item.batchId
+        ? `${item.batchId} · ${Number(day.slice(5, 7))}/${Number(day.slice(8, 10))}`
+        : `${t(`feed.group.${batch}`)} · ${Number(day.slice(5, 7))}/${Number(day.slice(8, 10))}`
       const g = map.get(key) ?? { key, label, items: [] }
       g.items.push(item)
       map.set(key, g)
     }
+    for (const g of map.values()) g.items.sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned))
     return [...map.values()].sort((a, b) => b.key.localeCompare(a.key))
   }, [summary, t])
 
@@ -223,6 +254,8 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
                   now={now}
                   actions={actions}
                   onDelete={id => { void api.deleteItem(id).then(onChanged).catch(() => {}) }}
+                  onFeedback={(id, signal) => { void api.feedback(id, signal).then(onChanged).catch(() => {}) }}
+                  onPin={(id, pinned) => { void api.setPin(id, pinned).then(onChanged).catch(() => {}) }}
                 />
               ))}
             </ul>

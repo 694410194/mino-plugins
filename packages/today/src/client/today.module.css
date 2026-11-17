@@ -500,6 +500,12 @@
   background: var(--today-accent-soft);
 }
 .miniButton:disabled { opacity: 0.5; cursor: default; }
+.miniButton[data-active] {
+  color: var(--today-accent-ink);
+  border-color: var(--today-accent);
+  background: var(--today-accent-soft);
+}
+.feedCard[data-pinned] { border-color: var(--today-accent); }
 
 /* ---------- 任务卡 ---------- */
 .jobList {

@@ -7,7 +7,7 @@
  * fish-memory 自己的 /dsh-fish-memory/list 直接提供给客户端，本插件不读它的存储。
  */
 import type { Context } from '@deepseek-ai/cordis'
-import { addDiaryEntry, addItem, dayKey, deleteDiaryEntry, loadStore, saveStore, type FeedItem, type Suggestion } from './store.ts'
+import { addDiaryEntry, addItem, addWatch, dayKey, deleteDiaryEntry, loadStore, removeWatch, saveStore, type FeedItem, type Suggestion, type Watch } from './store.ts'
 
 export const name = 'mino-today'
 export const inject = ['webServer', 'tools']
@@ -32,10 +32,20 @@ interface ToolsFace {
   register(tool: Record<string, unknown>, options?: Record<string, unknown>): () => void
 }
 
-/** 宿主 schedule 服务（可选）：catalog() 返回浏览器安全的任务条目，edit() 暂停/恢复。 */
+/** 宿主 schedule 服务（可选）：catalog() 返回浏览器安全的任务条目，create() 建条目，edit() 暂停/恢复/删除。 */
 interface ScheduleFace {
   catalog(): Promise<ScheduleEntry[]>
+  /** 返回入库后的任务条目（含 id）；miss/conflict 不抛，看 edit 返回值。 */
+  create(request: ScheduleCreateRequest): Promise<ScheduleEntry>
+  /** 更新返回条目；miss/conflict 返回 { id, code }，删除成功返回 { id, deleted: true }——均不抛。 */
   edit(request: { id: string; action: 'update' | 'delete'; patch?: { active?: boolean } }): Promise<unknown>
+}
+
+interface ScheduleCreateRequest {
+  title: string
+  prompt: string
+  timing: { kind: 'daily'; daily: { time: string; time_zone: string } }
+  target?: { kind: 'new'; create?: { agentPreset?: string } }
 }
 
 interface ScheduleEntry {
@@ -56,6 +66,11 @@ const MAX_SOURCE = 40
 const MAX_SUGGESTIONS = 4
 const MAX_SUGGESTION_LABEL = 40
 const MAX_SUGGESTION_PROMPT = 400
+const MAX_BATCH = 24
+const MAX_WATCH_TOPIC = 60
+const MAX_WATCH_PROMPT = 600
+const WATCH_TIME_RE = /^\d{2}:\d{2}(:\d{2})?$/
+const FEEDBACK_SIGNALS = new Set(['up', 'down', 'not_interested'])
 
 function sendJson(res: NodeRes, status: number, body: unknown): void {
   res.writeHead(status, JSON_HEADERS)
@@ -116,6 +131,11 @@ function clipSuggestions(input: unknown): Suggestion[] | undefined {
 
 const KINDS = new Set(['note', 'result', 'moment'])
 
+/** 宿主 schedule 服务（可选，缺席时相关能力降级）。 */
+function scheduleOf(ctx: Context): ScheduleFace | undefined {
+  try { return ctx.get('schedule') as ScheduleFace | undefined } catch { return undefined }
+}
+
 function makeTools(ctx: Context): Record<string, unknown>[] {
   return [
     {
@@ -140,6 +160,10 @@ function makeTools(ctx: Context): Record<string, unknown>[] {
           source: {
             type: 'string',
             description: '可选。这条动态来自哪（≤40字的小标签），比如「会话」「定时任务」「日报」。',
+          },
+          batch: {
+            type: 'string',
+            description: '可选。批次标签（≤24字）——同一批产出的卡片传同一个标签（如「早报」「晚报」），feed 里会并成一组。散件别传。',
           },
           suggestions: {
             type: 'array',
@@ -167,7 +191,7 @@ function makeTools(ctx: Context): Record<string, unknown>[] {
           return [{ type: 'text', text: ok ? '✓ 已投到今日页' : '✗ ' + String((value as { message?: string } | null)?.message || '没投成') }]
         },
       },
-      async execute(args: { title?: string; body?: string; kind?: string; source?: string; suggestions?: unknown }, exec: unknown) {
+      async execute(args: { title?: string; body?: string; kind?: string; source?: string; batch?: string; suggestions?: unknown }, exec: unknown) {
         const title = String(args?.title || '').trim()
         if (!title) return { ok: false, message: '标题是空的' }
         const store = loadStore()
@@ -177,6 +201,7 @@ function makeTools(ctx: Context): Record<string, unknown>[] {
           body: args?.body ? clip(String(args.body).trim(), MAX_BODY) : undefined,
           sessionId: sessionIdFromExec(exec) || undefined,
           source: args?.source ? clip(String(args.source).trim(), MAX_SOURCE) : undefined,
+          batchId: args?.batch ? clip(String(args.batch).trim(), MAX_BATCH) : undefined,
           suggestions: clipSuggestions(args?.suggestions),
         })
         saveStore(store)
@@ -217,6 +242,121 @@ function makeTools(ctx: Context): Record<string, unknown>[] {
         const { date } = addDiaryEntry(store, args?.date, clip(text, MAX_DIARY_TEXT), sessionIdFromExec(exec) || undefined)
         saveStore(store)
         return { ok: true, date }
+      },
+    },
+    {
+      name: 'watch_add',
+      description:
+        '开始长期追踪一个主题——她说「关注一下 X」「以后帮我盯着 X」时用。' +
+        '会建一条每天定时去查的日程（出现在「定时」里，她可暂停可删），到点查到有新进展就 today_post 投给她。' +
+        '只追她明确说要长期关注的；一次性的查一下直接查，别建追踪。',
+      parameters: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['topic'],
+        properties: {
+          topic: { type: 'string', description: '追什么（≤60字），比如「竞品的定价变化」。' },
+          prompt: { type: 'string', description: '可选。到点让查者做的事（≤600字）；缺省用「看看这个主题有没有新进展，有就投一条今日卡」。' },
+          time: { type: 'string', description: '可选。每天几点查（HH:mm，本地时区），默认 09:30。' },
+          preset: { type: 'string', description: '可选。让哪个 preset 会话去查，默认 mino-brief（简报员）。' },
+        },
+      },
+      output: {
+        schema: {
+          type: 'object',
+          additionalProperties: false,
+          properties: { ok: { type: 'boolean' }, message: { type: 'string' }, id: { type: 'string' } },
+        },
+        render: (_args: unknown, value: unknown) => {
+          const v = value as { ok?: boolean; message?: string } | null
+          return [{ type: 'text', text: v?.ok !== false ? '✓ 已开始追踪' : '✗ ' + String(v?.message || '没建成') }]
+        },
+      },
+      async execute(args: { topic?: string; prompt?: string; time?: string; preset?: string }) {
+        const topic = String(args?.topic || '').trim()
+        if (!topic) return { ok: false, message: '主题为空' }
+        const time = WATCH_TIME_RE.test(String(args?.time || '')) ? String(args!.time) : '09:30'
+        const custom = String(args?.prompt || '').trim()
+        const prompt = (custom ? clip(custom, MAX_WATCH_PROMPT) : '')
+          || `追踪主题「${clip(topic, MAX_WATCH_TOPIC)}」：看看有没有值得告诉她的新进展——有就 today_post 投一条（batch=关注，source=关注·${clip(topic, 20)}），没有就安静结束。`
+        const store = loadStore()
+        const watch = addWatch(store, { topic: clip(topic, MAX_WATCH_TOPIC), prompt, enabled: true })
+        const sched = scheduleOf(ctx)
+        if (sched) {
+          try {
+            const created = await sched.create({
+              title: `关注：${clip(topic, 40)}`,
+              prompt,
+              timing: { kind: 'daily', daily: { time: time.length === 5 ? `${time}:00` : time, time_zone: 'Asia/Shanghai' } },
+              target: { kind: 'new', create: { agentPreset: args?.preset ? clip(String(args.preset).trim(), 60) : 'mino-brief' } },
+            })
+            watch.scheduleId = created.id
+          } catch { /* 建条目失败也只留 watch 记录 */ }
+        }
+        saveStore(store)
+        return { ok: true, id: watch.id, message: watch.scheduleId ? undefined : '已记录，但宿主没有调度服务，不会自动跑' }
+      },
+    },
+    {
+      name: 'watch_list',
+      description: '列出正在长期追踪的主题（「关注 X」建的那些）。',
+      parameters: { type: 'object', additionalProperties: false, properties: {} },
+      output: {
+        schema: {
+          type: 'object',
+          additionalProperties: false,
+          properties: { ok: { type: 'boolean' }, watches: { type: 'array', items: { type: 'object' } } },
+        },
+        render: (_args: unknown, value: unknown) => {
+          const v = value as { watches?: { id: string; topic: string; enabled: boolean }[] } | null
+          const ws = v?.watches ?? []
+          if (!ws.length) return [{ type: 'text', text: '没有在追的主题' }]
+          const lines = ws.map(w => `- ${w.topic}（id: ${w.id}${w.enabled ? '' : '，已暂停'}）`)
+          return [{ type: 'text', text: `在追 ${ws.length} 个主题：\n${lines.join('\n')}` }]
+        },
+      },
+      async execute() {
+        const watches = loadStore().watches.map(w => ({ id: w.id, topic: w.topic, enabled: w.enabled, scheduled: !!w.scheduleId, at: w.at }))
+        return { ok: true, watches }
+      },
+    },
+    {
+      name: 'watch_remove',
+      description: '停止追踪一个主题（她说「别再看 X 了」时用）；连它的定时日程一起撤。先用 watch_list 拿 id。',
+      parameters: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['id'],
+        properties: { id: { type: 'string', description: 'watch_list 里那条的 id；也可以直接给主题原文（唯一匹配才撤）。' } },
+      },
+      output: {
+        schema: {
+          type: 'object',
+          additionalProperties: false,
+          properties: { ok: { type: 'boolean' }, message: { type: 'string' } },
+        },
+        render: (_args: unknown, value: unknown) => {
+          const v = value as { ok?: boolean; message?: string } | null
+          return [{ type: 'text', text: v?.ok !== false ? '✓ 已撤掉' : '✗ ' + String(v?.message || '没这条') }]
+        },
+      },
+      async execute(args: { id?: string }) {
+        const id = String(args?.id || '').trim()
+        const store = loadStore()
+        // 先按 id 精确摘；摘不到再按主题匹配（模型常直接给主题原文），必须唯一。
+        let removed = removeWatch(store, id)
+        if (!removed) {
+          const hits = store.watches.filter(w => w.topic === id || w.topic.includes(id))
+          if (hits.length === 1 && hits[0]) removed = removeWatch(store, hits[0].id)
+          else if (hits.length > 1) return { ok: false, message: `主题「${id}」对上 ${hits.length} 条，给具体 id：${hits.map(w => w.id).join('、')}` }
+        }
+        if (!removed) return { ok: false, message: '没这条追踪，先 watch_list 看有哪些' }
+        const sched = scheduleOf(ctx)
+        if (sched && removed.scheduleId) {
+          try { await sched.edit({ id: removed.scheduleId, action: 'delete' }) } catch { /* 条目已没 */ }
+        }
+        saveStore(store)
+        return { ok: true, message: `已撤「${removed.topic}」` }
       },
     },
   ]
@@ -292,7 +432,8 @@ export function apply(ctx: Context): void {
     const body = await readBody(req)
     const id = String(body.id || '')
     if (!id || typeof body.active !== 'boolean') return sendJson(res, 400, { ok: false, error: '参数不对' })
-    const result = await schedule.edit({ id, action: 'update', patch: { active: body.active } })
+    const result = await schedule.edit({ id, action: 'update', patch: { active: body.active } }) as { code?: string }
+    if (result?.code) return sendJson(res, result.code === 'schedule_not_found' ? 404 : 409, { ok: false, error: result.code })
     sendJson(res, 200, { ok: true, result })
   })
 
@@ -319,6 +460,49 @@ export function apply(ctx: Context): void {
     item.dismissed = true
     saveStore(store)
     sendJson(res, 200, { ok: true })
+  })
+
+  /** 卡片反馈：up/down 留信号；not_interested 顺带划掉（Today「不感兴趣」语义）。 */
+  route('/mino-today/api/item/feedback', async (req, res) => {
+    const body = await readBody(req)
+    const id = String(body.id || '')
+    const signal = String(body.signal || '')
+    if (!FEEDBACK_SIGNALS.has(signal)) return sendJson(res, 400, { ok: false, error: '信号不对' })
+    const store = loadStore()
+    const item = store.items.find(i => i.id === id)
+    if (!item) return sendJson(res, 404, { ok: false, error: '没这条' })
+    item.feedback = signal as FeedItem['feedback']
+    if (signal === 'not_interested') item.dismissed = true
+    saveStore(store)
+    sendJson(res, 200, { ok: true })
+  })
+
+  /** 置顶开关。 */
+  route('/mino-today/api/item/pin', async (req, res) => {
+    const body = await readBody(req)
+    const id = String(body.id || '')
+    const store = loadStore()
+    const item = store.items.find(i => i.id === id)
+    if (!item) return sendJson(res, 404, { ok: false, error: '没这条' })
+    item.pinned = body.pinned === undefined ? !item.pinned : body.pinned === true
+    saveStore(store)
+    sendJson(res, 200, { ok: true, pinned: item.pinned })
+  })
+
+  /** 正在追踪的主题清单。 */
+  route('/mino-today/api/watches', async (_req, res) => {
+    const store = loadStore()
+    sendJson(res, 200, {
+      ok: true,
+      watches: store.watches.map(w => ({
+        id: w.id,
+        topic: w.topic,
+        prompt: w.prompt,
+        scheduleId: w.scheduleId ?? null,
+        enabled: w.enabled,
+        at: w.at,
+      })),
+    })
   })
 
   route('/mino-today/api/item/delete', async (req, res) => {

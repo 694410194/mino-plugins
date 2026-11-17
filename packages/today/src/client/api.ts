@@ -14,6 +14,10 @@ export interface FeedItem {
   sessionId?: string
   source?: string
   suggestions?: Suggestion[]
+  /** 生成方给的批次标签；同批卡片并成一组显示。 */
+  batchId?: string
+  pinned?: boolean
+  feedback?: 'up' | 'down' | 'not_interested'
 }
 
 export interface ScheduleCard {
@@ -82,6 +86,11 @@ export const api = {
   dismiss: (id: string) => postJson<{ ok: boolean }>('/mino-today/api/dismiss', { id }),
   /** 真删一条动态（dismiss 只是划出视野）。 */
   deleteItem: (id: string) => postJson<{ ok: boolean }>('/mino-today/api/item/delete', { id }),
+  /** 卡片反馈：up/down 留信号；not_interested 顺带划掉。 */
+  feedback: (id: string, signal: 'up' | 'down' | 'not_interested') =>
+    postJson<{ ok: boolean }>('/mino-today/api/item/feedback', { id, signal }),
+  /** 置顶开关。 */
+  setPin: (id: string, pinned: boolean) => postJson<{ ok: boolean; pinned: boolean }>('/mino-today/api/item/pin', { id, pinned }),
   /** 定时任务暂停/恢复（id + 目标状态）。 */
   setScheduleActive: (id: string, active: boolean) => postJson<{ ok: boolean }>('/mino-today/api/schedule/edit', { id, active }),
   diaries: () => getJson<{ ok: boolean; dates: DiaryListRow[] }>('/mino-today/api/diaries'),

@@ -25,6 +25,23 @@ export interface FeedItem {
   source?: string
   suggestions?: Suggestion[]
   dismissed?: boolean
+  /** 生成方给的批次标签（如「早报」「晚报」）；同批卡片在 feed 里并成一组。 */
+  batchId?: string
+  /** 用户置顶——组内排在最前。 */
+  pinned?: boolean
+  /** 用户反馈信号；not_interested 同时意味着划掉。 */
+  feedback?: 'up' | 'down' | 'not_interested'
+}
+
+/** 「关注 X」追踪：用户点名的长期关注主题，绑一条宿主 schedule 定时去查。 */
+export interface Watch {
+  id: string
+  topic: string
+  prompt: string
+  /** 宿主 schedule 条目 id（schedule 服务缺失时为空——只记不跑）。 */
+  scheduleId?: string
+  at: string
+  enabled: boolean
 }
 
 export interface DiaryEntry {
@@ -41,6 +58,7 @@ export interface Diary {
 export interface Store {
   items: FeedItem[]
   diaries: Record<string, Diary>
+  watches: Watch[]
 }
 
 /** 存留的动态卡片上限；先丢最旧的已划掉卡片，再丢最旧的。 */
@@ -52,7 +70,7 @@ const STORE_DIR = join(process.env.DSH_HOME || join(homedir(), '.mino'), 'mino-t
 const STORE_FILE = join(STORE_DIR, 'store.json')
 
 function emptyStore(): Store {
-  return { items: [], diaries: {} }
+  return { items: [], diaries: {}, watches: [] }
 }
 
 export function loadStore(): Store {
@@ -61,6 +79,7 @@ export function loadStore(): Store {
     const store = emptyStore()
     if (Array.isArray(raw?.items)) store.items = raw.items
     if (raw && typeof raw.diaries === 'object' && raw.diaries !== null) store.diaries = raw.diaries
+    if (Array.isArray(raw?.watches)) store.watches = raw.watches
     return store
   } catch {
     return emptyStore()
@@ -95,6 +114,7 @@ export function addItem(store: Store, item: Omit<FeedItem, 'id' | 'at'> & { at?:
   if (item.body) full.body = item.body
   if (item.sessionId) full.sessionId = item.sessionId
   if (item.source) full.source = item.source
+  if (item.batchId) full.batchId = item.batchId
   if (item.suggestions?.length) full.suggestions = item.suggestions
   store.items.push(full)
   if (store.items.length > MAX_ITEMS) {
@@ -131,4 +151,22 @@ export function deleteDiaryEntry(store: Store, date: string, at: string): boolea
   if (diary.entries.length === 0) delete store.diaries[date]
   else diary.updatedAt = new Date().toISOString()
   return true
+}
+
+/** 登记一条「关注」追踪，返回它的 id。 */
+export function addWatch(store: Store, watch: Omit<Watch, 'id' | 'at'>): Watch {
+  const full: Watch = {
+    id: 'wt' + Date.now().toString(36) + Math.floor(Math.random() * 10000).toString(36),
+    at: new Date().toISOString(),
+    ...watch,
+  }
+  store.watches.push(full)
+  return full
+}
+
+/** 按 id 摘一条 watch（返回被摘的，方便拿 scheduleId 去删宿主条目）。 */
+export function removeWatch(store: Store, id: string): Watch | undefined {
+  const idx = store.watches.findIndex(w => w.id === id)
+  if (idx < 0) return undefined
+  return store.watches.splice(idx, 1)[0]
 }
