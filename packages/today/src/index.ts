@@ -527,6 +527,20 @@ export function apply(ctx: Context): void {
     sendJson(res, 200, { ok: true })
   })
 
+  /** 「调整卡片」自由文本：存进 item.adjustNotes，生成方经 feedbackSummary 按 source 取回。 */
+  route('/mino-today/api/item/adjust', async (req, res) => {
+    const body = await readBody(req)
+    const id = String(body.id || '')
+    const note = clip(String(body.note || '').trim(), 300)
+    if (!note) return sendJson(res, 400, { ok: false, error: '内容是空的' })
+    const store = loadStore()
+    const item = store.items.find(i => i.id === id)
+    if (!item) return sendJson(res, 404, { ok: false, error: '没这条' })
+    item.adjustNotes = [...(item.adjustNotes ?? []), note].slice(-3)
+    saveStore(store)
+    sendJson(res, 200, { ok: true })
+  })
+
   /** 已读标记：{id} 单条；{all:true} 全部标已读。 */
   route('/mino-today/api/item/read', async (req, res) => {
     const body = await readBody(req)
@@ -623,20 +637,22 @@ export function apply(ctx: Context): void {
     sendJson(res, 200, { ok: true })
   })
 
-  /** 陪伴类插件（call 等）消费反馈信号的公开服务面：按 source 聚合卡片反馈。 */
-  interface FeedbackRow { source: string; up: number; down: number; notInterested: number }
+  /** 陪伴类插件（call 等）消费反馈信号的公开服务面：按 source 聚合卡片反馈 + 调整文本。 */
+  interface FeedbackRow { source: string; up: number; down: number; notInterested: number; adjustments: string[] }
   ;(ctx as Context & { provide: (name: string, svc: unknown) => void }).provide('mino-today', {
     feedbackSummary(): FeedbackRow[] {
       const rows = new Map<string, FeedbackRow>()
       for (const item of loadStore().items) {
-        if (!item.source || !item.feedback) continue
-        const row = rows.get(item.source) ?? { source: item.source, up: 0, down: 0, notInterested: 0 }
+        if (!item.source) continue
+        const row = rows.get(item.source) ?? { source: item.source, up: 0, down: 0, notInterested: 0, adjustments: [] }
         if (item.feedback === 'up') row.up++
         else if (item.feedback === 'down') row.down++
-        else row.notInterested++
+        else if (item.feedback === 'not_interested') row.notInterested++
+        if (item.adjustNotes?.length) row.adjustments.push(...item.adjustNotes)
+        row.adjustments = row.adjustments.slice(-5)
         rows.set(item.source, row)
       }
-      return [...rows.values()]
+      return [...rows.values()].filter(r => r.up + r.down + r.notInterested + r.adjustments.length > 0)
     },
   })
 

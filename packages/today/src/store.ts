@@ -37,6 +37,8 @@ export interface FeedItem {
   pinned?: boolean
   /** 用户反馈信号；not_interested 同时意味着划掉。 */
   feedback?: 'up' | 'down' | 'not_interested'
+  /** 「调整卡片」自由文本（Today briefFeedback.adjust 语义）：生成方按 source 聚合读取。 */
+  adjustNotes?: string[]
   /** 结构化卡体；缺省就是普通文字卡。 */
   card?: FeedCard
   /** 已读标记（ISO 时间）；缺省=未读，卡片上有未读点。 */

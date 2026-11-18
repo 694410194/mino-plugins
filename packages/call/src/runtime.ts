@@ -48,9 +48,9 @@ interface ToolsExecFace {
   }): Promise<unknown>
 }
 
-/** The `mino-today` preference face: per-source aggregated feed feedback. */
+/** The `mino-today` preference face: per-source aggregated feed feedback plus adjust texts. */
 interface TodayFace {
-  feedbackSummary(): { source: string; up: number; down: number; notInterested: number }[]
+  feedbackSummary(): { source: string; up: number; down: number; notInterested: number; adjustments?: string[] }[]
 }
 
 export interface RuntimeOptions {
@@ -331,14 +331,16 @@ export class Runtime implements SourceHost, TaskHost {
     return `call:${items[0]?.sourceKind ?? 'unknown'}`
   }
 
-  /** Sources the user muted in the feed: any not_interested, or more downs than ups. */
-  private mutedFeedSources(): Set<string> {
+  /** Feed feedback surface: muted sources plus the person's free-text card adjustments. */
+  private feedFeedback(): { muted: Set<string>; adjustments: { source: string; notes: string[] }[] } {
     const today = this.ctx.get('mino-today') as TodayFace | undefined
     const muted = new Set<string>()
+    const adjustments: { source: string; notes: string[] }[] = []
     for (const row of today?.feedbackSummary?.() ?? []) {
       if (row.notInterested > 0 || row.down > row.up) muted.add(row.source)
+      if (row.adjustments?.length) adjustments.push({ source: row.source, notes: row.adjustments })
     }
-    return muted
+    return { muted, adjustments }
   }
 
   /** Hand a delivered notification to the feed so its card can gather feedback (soft dep). */
@@ -391,7 +393,7 @@ export class Runtime implements SourceHost, TaskHost {
       }
     }
 
-    const muted = this.mutedFeedSources()
+    const { muted, adjustments } = this.feedFeedback()
     const judged = this.options.decideModel
       ? await judgeMatters(this.ctx, this.options.decideModel, pending, this.controller.signal, {
         // 跨源关联：把最近判过的事项塞给 judge，重复旧题不再升级（「记住旧任务」闭环）。
@@ -401,6 +403,7 @@ export class Runtime implements SourceHost, TaskHost {
           .slice(0, 10)
           .map(([, m]) => `[${m.decision ?? m.status}] ${m.title}`),
         muted: [...muted],
+        adjustments,
       })
       : undefined
 

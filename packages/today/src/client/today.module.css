@@ -539,6 +539,8 @@
   transform: translateY(-1px);
 }
 .feedCard[data-nav] { cursor: pointer; }
+/* backdrop-filter 让每张卡自带层叠上下文——开着 ⋯ 菜单的卡要抬到兄弟卡之上，否则菜单被下一张卡盖住 */
+.feedCard:has(.feedMenu) { z-index: 10; }
 /* provider 行：对齐 client-today-card-shell——图标+来源名粗体小字+更新于，无左侧色条 */
 .feedHead {
   display: flex;
@@ -630,6 +632,42 @@
   cursor: pointer;
 }
 .scheduleMore:hover { color: var(--today-accent); }
+
+/* 「调整卡片」卡内编辑区（对齐 briefFeedback.adjust 对话框语义） */
+.adjustBox {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 0.5px solid var(--glass-e-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.55);
+}
+.adjustInput {
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  resize: none;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--t-ink);
+  outline: none;
+}
+.adjustRow {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+.adjustSaved {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--t-ink-3);
+}
+:global(body[data-ds-dark-theme]) .adjustBox {
+  background: rgba(255, 255, 255, 0.06);
+}
 
 /* 建议 chips：emoji + label，点了把 prompt 发回写卡片的会话 */
 .suggestRow {

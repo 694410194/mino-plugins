@@ -63,6 +63,15 @@ export interface DiaryEntry {
   sessionId?: string
 }
 
+export interface Watch {
+  id: string
+  topic: string
+  prompt?: string
+  scheduleId?: string | null
+  enabled: boolean
+  at: string
+}
+
 export interface MemoryRow {
   id: string
   text: string
@@ -99,6 +108,8 @@ export const api = {
   /** 卡片反馈：up/down 留信号；not_interested 顺带划掉。 */
   feedback: (id: string, signal: 'up' | 'down' | 'not_interested') =>
     postJson<{ ok: boolean }>('/mino-today/api/item/feedback', { id, signal }),
+  /** 「调整卡片」自由文本：生成方按 source 取回并折进下次产出。 */
+  adjust: (id: string, note: string) => postJson<{ ok: boolean }>('/mino-today/api/item/adjust', { id, note }),
   /** 置顶开关。 */
   setPin: (id: string, pinned: boolean) => postJson<{ ok: boolean; pinned: boolean }>('/mino-today/api/item/pin', { id, pinned }),
   /** 标已读：单条或全部。 */
@@ -109,6 +120,8 @@ export const api = {
   diary: (date: string) => getJson<{ ok: boolean; date: string; entries: DiaryEntry[] }>(`/mino-today/api/diary?date=${encodeURIComponent(date)}`),
   addDiary: (text: string, date?: string) => postJson<{ ok: boolean; date: string }>('/mino-today/api/diary', { text, date }),
   deleteDiaryEntry: (date: string, at: string) => postJson<{ ok: boolean }>('/mino-today/api/diary/delete', { date, at }),
+  /** 追踪中的主题（live widget 对应物）。 */
+  watches: () => getJson<{ ok: boolean; watches: Watch[] }>('/mino-today/api/watches'),
   /** fish-memory 自己的路由；插件不在 → fetch 抛错，由调用方转「未安装」态。 */
   memoryList: () => getJson<{
     ok: boolean

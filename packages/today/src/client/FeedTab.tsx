@@ -9,7 +9,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 const WINDOW_DAYS = 14
 /** 每次露出的条数（对应 today-feed-sentinel 的增量加载）。 */
 const PAGE = 12
-import { api, type FeedCard as FeedCardBody, type FeedItem, type ScheduleCard, type Summary } from './api.ts'
+import { api, type FeedCard as FeedCardBody, type FeedItem, type ScheduleCard, type Summary, type Watch } from './api.ts'
 import { batchOf, dayKey, edgeGlowHandlers, hhmm, relTime, useNow } from './shared.tsx'
 import type { TodayActions, Translate } from './TodayPage.tsx'
 import css from './today.module.css'
@@ -153,7 +153,7 @@ function CardBody({ card }: { card: FeedCardBody }) {
  * 卡片溢出菜单：Today 的 more 菜单（briefFeedback.more=更多）——
  * 置顶/反馈/不感兴趣/打开会话/删除全部收进一个 ⋯，外点与 Esc 关闭。
  */
-function CardMenu({ item, t, actions, onDelete, onFeedback, onPin }: { item: FeedItem; t: Translate; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void }) {
+function CardMenu({ item, t, actions, onDelete, onFeedback, onPin, onAdjust }: { item: FeedItem; t: Translate; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void; onAdjust: () => void }) {
   const [open, setOpen] = useState(false)
   const [confirming, setConfirming] = useState(false)
   const rootRef = useRef<HTMLSpanElement>(null)
@@ -193,6 +193,9 @@ function CardMenu({ item, t, actions, onDelete, onFeedback, onPin }: { item: Fee
           </button>
           <button type="button" role="menuitem" className={css.menuItem} onClick={act(() => onFeedback(item.id, 'not_interested'))}>
             {t('feed.notInterested')}
+          </button>
+          <button type="button" role="menuitem" className={css.menuItem} onClick={act(onAdjust)}>
+            {t('feed.adjust')}
           </button>
           {item.sessionId ? (
             <button type="button" role="menuitem" className={css.menuItem} onClick={act(() => actions.openSession(item.sessionId!))}>
@@ -252,36 +255,86 @@ function updatedLabel(iso: string, now: number, t: Translate): string {
   return t('feed.updated.date', { date: `${d.getMonth() + 1}/${d.getDate()}` })
 }
 
-function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void; onRead: (id: string) => void }) {
+/** 「调整卡片」卡内编辑区：自由文本 → item.adjustNotes → 生成方按 source 取回。 */
+function AdjustEditor({ item, t, onClose }: { item: FeedItem; t: Translate; onClose: (saved: boolean) => void }) {
+  const [note, setNote] = useState('')
+  const [saving, setSaving] = useState(false)
+  return (
+    <div className={css.adjustBox}>
+      <textarea
+        className={css.adjustInput}
+        value={note}
+        placeholder={t('feed.adjustPlaceholder')}
+        rows={2}
+        autoFocus
+        onChange={e => setNote(e.target.value)}
+      />
+      <div className={css.adjustRow}>
+        <button type="button" className={css.linkButton} onClick={() => onClose(false)}>{t('feed.cancel')}</button>
+        <button
+          type="button"
+          className={css.quickButton}
+          disabled={!note.trim() || saving}
+          onClick={() => {
+            setSaving(true)
+            void api.adjust(item.id, note.trim()).then(() => onClose(true)).catch(() => setSaving(false))
+          }}
+        >{t('feed.adjustSave')}</button>
+      </div>
+    </div>
+  )
+}
+
+/** 滚动已读：卡滚进视口（≥50% 露出）即标已读，对齐 Today 的 batch scroll-spy。 */
+function seenRef(onSeen: () => void) {
+  return (el: HTMLElement | null) => {
+    if (!el || el.dataset.seenBound) return
+    el.dataset.seenBound = '1'
+    const io = new IntersectionObserver(entries => {
+      if (entries.some(e => e.intersectionRatio >= 0.5)) { onSeen(); io.disconnect() }
+    }, { threshold: 0.5 })
+    io.observe(el)
+  }
+}
+
+function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onSeen, read }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void; onSeen: (id: string) => void; read: boolean }) {
+  const [adjusting, setAdjusting] = useState(false)
+  const [adjusted, setAdjusted] = useState(false)
   return (
     <li
       className={css.feedCard}
       data-kind={item.kind}
       data-pinned={item.pinned || undefined}
-      data-unread={item.read ? undefined : true}
+      data-unread={read ? undefined : true}
       data-nav={item.sessionId || undefined}
+      ref={read ? undefined : seenRef(() => onSeen(item.id))}
       onClick={e => {
-        if ((e.target as HTMLElement).closest('button, input, a')) return
+        if ((e.target as HTMLElement).closest('button, input, a, textarea')) return
         if (window.getSelection()?.toString()) return
-        if (!item.read) onRead(item.id)
+        if (!read) onSeen(item.id)
         if (item.sessionId) actions.openSession(item.sessionId)
       }}
       {...edgeGlowHandlers<HTMLLIElement>()}
     >
       <span className={css.edgeLight} />
       <div className={css.feedHead}>
-        {!item.read ? <span className={css.unreadDot} title={t('feed.unread')} /> : null}
+        {!read ? <span className={css.unreadDot} title={t('feed.unread')} /> : null}
         <span className={css.feedProvider} data-kind={item.kind}>
           <span className={css.feedKindIcon}>{KIND_ICON[item.kind]}</span>
           {item.source ?? t(`feed.kind.${item.kind}`)}
         </span>
         <span className={css.feedTime}>{updatedLabel(item.at, now, t)}</span>
-        <CardMenu item={item} t={t} actions={actions} onDelete={onDelete} onFeedback={onFeedback} onPin={onPin} />
+        <CardMenu item={item} t={t} actions={actions} onDelete={onDelete} onFeedback={onFeedback} onPin={onPin} onAdjust={() => setAdjusting(true)} />
       </div>
       <div className={css.feedTitle}>{item.title}</div>
       {item.body ? <FeedBody body={item.body} t={t} /> : null}
       {item.card ? <CardBody card={item.card} /> : null}
       <SuggestionChips item={item} t={t} actions={actions} />
+      {adjusting ? (
+        <AdjustEditor item={item} t={t} onClose={saved => { setAdjusting(false); if (saved) setAdjusted(true) }} />
+      ) : adjusted ? (
+        <p className={css.adjustSaved}>{t('feed.adjustSaved')}</p>
+      ) : null}
     </li>
   )
 }
@@ -310,8 +363,24 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
   const [draft, setDraft] = useState('')
   const [posting, setPosting] = useState(false)
   const [visible, setVisible] = useState(PAGE)
+  const [seenIds, setSeenIds] = useState<Set<string>>(new Set())
+  const [watches, setWatches] = useState<Watch[]>([])
   const sentinelRef = useRef<HTMLDivElement>(null)
   const now = useNow()
+
+  /** 静默已读：本地记 seenIds 即时消点，后台标读不拉全量刷新。 */
+  const markSeen = (id: string) => {
+    setSeenIds(prev => {
+      if (prev.has(id)) return prev
+      const next = new Set(prev); next.add(id); return next
+    })
+    void api.markRead(id).catch(() => {})
+  }
+  const readOf = (item: FeedItem) => !!item.read || seenIds.has(item.id)
+
+  useEffect(() => {
+    void api.watches().then(r => setWatches(r.watches)).catch(() => {})
+  }, [summary])
 
   const { groups, total, windowed } = useMemo(() => {
     const groups: FeedGroup[] = []
@@ -381,6 +450,25 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
       </h2>
       <ScheduleList cards={summary.schedules} t={t} onChanged={onChanged} limit={3} />
 
+      {watches.length > 0 ? (
+        <>
+          <h2 className={css.sectionTitle}>{t('section.watches')}</h2>
+          <ul className={css.scheduleList}>
+            {watches.map(w => {
+              const sched = summary.schedules.find(s => s.id === w.scheduleId)
+              return (
+                <li key={w.id} className={css.scheduleRow} data-status={w.enabled ? 'active' : 'paused'}>
+                  <span className={css.scheduleDot} data-status={w.enabled ? 'active' : 'paused'} />
+                  <span className={css.scheduleTitle}>{w.topic}</span>
+                  {!w.enabled ? <span className={css.chip} data-tone="paused">{t('schedule.status.paused')}</span> : null}
+                  <span className={css.scheduleTime}>{sched?.nextAt ? nextRunLabel(sched, t) : t('watch.manual')}</span>
+                </li>
+              )
+            })}
+          </ul>
+        </>
+      ) : null}
+
       <div className={css.sectionRow}>
         <h2 className={css.sectionTitle}>
           {t('section.feed')}
@@ -414,7 +502,7 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
           <section key={group.key} className={css.feedGroup} ref={revealRef}>
             <header className={css.feedGroupHead}>
               <span className={css.feedGroupKind}>{group.label}</span>
-              {group.items.some(i => !i.read) ? <span className={css.newBadge}>{t('feed.newBatch')}</span> : null}
+              {group.items.some(i => !readOf(i)) ? <span className={css.newBadge}>{t('feed.newBatch')}</span> : null}
               <span className={css.feedGroupDivider}>·</span>
               <span className={css.feedGroupCount}>{t('memory.count', { count: group.items.length })}</span>
             </header>
@@ -426,10 +514,11 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
                   t={t}
                   now={now}
                   actions={actions}
+                  read={readOf(item)}
+                  onSeen={markSeen}
                   onDelete={id => { void api.deleteItem(id).then(onChanged).catch(() => {}) }}
                   onFeedback={(id, signal) => { void api.feedback(id, signal).then(onChanged).catch(() => {}) }}
                   onPin={(id, pinned) => { void api.setPin(id, pinned).then(onChanged).catch(() => {}) }}
-                  onRead={id => { void api.markRead(id).then(onChanged).catch(() => {}) }}
                 />
               ))}
             </ul>

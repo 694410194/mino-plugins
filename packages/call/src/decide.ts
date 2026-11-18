@@ -60,6 +60,8 @@ export interface JudgeContext {
   history: string[]
   /** Feed source labels the person muted (e.g. `call:mail`). */
   muted: string[]
+  /** Free-text adjustments the person asked for on feed cards, per source. */
+  adjustments?: { source: string; notes: string[] }[]
 }
 
 /** One batched judge call for the sweep's pending matters; undefined when no model is set. */
@@ -78,6 +80,9 @@ export async function judgeMatters(
       : '',
     context?.muted.length
       ? `Feed sources the person muted — judge these low unless truly urgent:\n${context.muted.map(m => `- ${m}`).join('\n')}`
+      : '',
+    context?.adjustments?.length
+      ? `Card adjustments the person asked for — fold them into how these cards are judged and worded:\n${context.adjustments.map(a => `- ${a.source}: ${a.notes.join('；')}`).join('\n')}`
       : '',
   ].filter(Boolean).join('\n\n')
   const prompt = (preamble ? `${preamble}\n\n` : '')
