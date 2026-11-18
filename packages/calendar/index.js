@@ -29,6 +29,9 @@ function openStore() {
   const db = new DatabaseSync(join(STORE, 'calendar.db'))
   db.exec(`CREATE TABLE IF NOT EXISTS events(dtstart TEXT, dtend TEXT, summary TEXT, location TEXT, source TEXT)`)
   db.exec(`CREATE INDEX IF NOT EXISTS idx_d ON events(dtstart)`)
+  // cal_sync 每次 REPORT 全量重拉——同一事件重复入库会让 cal_upcoming 越查越肥，
+  // 同步前按四元组去重（同 dtstart+summary+dtend+source 视为同一事件）。
+  db.exec(`DELETE FROM events WHERE rowid NOT IN (SELECT MIN(rowid) FROM events GROUP BY dtstart, dtend, summary, location, source)`)
   return db
 }
 
@@ -130,13 +133,14 @@ export function apply(ctx) {
       if (!res.ok && res.status !== 207) throw new Error(`cal_sync: HTTP ${res.status}（检查 url/凭据，iCloud 要应用专用密码）`)
       const xml = await res.text()
       const db = openStore()
-      const ins = db.prepare('INSERT INTO events(dtstart,dtend,summary,location,source) VALUES(?,?,?,?,?)')
+      const ins = db.prepare('INSERT INTO events(dtstart,dtend,summary,location,source) SELECT ?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM events WHERE dtstart=? AND dtend=? AND summary=? AND location=? AND source=?)')
       let n = 0
       db.exec('BEGIN')
       try {
         for (const m of xml.matchAll(/<(?:\w+:)?calendar-data[^>]*>([\s\S]*?)<\/(?:\w+:)?calendar-data>/g)) {
           for (const e of parseIcs(m[1].replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'))) {
-            ins.run(e.dtstart, e.dtend, e.summary, e.location, 'caldav'); n++
+            const r = ins.run(e.dtstart, e.dtend, e.summary, e.location, 'caldav', e.dtstart, e.dtend, e.summary, e.location, 'caldav')
+            n += Number(r.changes)
           }
         }
         db.exec('COMMIT')
