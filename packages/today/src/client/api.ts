@@ -85,6 +85,26 @@ export interface MemoryRow {
   sessionTitle: string
 }
 
+/** 日历连接器 /api/day 的事件行（mino-connector-calendar 自己的公开面）。 */
+export interface CalEvent {
+  summary: string
+  /** 'YYYY-MM-DD HH:MM' 或 'YYYY-MM-DD'（allDay）。 */
+  start: string
+  end: string
+  location: string
+  allDay: boolean
+}
+
+/** mino-brief /api/prefs 的槽位行（早晚报插件自己的公开面）。 */
+export interface BriefSlot {
+  slot: 'morning' | 'evening' | string
+  title: string
+  enabled: boolean
+  hasEntry: boolean
+  time: string
+  preference: string
+}
+
 async function getJson<T>(url: string): Promise<T> {
   const res = await fetch(url, { cache: 'no-store' })
   if (!res.ok) throw new Error(`${res.status}`)
@@ -131,4 +151,8 @@ export const api = {
     ok: boolean
     sessions: { id: string; title?: string; memories: Omit<MemoryRow, 'sessionTitle'>[] }[]
   }>('/dsh-fish-memory/list'),
+  /** 日历连接器自己的路由（日程进展卡数据源）；插件不在 → 404 由调用方转「隐藏」态。 */
+  calendarDay: (date: string) => getJson<{ ok: boolean; date: string; events: CalEvent[] }>(`/mino-connector-calendar/api/day?date=${date}`),
+  /** mino-brief 自己的路由（候简报行数据源）；插件不在 → 404 由调用方转「隐藏」态。 */
+  briefPrefs: () => getJson<{ ok: boolean; slots: BriefSlot[] }>('/mino-brief/api/prefs'),
 }

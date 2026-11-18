@@ -108,14 +108,14 @@ export function apply(ctx: Context): void {
   const uiWorkspace = ctx.get('uiWorkspace') as UiWorkspaceFace | undefined
   const layout = ctx.get('layout') as LayoutFace | undefined
 
-  /** 把一句话发进指定会话；没给会话就开一个新的再发。 */
-  const sendPrompt = async (sessionId: string | undefined, text: string): Promise<boolean> => {
+  /** 把一句话发进指定会话；没给会话就开一个新的再发。navigate=false 时新会话不抢前台（feed 内嵌生成态用）。 */
+  const sendPrompt = async (sessionId: string | undefined, text: string, options?: { navigate?: boolean }): Promise<boolean> => {
     if (!sessions) return false
     try {
       let target = sessionId
       if (!target) {
         target = await sessions.create()
-        uiWorkspace?.openSession(target)
+        if (options?.navigate !== false) uiWorkspace?.openSession(target)
       }
       await sessions.using(target, { source: 'minoToday' }, async (reference) => {
         const session = reference.binding.session

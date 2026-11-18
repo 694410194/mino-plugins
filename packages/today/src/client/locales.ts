@@ -132,6 +132,23 @@ export const zh = {
   'feed.updated.yesterday': '昨天 {time} 更新',
   'feed.updated.date': '{date} 更新',
 
+  // Day-in-progress（日程进展卡）
+  'section.routines': '定时任务',
+  'events.empty': '今天还没有日程',
+  'events.allDay': '全天',
+  'events.past': '已过去',
+  'events.now': '进行中',
+  'events.endsIn': '{count} 分钟后结束',
+
+  // Latest brief（候简报行）
+  'brief.waiting': '你的简报已在这里等候，随时可以查看。',
+  'brief.fetch': '获取我的最新简报',
+  'brief.fetching': '正在获取你的最新简报…',
+  'brief.fetchPrompt': '现在生成我的最新简报，并用 today_post 投到今日页（batchKind 用对应的 morning_brief / evening_brief）。',
+
+  // Live widget 生成态
+  'watch.creating': '正在为你生成{topic}…',
+
   // Tasks tab
   'tasks.create': '+ 创建任务',
   'tasks.createSchedule': '+ 创建定时任务',
@@ -352,6 +369,23 @@ export const en: Record<keyof typeof zh, string> = {
   'feed.updated.today': 'Updated today {time}',
   'feed.updated.yesterday': 'Updated yesterday {time}',
   'feed.updated.date': 'Updated {date}',
+
+  // Day-in-progress
+  'section.routines': 'Routines',
+  'events.empty': 'No events today',
+  'events.allDay': 'All day',
+  'events.past': 'Past',
+  'events.now': 'Now',
+  'events.endsIn': 'ends in {count}m',
+
+  // Latest brief
+  'brief.waiting': 'Your brief is waiting here — take a look whenever you’re ready.',
+  'brief.fetch': 'Get my latest brief',
+  'brief.fetching': 'Getting your latest brief…',
+  'brief.fetchPrompt': 'Generate my latest brief now and post it to the today page via today_post (use the matching morning_brief / evening_brief batchKind).',
+
+  // Live widget creating state
+  'watch.creating': 'Creating {topic} for you…',
 
   'tasks.create': '+ New task',
   'tasks.createSchedule': '+ New routine',

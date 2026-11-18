@@ -236,6 +236,48 @@ export function apply(ctx) {
     presentCall: (a) => ({ card: 'generic', title: '删日程', kind: 'other', rawInput: a }),
   }))
 
+  // 「日程进展」公共读面：今日页经这条路由取某天事件（含跨日），路由缺席=没装日历连接器。
+  // webServer 是软依赖（ctx.get）——无 web 宿主上插件照常工作，只是没有这个只读面。
+  const webServer = ctx.get('webServer')
+  if (webServer?.register) {
+    ctx.effect(() => webServer.register({
+      kind: 'exact',
+      path: '/mino-connector-calendar/api/day',
+      handler: (req, res) => {
+        const json = (status, body) => {
+          res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' })
+          res.end(JSON.stringify(body))
+        }
+        try {
+          const q = new URL(req.url || '/', 'http://local').searchParams.get('date') || ''
+          const local = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10)
+          const date = /^\d{4}-\d{2}-\d{2}$/.test(q) ? q : local
+          const dbFile = join(STORE, 'calendar.db')
+          if (!DatabaseSync || !existsSync(dbFile)) return json(200, { ok: true, date, events: [] })
+          const db = new DatabaseSync(dbFile, { readOnly: true })
+          let rows
+          try {
+            rows = db.prepare(
+              `SELECT dtstart,dtend,summary,location FROM events
+               WHERE substr(dtstart,1,10) <= ?
+                 AND COALESCE(NULLIF(substr(dtend,1,10),''),substr(dtstart,1,10)) >= ?
+               ORDER BY dtstart LIMIT 100`,
+            ).all(date, date)
+          } finally { db.close() }
+          json(200, {
+            ok: true, date,
+            events: rows.map(r => ({
+              summary: r.summary, start: r.dtstart, end: r.dtend || '',
+              location: r.location || '', allDay: !/ /.test(r.dtstart),
+            })),
+          })
+        } catch (error) {
+          json(500, { ok: false, error: String(error && error.message) })
+        }
+      },
+    }))
+  }
+
   // 敏感写动作挂官方审批缝：pre-execute 瀑布返回 ask，由宿主 approval 服务向人确认；
   // 无审批答者（service 级调用/无 UI）按 fail-closed 拒绝。
   const SENSITIVE = new Set(['cal_write', 'cal_delete'])

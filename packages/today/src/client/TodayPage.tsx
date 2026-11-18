@@ -19,7 +19,7 @@ export type Translate = (key: string, params?: Record<string, string | number>) 
 export interface TodayActions {
   openSession(sessionId: string): void
   /** 往会话发一句话；sessionId 为空时新开一个会话。返回是否发出。 */
-  sendPrompt(sessionId: string | undefined, text: string): Promise<boolean>
+  sendPrompt(sessionId: string | undefined, text: string, options?: { navigate?: boolean }): Promise<boolean>
   /** 「和米洛聊聊」：开新会话并跳过去。 */
   newChat(): Promise<void>
   /** 订一个会话的后台任务流，返回停止函数。 */

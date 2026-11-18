@@ -9,7 +9,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 const WINDOW_DAYS = 14
 /** 每次露出的条数（对应 today-feed-sentinel 的增量加载）。 */
 const PAGE = 12
-import { api, type FeedCard as FeedCardBody, type FeedItem, type ScheduleCard, type Summary, type Watch } from './api.ts'
+import { api, type BriefSlot, type CalEvent, type FeedCard as FeedCardBody, type FeedItem, type ScheduleCard, type Summary, type Watch } from './api.ts'
 import { batchOf, dayKey, edgeGlowHandlers, hhmm, relTime, useNow } from './shared.tsx'
 import type { TodayActions, TodayPageProps, Translate } from './TodayPage.tsx'
 import css from './today.module.css'
@@ -99,6 +99,96 @@ export function ScheduleList({ cards, t, onChanged, limit }: { cards: ScheduleCa
         </button>
       ) : null}
     </>
+  )
+}
+
+/** 'YYYY-MM-DD HH:MM' → 当日分钟数；全日返回 null。 */
+function minutesOf(start: string): number | null {
+  const m = start.match(/\d{4}-\d{2}-\d{2} (\d{2}):(\d{2})/)
+  return m ? Number(m[1]) * 60 + Number(m[2]) : null
+}
+
+/**
+ * 日程进展卡（Today day_in_progress@1 复刻）：今日日历事件按时间列，
+ * 状态 = 已过去/进行中/即将开始(30min)/未到；3 条起步 + 「还有 N 条」。
+ * 数据走日历连接器自己的 /api/day——插件没装整条卡消失（events=null）。
+ */
+function EventsCard({ events, t, now }: { events: CalEvent[]; t: Translate; now: number }) {
+  const [showAll, setShowAll] = useState(false)
+  const statusOf = (e: CalEvent): 'allDay' | 'past' | 'now' | 'soon' | 'later' => {
+    if (e.allDay) return 'allDay'
+    const start = minutesOf(e.start)
+    const end = minutesOf(e.end) ?? (start !== null ? start + 60 : null)
+    const cur = new Date(now).getHours() * 60 + new Date(now).getMinutes()
+    if (start === null) return 'later'
+    if (end !== null && cur >= end) return 'past'
+    if (cur >= start && (end === null || cur < end)) return 'now'
+    return start - cur <= 30 ? 'soon' : 'later'
+  }
+  const list = showAll ? events : events.slice(0, 3)
+  return (
+    <section className={css.eventsCard} data-client-card="day_in_progress">
+      <h2 className={css.sectionTitle}>{t('section.schedule')}</h2>
+      {events.length === 0 ? <p className={css.sectionHint}>{t('events.empty')}</p> : (
+        <ul className={css.scheduleList}>
+          {list.map((e, i) => {
+            const st = statusOf(e)
+            const endMin = minutesOf(e.end)
+            const cur = new Date(now).getHours() * 60 + new Date(now).getMinutes()
+            return (
+              <li key={i} className={css.scheduleRow} data-status={st === 'past' ? 'ended' : 'active'}>
+                <span className={css.scheduleDot} data-status={st === 'past' ? 'ended' : st === 'now' ? 'active' : 'paused'} />
+                <span className={css.scheduleTitle}>{e.summary}</span>
+                {st === 'allDay' ? <span className={css.chip} data-tone="kind">{t('events.allDay')}</span> : null}
+                {st === 'past' ? <span className={css.chip} data-tone="ended">{t('events.past')}</span> : null}
+                {st === 'now' ? (
+                  <span className={css.chip} data-tone="run">
+                    {t('events.now')}
+                    {endMin !== null && endMin > cur ? ` · ${t('events.endsIn', { count: endMin - cur })}` : ''}
+                  </span>
+                ) : null}
+                {st === 'soon' ? <span className={css.chip} data-tone="soon">{t('schedule.startingSoon')}</span> : null}
+                {e.location ? <span className={css.eventLoc}>{e.location}</span> : null}
+                <span className={css.scheduleTime}>{e.allDay ? '' : `${e.start.slice(11)}${e.end ? `–${e.end.slice(11) || '…'}` : ''}`}</span>
+              </li>
+            )
+          })}
+        </ul>
+      )}
+      {events.length > 3 ? (
+        <button type="button" className={css.scheduleMore} onClick={() => setShowAll(v => !v)}>
+          {showAll ? t('schedule.showLess') : t('schedule.showMore', { count: events.length - 3 })}
+        </button>
+      ) : null}
+    </section>
+  )
+}
+
+/** 槽位 → 对应批次 kind（与 brief 约定：早= morning_brief，晚= evening_brief）。 */
+const BRIEF_KIND: Record<string, string> = { morning: 'morning_brief', evening: 'evening_brief' }
+
+/**
+ * 候简报行（Today latestBriefCard 复刻）：该出的简报还没落地时，
+ * 上下发丝线之间放「你的简报已在这里等候」+ 取稿 CTA；点击→生成态卡。
+ * 数据走 mino-brief 自己的 /api/prefs——插件没装整条消失（slots=null）。
+ */
+function LatestBrief({ t, slots, items, creating, onFetch }: { t: Translate; slots: BriefSlot[]; items: FeedItem[]; creating: boolean; onFetch: () => void }) {
+  const now = new Date()
+  const nowHM = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
+  const today = dayKey(now)
+  const pending = slots.find(s =>
+    s.enabled && s.hasEntry && s.time <= nowHM &&
+    !items.some(i => i.batchKind === BRIEF_KIND[s.slot] && dayKey(new Date(i.at)) === today),
+  )
+  if (creating) {
+    return <div className={css.latestBrief}><p className={css.latestBriefText}>{t('brief.fetching')}</p></div>
+  }
+  if (!pending) return null
+  return (
+    <div className={css.latestBrief} data-batch-kind="latest_brief">
+      <p className={css.latestBriefText}>{t('brief.waiting')}</p>
+      <button type="button" className={css.latestBriefCta} onClick={onFetch}>{t('brief.fetch')}</button>
+    </div>
   )
 }
 
@@ -274,14 +364,23 @@ function WidgetSection({ t, watches, schedules, actions, hintDismissed, onDismis
   const [adding, setAdding] = useState(false)
   const [topic, setTopic] = useState('')
   const [sending, setSending] = useState(false)
+  /** generationState==="creating" 对应物：add 发出后到 watch 落地（或超时）期间的占位卡。 */
+  const [pendingTopic, setPendingTopic] = useState<string | null>(null)
+  useEffect(() => {
+    if (!pendingTopic) return
+    if (watches.some(w => w.topic === pendingTopic)) { setPendingTopic(null); return }
+    const timer = setTimeout(() => setPendingTopic(null), 90_000)
+    return () => clearTimeout(timer)
+  }, [watches, pendingTopic])
   const send = (text: string) => {
     setSending(true)
-    void actions.sendPrompt(undefined, text).finally(() => setSending(false))
+    void actions.sendPrompt(undefined, text, { navigate: false }).finally(() => setSending(false))
   }
   const askAdd = () => {
     const v = topic.trim()
     if (!v) return
     send(t('watch.addPrompt', { topic: v }))
+    setPendingTopic(v)
     setAdding(false)
     setTopic('')
   }
@@ -317,6 +416,7 @@ function WidgetSection({ t, watches, schedules, actions, hintDismissed, onDismis
           <button type="button" className={css.watchHintClose} title={t('watch.hintDismiss')} onClick={onDismissHint}>✕</button>
         </div>
       ) : null}
+      {pendingTopic ? <div className={css.creatingCard}>{t('watch.creating', { topic: pendingTopic })}</div> : null}
       {watches.length ? (
         <ul className={css.scheduleList}>
           {watches.map(w => <WatchRow key={w.id} w={w} t={t} schedules={schedules} send={send} sending={sending} onChanged={onChanged} />)}
@@ -551,11 +651,11 @@ interface FeedDay {
 
 /** 批次入场：对齐 data-batch-revealed——滚入视口才置 true，CSS 做上浮淡入。 */
 function revealRef(el: HTMLElement | null) {
-  if (!el || el.dataset.revealed !== undefined) return
-  el.dataset.revealed = 'false'
+  if (!el || el.dataset.batchRevealed !== undefined) return
+  el.dataset.batchRevealed = 'false'
   const io = new IntersectionObserver(entries => {
     if (entries.some(e => e.isIntersecting)) {
-      el.dataset.revealed = 'true'
+      el.dataset.batchRevealed = 'true'
       io.disconnect()
     }
   }, { rootMargin: '60px' })
@@ -569,6 +669,12 @@ export function FeedTab({ t, summary, onChanged, actions, renderSlot }: { t: Tra
   const [seenIds, setSeenIds] = useState<Set<string>>(new Set())
   const [watches, setWatches] = useState<Watch[]>([])
   const [editing, setEditing] = useState(false)
+  /** null=日历连接器没装（路由 404）——日程进展卡整条隐藏。 */
+  const [events, setEvents] = useState<CalEvent[] | null>(null)
+  /** null=mino-brief 没装——候简报行整条隐藏。 */
+  const [briefSlots, setBriefSlots] = useState<BriefSlot[] | null>(null)
+  /** getLatestBriefPending 对应物：CTA 点到新简报落地（或超时）期间。 */
+  const [briefFetching, setBriefFetching] = useState(false)
   const [hintDismissed, setHintDismissed] = useState(() => {
     try { return localStorage.getItem('mino-today.widgetHint.dismissed') === '1' } catch { return false }
   })
@@ -589,7 +695,21 @@ export function FeedTab({ t, summary, onChanged, actions, renderSlot }: { t: Tra
 
   useEffect(() => {
     void api.watches().then(r => setWatches(r.watches)).catch(() => {})
+    void api.calendarDay(dayKey(new Date())).then(r => setEvents(r.events)).catch(() => setEvents(null))
+    void api.briefPrefs().then(r => setBriefSlots(r.slots)).catch(() => setBriefSlots(null))
   }, [summary])
+
+  /** 取稿等待态：新简报卡落地（对应 kind 出现在今日 items）或 120s 超时后清掉。 */
+  useEffect(() => {
+    if (!briefFetching) return
+    const today = dayKey(new Date())
+    if (summary?.items.some(i => i.batchKind && Object.values(BRIEF_KIND).includes(i.batchKind) && dayKey(new Date(i.at)) === today)) {
+      setBriefFetching(false)
+      return
+    }
+    const timer = setTimeout(() => setBriefFetching(false), 120_000)
+    return () => clearTimeout(timer)
+  }, [briefFetching, summary])
 
   const { days, total, windowed } = useMemo(() => {
     if (!summary) return { days: [] as FeedDay[], total: 0, windowed: false }
@@ -698,11 +818,26 @@ export function FeedTab({ t, summary, onChanged, actions, renderSlot }: { t: Tra
   if (!summary) return <div className={css.loading} />
   return (
     <div>
+      {events !== null ? <EventsCard events={events} t={t} now={now} /> : null}
+
       <h2 className={css.sectionTitle}>
-        {t('section.schedule')}
+        {t('section.routines')}
         <button type="button" className={css.linkButton} onClick={actions.openSchedules}>{t('section.scheduleAll')} →</button>
       </h2>
       <ScheduleList cards={summary.schedules} t={t} onChanged={onChanged} limit={3} />
+
+      {briefSlots !== null ? (
+        <LatestBrief
+          t={t}
+          slots={briefSlots}
+          items={summary.items}
+          creating={briefFetching}
+          onFetch={() => {
+            setBriefFetching(true)
+            void actions.sendPrompt('mino-brief', t('brief.fetchPrompt')).then(ok => { if (!ok) setBriefFetching(false) })
+          }}
+        />
+      ) : null}
 
       <WidgetSection
         t={t}
@@ -741,7 +876,11 @@ export function FeedTab({ t, summary, onChanged, actions, renderSlot }: { t: Tra
         <button
           type="button"
           className={css.unreadPill}
-          onClick={() => groupRefs.current.get(unreadGroup.key)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          onClick={() => {
+            groupRefs.current.get(unreadGroup.key)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            // 批次级已读（Today PUT batches/{id}/read 语义）：胶囊点了=这批看过了。
+            for (const i of unreadGroup.items) if (!readOf(i)) markSeen(i.id)
+          }}
         >{t('feed.newBatchOf', { label: unreadGroup.label })}</button>
       ) : null}
 
@@ -772,6 +911,7 @@ export function FeedTab({ t, summary, onChanged, actions, renderSlot }: { t: Tra
                 key={group.key}
                 className={css.feedGroup}
                 data-group-key={group.key}
+                data-batch-id={group.key}
                 data-batch-kind={group.ambient}
                 ref={el => { revealRef(el); if (el) groupRefs.current.set(group.key, el) }}
               >

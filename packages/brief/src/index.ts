@@ -33,7 +33,8 @@ export const Config = z.object({
     enabled: z.boolean().default(true),
     time: z.string().regex(TIME_RE).default('08:00'),
     prompt: z.string().default(
-      '生成今日早报：面向今天这一天——今天的日程线索、昨晚以来值得留意的变化、未完成事项的跟进提醒。',
+      '生成今日早报：面向今天这一天——今天的日程线索、昨晚以来值得留意的变化、未完成事项的跟进提醒。' +
+      '产出用 today_post 投到今日页：batch=今日早报，batchKind=morning_brief。',
     ),
   }).prefault({}),
   /** Evening brief entry. */
@@ -41,7 +42,8 @@ export const Config = z.object({
     enabled: z.boolean().default(true),
     time: z.string().regex(TIME_RE).default('21:00'),
     prompt: z.string().default(
-      '生成今日晚报：回顾这一天——今天完成和发生的事、明天要接续的线索。',
+      '生成今日晚报：回顾这一天——今天完成和发生的事、明天要接续的线索。' +
+      '产出用 today_post 投到今日页：batch=今日晚报，batchKind=evening_brief。',
     ),
   }).prefault({}),
 }).prefault({})

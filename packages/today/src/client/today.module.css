@@ -327,6 +327,65 @@
   color: var(--t-ink-3);
 }
 
+/* ---------- 日程进展卡（Today day_in_progress 复刻：今日日历事件列表） ---------- */
+.eventsCard { margin-top: 10px; }
+.eventsCard .sectionTitle { margin-top: 0; }
+.eventLoc {
+  flex: none;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11.5px;
+  color: var(--t-ink-3);
+}
+
+/* ---------- 候简报行（Today latestBriefCard：上下发丝线 + 居中文案 + 主 CTA） ---------- */
+.latestBrief {
+  margin: 26px 0 4px;
+  padding: 18px 20px;
+  border-top: 0.5px solid var(--glass-e-border);
+  border-bottom: 0.5px solid var(--glass-e-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+.latestBriefText {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--t-ink-2);
+}
+.latestBriefCta {
+  border: 0;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--today-accent-ink);
+  background: var(--today-accent-soft);
+  cursor: pointer;
+}
+.latestBriefCta:hover { filter: brightness(1.05); }
+
+/* ---------- 生成态占位（generationState==="creating" → LiveWidgetLoadingCard 对应物） ---------- */
+.creatingCard {
+  margin-top: 10px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 0.5px solid var(--glass-e-border);
+  background: var(--glass-e-bg);
+  font-size: 13px;
+  color: var(--t-ink-3);
+  animation: todayPulse 1.6s ease-in-out infinite;
+}
+@keyframes todayPulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
 /* ---------- 批次分组头（对齐 Today：sticky 吸顶 + data-batch-revealed 入场） ---------- */
 .feedDay { margin-top: 22px; }
 .feedDay:first-of-type { margin-top: 10px; }
@@ -354,8 +413,8 @@
   margin-top: 16px;
   transition: opacity 380ms ease, transform 380ms ease;
 }
-.feedGroup[data-revealed='false'] { opacity: 0; transform: translateY(14px); }
-.feedGroup[data-revealed='true'] { opacity: 1; transform: none; }
+.feedGroup[data-batch-revealed='false'] { opacity: 0; transform: translateY(14px); }
+.feedGroup[data-batch-revealed='true'] { opacity: 1; transform: none; }
 
 /* 批次头（Today section-title 复刻）：吸顶居中，时间小字 + 标题 + 氛围粒子 */
 .batchHead {
