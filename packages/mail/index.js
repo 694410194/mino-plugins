@@ -92,7 +92,9 @@ class Imap {
     const lines = await this.cmd(`FETCH ${from}:${total} (ENVELOPE)`, (l) => l.startsWith(`A${String(this.tag).padStart(4, '0')} `), 30000)
     const mails = []
     for (const l of lines) {
-      const m = l.match(/ENVELOPE \("([^"]*)" "[^"]*" \((?:\(\("[^"]*" NIL "[^"]*" "([^"]*)"\)|NIL)/)
+      // IMAP 地址字段是 (("name" NIL "mailbox" "host")) —— 字段表 `(` 内只套一层
+      // 地址 `("..."`（两个括号共），原正则 `\((?:\(\(` 要求三个连续括号恒不匹配。
+      const m = l.match(/ENVELOPE \("([^"]*)" "[^"]*" \((?:\("[^"]*" NIL "[^"]*" "([^"]*)"\)|NIL)/)
       if (m) mails.push({ date: m[1] || '', from: m[2] || '', subject: decodeHeader(l.match(/ENVELOPE \("[^"]*" "((?:[^"\\]|\\.)*)"/)?.[1] || '') })
     }
     return { total, mails: mails.reverse() }
