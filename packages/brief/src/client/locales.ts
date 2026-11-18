@@ -1,0 +1,43 @@
+/** mino-brief 文案键（Today briefEditor 的 zh 原文对齐；英文 sentence case）。 */
+export const zh = {
+  'editor.title': '编辑早晚报',
+  'editor.morning': '早报',
+  'editor.evening': '晚报',
+  'editor.desc.morning': '结合你的日程、待办和近期关注，梳理今天的重要安排、需要提前准备的事，以及值得留意的新信息，帮你更从容地开始一天。',
+  'editor.desc.evening': '回顾今天重要事项的进展与尚未解决的问题，结合你的工作和学习提供复盘建议与新思路，并提醒明天需要提前准备的事。',
+  'editor.preferenceLabel': '内容偏好',
+  'editor.preferencePlaceholder': '添加你关注的内容和呈现偏好',
+  'editor.pushEnabled': '开启推送',
+  'editor.pushTime': '推送时间',
+  'editor.dailyAt': '每天 {time}',
+  'editor.save': '保存更改',
+  'editor.saving': '保存中…',
+  'editor.saved': '已保存，从下一次{name}起生效',
+  'editor.failed': '保存失败，修改已保留',
+  'editor.loading': '正在加载早晚报设置',
+  'editor.loadFailed': '无法读取早晚报设置，请稍后重试。',
+  'editor.retry': '重试',
+  'editor.empty': '暂无可编辑的早晚报。',
+} as const
+export type CopyKey = keyof typeof zh
+
+export const en: Record<CopyKey, string> = {
+  'editor.title': 'Edit briefs',
+  'editor.morning': 'Morning brief',
+  'editor.evening': 'Evening brief',
+  'editor.desc.morning': 'Pulls together your schedule, to-dos and recent focus — what matters today, what to prepare, and what’s new, so you can start the day calmly.',
+  'editor.desc.evening': 'Looks back on today’s progress and open threads, offers review ideas for your work and study, and reminds you what to prepare for tomorrow.',
+  'editor.preferenceLabel': 'Content preference',
+  'editor.preferencePlaceholder': 'Add the topics you care about and how you want them presented',
+  'editor.pushEnabled': 'Push enabled',
+  'editor.pushTime': 'Push time',
+  'editor.dailyAt': 'Daily at {time}',
+  'editor.save': 'Save changes',
+  'editor.saving': 'Saving…',
+  'editor.saved': 'Saved — applies from the next {name}',
+  'editor.failed': 'Save failed — your edits were kept',
+  'editor.loading': 'Loading brief settings',
+  'editor.loadFailed': 'Could not load brief settings. Please try again.',
+  'editor.retry': 'Retry',
+  'editor.empty': 'No briefs to edit right now.',
+}

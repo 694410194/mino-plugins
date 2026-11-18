@@ -11,7 +11,7 @@ const WINDOW_DAYS = 14
 const PAGE = 12
 import { api, type FeedCard as FeedCardBody, type FeedItem, type ScheduleCard, type Summary, type Watch } from './api.ts'
 import { batchOf, dayKey, edgeGlowHandlers, hhmm, relTime, useNow } from './shared.tsx'
-import type { TodayActions, Translate } from './TodayPage.tsx'
+import type { TodayActions, TodayPageProps, Translate } from './TodayPage.tsx'
 import css from './today.module.css'
 
 const KIND_ICON: Record<FeedItem['kind'], string> = {
@@ -41,6 +41,13 @@ function kindLabel(card: ScheduleCard, t: Translate): string {
   }
 }
 
+/** dayInProgress.startingSoon：active 且下次运行在未来 30 分钟内。 */
+function startingSoon(card: ScheduleCard): boolean {
+  if (!card.nextAt || card.running || card.status !== 'active') return false
+  const diff = new Date(card.nextAt).getTime() - Date.now()
+  return diff > 0 && diff <= 30 * 60_000
+}
+
 function ScheduleRow({ card, t, onToggle }: { card: ScheduleCard; t: Translate; onToggle: (card: ScheduleCard) => void }) {
   return (
     <li className={css.scheduleRow} data-status={card.status}>
@@ -48,6 +55,7 @@ function ScheduleRow({ card, t, onToggle }: { card: ScheduleCard; t: Translate; 
       <span className={css.scheduleTitle}>{card.title}</span>
       <span className={css.chip} data-tone="kind">{kindLabel(card, t)}</span>
       {card.running ? <span className={css.chip} data-tone="run">{t('schedule.running')}</span> : null}
+      {startingSoon(card) ? <span className={css.chip} data-tone="soon">{t('schedule.startingSoon')}</span> : null}
       <span className={css.chip} data-tone={card.status}>{t(`schedule.status.${card.status}`)}</span>
       <span className={css.scheduleTime}>
         {card.status === 'active' && card.nextAt
@@ -197,6 +205,9 @@ function CardMenu({ item, t, actions, onDelete, onFeedback, onPin, onAdjust }: {
           <button type="button" role="menuitem" className={css.menuItem} onClick={act(onAdjust)}>
             {t('feed.adjust')}
           </button>
+          <button type="button" role="menuitem" className={css.menuItem} onClick={act(() => { void actions.sendPrompt(item.sessionId, t('feed.askPrompt', { title: item.title })) })}>
+            {t('feed.askAgent')}
+          </button>
           {item.sessionId ? (
             <button type="button" role="menuitem" className={css.menuItem} onClick={act(() => actions.openSession(item.sessionId!))}>
               {t('feed.openSession')}
@@ -253,6 +264,105 @@ function updatedLabel(iso: string, now: number, t: Translate): string {
   if (day(d) === day(n)) return t('feed.updated.today', { time: hhmm(iso) })
   if (day(d) === day(n) - 1) return t('feed.updated.yesterday', { time: hhmm(iso) })
   return t('feed.updated.date', { date: `${d.getMonth() + 1}/${d.getDate()}` })
+}
+
+/**
+ * 实时组件区（Today liveWidgets 复刻）：追踪中的主题卡片 + 悬停刷新/编辑/删除 +
+ * 空态建议卡（可关闭）+ 添加入口（经会话让 agent 建 watch）。
+ */
+function WidgetSection({ t, watches, schedules, actions, hintDismissed, onDismissHint, onChanged }: { t: Translate; watches: Watch[]; schedules: ScheduleCard[]; actions: TodayActions; hintDismissed: boolean; onDismissHint: () => void; onChanged: () => void }) {
+  const [adding, setAdding] = useState(false)
+  const [topic, setTopic] = useState('')
+  const [sending, setSending] = useState(false)
+  const send = (text: string) => {
+    setSending(true)
+    void actions.sendPrompt(undefined, text).finally(() => setSending(false))
+  }
+  const askAdd = () => {
+    const v = topic.trim()
+    if (!v) return
+    send(t('watch.addPrompt', { topic: v }))
+    setAdding(false)
+    setTopic('')
+  }
+  return (
+    <section className={css.widgetSection} data-batch-kind="live_widget">
+      <h2 className={css.sectionTitle}>
+        {t('section.watches')}
+        <button type="button" className={css.linkButton} onClick={() => setAdding(v => !v)}>{t('watch.add')} +</button>
+      </h2>
+      {adding ? (
+        <div className={css.quickAdd}>
+          <input
+            className={css.quickInput}
+            value={topic}
+            placeholder={t('watch.addPlaceholder')}
+            autoFocus
+            onChange={e => setTopic(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter') askAdd() }}
+          />
+          <button type="button" className={css.quickButton} disabled={!topic.trim() || sending} onClick={askAdd}>
+            {t('watch.addSend')}
+          </button>
+        </div>
+      ) : null}
+      {watches.length === 0 && !hintDismissed && !adding ? (
+        <div className={css.watchHint}>
+          <span className={css.watchHintIcon}>◉</span>
+          <div className={css.watchHintText}>
+            <div className={css.watchHintTitle}>{t('watch.hintTitle')}</div>
+            <p className={css.watchHintBody}>{t('watch.hintBody')}</p>
+            <button type="button" className={css.miniButton} onClick={() => setAdding(true)}>{t('watch.add')}</button>
+          </div>
+          <button type="button" className={css.watchHintClose} title={t('watch.hintDismiss')} onClick={onDismissHint}>✕</button>
+        </div>
+      ) : null}
+      {watches.length ? (
+        <ul className={css.scheduleList}>
+          {watches.map(w => <WatchRow key={w.id} w={w} t={t} schedules={schedules} send={send} sending={sending} onChanged={onChanged} />)}
+        </ul>
+      ) : null}
+    </section>
+  )
+}
+
+/** 单个追踪组件：hover 露操作（刷新/编辑/删除），删除走两步确认（deleteConfirm 语义）。 */
+function WatchRow({ w, t, schedules, send, sending, onChanged }: { w: Watch; t: Translate; schedules: ScheduleCard[]; send: (text: string) => void; sending: boolean; onChanged: () => void }) {
+  const [confirming, setConfirming] = useState(false)
+  const [removing, setRemoving] = useState(false)
+  const sched = schedules.find(s => s.id === w.scheduleId)
+  return (
+    <li className={`${css.scheduleRow} ${css.watchRow}`} data-status={w.enabled ? 'active' : 'paused'}>
+      <span className={css.scheduleDot} data-status={w.enabled ? 'active' : 'paused'} />
+      <span className={css.scheduleTitle}>{w.topic}</span>
+      {!w.enabled ? <span className={css.chip} data-tone="paused">{t('schedule.status.paused')}</span> : null}
+      <span className={css.scheduleTime}>{sched?.nextAt ? t('watch.next', { time: nextRunLabel(sched, t) }) : t('watch.manual')}</span>
+      <span className={css.watchActions}>
+        {confirming ? (
+          <>
+            <button type="button" className={css.linkButton} onClick={() => setConfirming(false)}>{t('feed.cancel')}</button>
+            <button
+              type="button"
+              className={css.miniButton}
+              disabled={removing}
+              onClick={() => {
+                setRemoving(true)
+                void api.deleteWatch(w.id).then(onChanged).catch(() => setRemoving(false))
+              }}
+            >{removing ? t('watch.deleting') : t('watch.deleteConfirm')}</button>
+          </>
+        ) : (
+          <>
+            <button type="button" className={css.watchAction} title={t('watch.refresh')} disabled={sending}
+              onClick={() => send(t('watch.refreshPrompt', { topic: w.topic }))}>⟳</button>
+            <button type="button" className={css.watchAction} title={t('watch.edit')} disabled={sending}
+              onClick={() => send(t('watch.editPrompt', { topic: w.topic }))}>✎</button>
+            <button type="button" className={css.watchAction} title={t('watch.delete')} onClick={() => setConfirming(true)}>✕</button>
+          </>
+        )}
+      </span>
+    </li>
+  )
 }
 
 /** 「调整卡片」卡内编辑区：自由文本 → item.adjustNotes → 生成方按 source 取回。 */
@@ -339,11 +449,104 @@ function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onSeen, 
   )
 }
 
-/** 同一批次的卡片一组：晨间/下午/晚间 + 日期，对齐 Today 的简报批次头。 */
+/** 批次 kind → section-title 氛围类别（Today e7 映射表同款）。 */
+const KIND_AMBIENT: Record<string, 'morning' | 'evening' | 'welcome' | 'guidance'> = {
+  morning_brief: 'morning',
+  evening_brief: 'evening',
+  diary: 'evening',
+  health_brief: 'evening',
+  first_health_report: 'evening',
+  weekly_health_report: 'evening',
+  welcome: 'welcome',
+  feature_intro: 'guidance',
+}
+
+/** 批次 kind → 本地化标题键（Today e_ 映射表同款；未知 kind 回落 batchId 原文）。 */
+const KIND_TITLE: Record<string, string> = {
+  morning_brief: 'batch.title.morning',
+  evening_brief: 'batch.title.evening',
+  diary: 'batch.title.diary',
+  health_brief: 'batch.title.healthBrief',
+  first_health_report: 'batch.title.firstHealth',
+  weekly_health_report: 'batch.title.weeklyHealth',
+  welcome: 'batch.title.welcome',
+  feature_intro: 'batch.title.featureIntro',
+}
+
+/** 闪光粒子布局（解包 el[] 原值：位置/大小/延迟/时长/不透明度）。 */
+const SPARKLES = [
+  { left: '-4%', top: '-20%', size: 11, delay: 0.2, dur: 2.6, op: 0.75 },
+  { left: '76%', top: '-22%', size: 13, delay: 1.1, dur: 2.8, op: 0.7 },
+  { left: '90%', top: '62%', size: 10, delay: 1.9, dur: 2.5, op: 0.7 },
+  { left: '18%', top: '82%', size: 9, delay: 2.6, dur: 2.4, op: 0.65 },
+]
+/** 氛围色组：morning=暖金（解包实值）；evening/guidance 走品牌紫粉（Mino 品牌对应）；welcome 无氛围。 */
+const AMBIENT_COLORS: Record<string, string[]> = {
+  morning: ['rgba(255,212,120,1)', 'rgba(255,180,90,1)', 'rgba(255,232,160,1)', 'rgba(255,196,110,1)'],
+  evening: ['rgba(165,94,232,0.85)', 'rgba(236,111,184,0.8)', 'rgba(200,150,245,0.75)', 'rgba(180,110,220,0.8)'],
+  guidance: ['rgba(120,178,255,1)', 'rgba(150,205,255,1)', 'rgba(90,160,255,1)', 'rgba(170,210,250,1)'],
+}
+
+/** 批次头闪光粒子（Today today-section-title-sparkle 同款 pop 动效）。 */
+function Sparkles({ kind }: { kind: string }) {
+  const colors = AMBIENT_COLORS[kind] ?? AMBIENT_COLORS.evening!
+  return (
+    <span className={css.titleAmbient} aria-hidden="true">
+      {SPARKLES.map((p, i) => (
+        <svg key={i} className={css.sparkle} viewBox="0 0 21 21" width={p.size} height={p.size}
+          style={{ left: p.left, top: p.top, animationDelay: `${p.delay}s`, animationDuration: `${p.dur}s`, ['--sp-op' as string]: p.op }}>
+          <path fill={colors[i % colors.length]} d="M10.5 0.8 L11.9 7.2 C12.4 9.6 13.9 11.1 16.3 11.6 L20.2 10.5 L16.3 13 C13.9 13.5 12.4 15 11.9 17.4 L10.5 20.2 L9.1 17.4 C8.6 15 7.1 13.5 4.7 13 L0.8 10.5 L4.7 11.6 C7.1 11.1 8.6 9.6 9.1 7.2 Z" transform="rotate(10 10.5 10.5)" />
+        </svg>
+      ))}
+    </span>
+  )
+}
+
+/** 晨间太阳氛围（Today morning-bokeh：光晕脉动 + 11 道旋转光线 + 核心，32s 一圈）。 */
+function MorningBokeh() {
+  const rays = Array.from({ length: 11 }, (_, i) => i * (360 / 11))
+  return (
+    <span className={css.bokeh} aria-hidden="true">
+      <svg viewBox="0 0 96 96" className={css.bokehSpin}>
+        {rays.map(a => (
+          <line key={a} x1="48" y1="14" x2="48" y2="4" stroke="rgba(255,180,90,.55)" strokeWidth="2.4" strokeLinecap="round" transform={`rotate(${a} 48 48)`} />
+        ))}
+      </svg>
+      <span className={css.bokehHalo} />
+      <span className={css.bokehCore} />
+    </span>
+  )
+}
+
+/** 批次区标题（Today section-title 复刻：居中时间小字 + 标题 + 氛围粒子；guidance 用引导标）。 */
+function BatchTitle({ ambient, title, time }: { ambient?: string; title: string; time?: string }) {
+  return (
+    <div className={css.batchHead} data-ambient={ambient || undefined}>
+      {ambient === 'guidance'
+        ? <span className={css.guidanceMark} aria-hidden="true">◈</span>
+        : time ? <span className={css.batchHeadTime}>{time}</span> : null}
+      <h3 className={css.batchHeadTitle}>
+        {title}
+        {ambient === 'morning' ? <MorningBokeh /> : ambient && ambient !== 'welcome' ? <Sparkles kind={ambient} /> : null}
+      </h3>
+    </div>
+  )
+}
+
+/** 同一批次的卡片一组；label 已是本地化标题或原文。 */
 interface FeedGroup {
   key: string
   label: string
+  ambient?: 'morning' | 'evening' | 'welcome' | 'guidance'
+  time?: string
   items: FeedItem[]
+}
+
+/** 一天的容器：居中日期头（date.absolute 同款「M月D日 · 周X」）+ 各批次组。 */
+interface FeedDay {
+  day: string
+  label: string
+  groups: FeedGroup[]
 }
 
 /** 批次入场：对齐 data-batch-revealed——滚入视口才置 true，CSS 做上浮淡入。 */
@@ -359,12 +562,18 @@ function revealRef(el: HTMLElement | null) {
   io.observe(el)
 }
 
-export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summary: Summary | null; onChanged: () => void; actions: TodayActions }) {
+export function FeedTab({ t, summary, onChanged, actions, renderSlot }: { t: Translate; summary: Summary | null; onChanged: () => void; actions: TodayActions; renderSlot?: TodayPageProps['renderSlot'] }) {
   const [draft, setDraft] = useState('')
   const [posting, setPosting] = useState(false)
   const [visible, setVisible] = useState(PAGE)
   const [seenIds, setSeenIds] = useState<Set<string>>(new Set())
   const [watches, setWatches] = useState<Watch[]>([])
+  const [editing, setEditing] = useState(false)
+  const [hintDismissed, setHintDismissed] = useState(() => {
+    try { return localStorage.getItem('mino-today.widgetHint.dismissed') === '1' } catch { return false }
+  })
+  const groupRefs = useRef(new Map<string, HTMLElement>())
+  const [inView, setInView] = useState<Set<string>>(new Set())
   const sentinelRef = useRef<HTMLDivElement>(null)
   const now = useNow()
 
@@ -382,40 +591,65 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
     void api.watches().then(r => setWatches(r.watches)).catch(() => {})
   }, [summary])
 
-  const { groups, total, windowed } = useMemo(() => {
-    const groups: FeedGroup[] = []
-    if (!summary) return { groups, total: 0, windowed: false }
+  const { days, total, windowed } = useMemo(() => {
+    if (!summary) return { days: [] as FeedDay[], total: 0, windowed: false }
     const cutoff = Date.now() - WINDOW_DAYS * 86_400_000
     const items = summary.items.filter(i => new Date(i.at).getTime() >= cutoff)
-    const map = new Map<string, FeedGroup>()
+    const dayMap = new Map<string, FeedDay>()
+    const groupMap = new Map<string, Map<string, FeedGroup>>()
     for (const item of items) {
       const day = dayKey(new Date(item.at))
       const batch = batchOf(item.at)
-      // 显式 batchId 的分组优先（简报/关注的成批产出），否则回落时段分桶。
-      // 键以日期开头，保证跨天排序仍由天主导。
-      const key = item.batchId ? `${day}|批|${item.batchId}` : `${day}|${batch}`
-      const label = item.batchId
-        ? `${item.batchId} · ${Number(day.slice(5, 7))}/${Number(day.slice(8, 10))}`
-        : `${t(`feed.group.${batch}`)} · ${Number(day.slice(5, 7))}/${Number(day.slice(8, 10))}`
-      const g = map.get(key) ?? { key, label, items: [] }
+      // 分组键：显式 batchKind/batchId 的成批产出优先生成批次组，否则回落时段桶。
+      const gkey = item.batchId || item.batchKind ? `批|${item.batchKind ?? ''}|${item.batchId ?? ''}` : batch
+      const kindTitle = item.batchKind ? KIND_TITLE[item.batchKind] : undefined
+      const label = item.batchKind
+        ? (kindTitle ? t(kindTitle) : item.batchKind)
+        : item.batchId ?? t(`feed.group.${batch}`)
+      const ambient = item.batchKind ? KIND_AMBIENT[item.batchKind] : undefined
+      let groups = groupMap.get(day)
+      if (!groups) { groups = new Map(); groupMap.set(day, groups) }
+      const g = groups.get(gkey) ?? { key: gkey, label, ambient, items: [] }
       g.items.push(item)
-      map.set(key, g)
+      const at = hhmm(item.at)
+      if (!g.time || at > g.time) g.time = at
+      groups.set(gkey, g)
     }
-    for (const g of map.values()) g.items.sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned))
-    groups.push(...[...map.values()].sort((a, b) => b.key.localeCompare(a.key)))
-    return { groups, total: items.length, windowed: items.length < summary.items.length }
+    for (const [day, groups] of groupMap) {
+      const d = new Date(`${day}T00:00:00`)
+      const weekday = t(`date.weekday.${['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][d.getDay()]}`)
+      const list = [...groups.values()]
+      for (const g of list) g.items.sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned))
+      // 语义批次在前（对齐 Today 批次装配顺序），时段桶在后；同类内按组内最新时间倒序。
+      list.sort((a, b) => Number(!!b.ambient) - Number(!!a.ambient) || (b.time ?? '').localeCompare(a.time ?? ''))
+      dayMap.set(day, {
+        day,
+        label: t('date.dayHeader', { month: d.getMonth() + 1, day: d.getDate(), weekday }),
+        groups: list,
+      })
+    }
+    return {
+      days: [...dayMap.values()].sort((a, b) => b.day.localeCompare(a.day)),
+      total: items.length,
+      windowed: items.length < summary.items.length,
+    }
   }, [summary, t])
 
   const shown = useMemo(() => {
     let budget = visible
-    return groups
-      .map(g => {
-        const take = Math.min(g.items.length, budget)
-        budget -= take
-        return take > 0 ? { ...g, items: g.items.slice(0, take) } : null
+    return days
+      .map(day => {
+        const groups = day.groups
+          .map(g => {
+            const take = Math.min(g.items.length, budget)
+            budget -= take
+            return take > 0 ? { ...g, items: g.items.slice(0, take) } : null
+          })
+          .filter((g): g is FeedGroup => g !== null)
+        return groups.length ? { ...day, groups } : null
       })
-      .filter((g): g is FeedGroup => g !== null)
-  }, [groups, visible])
+      .filter((d): d is FeedDay => d !== null)
+  }, [days, visible])
 
   const hasMore = total > visible
   useEffect(() => {
@@ -427,6 +661,26 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
     io.observe(el)
     return () => io.disconnect()
   }, [hasMore])
+
+  /** 批次在视口集合——未读批次胶囊只在对应批次滚出视口时浮现（unreadBatch 语义）。 */
+  useEffect(() => {
+    const io = new IntersectionObserver(entries => {
+      setInView(prev => {
+        const next = new Set(prev)
+        for (const e of entries) {
+          const k = (e.target as HTMLElement).dataset.groupKey
+          if (k) e.isIntersecting ? next.add(k) : next.delete(k)
+        }
+        return next
+      })
+    }, { rootMargin: '-72px 0px 0px 0px' })
+    for (const el of groupRefs.current.values()) io.observe(el)
+    return () => io.disconnect()
+  }, [shown])
+
+  const unreadGroup = shown
+    .flatMap(d => d.groups)
+    .find(g => g.items.some(i => !readOf(i)) && !inView.has(g.key))
 
   const submit = async () => {
     const title = draft.trim()
@@ -450,24 +704,15 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
       </h2>
       <ScheduleList cards={summary.schedules} t={t} onChanged={onChanged} limit={3} />
 
-      {watches.length > 0 ? (
-        <>
-          <h2 className={css.sectionTitle}>{t('section.watches')}</h2>
-          <ul className={css.scheduleList}>
-            {watches.map(w => {
-              const sched = summary.schedules.find(s => s.id === w.scheduleId)
-              return (
-                <li key={w.id} className={css.scheduleRow} data-status={w.enabled ? 'active' : 'paused'}>
-                  <span className={css.scheduleDot} data-status={w.enabled ? 'active' : 'paused'} />
-                  <span className={css.scheduleTitle}>{w.topic}</span>
-                  {!w.enabled ? <span className={css.chip} data-tone="paused">{t('schedule.status.paused')}</span> : null}
-                  <span className={css.scheduleTime}>{sched?.nextAt ? nextRunLabel(sched, t) : t('watch.manual')}</span>
-                </li>
-              )
-            })}
-          </ul>
-        </>
-      ) : null}
+      <WidgetSection
+        t={t}
+        watches={watches}
+        schedules={summary.schedules}
+        actions={actions}
+        hintDismissed={hintDismissed}
+        onDismissHint={() => { setHintDismissed(true); try { localStorage.setItem('mino-today.widgetHint.dismissed', '1') } catch { /* 私密模式写不进就算了 */ } }}
+        onChanged={() => { void api.watches().then(r => setWatches(r.watches)).catch(() => {}) }}
+      />
 
       <div className={css.sectionRow}>
         <h2 className={css.sectionTitle}>
@@ -492,37 +737,64 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
         </div>
       </div>
 
-      {summary.items.length === 0 ? (
+      {unreadGroup && !editing ? (
+        <button
+          type="button"
+          className={css.unreadPill}
+          onClick={() => groupRefs.current.get(unreadGroup.key)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+        >{t('feed.newBatchOf', { label: unreadGroup.label })}</button>
+      ) : null}
+
+      <div className={css.customizeRow}>
+        {editing ? (
+          <button type="button" className={css.miniButton} data-active onClick={() => setEditing(false)}>{t('customize.done')}</button>
+        ) : (
+          <button type="button" className={css.miniButton} onClick={() => setEditing(true)}>{t('customize.edit')}</button>
+        )}
+      </div>
+      {editing ? (
+        <div className={css.customizePanel}>
+          {renderSlot?.('today.page.customize', {}, {
+            fallback: <div className={css.emptyPanel}><p className={css.emptyText}>{t('customize.empty')}</p></div>,
+          }) ?? <div className={css.emptyPanel}><p className={css.emptyText}>{t('customize.empty')}</p></div>}
+        </div>
+      ) : summary.items.length === 0 ? (
         <div className={css.emptyPanel}>
           <div className={css.emptyTitle}>{t('feed.empty.title')}</div>
           <p className={css.emptyText}>{t('feed.empty.body')}</p>
         </div>
       ) : (
-        shown.map(group => (
-          <section key={group.key} className={css.feedGroup} ref={revealRef}>
-            <header className={css.feedGroupHead}>
-              <span className={css.feedGroupKind}>{group.label}</span>
-              {group.items.some(i => !readOf(i)) ? <span className={css.newBadge}>{t('feed.newBatch')}</span> : null}
-              <span className={css.feedGroupDivider}>·</span>
-              <span className={css.feedGroupCount}>{t('memory.count', { count: group.items.length })}</span>
-            </header>
-            <ul className={css.feedList}>
-              {group.items.map(item => (
-                <FeedCard
-                  key={item.id}
-                  item={item}
-                  t={t}
-                  now={now}
-                  actions={actions}
-                  read={readOf(item)}
-                  onSeen={markSeen}
-                  onDelete={id => { void api.deleteItem(id).then(onChanged).catch(() => {}) }}
-                  onFeedback={(id, signal) => { void api.feedback(id, signal).then(onChanged).catch(() => {}) }}
-                  onPin={(id, pinned) => { void api.setPin(id, pinned).then(onChanged).catch(() => {}) }}
-                />
-              ))}
-            </ul>
-          </section>
+        shown.map(day => (
+          <div key={day.day} className={css.feedDay}>
+            <h2 className={css.dayHead}>{day.label}</h2>
+            {day.groups.map(group => (
+              <section
+                key={group.key}
+                className={css.feedGroup}
+                data-group-key={group.key}
+                data-batch-kind={group.ambient}
+                ref={el => { revealRef(el); if (el) groupRefs.current.set(group.key, el) }}
+              >
+                <BatchTitle ambient={group.ambient} title={group.label} time={group.time} />
+                <ul className={css.feedList}>
+                  {group.items.map(item => (
+                    <FeedCard
+                      key={item.id}
+                      item={item}
+                      t={t}
+                      now={now}
+                      actions={actions}
+                      read={readOf(item)}
+                      onSeen={markSeen}
+                      onDelete={id => { void api.deleteItem(id).then(onChanged).catch(() => {}) }}
+                      onFeedback={(id, signal) => { void api.feedback(id, signal).then(onChanged).catch(() => {}) }}
+                      onPin={(id, pinned) => { void api.setPin(id, pinned).then(onChanged).catch(() => {}) }}
+                    />
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
         ))
       )}
       {summary.items.length > 0 ? (

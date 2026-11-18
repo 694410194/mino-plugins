@@ -19,7 +19,7 @@ import { briefDomain } from './domain.ts'
 import type { Domain } from '@deepseek-ai/dsh-storage-domain'
 
 export const name = 'mino-brief'
-export const inject = ['storageDomain', 'sessionController', 'workspaceRegistry']
+export const inject = ['storageDomain', 'sessionController', 'workspaceRegistry', 'webServer', 'schedule']
 
 const TIME_RE = /^\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?$/
 
@@ -57,6 +57,55 @@ const TITLE_KEY = 'title'
 
 interface SlotSpec { slot: 'morning' | 'evening'; title: string; time: string; prompt: string; enabled: boolean }
 
+interface WebServerFace {
+  register(route: { kind: 'exact'; path: string; handler: (req: NodeReq, res: NodeRes) => Promise<void> | void }): () => void
+}
+interface NodeReq { method?: string; [Symbol.asyncIterator]?: () => AsyncIterableIterator<unknown> }
+interface NodeRes { writeHead(status: number, headers?: Record<string, string>): void; end(body?: string): void }
+/** 宿主 schedule 服务（catalog/create/edit 同 mino-today 用的结构面）。 */
+interface ScheduleFace {
+  catalog(): Promise<ScheduleEntry[]>
+  create(request: { title: string; prompt: string; timing: { kind: 'daily'; daily: { time: string; time_zone: string } }; target?: { kind: 'session'; sessionId?: string } | { kind: 'new'; create?: { agentPreset?: string } } }): Promise<ScheduleEntry>
+  edit(request: { id: string; action: 'update' | 'delete'; patch?: { active?: boolean } }): Promise<unknown>
+}
+interface ScheduleEntry {
+  id: string
+  kind: string
+  title: string
+  status: 'active' | 'paused' | 'ended'
+  /** daily 条目记录的 HH:mm:ss(.SSS) 触发时刻。 */
+  time?: string
+  scheduledAt?: string
+}
+
+const JSON_HEADERS = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }
+const MAX_PREF = 600
+
+function sendJson(res: NodeRes, status: number, body: unknown): void {
+  res.writeHead(status, JSON_HEADERS)
+  res.end(JSON.stringify(body))
+}
+
+async function readBody(req: NodeReq): Promise<Record<string, unknown>> {
+  let raw = ''
+  for await (const chunk of req as AsyncIterable<unknown>) raw += String(chunk)
+  if (!raw) return {}
+  try {
+    const parsed = JSON.parse(raw)
+    return parsed && typeof parsed === 'object' ? parsed as Record<string, unknown> : {}
+  } catch {
+    return {}
+  }
+}
+
+/** 偏好状态行键：`pref:morning`/`pref:evening` → 用户写的内容偏好文本。 */
+const prefKey = (slot: string) => `pref:${slot}`
+/** 基础 prompt 合并偏好：重建定时条目时用这个全文。 */
+const mergedPrompt = (spec: SlotSpec, preference: string): string =>
+  spec.prompt + (preference.trim() ? `\n\n她的内容偏好：${preference.trim()}` : '')
+/** 条目记录里的 HH:mm:ss(.SSS) → 显示用 HH:mm。 */
+const displayTime = (t?: string): string => (t && /^\d{2}:\d{2}/.test(t) ? t.slice(0, 5) : '')
+
 export async function apply(ctx: Context, config: BriefConfig): Promise<void> {
   const logger = ctx.logger('mino-brief')
   const domain: Domain<typeof briefDomain> = await ctx.storageDomain.open(briefDomain)
@@ -89,6 +138,24 @@ export async function apply(ctx: Context, config: BriefConfig): Promise<void> {
     logger.warn('host schedule service unavailable — brief slots not registered')
     return
   }
+  const webServer = ctx.get('webServer') as WebServerFace | undefined
+  const route = (path: string, handler: (req: NodeReq, res: NodeRes) => Promise<void> | void) => {
+    if (!webServer) return
+    ctx.effect(() =>
+      webServer.register({
+        kind: 'exact',
+        path,
+        handler: async (req, res) => {
+          try {
+            await handler(req, res)
+          } catch (error) {
+            sendJson(res, 500, { ok: false, error: String(error && (error as Error).message) })
+          }
+        },
+      }),
+    )
+  }
+
   const catalog = await schedule.catalog()
   const byId = new Map(catalog.map(entry => [entry.id as string, entry]))
 
@@ -112,13 +179,76 @@ export async function apply(ctx: Context, config: BriefConfig): Promise<void> {
     }
     const created = await schedule.create({
       title: spec.title,
-      prompt: spec.prompt,
+      prompt: mergedPrompt(spec, state.get(prefKey(spec.slot))?.value ?? ''),
       timing: { kind: 'daily', daily: { time: normalizeTime(spec.time), time_zone: config.timeZone } },
       target: { kind: 'session', sessionId: SESSION_ID },
     })
     await state.put(idKey, { key: idKey, value: created.id as string })
     logger.info('brief schedule created: %s at %s %s', spec.title, spec.time, config.timeZone)
   }
+
+  /** 早晚报编辑器（Today briefEditor 语义）：读 = 各槽的偏好/开关/时间；写 = 偏好与改时重建条目、开关走 edit。 */
+  route('/mino-brief/api/prefs', async (req, res) => {
+    const specs = slotSpecs(config)
+    const sched = schedule as ScheduleFace | undefined
+    const entries = sched ? await sched.catalog() : []
+    const entryOf = (slot: string) => {
+      const id = state.get(`schedule:${slot}`)?.value
+      return id === undefined ? undefined : entries.find(e => e.id === id)
+    }
+
+    if (req.method !== 'POST') {
+      sendJson(res, 200, {
+        ok: true,
+        slots: specs.map(spec => {
+          const entry = entryOf(spec.slot)
+          return {
+            slot: spec.slot,
+            title: spec.title,
+            enabled: entry ? entry.status === 'active' : false,
+            hasEntry: !!entry,
+            time: displayTime(entry?.time) || spec.time.slice(0, 5),
+            preference: state.get(prefKey(spec.slot))?.value ?? '',
+          }
+        }),
+      })
+      return
+    }
+
+    const body = await readBody(req)
+    const spec = specs.find(s => s.slot === body.slot)
+    if (!spec || !sched) return sendJson(res, 400, { ok: false, error: '没这个槽位或调度服务缺席' })
+    const idKey = `schedule:${spec.slot}`
+    const entry = entryOf(spec.slot)
+
+    if (typeof body.enabled === 'boolean' && entry && (entry.status === 'active') !== body.enabled) {
+      await sched.edit({ id: entry.id, action: 'update', patch: { active: body.enabled } })
+    }
+
+    const pref = typeof body.preference === 'string' ? body.preference.slice(0, MAX_PREF).trim() : undefined
+    const time = typeof body.time === 'string' && TIME_RE.test(body.time) ? body.time.slice(0, 5) : undefined
+    const storedPref = state.get(prefKey(spec.slot))?.value ?? ''
+    const prefChanged = pref !== undefined && pref !== storedPref
+    const timeChanged = time !== undefined && time !== displayTime(entry?.time)
+    if (prefChanged) await state.put(prefKey(spec.slot), { key: prefKey(spec.slot), value: pref ?? '' })
+
+    // 偏好/时间变了 → 删旧建新（schedule.edit 只能拨开关，prompt/timing 不可 patch）。
+    if (entry && (prefChanged || timeChanged)) {
+      await sched.edit({ id: entry.id, action: 'delete' })
+    }
+    if ((prefChanged || timeChanged || (body.enabled === true && !entry))) {
+      const created = await sched.create({
+        title: spec.title,
+        prompt: mergedPrompt(spec, pref ?? storedPref),
+        timing: { kind: 'daily', daily: { time: normalizeTime(time ?? displayTime(entry?.time) ?? spec.time), time_zone: config.timeZone } },
+        target: { kind: 'session', sessionId: SESSION_ID },
+      })
+      await state.put(idKey, { key: idKey, value: created.id as string })
+      // 手动删掉条目形成的 tombstone 在新条目落地后失去意义。
+      if (state.get(`gone:${spec.slot}`) !== undefined) await state.delete(`gone:${spec.slot}`).catch(() => {})
+    }
+    sendJson(res, 200, { ok: true })
+  })
 }
 
 function slotSpecs(config: BriefConfig): SlotSpec[] {

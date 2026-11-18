@@ -161,6 +161,8 @@ function clipCard(input: unknown): FeedCard | undefined {
 }
 
 const KINDS = new Set(['note', 'result', 'moment'])
+/** 生成批次的语义类别（Today 批次 kind 表同款）；未列入的按普通标签处理。 */
+const BATCH_KINDS = new Set(['morning_brief', 'evening_brief', 'diary', 'health_brief', 'first_health_report', 'weekly_health_report', 'welcome', 'feature_intro'])
 
 /** 宿主 schedule 服务（可选，缺席时相关能力降级）。 */
 function scheduleOf(ctx: Context): ScheduleFace | undefined {
@@ -195,6 +197,11 @@ function makeTools(ctx: Context): Record<string, unknown>[] {
           batch: {
             type: 'string',
             description: '可选。批次标签（≤24字）——同一批产出的卡片传同一个标签（如「早报」「晚报」），feed 里会并成一组。散件别传。',
+          },
+          batchKind: {
+            type: 'string',
+            enum: ['morning_brief', 'evening_brief', 'diary', 'health_brief', 'first_health_report', 'weekly_health_report', 'welcome', 'feature_intro'],
+            description: '可选。这一批的语义类别——早报用 morning_brief、晚报用 evening_brief、日记用 diary。传了 feed 批次头会显示对应的正式标题，不是简报类批次别传。',
           },
           card: {
             type: 'object',
@@ -240,7 +247,7 @@ function makeTools(ctx: Context): Record<string, unknown>[] {
           return [{ type: 'text', text: ok ? '✓ 已投到今日页' : '✗ ' + String((value as { message?: string } | null)?.message || '没投成') }]
         },
       },
-      async execute(args: { title?: string; body?: string; kind?: string; source?: string; batch?: string; card?: unknown; suggestions?: unknown }, exec: unknown) {
+      async execute(args: { title?: string; body?: string; kind?: string; source?: string; batch?: string; batchKind?: string; card?: unknown; suggestions?: unknown }, exec: unknown) {
         const title = String(args?.title || '').trim()
         if (!title) return { ok: false, message: '标题是空的' }
         const store = loadStore()
@@ -251,6 +258,7 @@ function makeTools(ctx: Context): Record<string, unknown>[] {
           sessionId: sessionIdFromExec(exec) || undefined,
           source: args?.source ? clip(String(args.source).trim(), MAX_SOURCE) : undefined,
           batchId: args?.batch ? clip(String(args.batch).trim(), MAX_BATCH) : undefined,
+          batchKind: BATCH_KINDS.has(String(args?.batchKind)) ? String(args!.batchKind) : undefined,
           card: clipCard(args?.card),
           suggestions: clipSuggestions(args?.suggestions),
         })
@@ -584,6 +592,22 @@ export function apply(ctx: Context): void {
         at: w.at,
       })),
     })
+  })
+
+  /** 撤掉一条追踪：watch_remove 工具的 HTTP 对应物——连定时日程一起撤。 */
+  route('/mino-today/api/watch/delete', async (req, res) => {
+    const body = await readBody(req)
+    const id = String(body.id || '')
+    const store = loadStore()
+    const watch = store.watches.find(w => w.id === id)
+    if (!watch) return sendJson(res, 404, { ok: false, error: '没这条追踪' })
+    const sched = scheduleOf(ctx)
+    if (sched && watch.scheduleId) {
+      await sched.edit({ id: watch.scheduleId, action: 'delete' }).catch(() => {})
+    }
+    removeWatch(store, id)
+    saveStore(store)
+    sendJson(res, 200, { ok: true })
   })
 
   route('/mino-today/api/item/delete', async (req, res) => {

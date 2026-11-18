@@ -160,7 +160,11 @@ export function apply(ctx: Context): void {
         locale: NS,
         // 「语音」tab 的贡献座位：语音笔记等插件经 slots.inject 注册进来，
         // 不在 bundles 里时座位为空、tab 显示占位文案。
-        children: { 'today.page.voice': { kind: 'list', scope: 'root' } },
+        // 「自定义」编辑面座位：早晚报等生成方贡献自己的偏好编辑卡。
+        children: {
+          'today.page.voice': { kind: 'list', scope: 'root' },
+          'today.page.customize': { kind: 'list', scope: 'root' },
+        },
         inject: () => ({
           t,
           actions,

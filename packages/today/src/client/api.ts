@@ -22,6 +22,8 @@ export interface FeedItem {
   suggestions?: Suggestion[]
   /** 生成方给的批次标签；同批卡片并成一组显示。 */
   batchId?: string
+  /** 批次语义类别（morning_brief/evening_brief/diary…）——有它批次头显示正式标题。 */
+  batchKind?: string
   pinned?: boolean
   feedback?: 'up' | 'down' | 'not_interested'
   /** 结构化卡体；缺省就是普通文字卡。 */
@@ -122,6 +124,8 @@ export const api = {
   deleteDiaryEntry: (date: string, at: string) => postJson<{ ok: boolean }>('/mino-today/api/diary/delete', { date, at }),
   /** 追踪中的主题（live widget 对应物）。 */
   watches: () => getJson<{ ok: boolean; watches: Watch[] }>('/mino-today/api/watches'),
+  /** 撤掉一条追踪（连它的定时日程一起）。 */
+  deleteWatch: (id: string) => postJson<{ ok: boolean }>('/mino-today/api/watch/delete', { id }),
   /** fish-memory 自己的路由；插件不在 → fetch 抛错，由调用方转「未安装」态。 */
   memoryList: () => getJson<{
     ok: boolean

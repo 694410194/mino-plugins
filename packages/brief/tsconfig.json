@@ -1,25 +1,30 @@
 {
   "compilerOptions": {
-    "target": "ES2024",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "lib": [
-      "ES2024",
-      "DOM"
-    ],
+    "target": "ES2023",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
     "strict": true,
-    "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,
-    "rewriteRelativeImportExtensions": true,
-    "declaration": true,
-    "types": [
-      "node"
-    ]
+    "noEmit": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "@deepseek-ai/cordis": ["./node_modules/@deepseek-ai/cordis/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-storage-domain": ["./node_modules/@deepseek-ai/dsh-storage-domain/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-api-session-controller": ["./node_modules/@deepseek-ai/dsh-api-session-controller/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-workspace": ["./node_modules/@deepseek-ai/dsh-workspace/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-schedule": ["./node_modules/@deepseek-ai/dsh-schedule/lib/types/index.d.ts"],
+      "tsdown": ["./node_modules/tsdown/dist/index.d.mts"]
+    }
   },
-  "include": [
-    "src/**/*.ts",
-    "tsdown.config.ts"
-  ]
+  "include": ["src", "tsdown.config.ts"]
 }

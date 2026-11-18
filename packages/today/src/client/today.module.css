@@ -328,33 +328,224 @@
 }
 
 /* ---------- 批次分组头（对齐 Today：sticky 吸顶 + data-batch-revealed 入场） ---------- */
+.feedDay { margin-top: 22px; }
+.feedDay:first-of-type { margin-top: 10px; }
+
+/* 日容器头：Today date.absolute「M月D日 · 周X」居中发丝标签 */
+.dayHead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 6px;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  color: var(--t-ink-3);
+}
+.dayHead::before,
+.dayHead::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: var(--t-ink-fill);
+}
+
 .feedGroup {
-  margin-top: 18px;
+  margin-top: 16px;
   transition: opacity 380ms ease, transform 380ms ease;
 }
 .feedGroup[data-revealed='false'] { opacity: 0; transform: translateY(14px); }
 .feedGroup[data-revealed='true'] { opacity: 1; transform: none; }
-.feedGroupHead {
+
+/* 批次头（Today section-title 复刻）：吸顶居中，时间小字 + 标题 + 氛围粒子 */
+.batchHead {
   position: sticky;
-  top: 64px;
+  top: 54px;
   z-index: 4;
   display: flex;
-  align-items: baseline;
-  gap: 6px;
-  margin: 0 -10px 10px;
-  padding: 6px 10px;
-  border-radius: 12px;
-  backdrop-filter: blur(20px) saturate(1.3);
-  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px 10px;
+  text-align: center;
 }
-.feedGroupKind {
+.batchHead::before {
+  content: '';
+  position: absolute;
+  inset: 0 -30px -6px;
+  z-index: -1;
+  background: linear-gradient(to bottom, var(--page-bg-a, rgba(220,217,246,0)) 30%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+.batchHeadTime {
   font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.3px;
-  color: var(--t-ink-2);
+  line-height: 20px;
+  color: var(--t-ink-3);
+  font-variant-numeric: tabular-nums;
 }
-.feedGroupDivider { color: var(--t-ink-3); font-size: 11px; }
-.feedGroupCount { font-size: 11px; color: var(--t-ink-3); }
+.batchHeadTitle {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: var(--t-ink);
+}
+
+/* 氛围层：Today ambient 复刻——标题周围 ±6px 的闪光粒子 */
+.titleAmbient {
+  position: absolute;
+  inset: -6px;
+  pointer-events: none;
+}
+.sparkle {
+  position: absolute;
+  opacity: 0;
+  animation: today-sparkle-pop ease-in-out infinite;
+  will-change: transform, opacity;
+}
+@keyframes today-sparkle-pop {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(75deg); }
+  35%, 55% { opacity: var(--sp-op, 0.7); transform: scale(1) rotate(150deg); }
+}
+
+/* 晨间太阳氛围（Today morning-bokeh：光晕脉动 + 旋转光线 + 核心） */
+.bokeh {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 96px;
+  height: 96px;
+  transform: translate(-50%, -56%);
+  pointer-events: none;
+}
+.bokehSpin {
+  position: absolute;
+  inset: 0;
+  animation: today-bokeh-spin 32s linear infinite;
+}
+.bokehHalo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72px;
+  height: 72px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 190, 100, 0.4), rgba(255, 190, 100, 0) 70%);
+  filter: blur(6px);
+  animation: today-bokeh-halo 4.5s ease-in-out infinite;
+}
+.bokehCore {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(255, 186, 92, 0.9);
+  animation: today-bokeh-core 4.5s ease-in-out infinite;
+}
+@keyframes today-bokeh-spin { to { transform: rotate(360deg); } }
+@keyframes today-bokeh-halo {
+  0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.92); }
+  50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.08); }
+}
+@keyframes today-bokeh-core { 0%, 100% { opacity: 0.85; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .sparkle, .bokehSpin, .bokehHalo, .bokehCore { animation: none !important; }
+}
+
+/* 引导批次标（Today guidance-mark 同款语义） */
+.guidanceMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-bottom: 2px;
+  font-size: 14px;
+  color: var(--today-accent);
+}
+
+/* 未读批次胶囊：批次滚出视口时浮现，点击平滑滚回（unreadBatch + topOffset72 同款） */
+.unreadPill {
+  position: sticky;
+  top: 54px;
+  z-index: 12;
+  display: block;
+  margin: 0 auto 10px;
+  padding: 7px 16px;
+  border: 0.5px solid var(--glass-e-border);
+  border-radius: 999px;
+  background: var(--glass-e-bg);
+  box-shadow: var(--glass-e-shadow);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--today-accent);
+  cursor: pointer;
+}
+
+/* 「自定义」入口：Today briefSettings.customize 同款右上角编辑钮 */
+.customizeRow {
+  display: flex;
+  justify-content: flex-end;
+  margin: 4px 0 2px;
+}
+.customizePanel { margin-top: 6px; }
+
+/* 实时组件区：空态建议卡 + 行内 hover 操作 */
+.watchHint {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 14px 16px;
+  border: 0.5px dashed var(--glass-e-border);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.35);
+}
+.watchHintIcon { font-size: 18px; color: var(--today-accent); margin-top: 2px; }
+.watchHintText { flex: 1; min-width: 0; }
+.watchHintTitle { font-size: 13px; font-weight: 600; color: var(--t-ink); }
+.watchHintBody { margin: 4px 0 10px; font-size: 12px; line-height: 1.6; color: var(--t-ink-2); }
+.watchHintClose {
+  border: 0;
+  background: transparent;
+  color: var(--t-ink-3);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+.watchActions {
+  display: none;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+.watchRow:hover .watchActions,
+.watchRow:focus-within .watchActions { display: inline-flex; }
+.watchAction {
+  border: 0;
+  background: transparent;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 12px;
+  color: var(--t-ink-2);
+  cursor: pointer;
+}
+.watchAction:hover { background: var(--t-ink-fill); color: var(--t-ink); }
+@media (hover: none) { .watchActions { display: inline-flex; } }
+:global(body[data-ds-dark-theme]) .watchHint { background: rgba(255, 255, 255, 0.05); }
 
 /* ---------- 定时任务条：玻璃容器 + 发丝分隔 ---------- */
 .scheduleList {
@@ -427,6 +618,14 @@
   border-color: transparent;
 }
 .chip[data-tone='ended'] { opacity: 0.6; }
+.chip[data-tone='soon'] {
+  color: #b0722a;
+  background: rgba(255, 196, 110, 0.24);
+}
+:global(body[data-ds-dark-theme]) .chip[data-tone='soon'] {
+  color: #f0c68a;
+  background: rgba(255, 196, 110, 0.14);
+}
 .chip[data-tone='kind'] { color: var(--t-ink-3); }
 .chip[data-tone='source'] {
   color: var(--t-ink-3);

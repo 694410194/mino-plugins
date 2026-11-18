@@ -33,6 +33,8 @@ export interface FeedItem {
   dismissed?: boolean
   /** 生成方给的批次标签（如「早报」「晚报」）；同批卡片在 feed 里并成一组。 */
   batchId?: string
+  /** 生成批次的语义类别（Today 同款：morning_brief/evening_brief/diary 等）——决定批次标题与氛围，不传就用 batchId 原文。 */
+  batchKind?: string
   /** 用户置顶——组内排在最前。 */
   pinned?: boolean
   /** 用户反馈信号；not_interested 同时意味着划掉。 */
@@ -127,6 +129,7 @@ export function addItem(store: Store, item: Omit<FeedItem, 'id' | 'at'> & { at?:
   if (item.sessionId) full.sessionId = item.sessionId
   if (item.source) full.source = item.source
   if (item.batchId) full.batchId = item.batchId
+  if (item.batchKind) full.batchKind = item.batchKind
   if (item.suggestions?.length) full.suggestions = item.suggestions
   if (item.card) full.card = item.card
   store.items.push(full)

@@ -185,7 +185,7 @@ export function TodayPage({ t, actions, useSessionList, useJobs, renderSlot }: T
         {summaryFailed && tab === 'feed' ? (
           <button type="button" className={css.errorBox} onClick={loadSummary}>{t('error.load')}</button>
         ) : null}
-        {tab === 'feed' ? <FeedTab t={t} summary={summary} onChanged={loadSummary} actions={actions} /> : null}
+        {tab === 'feed' ? <FeedTab t={t} summary={summary} onChanged={loadSummary} actions={actions} renderSlot={renderSlot} /> : null}
         {tab === 'tasks' ? (
           <TasksTab t={t} actions={actions} sessions={sessions} useJobs={useJobs} now={now} summary={summary} onChanged={loadSummary} />
         ) : null}
