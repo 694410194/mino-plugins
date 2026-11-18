@@ -42,6 +42,7 @@ export function apply(ctx: Context): void {
     slots.inject(SEAT, () =>
       slots.register({
         name: SEAT,
+        id: 'mino-voice-notes',
         locale: NS,
         inject: () => ({ t }),
       }, VNotesPage)))
