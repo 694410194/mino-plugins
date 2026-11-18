@@ -18,15 +18,30 @@ const PKG = JSON.parse(readFileSync(join(PKG_DIR, 'package.json'), 'utf8'))
 const CFG_PATH = join(process.env.DSH_HOME || join(homedir(), '.dsh'), 'connector-mail.json')
 
 export const name = PKG.name
-export const inject = ['skills', 'tools']
+export const inject = ['skills', 'tools', 'credentials']
 const defineTool = (await loadHostDeps()).defineTool
 
 const NEED_CFG = `mail 需要 IMAP 凭据：在 ${CFG_PATH.replace(/\//g, '\\')} 填
 {"host":"imap.qq.com","port":993,"user":"你的邮箱","pass":"邮箱授权码","tls":true}
-（QQ/163/Gmail 都在网页版邮箱设置里开 IMAP 并生成授权码，不是登录密码）`
+（QQ/163/Gmail 都在网页版邮箱设置里开 IMAP 并生成授权码，不是登录密码。
+pass 也可不放明文：填 "passRef":"MINO_MAIL_PASS" 指官方凭据库引用，用 cred_set 工具入库）`
 
 function loadCfg() {
   try { return JSON.parse(readFileSync(CFG_PATH, 'utf8')) } catch { return null }
+}
+
+// 凭据可指官方凭据库的引用名（cfg.passRef，如 MINO_MAIL_PASS，经 cred_set 入库）；
+// 文件里的明文 pass 仍是回退路径——迁移期两可，服务未挂载/引用未配置时照常工作。
+const REF_RE = /^[A-Za-z_][A-Za-z0-9_]*$/
+async function mailCfg(ctx) {
+  const cfg = loadCfg()
+  let pass = cfg?.pass
+  const ref = String(cfg?.passRef || '')
+  if (REF_RE.test(ref)) {
+    try { pass = (await ctx.get('credentials')?.resolve?.(ref))?.value || pass } catch { /* 凭据服务不可达回落文件值 */ }
+  }
+  if (!cfg?.host || !cfg?.user || !pass) throw new Error(NEED_CFG)
+  return { ...cfg, pass }
 }
 
 // ── 最小 IMAP 客户端：LOGIN→SELECT→FETCH 头/搜索（只读命令）────────────────────
@@ -200,8 +215,7 @@ export function apply(ctx) {
       render: (_a, v) => [{ type: 'text', text: `邮箱共 ${v.total} 封，列出最近 ${v.mails.length} 封` }] },
     isConcurrencySafe: () => false,
     async execute(args) {
-      const cfg = loadCfg()
-      if (!cfg?.host || !cfg?.user || !cfg?.pass) throw new Error(NEED_CFG)
+      const cfg = await mailCfg(ctx)
       const im = new Imap(cfg)
       try {
         await im.connect(); await im.login()
@@ -223,8 +237,7 @@ export function apply(ctx) {
       render: (_a, v) => [{ type: 'text', text: `命中 ${v.count} 封` }] },
     isConcurrencySafe: () => false,
     async execute(args) {
-      const cfg = loadCfg()
-      if (!cfg?.host || !cfg?.user || !cfg?.pass) throw new Error(NEED_CFG)
+      const cfg = await mailCfg(ctx)
       const im = new Imap(cfg)
       try {
         await im.connect(); await im.login()
@@ -247,8 +260,7 @@ export function apply(ctx) {
       render: (_a, v) => [{ type: 'text', text: v.sent ? `已发送到 ${v.to}` : '未发送' }] },
     isConcurrencySafe: () => false,
     async execute(args) {
-      const cfg = loadCfg()
-      if (!cfg?.host || !cfg?.user || !cfg?.pass) throw new Error(NEED_CFG)
+      const cfg = await mailCfg(ctx)
       const to = String(args.to).split(',').map(s => s.trim()).filter(Boolean)
       if (!to.length) throw new Error('mail_send: 收件人为空')
       const msg = buildRfc822({ from: cfg.user, to, cc: args.cc, subject: String(args.subject), body: String(args.body) })
@@ -271,8 +283,7 @@ export function apply(ctx) {
       render: (_a, v) => [{ type: 'text', text: v.drafted ? '草稿已存入草稿箱' : '未存' }] },
     isConcurrencySafe: () => false,
     async execute(args) {
-      const cfg = loadCfg()
-      if (!cfg?.host || !cfg?.user || !cfg?.pass) throw new Error(NEED_CFG)
+      const cfg = await mailCfg(ctx)
       const msg = buildRfc822({ from: cfg.user, to: String(args.to).split(',').map(s => s.trim()).filter(Boolean), subject: String(args.subject), body: String(args.body) })
       const im = new Imap(cfg)
       try {
@@ -297,8 +308,7 @@ export function apply(ctx) {
       render: (_a, v) => [{ type: 'text', text: v.found ? `退订已发出（${v.method}）` : '没找到可退订的邮件' }] },
     isConcurrencySafe: () => false,
     async execute(args) {
-      const cfg = loadCfg()
-      if (!cfg?.host || !cfg?.user || !cfg?.pass) throw new Error(NEED_CFG)
+      const cfg = await mailCfg(ctx)
       const im = new Imap(cfg)
       try {
         await im.connect(); await im.login()

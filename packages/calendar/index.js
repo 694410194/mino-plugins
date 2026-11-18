@@ -18,7 +18,7 @@ const STORE = join(process.env.DSH_HOME || join(homedir(), '.dsh'), 'connector-c
 const CFG_PATH = join(process.env.DSH_HOME || join(homedir(), '.dsh'), 'connector-cloud.json')
 
 export const name = PKG.name
-export const inject = ['skills', 'tools']
+export const inject = ['skills', 'tools', 'credentials']
 const defineTool = (await loadHostDeps()).defineTool
 
 let DatabaseSync = null
@@ -124,11 +124,9 @@ export function apply(ctx) {
       render: (_a, v) => [{ type: 'text', text: `同步 ${v.synced} 条日程` }] },
     isConcurrencySafe: () => false,
     async execute() {
-      let c
-      try { c = JSON.parse(readFileSync(CFG_PATH, 'utf8')).caldav } catch {}
-      if (!c?.url || !c?.user || !c?.pass) throw new Error(`没配 CalDAV：在 ${CFG_PATH.replace(/\//g, '\\')} 填 {"caldav":{"url":"...","user":"...","pass":"..."}}`)
+      const c = await caldav()
       // 最小 PROPFIND：拉 calendar-data
-      const auth = 'Basic ' + Buffer.from(`${c.user}:${c.pass}`).toString('base64')
+      const auth = c.auth
       const res = await fetch(c.url, {
         method: 'REPORT',
         headers: { Authorization: auth, 'Content-Type': 'application/xml', Depth: '1' },
@@ -155,11 +153,17 @@ export function apply(ctx) {
     presentCall: (a) => ({ card: 'generic', title: '同步日历', kind: 'other', rawInput: a }),
   }))
 
-  const caldav = () => {
+  // pass 可指官方凭据库引用名（passRef，经 cred_set 入库）；文件明文 pass 为回退。
+  const caldav = async () => {
     let c
     try { c = JSON.parse(readFileSync(CFG_PATH, 'utf8')).caldav } catch {}
-    if (!c?.url || !c?.user || !c?.pass) throw new Error(`没配 CalDAV：在 ${CFG_PATH.replace(/\//g, '\\')} 填 {"caldav":{"url":"...","user","pass":"..."}}`)
-    return { ...c, auth: 'Basic ' + Buffer.from(`${c.user}:${c.pass}`).toString('base64'), base: c.url.endsWith('/') ? c.url : c.url + '/' }
+    let pass = c?.pass
+    const ref = String(c?.passRef || '')
+    if (/^[A-Za-z_][A-Za-z0-9_]*$/.test(ref)) {
+      try { pass = (await ctx.get('credentials')?.resolve?.(ref))?.value || pass } catch { /* 凭据服务不可达回落文件值 */ }
+    }
+    if (!c?.url || !c?.user || !pass) throw new Error(`没配 CalDAV：凭据库 cred_set <passRef名>=<密码> + ${CFG_PATH.replace(/\//g, '\\')} 填 {"caldav":{"url":"...","user":"...","passRef":"MINO_CALDAV_PASS"}}（明文 pass 为回退）`)
+    return { ...c, auth: 'Basic ' + Buffer.from(`${c.user}:${pass}`).toString('base64'), base: c.url.endsWith('/') ? c.url : c.url + '/' }
   }
 
   const toIcs = (s) => { // 'YYYY-MM-DD[ HH:MM]' 本地时刻 → ics 本地形式
@@ -184,7 +188,7 @@ export function apply(ctx) {
     isConcurrencySafe: () => false,
     async execute(args) {
       if (!DatabaseSync) throw new Error('cal_write: 运行时缺 node:sqlite')
-      const c = caldav()
+      const c = await caldav()
       const uid = String(args.uid || `mino-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`)
       const dtend = args.dtend ? toIcs(args.dtend) : ''
       const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//mino//cal_write//CN', 'BEGIN:VEVENT',
@@ -219,7 +223,7 @@ export function apply(ctx) {
       render: (_a, v) => [{ type: 'text', text: v.deleted ? '日程已删除' : '未删除' }] },
     isConcurrencySafe: () => false,
     async execute(args) {
-      const c = caldav()
+      const c = await caldav()
       const uid = String(args.uid)
       const res = await fetch(`${c.base}${encodeURIComponent(uid)}.ics`, {
         method: 'DELETE', headers: { Authorization: c.auth }, signal: AbortSignal.timeout(30000),
