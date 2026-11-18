@@ -112,8 +112,13 @@ export const zh = {
   'time.today': '今天 {time}',
   'time.yesterday': '昨天 {time}',
   'error.load': '加载失败了，点这里重试',
-}
 
+  'tv.badge': '今日',
+  'tv.untitled': '未命名卡片',
+  'tv.posting': '投递中…',
+  'tv.posted': '已投递',
+  'tv.failed': '投递失败',
+}
 export const en: Record<keyof typeof zh, string> = {
   'entry.label': 'Today',
   'tab.feed': 'Today',
@@ -217,6 +222,11 @@ export const en: Record<keyof typeof zh, string> = {
   'time.today': 'Today {time}',
   'time.yesterday': 'Yesterday {time}',
   'error.load': 'Could not load — click to retry',
-}
 
+  'tv.badge': 'Today',
+  'tv.untitled': 'Untitled card',
+  'tv.posting': 'Posting…',
+  'tv.posted': 'Posted',
+  'tv.failed': 'Post failed',
+}
 export type CopyKey = keyof typeof zh

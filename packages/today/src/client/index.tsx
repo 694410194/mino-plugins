@@ -13,6 +13,7 @@
 import type { Context } from '@deepseek-ai/cordis'
 import { PanelIcon } from './PanelIcon.tsx'
 import { TodayPage, type TodayActions, type Translate } from './TodayPage.tsx'
+import { TodayPostRow } from './TodayPostRow.tsx'
 import { en, zh, type CopyKey } from './locales.ts'
 
 export const inject = ['slots', 'locale', 'sessions', 'jobs', 'uiWorkspace', 'layout']
@@ -166,4 +167,15 @@ export function apply(ctx: Context): void {
           },
         }),
       }, TodayPage)))
+
+  // 会话内 `today_post` 结果卡：keyed 命中替换通用工具行；
+  // 宿主没声明 tool.call.toolview 座位时安静缺席。
+  ctx.effect(() =>
+    slots.inject('tool.call.toolview', () =>
+      slots.register({
+        name: 'tool.call.toolview',
+        key: 'today_post',
+        locale: NS,
+        inject: () => ({ t }),
+      }, TodayPostRow)))
 }

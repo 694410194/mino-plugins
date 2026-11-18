@@ -892,3 +892,37 @@
   .diaryList { flex-direction: row; overflow-x: auto; }
   .diaryDate { min-width: 120px; }
 }
+
+/* today_post 会话内 toolview 行（tool.call.toolview 槽） */
+.tvRow {
+  border: 1px solid var(--dsh-border, #e3e3e3);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 4px 0;
+  max-width: 560px;
+  background: var(--dsh-bg-elevated, #fff);
+}
+.tvRow[data-error] { border-color: var(--dsh-danger, #c0392b); }
+.tvHead { display: flex; align-items: center; gap: 8px; }
+.tvBadge {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--dsh-accent-soft, #eef4ff);
+  color: var(--dsh-accent, #2f6fed);
+  flex-shrink: 0;
+}
+.tvTitle { font-weight: 600; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tvBatch { font-size: 11px; opacity: 0.55; flex-shrink: 0; }
+.tvState { margin-left: auto; font-size: 11px; opacity: 0.6; flex-shrink: 0; }
+.tvSummary { font-size: 12px; opacity: 0.8; margin-top: 6px; white-space: pre-wrap; }
+.tvList { margin: 6px 0 0; padding-left: 18px; font-size: 12px; }
+.tvList li { margin: 2px 0; }
+.tvMetric { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
+.tvMetricValue { font-size: 20px; font-weight: 700; }
+.tvMetricLabel { font-size: 12px; opacity: 0.7; }
+.tvProgress { margin-top: 8px; }
+.tvProgressBar { height: 6px; border-radius: 3px; background: var(--dsh-border, #e3e3e3); overflow: hidden; }
+.tvProgressFill { height: 100%; border-radius: 3px; background: var(--dsh-accent, #2f6fed); }
+.tvProgressText { font-size: 11px; opacity: 0.7; }
+.tvError { font-size: 12px; color: var(--dsh-danger, #c0392b); margin-top: 6px; }
