@@ -12,6 +12,7 @@ import { imSource } from './sources/im.ts'
 import { webwatchSource } from './sources/webwatch.ts'
 import { mailSource } from './sources/mail.ts'
 import { calendarSource } from './sources/calendar.ts'
+import { taskSource } from './sources/tasks.ts'
 
 declare module '@deepseek-ai/dsh-llm' {
   interface MessageSourceMap {
@@ -56,6 +57,13 @@ export const Config = z.object({
       days: z.number().min(1).max(90).default(3),
       /** Attempt cal_sync (CalDAV pull) first; absent creds error is ignored. */
       sync: z.boolean().default(true),
+    }).prefault({}),
+    tasks: z.object({
+      /** Read the task-board service snapshot; absent board idles harmlessly. */
+      enabled: z.boolean().default(true),
+      intervalMinutes: z.number().min(1).default(10),
+      /** A scheduled todo within this many minutes counts as due-soon signal. */
+      dueSoonMinutes: z.number().min(0).default(30),
     }).prefault({}),
   }).prefault({}),
   proactive: z.object({
@@ -108,6 +116,9 @@ export async function apply(ctx: Context, config: CommaConfig): Promise<void> {
   }
   if (config.sources.calendar.enabled) {
     sources.push(calendarSource(ctx, config.sources.calendar))
+  }
+  if (config.sources.tasks.enabled) {
+    sources.push(taskSource(ctx, config.sources.tasks))
   }
   runtime = new Runtime(ctx, sources, {
     workspaceRoot: config.workspaceRoot,
