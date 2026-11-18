@@ -1,0 +1,5 @@
+# mino-voice-notes bundle patch：把双面插件行插进 web 档 roster。
+# `dsh plugin --profile <name> add mino-voice-notes` 时本补丁随包并入 bundle 栈。
+- insert:
+    - id: voice-notes
+      name: 'mino-voice-notes'
