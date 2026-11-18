@@ -327,13 +327,25 @@
   color: var(--t-ink-3);
 }
 
-/* ---------- 批次分组头 ---------- */
-.feedGroup { margin-top: 18px; }
+/* ---------- 批次分组头（对齐 Today：sticky 吸顶 + data-batch-revealed 入场） ---------- */
+.feedGroup {
+  margin-top: 18px;
+  transition: opacity 380ms ease, transform 380ms ease;
+}
+.feedGroup[data-revealed='false'] { opacity: 0; transform: translateY(14px); }
+.feedGroup[data-revealed='true'] { opacity: 1; transform: none; }
 .feedGroupHead {
+  position: sticky;
+  top: 64px;
+  z-index: 4;
   display: flex;
   align-items: baseline;
   gap: 6px;
-  margin-bottom: 10px;
+  margin: 0 -10px 10px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
 }
 .feedGroupKind {
   font-size: 12px;
@@ -526,6 +538,7 @@
   border-color: var(--t-ink-fill);
   transform: translateY(-1px);
 }
+.feedCard[data-nav] { cursor: pointer; }
 .feedCard[data-kind='result'] { border-left: 3px solid var(--today-accent); }
 .feedCard[data-kind='moment'] { border-left: 3px solid var(--today-warn); }
 .feedHead {
@@ -567,10 +580,10 @@
   white-space: pre-wrap;
   word-break: break-word;
 }
-/* 正文预览按 Today 的 line-clamp-7 截断，溢出时出「展开」 */
+/* 正文预览按信息流卡截 4 行，溢出时出「展开」 */
 .feedBodyClamped {
   display: -webkit-box;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

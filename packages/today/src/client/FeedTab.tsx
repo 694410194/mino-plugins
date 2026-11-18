@@ -212,8 +212,7 @@ function CardMenu({ item, t, actions, onDelete, onFeedback, onPin }: { item: Fee
 }
 
 /**
- * 卡正文预览对齐 Today 的 line-clamp-7：始终先按 7 行截，
- * 量出溢出才挂「展开/收起」（对应 common.expand / common.collapse）。
+ * 卡正文按 Today 信息流卡做紧凑预览（4 行），量出溢出挂「展开/收起」。
  */
 function FeedBody({ body, t }: { body: string; t: Translate }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -235,6 +234,10 @@ function FeedBody({ body, t }: { body: string; t: Translate }) {
   )
 }
 
+/**
+ * feed 卡 = 导航卡（对齐 data-today-v3-navigation-card）：点卡标记已读并进来源会话，
+ * 正文只做紧凑预览；按钮/划词不误触。
+ */
 function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void; onRead: (id: string) => void }) {
   return (
     <li
@@ -242,6 +245,13 @@ function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }
       data-kind={item.kind}
       data-pinned={item.pinned || undefined}
       data-unread={item.read ? undefined : true}
+      data-nav={item.sessionId || undefined}
+      onClick={e => {
+        if ((e.target as HTMLElement).closest('button, input, a')) return
+        if (window.getSelection()?.toString()) return
+        if (!item.read) onRead(item.id)
+        if (item.sessionId) actions.openSession(item.sessionId)
+      }}
       {...edgeGlowHandlers<HTMLLIElement>()}
     >
       <span className={css.edgeLight} />
@@ -255,7 +265,7 @@ function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }
         <span className={css.feedTime}>{relTime(item.at, now)}</span>
         <CardMenu item={item} t={t} actions={actions} onDelete={onDelete} onFeedback={onFeedback} onPin={onPin} />
       </div>
-      <div className={css.feedTitle} onClick={() => { if (!item.read) onRead(item.id) }}>{item.title}</div>
+      <div className={css.feedTitle}>{item.title}</div>
       {item.body ? <FeedBody body={item.body} t={t} /> : null}
       {item.card ? <CardBody card={item.card} /> : null}
       <SuggestionChips item={item} t={t} actions={actions} />
@@ -268,6 +278,19 @@ interface FeedGroup {
   key: string
   label: string
   items: FeedItem[]
+}
+
+/** 批次入场：对齐 data-batch-revealed——滚入视口才置 true，CSS 做上浮淡入。 */
+function revealRef(el: HTMLElement | null) {
+  if (!el || el.dataset.revealed !== undefined) return
+  el.dataset.revealed = 'false'
+  const io = new IntersectionObserver(entries => {
+    if (entries.some(e => e.isIntersecting)) {
+      el.dataset.revealed = 'true'
+      io.disconnect()
+    }
+  }, { rootMargin: '60px' })
+  io.observe(el)
 }
 
 export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summary: Summary | null; onChanged: () => void; actions: TodayActions }) {
@@ -375,7 +398,7 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
         </div>
       ) : (
         shown.map(group => (
-          <section key={group.key} className={css.feedGroup}>
+          <section key={group.key} className={css.feedGroup} ref={revealRef}>
             <header className={css.feedGroupHead}>
               <span className={css.feedGroupKind}>{group.label}</span>
               <span className={css.feedGroupDivider}>·</span>
