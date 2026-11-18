@@ -64,18 +64,28 @@ function ScheduleRow({ card, t, onToggle }: { card: ScheduleCard; t: Translate; 
   )
 }
 
-/** 定时任务列表：今日页 strip 与任务页「定时任务」段共用。 */
-export function ScheduleList({ cards, t, onChanged }: { cards: ScheduleCard[]; t: Translate; onChanged: () => void }) {
+/** 定时任务列表：今日页 strip 与任务页「定时任务」段共用。limit=预览条数（对齐 day-in-progress 的 3+more）。 */
+export function ScheduleList({ cards, t, onChanged, limit }: { cards: ScheduleCard[]; t: Translate; onChanged: () => void; limit?: number }) {
+  const [showAll, setShowAll] = useState(false)
   const toggle = (card: ScheduleCard) => {
     void api.setScheduleActive(card.id, card.status !== 'active').then(onChanged).catch(() => {})
   }
   if (cards.length === 0) return <p className={css.sectionHint}>{t('schedule.empty')}</p>
+  const sorted = [...cards]
+    .sort((a, b) => ({ active: 0, paused: 1, ended: 2 })[a.status] - ({ active: 0, paused: 1, ended: 2 })[b.status])
+  const hidden = limit && !showAll ? Math.max(0, sorted.length - limit) : 0
   return (
-    <ul className={css.scheduleList}>
-      {[...cards]
-        .sort((a, b) => ({ active: 0, paused: 1, ended: 2 })[a.status] - ({ active: 0, paused: 1, ended: 2 })[b.status])
-        .map(card => <ScheduleRow key={card.id} card={card} t={t} onToggle={toggle} />)}
-    </ul>
+    <>
+      <ul className={css.scheduleList}>
+        {(hidden ? sorted.slice(0, limit) : sorted)
+          .map(card => <ScheduleRow key={card.id} card={card} t={t} onToggle={toggle} />)}
+      </ul>
+      {limit && sorted.length > limit ? (
+        <button type="button" className={css.scheduleMore} onClick={() => setShowAll(v => !v)}>
+          {showAll ? t('schedule.showLess') : t('schedule.showMore', { count: sorted.length - limit })}
+        </button>
+      ) : null}
+    </>
   )
 }
 
@@ -196,6 +206,30 @@ function CardMenu({ item, t, actions, onDelete, onFeedback, onPin }: { item: Fee
   )
 }
 
+/**
+ * 卡正文预览对齐 Today 的 line-clamp-7：始终先按 7 行截，
+ * 量出溢出才挂「展开/收起」（对应 common.expand / common.collapse）。
+ */
+function FeedBody({ body, t }: { body: string; t: Translate }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [overflow, setOverflow] = useState(false)
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (el) setOverflow(el.scrollHeight > el.clientHeight + 1)
+  }, [body])
+  return (
+    <>
+      <div ref={ref} className={`${css.feedBody} ${!open ? css.feedBodyClamped : ''}`}>{body}</div>
+      {overflow ? (
+        <button type="button" className={css.feedExpand} onClick={() => setOpen(v => !v)}>
+          {open ? t('feed.collapse') : t('feed.expand')}
+        </button>
+      ) : null}
+    </>
+  )
+}
+
 function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void; onRead: (id: string) => void }) {
   return (
     <li
@@ -217,7 +251,7 @@ function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }
         <CardMenu item={item} t={t} actions={actions} onDelete={onDelete} onFeedback={onFeedback} onPin={onPin} />
       </div>
       <div className={css.feedTitle} onClick={() => { if (!item.read) onRead(item.id) }}>{item.title}</div>
-      {item.body ? <div className={css.feedBody}>{item.body}</div> : null}
+      {item.body ? <FeedBody body={item.body} t={t} /> : null}
       {item.card ? <CardBody card={item.card} /> : null}
       <SuggestionChips item={item} t={t} actions={actions} />
     </li>
@@ -276,7 +310,7 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
         {t('section.schedule')}
         <button type="button" className={css.linkButton} onClick={actions.openSchedules}>{t('section.scheduleAll')} →</button>
       </h2>
-      <ScheduleList cards={summary.schedules} t={t} onChanged={onChanged} />
+      <ScheduleList cards={summary.schedules} t={t} onChanged={onChanged} limit={3} />
 
       <div className={css.sectionRow}>
         <h2 className={css.sectionTitle}>

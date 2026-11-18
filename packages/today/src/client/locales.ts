@@ -47,6 +47,8 @@ export const zh = {
   'schedule.weekly': '每周 {time}',
   'schedule.once': '单次',
   'schedule.repeating': '重复',
+  'schedule.showMore': '还有 {count} 条',
+  'schedule.showLess': '收起',
 
   // Feed
   'section.feed': '动态',
@@ -74,6 +76,8 @@ export const zh = {
   'feed.kind.result': '交付',
   'feed.kind.moment': '留意',
   'feed.sent': '已发给米洛',
+  'feed.expand': '展开',
+  'feed.collapse': '收起',
 
   // Tasks tab
   'tasks.create': '+ 创建任务',
@@ -212,6 +216,8 @@ export const en: Record<keyof typeof zh, string> = {
   'schedule.weekly': 'Weekly {time}',
   'schedule.once': 'Once',
   'schedule.repeating': 'Repeating',
+  'schedule.showMore': '{count} more',
+  'schedule.showLess': 'Show less',
 
   'section.feed': 'Updates',
   'feed.empty.title': 'Nothing new yet',
@@ -238,6 +244,8 @@ export const en: Record<keyof typeof zh, string> = {
   'feed.kind.result': 'Done',
   'feed.kind.moment': 'Heads-up',
   'feed.sent': 'Sent to Mino',
+  'feed.expand': 'Expand',
+  'feed.collapse': 'Collapse',
 
   'tasks.create': '+ New task',
   'tasks.createSchedule': '+ New routine',

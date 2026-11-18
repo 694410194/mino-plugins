@@ -547,6 +547,10 @@
   font-weight: 500;
   line-height: 1.5;
   color: var(--t-ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .feedBody {
   margin-top: 6px;
@@ -556,6 +560,36 @@
   white-space: pre-wrap;
   word-break: break-word;
 }
+/* 正文预览按 Today 的 line-clamp-7 截断，溢出时出「展开」 */
+.feedBodyClamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.feedExpand {
+  margin-top: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--t-ink-3);
+  cursor: pointer;
+}
+.feedExpand:hover { color: var(--today-accent); }
+.scheduleMore {
+  display: block;
+  margin: 6px auto 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--t-ink-3);
+  cursor: pointer;
+}
+.scheduleMore:hover { color: var(--today-accent); }
 
 /* 建议 chips：emoji + label，点了把 prompt 发回写卡片的会话 */
 .suggestRow {
@@ -858,6 +892,10 @@
   font-size: 13px;
   line-height: 1.65;
   color: var(--t-ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .memoryMeta {
   margin-top: 6px;
