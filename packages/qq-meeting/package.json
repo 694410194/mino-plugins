@@ -1,0 +1,10 @@
+{
+  "name": "mino-connector-qqmeeting",
+  "version": "0.1.0",
+  "description": "Tencent Meeting connector (enterprise app AKSK, TC3-HMAC-SHA256 signed)",
+  "type": "module",
+  "main": "index.js",
+  "dsh": { "bundle": "host" },
+  "files": ["index.js", "README.md", "cordis.patch.yml"],
+  "license": "MIT"
+}
