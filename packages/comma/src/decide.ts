@@ -54,16 +54,34 @@ export function heuristicUrgency(matter: Matter, items: SourceItem[]): MatterUrg
   return 'normal'
 }
 
+/** Cross-sweep context handed to the judge: prior decisions plus feed-muted sources. */
+export interface JudgeContext {
+  /** Recent decided matters, newest first (`[decision] title`). */
+  history: string[]
+  /** Feed source labels the person muted (e.g. `comma:mail`). */
+  muted: string[]
+}
+
 /** One batched judge call for the sweep's pending matters; undefined when no model is set. */
 export async function judgeMatters(
   ctx: Context,
   model: DecideModel,
   pending: { matter: Matter; items: SourceItem[] }[],
   signal: AbortSignal,
+  context?: JudgeContext,
 ): Promise<Map<string, { urgency: MatterUrgency; title?: string }> | undefined> {
   const llm = ctx.get('llm') as LlmStream | undefined
   if (!llm?.stream || pending.length === 0) return undefined
-  const prompt = pending.map(({ matter, items }) => judgePrompt(matter, items)).join('\n\n')
+  const preamble = [
+    context?.history.length
+      ? `Matters already handled (an unchanged repeat stays quiet):\n${context.history.map(h => `- ${h}`).join('\n')}`
+      : '',
+    context?.muted.length
+      ? `Feed sources the person muted — judge these low unless truly urgent:\n${context.muted.map(m => `- ${m}`).join('\n')}`
+      : '',
+  ].filter(Boolean).join('\n\n')
+  const prompt = (preamble ? `${preamble}\n\n` : '')
+    + pending.map(({ matter, items }) => judgePrompt(matter, items)).join('\n\n')
   try {
     let text = ''
     for await (const chunk of llm.stream({

@@ -307,10 +307,18 @@ export class Runtime implements SourceHost {
       }
     }
 
-    const judged = this.options.decideModel
-      ? await judgeMatters(this.ctx, this.options.decideModel, pending, this.controller.signal)
-      : undefined
     const muted = this.mutedFeedSources()
+    const judged = this.options.decideModel
+      ? await judgeMatters(this.ctx, this.options.decideModel, pending, this.controller.signal, {
+        // 跨源关联：把最近判过的事项塞给 judge，重复旧题不再升级（「记住旧任务」闭环）。
+        history: [...matters.entries()]
+          .filter(([, m]) => m.decidedAt !== undefined)
+          .sort((a, b) => (b[1].decidedAt ?? 0) - (a[1].decidedAt ?? 0))
+          .slice(0, 10)
+          .map(([, m]) => `[${m.decision ?? m.status}] ${m.title}`),
+        muted: [...muted],
+      })
+      : undefined
 
     const budgetRow = state.get(BUDGET_KEY)
     let budget: NotifyBudget = budgetRow ? { ...emptyBudget(), ...JSON.parse(budgetRow.value) } : emptyBudget()
