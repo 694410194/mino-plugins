@@ -1,5 +1,5 @@
 /** 「语音笔记」main 页：录音控制 + 笔记列表 + 详情（转写/纪要/分享）。 */
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { Translate } from './index.tsx'
 import * as api from './api.ts'
 import { startRecording, wavToBase64, type Recorder } from './recorder.ts'
@@ -84,6 +84,22 @@ export function VNotesPage({ t }: { t: Translate }) {
 
   const statusLabel = (s: api.VNotePublic['status']) => t(`list.status.${s}` as Parameters<Translate>[0])
 
+  // audioNotes 同款时间分桶：今天 / 昨天 / 更早。
+  const grouped = useMemo(() => {
+    const dayStart = (iso: string) => { const d = new Date(iso); return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() }
+    const today = dayStart(new Date().toISOString())
+    const buckets: { key: 'group.today' | 'group.yesterday' | 'group.earlier'; items: api.VNotePublic[] }[] = [
+      { key: 'group.today', items: [] },
+      { key: 'group.yesterday', items: [] },
+      { key: 'group.earlier', items: [] },
+    ]
+    for (const n of notes) {
+      const d = dayStart(n.createdAt)
+      buckets[d >= today ? 0 : d >= today - 86_400_000 ? 1 : 2]!.items.push(n)
+    }
+    return buckets.filter(b => b.items.length > 0)
+  }, [notes])
+
   return (
     <div className={styles.page}>
       <div className={styles.head}>
@@ -102,15 +118,20 @@ export function VNotesPage({ t }: { t: Translate }) {
       <div className={styles.body}>
         <div className={styles.list}>
           {notes.length === 0 && <div className={styles.empty}>{t('list.empty')}</div>}
-          {notes.map(n => (
-            <div key={n.id} className={`${styles.row} ${selected?.id === n.id ? styles.rowActive : ''}`}
-              onClick={() => { setSelected(n); void api.getNote(n.id).then(d => d && setSelected(d)) }}>
-              <div className={styles.rowTitle}>{n.title}</div>
-              <div className={styles.rowMeta}>
-                <span className={`${styles.badge} ${styles[`st_${n.status}`]}`}>{statusLabel(n.status)}</span>
-                <span>{n.createdAt.slice(0, 16).replace('T', ' ')}</span>
-                {n.audioSeconds !== undefined && <span>{n.audioSeconds.toFixed(0)}s</span>}
-              </div>
+          {grouped.map(g => (
+            <div key={g.key} className={styles.group}>
+              <div className={styles.groupHead}>{t(g.key)}</div>
+              {g.items.map(n => (
+                <div key={n.id} className={`${styles.row} ${selected?.id === n.id ? styles.rowActive : ''}`}
+                  onClick={() => { setSelected(n); void api.getNote(n.id).then(d => d && setSelected(d)) }}>
+                  <div className={styles.rowTitle}>{n.title}</div>
+                  <div className={styles.rowMeta}>
+                    <span className={`${styles.badge} ${styles[`st_${n.status}`]}`}>{statusLabel(n.status)}</span>
+                    <span>{n.createdAt.slice(0, 16).replace('T', ' ')}</span>
+                    {n.audioSeconds !== undefined && <span>{n.audioSeconds.toFixed(0)}s</span>}
+                  </div>
+                </div>
+              ))}
             </div>
           ))}
         </div>

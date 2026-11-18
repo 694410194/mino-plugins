@@ -2,7 +2,7 @@
  * mino-today 的共享小组件：时钟 hook、相对时间格式化、chip/徽标。
  * 纯展示 —— 数据都从 props 进来。
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type PointerEvent as ReactPointerEvent } from 'react'
 
 /** 每 30s 跳一次的本地时钟（相对时间、进行中任务时长用）。 */
 export function useNow(stepMs = 30_000): number {
@@ -59,4 +59,31 @@ export function durationText(ms: number): string {
   if (m < 60) return `${m}m${s % 60 ? `${s % 60}s` : ''}`
   const h = Math.floor(m / 60)
   return `${h}h${m % 60 ? `${m % 60}m` : ''}`
+}
+
+/**
+ * Today 卡片的指针追光（解包 TOHVBq 协议）：pointer 相对卡心求方位角写
+ * --cursor-angle，按到最近边的归一化距离写 --edge-proximity（>0.3 才显光，
+ * 离开归零）。事件挂在卡根元素上，CSS 里 .edgeLight 子层消费这两个 var。
+ */
+export function edgeGlowHandlers<E extends HTMLElement>(): {
+  onPointerMove: (e: ReactPointerEvent<E>) => void
+  onPointerLeave: (e: ReactPointerEvent<E>) => void
+} {
+  return {
+    onPointerMove(e) {
+      const el = e.currentTarget
+      const r = el.getBoundingClientRect()
+      const x = e.clientX - r.left
+      const y = e.clientY - r.top
+      const deg = (Math.atan2(y - r.height / 2, x - r.width / 2) * 180) / Math.PI
+      const edge = Math.min(x, r.width - x, y, r.height - y)
+      const proximity = Math.max(0, 1 - edge / (0.45 * Math.min(r.width, r.height)))
+      el.style.setProperty('--cursor-angle', `${deg}deg`)
+      el.style.setProperty('--edge-proximity', String(Math.max(0, (proximity - 0.3) / 0.7)))
+    },
+    onPointerLeave(e) {
+      e.currentTarget.style.setProperty('--edge-proximity', '0')
+    },
+  }
 }

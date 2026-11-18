@@ -10,7 +10,7 @@ import { DiaryTab } from './DiaryTab.tsx'
 import { FeedTab } from './FeedTab.tsx'
 import { MemoryTab } from './MemoryTab.tsx'
 import { TasksTab } from './TasksTab.tsx'
-import { dayKey, hhmm, useNow } from './shared.tsx'
+import { dayKey, edgeGlowHandlers, hhmm, useNow } from './shared.tsx'
 import css from './today.module.css'
 
 export type Translate = (key: string, params?: Record<string, string | number>) => string
@@ -154,7 +154,9 @@ export function TodayPage({ t, actions, useSessionList, useJobs, renderSlot }: T
             type="button"
             className={css.workingBar}
             onClick={() => { const s = runningSessions[0]; if (s) actions.openSession(s.id) }}
+            {...edgeGlowHandlers<HTMLButtonElement>()}
           >
+            <span className={css.edgeLight} />
             <span className={css.workingDot} />
             {runningCount === 1
               ? t('hero.working', { title: runningSessions[0]?.displayTitle ?? '' })

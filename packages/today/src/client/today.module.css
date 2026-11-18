@@ -87,6 +87,7 @@
 }
 .heroGreeting {
   margin: 0;
+  font-family: var(--font-sentient, 'Sentient', Georgia, 'Times New Roman', 'Songti SC', 'STSong', serif);
   font-size: 32px;
   font-weight: 500;
   letter-spacing: -0.3px;
@@ -419,6 +420,79 @@
 .chip[data-tone='source'] {
   color: var(--t-ink-3);
   border-style: dashed;
+}
+
+/* ---------- 指针追光（解包 TOHVBq：锥形 mask 随 --cursor-angle 转向，
+   --edge-proximity 驱动不透明度，金色辉光只贴朝向指针的那段卡缘） ---------- */
+.edgeLight {
+  position: absolute;
+  inset: -30px;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+  mask-image: conic-gradient(from var(--cursor-angle, 45deg) at center,
+      black 3%, transparent 12%, transparent 88%, black 97%);
+  -webkit-mask-image: conic-gradient(from var(--cursor-angle, 45deg) at center,
+      black 3%, transparent 12%, transparent 88%, black 97%);
+  opacity: var(--edge-proximity, 0);
+  transition: opacity 0.25s cubic-bezier(0.8, 0, 0, 1);
+}
+.edgeLight::before {
+  content: '';
+  position: absolute;
+  inset: 30px;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px rgba(245, 218, 163, 0.85),
+    inset 0 0 2px rgba(245, 218, 163, 0.6),
+    inset 0 0 8px rgba(245, 218, 163, 0.45),
+    inset 0 0 22px 2px rgba(245, 218, 163, 0.28),
+    0 0 2px rgba(245, 218, 163, 0.5),
+    0 0 14px rgba(245, 218, 163, 0.3);
+}
+
+/* ---------- 卡片 ⋯ 溢出菜单（玻璃浮层） ---------- */
+.menuWrap { position: relative; flex: none; }
+.feedMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: -6px;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  min-width: 132px;
+  padding: 5px;
+  border-radius: 14px;
+  border: 0.5px solid var(--glass-e-border);
+  background: var(--glass-e-bg);
+  box-shadow: var(--glass-e-shadow), 0 8px 24px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(40px) saturate(1.4);
+  -webkit-backdrop-filter: blur(40px) saturate(1.4);
+  animation: today-fade-up 160ms ease both;
+}
+.menuItem {
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1;
+  padding: 9px 12px;
+  border-radius: 9px;
+  color: var(--t-ink-2);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.menuItem:hover { background: var(--t-ink-fill); color: var(--t-ink); }
+.menuItem[data-active] { color: var(--today-accent-ink); }
+.menuItemDanger { color: #e5484d; }
+.menuItemDanger:hover { background: rgba(229, 72, 77, 0.09); color: #e5484d; }
+
+.feedEnd {
+  margin: 26px 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+  color: var(--t-ink-3);
 }
 
 /* ---------- 动态卡片（玻璃拟态卡） ---------- */

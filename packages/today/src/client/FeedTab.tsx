@@ -3,9 +3,9 @@
  * 卡片带类型左条、来源 chip、建议 chips（点了把 prompt 发回给写卡片的会话）、
  * 会话跳转和划掉。
  */
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { api, type FeedCard as FeedCardBody, type FeedItem, type ScheduleCard, type Summary } from './api.ts'
-import { batchOf, dayKey, hhmm, relTime, useNow } from './shared.tsx'
+import { batchOf, dayKey, edgeGlowHandlers, hhmm, relTime, useNow } from './shared.tsx'
 import type { TodayActions, Translate } from './TodayPage.tsx'
 import css from './today.module.css'
 
@@ -119,10 +119,78 @@ function CardBody({ card }: { card: FeedCardBody }) {
   }
 }
 
-function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void; onRead: (id: string) => void }) {
+/**
+ * 卡片溢出菜单：Today 的 more 菜单（briefFeedback.more=更多）——
+ * 置顶/反馈/不感兴趣/打开会话/删除全部收进一个 ⋯，外点与 Esc 关闭。
+ */
+function CardMenu({ item, t, actions, onDelete, onFeedback, onPin }: { item: FeedItem; t: Translate; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void }) {
+  const [open, setOpen] = useState(false)
   const [confirming, setConfirming] = useState(false)
+  const rootRef = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    if (!open) return
+    const onPointerDown = (e: PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) { setOpen(false); setConfirming(false) }
+    }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(false); setConfirming(false) } }
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+  const act = (fn: () => void) => () => { fn(); setOpen(false); setConfirming(false) }
   return (
-    <li className={css.feedCard} data-kind={item.kind} data-pinned={item.pinned || undefined} data-unread={item.read ? undefined : true}>
+    <span className={css.menuWrap} ref={rootRef}>
+      <button
+        type="button"
+        className={css.iconButton}
+        title={t('feed.more')}
+        aria-expanded={open}
+        onClick={() => { setOpen(v => !v); setConfirming(false) }}
+      >⋯</button>
+      {open ? (
+        <span className={css.feedMenu} role="menu">
+          <button type="button" role="menuitem" className={css.menuItem} onClick={act(() => onPin(item.id, !item.pinned))}>
+            {item.pinned ? t('feed.unpin') : t('feed.pin')}
+          </button>
+          <button type="button" role="menuitem" className={css.menuItem} data-active={item.feedback === 'up' || undefined} onClick={act(() => onFeedback(item.id, 'up'))}>
+            {t('feed.up')}
+          </button>
+          <button type="button" role="menuitem" className={css.menuItem} data-active={item.feedback === 'down' || undefined} onClick={act(() => onFeedback(item.id, 'down'))}>
+            {t('feed.down')}
+          </button>
+          <button type="button" role="menuitem" className={css.menuItem} onClick={act(() => onFeedback(item.id, 'not_interested'))}>
+            {t('feed.notInterested')}
+          </button>
+          {item.sessionId ? (
+            <button type="button" role="menuitem" className={css.menuItem} onClick={act(() => actions.openSession(item.sessionId!))}>
+              {t('feed.openSession')}
+            </button>
+          ) : null}
+          <button
+            type="button"
+            role="menuitem"
+            className={`${css.menuItem} ${css.menuItemDanger}`}
+            onClick={confirming ? act(() => onDelete(item.id)) : () => setConfirming(true)}
+          >{confirming ? t('feed.confirmDelete') : t('feed.dismiss')}</button>
+        </span>
+      ) : null}
+    </span>
+  )
+}
+
+function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void; onRead: (id: string) => void }) {
+  return (
+    <li
+      className={css.feedCard}
+      data-kind={item.kind}
+      data-pinned={item.pinned || undefined}
+      data-unread={item.read ? undefined : true}
+      {...edgeGlowHandlers<HTMLLIElement>()}
+    >
+      <span className={css.edgeLight} />
       <div className={css.feedHead}>
         {!item.read ? <span className={css.unreadDot} title={t('feed.unread')} /> : null}
         <span className={css.feedKind} data-kind={item.kind}>
@@ -131,47 +199,7 @@ function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }
         </span>
         {item.source ? <span className={css.chip} data-tone="source">{item.source}</span> : null}
         <span className={css.feedTime}>{relTime(item.at, now)}</span>
-        <button
-          type="button"
-          className={css.miniButton}
-          title={item.pinned ? t('feed.unpin') : t('feed.pin')}
-          onClick={() => onPin(item.id, !item.pinned)}
-        >{item.pinned ? '📌' : '📍'}</button>
-        <button
-          type="button"
-          className={css.miniButton}
-          data-active={item.feedback === 'up' || undefined}
-          title={t('feed.up')}
-          onClick={() => onFeedback(item.id, 'up')}
-        >👍</button>
-        <button
-          type="button"
-          className={css.miniButton}
-          data-active={item.feedback === 'down' || undefined}
-          title={t('feed.down')}
-          onClick={() => onFeedback(item.id, 'down')}
-        >👎</button>
-        <button
-          type="button"
-          className={css.miniButton}
-          title={t('feed.notInterested')}
-          onClick={() => onFeedback(item.id, 'not_interested')}
-        >⊘</button>
-        {item.sessionId ? (
-          <button
-            type="button"
-            className={css.miniButton}
-            title={t('feed.openSession')}
-            onClick={() => actions.openSession(item.sessionId!)}
-          >↗</button>
-        ) : null}
-        <button
-          type="button"
-          className={css.iconButton}
-          title={t('feed.dismiss')}
-          onClick={() => (confirming ? onDelete(item.id) : setConfirming(true))}
-          onBlur={() => setConfirming(false)}
-        >{confirming ? t('feed.delete') : '×'}</button>
+        <CardMenu item={item} t={t} actions={actions} onDelete={onDelete} onFeedback={onFeedback} onPin={onPin} />
       </div>
       <div className={css.feedTitle} onClick={() => { if (!item.read) onRead(item.id) }}>{item.title}</div>
       {item.body ? <div className={css.feedBody}>{item.body}</div> : null}
@@ -301,6 +329,7 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
           </section>
         ))
       )}
+      {summary.items.length > 0 ? <p className={css.feedEnd}>{t('feed.end')}</p> : null}
     </div>
   )
 }

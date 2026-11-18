@@ -21,6 +21,9 @@ export const zh = {
   'action.refresh': '刷新',
   'share.copied': '链接已复制',
   'share.path': '分享页',
+  'group.today': '今天',
+  'group.yesterday': '昨天',
+  'group.earlier': '更早',
 } as const
 
 export const en: Record<CopyKey, string> = {
@@ -44,4 +47,7 @@ export const en: Record<CopyKey, string> = {
   'action.refresh': 'Refresh',
   'share.copied': 'Link copied',
   'share.path': 'Share page',
+  'group.today': 'Today',
+  'group.yesterday': 'Yesterday',
+  'group.earlier': 'Earlier',
 }
