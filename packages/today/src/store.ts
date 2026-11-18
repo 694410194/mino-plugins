@@ -13,6 +13,12 @@ export interface Suggestion {
   prompt: string
 }
 
+/** 结构化卡体（自有 schema 枚举，不抄 Today manifest 字段名）：标题/正文之外的可视化载体。 */
+export type FeedCard =
+  | { type: 'list'; items: string[] }
+  | { type: 'metric'; value: string; unit?: string; delta?: string }
+  | { type: 'progress'; done: number; total: number; label?: string }
+
 /** 「今日」动态卡片。kind: note=随手记 / result=做完的事 / moment=值得留意。 */
 export interface FeedItem {
   id: string
@@ -31,6 +37,10 @@ export interface FeedItem {
   pinned?: boolean
   /** 用户反馈信号；not_interested 同时意味着划掉。 */
   feedback?: 'up' | 'down' | 'not_interested'
+  /** 结构化卡体；缺省就是普通文字卡。 */
+  card?: FeedCard
+  /** 已读标记（ISO 时间）；缺省=未读，卡片上有未读点。 */
+  read?: string
 }
 
 /** 「关注 X」追踪：用户点名的长期关注主题，绑一条宿主 schedule 定时去查。 */
@@ -116,6 +126,7 @@ export function addItem(store: Store, item: Omit<FeedItem, 'id' | 'at'> & { at?:
   if (item.source) full.source = item.source
   if (item.batchId) full.batchId = item.batchId
   if (item.suggestions?.length) full.suggestions = item.suggestions
+  if (item.card) full.card = item.card
   store.items.push(full)
   if (store.items.length > MAX_ITEMS) {
     const dismissed = store.items.filter(i => i.dismissed)

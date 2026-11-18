@@ -4,7 +4,7 @@
  * 会话跳转和划掉。
  */
 import { useMemo, useState } from 'react'
-import { api, type FeedItem, type ScheduleCard, type Summary } from './api.ts'
+import { api, type FeedCard as FeedCardBody, type FeedItem, type ScheduleCard, type Summary } from './api.ts'
 import { batchOf, dayKey, hhmm, relTime, useNow } from './shared.tsx'
 import type { TodayActions, Translate } from './TodayPage.tsx'
 import css from './today.module.css'
@@ -90,11 +90,41 @@ function SuggestionChips({ item, t, actions }: { item: FeedItem; t: Translate; a
   )
 }
 
-function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void }) {
+/** 结构化卡体渲染：list 清单 / metric 指标 / progress 进度条。 */
+function CardBody({ card }: { card: FeedCardBody }) {
+  switch (card.type) {
+    case 'list':
+      return (
+        <ul className={css.cardList}>
+          {card.items.map((it, i) => <li key={i}>{it}</li>)}
+        </ul>
+      )
+    case 'metric':
+      return (
+        <div className={css.cardMetric}>
+          <span className={css.cardMetricValue}>{card.value}</span>
+          {card.unit ? <span className={css.cardMetricUnit}>{card.unit}</span> : null}
+          {card.delta ? <span className={css.cardMetricDelta}>{card.delta}</span> : null}
+        </div>
+      )
+    case 'progress': {
+      const pct = Math.round((card.done / card.total) * 100)
+      return (
+        <div className={css.cardProgress}>
+          <div className={css.cardProgressBar}><span style={{ width: `${pct}%` }} /></div>
+          <span className={css.cardProgressText}>{card.label ? `${card.label} ` : ''}{card.done}/{card.total}</span>
+        </div>
+      )
+    }
+  }
+}
+
+function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void; onRead: (id: string) => void }) {
   const [confirming, setConfirming] = useState(false)
   return (
-    <li className={css.feedCard} data-kind={item.kind} data-pinned={item.pinned || undefined}>
+    <li className={css.feedCard} data-kind={item.kind} data-pinned={item.pinned || undefined} data-unread={item.read ? undefined : true}>
       <div className={css.feedHead}>
+        {!item.read ? <span className={css.unreadDot} title={t('feed.unread')} /> : null}
         <span className={css.feedKind} data-kind={item.kind}>
           <span className={css.feedKindIcon}>{KIND_ICON[item.kind]}</span>
           {t(`feed.kind.${item.kind}`)}
@@ -143,8 +173,9 @@ function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin }: { item
           onBlur={() => setConfirming(false)}
         >{confirming ? t('feed.delete') : '×'}</button>
       </div>
-      <div className={css.feedTitle}>{item.title}</div>
+      <div className={css.feedTitle} onClick={() => { if (!item.read) onRead(item.id) }}>{item.title}</div>
       {item.body ? <div className={css.feedBody}>{item.body}</div> : null}
+      {item.card ? <CardBody card={item.card} /> : null}
       <SuggestionChips item={item} t={t} actions={actions} />
     </li>
   )
@@ -217,7 +248,14 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
       )}
 
       <div className={css.sectionRow}>
-        <h2 className={css.sectionTitle}>{t('section.feed')}</h2>
+        <h2 className={css.sectionTitle}>
+          {t('section.feed')}
+          {summary.items.some(i => !i.read) ? (
+            <button type="button" className={css.linkButton} onClick={() => { void api.markRead().then(onChanged).catch(() => {}) }}>
+              {t('feed.readAll')}
+            </button>
+          ) : null}
+        </h2>
         <div className={css.quickAdd}>
           <input
             className={css.quickInput}
@@ -256,6 +294,7 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
                   onDelete={id => { void api.deleteItem(id).then(onChanged).catch(() => {}) }}
                   onFeedback={(id, signal) => { void api.feedback(id, signal).then(onChanged).catch(() => {}) }}
                   onPin={(id, pinned) => { void api.setPin(id, pinned).then(onChanged).catch(() => {}) }}
+                  onRead={id => { void api.markRead(id).then(onChanged).catch(() => {}) }}
                 />
               ))}
             </ul>

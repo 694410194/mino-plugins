@@ -5,6 +5,12 @@ export interface Suggestion {
   prompt: string
 }
 
+/** 结构化卡体（自有 schema 枚举）。 */
+export type FeedCard =
+  | { type: 'list'; items: string[] }
+  | { type: 'metric'; value: string; unit?: string; delta?: string }
+  | { type: 'progress'; done: number; total: number; label?: string }
+
 export interface FeedItem {
   id: string
   kind: 'note' | 'result' | 'moment'
@@ -18,6 +24,10 @@ export interface FeedItem {
   batchId?: string
   pinned?: boolean
   feedback?: 'up' | 'down' | 'not_interested'
+  /** 结构化卡体；缺省就是普通文字卡。 */
+  card?: FeedCard
+  /** 已读时间；缺省=未读。 */
+  read?: string
 }
 
 export interface ScheduleCard {
@@ -91,6 +101,8 @@ export const api = {
     postJson<{ ok: boolean }>('/mino-today/api/item/feedback', { id, signal }),
   /** 置顶开关。 */
   setPin: (id: string, pinned: boolean) => postJson<{ ok: boolean; pinned: boolean }>('/mino-today/api/item/pin', { id, pinned }),
+  /** 标已读：单条或全部。 */
+  markRead: (id?: string) => postJson<{ ok: boolean }>('/mino-today/api/item/read', id ? { id } : { all: true }),
   /** 定时任务暂停/恢复（id + 目标状态）。 */
   setScheduleActive: (id: string, active: boolean) => postJson<{ ok: boolean }>('/mino-today/api/schedule/edit', { id, active }),
   diaries: () => getJson<{ ok: boolean; dates: DiaryListRow[] }>('/mino-today/api/diaries'),

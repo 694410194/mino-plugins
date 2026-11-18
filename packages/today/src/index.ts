@@ -7,7 +7,7 @@
  * fish-memory 自己的 /dsh-fish-memory/list 直接提供给客户端，本插件不读它的存储。
  */
 import type { Context } from '@deepseek-ai/cordis'
-import { addDiaryEntry, addItem, addWatch, dayKey, deleteDiaryEntry, loadStore, removeWatch, saveStore, type FeedItem, type Suggestion, type Watch } from './store.ts'
+import { addDiaryEntry, addItem, addWatch, dayKey, deleteDiaryEntry, loadStore, removeWatch, saveStore, type FeedCard, type FeedItem, type Suggestion, type Watch } from './store.ts'
 
 export const name = 'mino-today'
 export const inject = ['webServer', 'tools']
@@ -129,6 +129,37 @@ function clipSuggestions(input: unknown): Suggestion[] | undefined {
   return out.length ? out : undefined
 }
 
+/** 把模型给的 card 参数钳成 FeedCard（非法形状整个丢弃，不存半残结构）。 */
+function clipCard(input: unknown): FeedCard | undefined {
+  if (!input || typeof input !== 'object') return undefined
+  const c = input as Record<string, unknown>
+  switch (String(c.type)) {
+    case 'list': {
+      const items = Array.isArray(c.items)
+        ? c.items.map(i => clip(String(i).trim(), 80)).filter(Boolean).slice(0, 8)
+        : []
+      return items.length ? { type: 'list', items } : undefined
+    }
+    case 'metric': {
+      const value = String(c.value || '').trim()
+      if (!value) return undefined
+      const out: FeedCard = { type: 'metric', value: clip(value, 40) }
+      if (c.unit) out.unit = clip(String(c.unit).trim(), 20)
+      if (c.delta) out.delta = clip(String(c.delta).trim(), 40)
+      return out
+    }
+    case 'progress': {
+      const done = Number(c.done)
+      const total = Number(c.total)
+      if (!Number.isFinite(done) || !Number.isFinite(total) || total <= 0) return undefined
+      const out: FeedCard = { type: 'progress', done: Math.max(0, Math.min(done, total)), total }
+      if (c.label) out.label = clip(String(c.label).trim(), 60)
+      return out
+    }
+  }
+  return undefined
+}
+
 const KINDS = new Set(['note', 'result', 'moment'])
 
 /** 宿主 schedule 服务（可选，缺席时相关能力降级）。 */
@@ -165,6 +196,24 @@ function makeTools(ctx: Context): Record<string, unknown>[] {
             type: 'string',
             description: '可选。批次标签（≤24字）——同一批产出的卡片传同一个标签（如「早报」「晚报」），feed 里会并成一组。散件别传。',
           },
+          card: {
+            type: 'object',
+            additionalProperties: false,
+            description:
+              '可选。结构化卡体，标题正文不够用时再传：' +
+              'list（清单：{type,items:[]≤8条}）、metric（指标：{type,value,unit?,delta?}）、' +
+              'progress（进度：{type,done,total,label?}）。普通文字动态不要传。',
+            properties: {
+              type: { type: 'string', enum: ['list', 'metric', 'progress'] },
+              items: { type: 'array', items: { type: 'string' }, description: 'list 用：条目，每条≤80字。' },
+              value: { type: 'string', description: 'metric 用：数值文字（≤40字）。' },
+              unit: { type: 'string', description: 'metric 用：单位（≤20字）。' },
+              delta: { type: 'string', description: 'metric 用：变化量说明（≤40字），如「+3 封」。' },
+              done: { type: 'number', description: 'progress 用：已完成数。' },
+              total: { type: 'number', description: 'progress 用：总数（>0）。' },
+              label: { type: 'string', description: 'progress 用：进度说明（≤60字）。' },
+            },
+          },
           suggestions: {
             type: 'array',
             description: '可选。卡片底部的建议按钮（≤4个）：她点一下就把 prompt 发回来找你。比如「展开说说」→展开讲。',
@@ -191,7 +240,7 @@ function makeTools(ctx: Context): Record<string, unknown>[] {
           return [{ type: 'text', text: ok ? '✓ 已投到今日页' : '✗ ' + String((value as { message?: string } | null)?.message || '没投成') }]
         },
       },
-      async execute(args: { title?: string; body?: string; kind?: string; source?: string; batch?: string; suggestions?: unknown }, exec: unknown) {
+      async execute(args: { title?: string; body?: string; kind?: string; source?: string; batch?: string; card?: unknown; suggestions?: unknown }, exec: unknown) {
         const title = String(args?.title || '').trim()
         if (!title) return { ok: false, message: '标题是空的' }
         const store = loadStore()
@@ -202,6 +251,7 @@ function makeTools(ctx: Context): Record<string, unknown>[] {
           sessionId: sessionIdFromExec(exec) || undefined,
           source: args?.source ? clip(String(args.source).trim(), MAX_SOURCE) : undefined,
           batchId: args?.batch ? clip(String(args.batch).trim(), MAX_BATCH) : undefined,
+          card: clipCard(args?.card),
           suggestions: clipSuggestions(args?.suggestions),
         })
         saveStore(store)
@@ -474,6 +524,23 @@ export function apply(ctx: Context): void {
     item.feedback = signal as FeedItem['feedback']
     if (signal === 'not_interested') item.dismissed = true
     saveStore(store)
+    sendJson(res, 200, { ok: true })
+  })
+
+  /** 已读标记：{id} 单条；{all:true} 全部标已读。 */
+  route('/mino-today/api/item/read', async (req, res) => {
+    const body = await readBody(req)
+    const store = loadStore()
+    const now = new Date().toISOString()
+    if (body.all === true) {
+      for (const item of store.items) if (!item.read) item.read = now
+      saveStore(store)
+      return sendJson(res, 200, { ok: true })
+    }
+    const id = String(body.id || '')
+    const item = store.items.find(i => i.id === id)
+    if (!item) return sendJson(res, 404, { ok: false, error: '没这条' })
+    if (!item.read) { item.read = now; saveStore(store) }
     sendJson(res, 200, { ok: true })
   })
 
