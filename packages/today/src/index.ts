@@ -623,6 +623,23 @@ export function apply(ctx: Context): void {
     sendJson(res, 200, { ok: true })
   })
 
+  /** 陪伴类插件（comma 等）消费反馈信号的公开服务面：按 source 聚合卡片反馈。 */
+  interface FeedbackRow { source: string; up: number; down: number; notInterested: number }
+  ;(ctx as Context & { provide: (name: string, svc: unknown) => void }).provide('mino-today', {
+    feedbackSummary(): FeedbackRow[] {
+      const rows = new Map<string, FeedbackRow>()
+      for (const item of loadStore().items) {
+        if (!item.source || !item.feedback) continue
+        const row = rows.get(item.source) ?? { source: item.source, up: 0, down: 0, notInterested: 0 }
+        if (item.feedback === 'up') row.up++
+        else if (item.feedback === 'down') row.down++
+        else row.notInterested++
+        rows.set(item.source, row)
+      }
+      return [...rows.values()]
+    },
+  })
+
   if (tools) {
     for (const tool of makeTools(ctx)) ctx.effect(() => tools.register(tool))
   }
