@@ -1,0 +1,5 @@
+# mino-cred-vault — bundle patch
+- insert:
+    - id: cred-vault
+      name: 'mino-cred-vault'
+      config: {}
