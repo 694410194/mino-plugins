@@ -1,10 +1,10 @@
 # mino-voice-notes
 
-「语音笔记」面板：录音 → 分段 → 本机转写 → 纪要 → 本地分享页。
+「语音笔记」：录音 → 分段 → 本机转写 → 纪要 → 本地分享页。
 
 ## 能力面
 
-- 侧栏面板（`vnotes`）：录音控制 + 笔记列表 + 详情（转写/纪要/分段回放/分享）
+- 「今日」面板的「语音」tab（注册进 `today.page.voice` 座位，mino-today 未装时安静缺席）：录音控制 + 笔记列表 + 详情（转写/纪要/分段回放/分享）
 - 6 个模型工具：`vnote_start` / `vnote_stop` / `vnote_list` / `vnote_get` / `vnote_update` / `vnote_share`
 - 自有路由：`/mino-voice-notes/api/{start,segment,stop,list,note,update,share,delete,audio}` + `/mino-voice-notes/s/<shareId>` 只读分享页
 - 服务缝：`ctx.get('mino-voice-notes')` → `{start,stop,status}`（meeting-detect 等消费方走这里，不走工具名）

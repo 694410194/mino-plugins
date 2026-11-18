@@ -4,7 +4,7 @@
  * 数据：自有路由 /mino-today/api/* + fish-memory /dsh-fish-memory/list
  * + 官方缝（sessions.list / jobs.state / uiWorkspace / schedule）。
  */
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { api, type Summary } from './api.ts'
 import { DiaryTab } from './DiaryTab.tsx'
 import { FeedTab } from './FeedTab.tsx'
@@ -66,9 +66,11 @@ export interface TodayPageProps {
   actions: TodayActions
   useSessionList?: BoundHook<SessionListLite>
   useJobs?: BoundHook<JobsSnapshotLite>
+  /** 框架下发的子座位渲染器；渲染 'today.page.voice' 由语音笔记插件贡献。 */
+  renderSlot?: (key: string, owner: Record<string, unknown>, opts?: { fallback?: ReactNode }) => ReactNode
 }
 
-type Tab = 'feed' | 'tasks' | 'memory' | 'diary'
+type Tab = 'feed' | 'tasks' | 'memory' | 'diary' | 'voice'
 
 const EMPTY_SESSIONS: SessionListLite = { ids: [], byId: {} }
 
@@ -92,7 +94,7 @@ function daysSince(iso: string | null | undefined): number {
   return Math.max(1, days)
 }
 
-export function TodayPage({ t, actions, useSessionList, useJobs }: TodayPageProps) {
+export function TodayPage({ t, actions, useSessionList, useJobs, renderSlot }: TodayPageProps) {
   const [tab, setTab] = useState<Tab>('feed')
   const [summary, setSummary] = useState<Summary | null>(null)
   const [summaryFailed, setSummaryFailed] = useState(false)
@@ -162,7 +164,7 @@ export function TodayPage({ t, actions, useSessionList, useJobs }: TodayPageProp
       </header>
 
       <nav className={css.tabs}>
-        {(['feed', 'tasks', 'memory', 'diary'] as const).map(key => (
+        {(['feed', 'tasks', 'memory', 'diary', 'voice'] as const).map(key => (
           <button
             key={key}
             type="button"
@@ -186,6 +188,9 @@ export function TodayPage({ t, actions, useSessionList, useJobs }: TodayPageProp
         ) : null}
         {tab === 'memory' ? <MemoryTab t={t} /> : null}
         {tab === 'diary' ? <DiaryTab t={t} /> : null}
+        {tab === 'voice'
+          ? (renderSlot?.('today.page.voice', {}, { fallback: <div className={css.emptyPanel}>{t('tab.voiceEmpty')}</div> }) ?? null)
+          : null}
       </main>
     </div>
   )

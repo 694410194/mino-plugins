@@ -9,6 +9,8 @@ export const zh = {
   'tab.tasks': '任务',
   'tab.memory': '记忆',
   'tab.diary': '日记',
+  'tab.voice': '语音',
+  'tab.voiceEmpty': '语音笔记插件未安装',
 
   // Hero
   'greeting.morning': '早',
@@ -125,6 +127,8 @@ export const en: Record<keyof typeof zh, string> = {
   'tab.tasks': 'Tasks',
   'tab.memory': 'Memories',
   'tab.diary': 'Diary',
+  'tab.voice': 'Voice',
+  'tab.voiceEmpty': 'Voice Notes plugin is not installed',
 
   'greeting.morning': 'Morning',
   'greeting.forenoon': 'Good morning',

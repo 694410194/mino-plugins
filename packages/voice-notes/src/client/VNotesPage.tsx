@@ -87,7 +87,6 @@ export function VNotesPage({ t }: { t: Translate }) {
   return (
     <div className={styles.page}>
       <div className={styles.head}>
-        <h1 className={styles.title}>{t('page.title')}</h1>
         {recording ? (
           <button className={`${styles.btn} ${styles.btnStop}`} onClick={() => void finish()}>
             ● {t('record.recording')} {Math.floor(recording.seconds / 60)}:{String(Math.floor(recording.seconds % 60)).padStart(2, '0')} — {t('record.stop')}

@@ -1,17 +1,15 @@
-/** mino-voice-notes 客户端半：侧栏「语音笔记」图标 + keyed main 页。
+/** mino-voice-notes 客户端半：注册进 mino-today 的「语音」tab 座位。
  * 与 mino-today 同款注册法（slots.inject 座位缺席则安静缺席）。
  * 数据面：同源 fetch 自有路由；录音经 MediaRecorder 同款 getUserMedia+PCM16 WAV 链。
  */
 import type { Context } from '@deepseek-ai/cordis'
-import { PanelIcon } from './PanelIcon.tsx'
 import { VNotesPage } from './VNotesPage.tsx'
 import { en, zh, type CopyKey } from './locales.ts'
 
 export const inject = ['slots', 'locale']
 
 const NS = 'mino-voice-notes'
-const PANEL_ID = 'vnotes'
-const PANEL_ORDER = 6
+const SEAT = 'today.page.voice'
 
 interface SlotsFace {
   inject(key: string, callback: () => (() => void) | void): () => void
@@ -41,19 +39,9 @@ export function apply(ctx: Context): void {
   }
 
   ctx.effect(() =>
-    slots.inject('sidebar.panellist', () =>
+    slots.inject(SEAT, () =>
       slots.register({
-        name: 'sidebar.panellist',
-        id: PANEL_ID,
-        order: PANEL_ORDER,
-        locale: NS,
-        label: () => t('entry.label'),
-      }, PanelIcon)))
-  ctx.effect(() =>
-    slots.inject('main', () =>
-      slots.register({
-        name: 'main',
-        key: PANEL_ID,
+        name: SEAT,
         locale: NS,
         inject: () => ({ t }),
       }, VNotesPage)))
