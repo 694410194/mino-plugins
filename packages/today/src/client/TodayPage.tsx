@@ -125,46 +125,6 @@ export function TodayPage({ t, actions, useSessionList, useJobs, renderSlot }: T
 
   return (
     <div className={css.page}>
-      <header className={css.hero}>
-        <div className={css.heroMain}>
-          <div className={css.heroDate}>{dateLine}</div>
-          <h1 className={css.heroGreeting}>{t(greetingKey(today.getHours()))}</h1>
-          <div className={css.heroStats}>
-            {stats ? <span className={css.statChip}>{t('hero.stat.days', { count: daysSince(stats.oldestAt) })}</span> : null}
-            {stats ? <span className={css.statChip}>{t('hero.stat.feed', { count: stats.feedCount })}</span> : null}
-            {stats ? <span className={css.statChip}>{t('hero.stat.diary', { count: stats.diaryDays })}</span> : null}
-            {summary ? <span className={css.statChip}>{t('hero.stat.schedule', { count: summary.schedules.length })}</span> : null}
-          </div>
-        </div>
-        <div className={css.heroSide}>
-          <button type="button" className={css.chatButton} onClick={() => void actions.newChat()}>
-            {t('hero.chat')}
-          </button>
-          <button
-            type="button"
-            className={css.updatedAt}
-            title={t('hero.updated', { time: loadedAt ? hhmm(loadedAt) : '—' })}
-            onClick={loadSummary}
-          >
-            {t('hero.updated', { time: loadedAt ? hhmm(loadedAt) : '—' })}
-          </button>
-        </div>
-        {runningCount > 0 && runningSessions[0] ? (
-          <button
-            type="button"
-            className={css.workingBar}
-            onClick={() => { const s = runningSessions[0]; if (s) actions.openSession(s.id) }}
-            {...edgeGlowHandlers<HTMLButtonElement>()}
-          >
-            <span className={css.edgeLight} />
-            <span className={css.workingDot} />
-            {runningCount === 1
-              ? t('hero.working', { title: runningSessions[0]?.displayTitle ?? '' })
-              : t('hero.workingMore', { title: runningSessions[0]?.displayTitle ?? '', count: runningCount })}
-          </button>
-        ) : null}
-      </header>
-
       <nav className={css.tabs}>
         {(['feed', 'tasks', 'memory', 'diary', 'voice'] as const).map(key => (
           <button
@@ -181,12 +141,53 @@ export function TodayPage({ t, actions, useSessionList, useJobs, renderSlot }: T
       </nav>
 
       <main className={css.body}>
+        {tab === 'feed' ? (
+          <header className={css.hero}>
+            <div className={css.heroMain}>
+              <div className={css.heroDate}>{dateLine}</div>
+              <h1 className={css.heroGreeting}>{t(greetingKey(today.getHours()))}</h1>
+              <div className={css.heroStats}>
+                {stats ? <span className={css.statChip}>{t('hero.stat.days', { count: daysSince(stats.oldestAt) })}</span> : null}
+                {stats ? <span className={css.statChip}>{t('hero.stat.feed', { count: stats.feedCount })}</span> : null}
+                {stats ? <span className={css.statChip}>{t('hero.stat.diary', { count: stats.diaryDays })}</span> : null}
+                {summary ? <span className={css.statChip}>{t('hero.stat.schedule', { count: summary.schedules.length })}</span> : null}
+              </div>
+            </div>
+            <div className={css.heroSide}>
+              <button type="button" className={css.chatButton} onClick={() => void actions.newChat()}>
+                {t('hero.chat')}
+              </button>
+              <button
+                type="button"
+                className={css.updatedAt}
+                title={t('hero.updated', { time: loadedAt ? hhmm(loadedAt) : '—' })}
+                onClick={loadSummary}
+              >
+                {t('hero.updated', { time: loadedAt ? hhmm(loadedAt) : '—' })}
+              </button>
+            </div>
+            {runningCount > 0 && runningSessions[0] ? (
+              <button
+                type="button"
+                className={css.workingBar}
+                onClick={() => { const s = runningSessions[0]; if (s) actions.openSession(s.id) }}
+                {...edgeGlowHandlers<HTMLButtonElement>()}
+              >
+                <span className={css.edgeLight} />
+                <span className={css.workingDot} />
+                {runningCount === 1
+                  ? t('hero.working', { title: runningSessions[0]?.displayTitle ?? '' })
+                  : t('hero.workingMore', { title: runningSessions[0]?.displayTitle ?? '', count: runningCount })}
+              </button>
+            ) : null}
+          </header>
+        ) : null}
         {summaryFailed && tab === 'feed' ? (
           <button type="button" className={css.errorBox} onClick={loadSummary}>{t('error.load')}</button>
         ) : null}
         {tab === 'feed' ? <FeedTab t={t} summary={summary} onChanged={loadSummary} actions={actions} /> : null}
         {tab === 'tasks' ? (
-          <TasksTab t={t} actions={actions} sessions={sessions} useJobs={useJobs} now={now} />
+          <TasksTab t={t} actions={actions} sessions={sessions} useJobs={useJobs} now={now} summary={summary} onChanged={loadSummary} />
         ) : null}
         {tab === 'memory' ? <MemoryTab t={t} /> : null}
         {tab === 'diary' ? <DiaryTab t={t} /> : null}

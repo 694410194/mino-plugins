@@ -64,6 +64,21 @@ function ScheduleRow({ card, t, onToggle }: { card: ScheduleCard; t: Translate; 
   )
 }
 
+/** 定时任务列表：今日页 strip 与任务页「定时任务」段共用。 */
+export function ScheduleList({ cards, t, onChanged }: { cards: ScheduleCard[]; t: Translate; onChanged: () => void }) {
+  const toggle = (card: ScheduleCard) => {
+    void api.setScheduleActive(card.id, card.status !== 'active').then(onChanged).catch(() => {})
+  }
+  if (cards.length === 0) return <p className={css.sectionHint}>{t('schedule.empty')}</p>
+  return (
+    <ul className={css.scheduleList}>
+      {[...cards]
+        .sort((a, b) => ({ active: 0, paused: 1, ended: 2 })[a.status] - ({ active: 0, paused: 1, ended: 2 })[b.status])
+        .map(card => <ScheduleRow key={card.id} card={card} t={t} onToggle={toggle} />)}
+    </ul>
+  )
+}
+
 function SuggestionChips({ item, t, actions }: { item: FeedItem; t: Translate; actions: TodayActions }) {
   const [sent, setSent] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -254,10 +269,6 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
     }
   }
 
-  const toggleSchedule = (card: ScheduleCard) => {
-    void api.setScheduleActive(card.id, card.status !== 'active').then(onChanged).catch(() => {})
-  }
-
   if (!summary) return <div className={css.loading} />
   return (
     <div>
@@ -265,15 +276,7 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
         {t('section.schedule')}
         <button type="button" className={css.linkButton} onClick={actions.openSchedules}>{t('section.scheduleAll')} →</button>
       </h2>
-      {summary.schedules.length === 0 ? (
-        <p className={css.sectionHint}>{t('schedule.empty')}</p>
-      ) : (
-        <ul className={css.scheduleList}>
-          {[...summary.schedules]
-            .sort((a, b) => ({ active: 0, paused: 1, ended: 2 })[a.status] - ({ active: 0, paused: 1, ended: 2 })[b.status])
-            .map(card => <ScheduleRow key={card.id} card={card} t={t} onToggle={toggleSchedule} />)}
-        </ul>
-      )}
+      <ScheduleList cards={summary.schedules} t={t} onChanged={onChanged} />
 
       <div className={css.sectionRow}>
         <h2 className={css.sectionTitle}>

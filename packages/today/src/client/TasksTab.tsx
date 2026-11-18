@@ -1,9 +1,11 @@
 /**
- * 「任务」视图：把最近活跃会话的后台任务（ctx.jobs 官方缝）聚成
- * 进行中 / 已完成 / 失败三组。运行中的卡有进度行和已执行时长，
- * 每行可跳回会话、可停止（jobs.kill）。
+ * 「任务」视图：分段开关「任务 | 定时任务」（对齐 Today 的任务页骨架）——
+ * 任务段 = 为你推荐（推荐卡把 prompt 发给米洛/开新会话）+ 活跃会话后台 job 分组；
+ * 定时任务段 = 定时版推荐 + 自有 schedule 列表（可暂停/恢复）。
  */
 import { useEffect, useMemo, useRef, useState } from 'react'
+import type { Summary } from './api.ts'
+import { ScheduleList } from './FeedTab.tsx'
 import { durationText } from './shared.tsx'
 import type { JobLite, JobsSnapshotLite, SessionListLite, SessionRowLite, TodayActions, Translate } from './TodayPage.tsx'
 import css from './today.module.css'
@@ -14,6 +16,50 @@ interface JobRow {
   job: JobLite
   sessionId: string
   sessionTitle: string
+}
+
+/** 推荐卡的图标：按序号轮转一组彩色字形（图标不是文案，不进 locales）。 */
+const RECO_ICONS = ['☰', '✉', '⌕', '◫', '☂', '✦', '↻', '⏱'] as const
+const RECO_TONES = ['blue', 'violet', 'green', 'amber', 'red', 'pink'] as const
+
+/** 每段的推荐条数；文案全部走 locales 的 tasks.reco.{seg}.{i}.*。 */
+const RECO_COUNT = 6
+
+function RecoList({ seg, t, actions }: { seg: 'task' | 'schedule'; t: Translate; actions: TodayActions }) {
+  const [sent, setSent] = useState<number | null>(null)
+  const [busy, setBusy] = useState(false)
+  return (
+    <section>
+      <h3 className={css.recoTitle}>{t('tasks.reco.title')}</h3>
+      <ul className={css.recoList}>
+        {Array.from({ length: RECO_COUNT }, (_, i) => {
+          const title = t(`tasks.reco.${seg}.${i}.title`)
+          if (!title || title === `tasks.reco.${seg}.${i}.title`) return null
+          return (
+            <li key={i} className={css.recoCard}>
+              <span className={css.recoIcon} data-tone={RECO_TONES[i % RECO_TONES.length]}>{RECO_ICONS[i % RECO_ICONS.length]}</span>
+              <span className={css.recoText}>
+                <span className={css.recoName}>{title}</span>
+                <span className={css.recoDesc}>{t(`tasks.reco.${seg}.${i}.desc`)}</span>
+              </span>
+              <button
+                type="button"
+                className={css.recoAdd}
+                aria-label={title}
+                disabled={busy || sent === i}
+                onClick={() => {
+                  setBusy(true)
+                  void actions.sendPrompt(undefined, t(`tasks.reco.${seg}.${i}.prompt`))
+                    .then(ok => { if (ok) setSent(i) })
+                    .finally(() => setBusy(false))
+                }}
+              >{sent === i ? '✓' : '+'}</button>
+            </li>
+          )
+        })}
+      </ul>
+    </section>
+  )
 }
 
 function JobCard({ row, t, now, actions }: { row: JobRow; t: Translate; now: number; actions: TodayActions }) {
@@ -71,13 +117,16 @@ function JobGroup({ title, rows, t, now, actions }: { title: string; rows: JobRo
 /** 订了哪些会话的 job 流：正在跑的全部 + 最近活跃的 5 个。 */
 const MAX_WATCHED_SESSIONS = 8
 
-export function TasksTab({ t, actions, sessions, useJobs, now }: {
+export function TasksTab({ t, actions, sessions, useJobs, now, summary, onChanged }: {
   t: Translate
   actions: TodayActions
   sessions: SessionListLite
   useJobs?: BoundHook<JobsSnapshotLite>
   now: number
+  summary: Summary | null
+  onChanged: () => void
 }) {
+  const [seg, setSeg] = useState<'task' | 'schedule'>('task')
   const jobsState = (useJobs?.(s => s) ?? { rows: {} }) as JobsSnapshotLite
 
   /** 订阅范围：running 会话优先，剩下按最近活跃补齐。 */
@@ -125,17 +174,43 @@ export function TasksTab({ t, actions, sessions, useJobs, now }: {
 
   return (
     <div>
-      <p className={css.sectionHint}>{t('tasks.note')}</p>
-      {running.length === 0 ? <p className={css.sectionHint}>{t('tasks.empty.running')}</p> : (
-        <JobGroup title={t('tasks.running')} rows={running} t={t} now={now} actions={actions} />
-      )}
-      {done.length === 0 && failed.length === 0 ? (
-        <p className={css.sectionHint}>{t('tasks.empty.done')}</p>
-      ) : (
+      <div className={css.pageTitleRow}>
+        <h2 className={css.pageTitle}>{t('tab.tasks')}</h2>
+        <button
+          type="button"
+          className={css.createButton}
+          onClick={() => { if (seg === 'task') void actions.newChat(); else actions.openSchedules() }}
+        >{seg === 'task' ? t('tasks.create') : t('tasks.createSchedule')}</button>
+      </div>
+
+      <div className={css.segmented} role="tablist">
+        <button type="button" role="tab" className={css.seg} data-active={seg === 'task'} onClick={() => setSeg('task')}>
+          <span className={css.segIcon}>☰</span>{t('tasks.seg.task')}
+        </button>
+        <button type="button" role="tab" className={css.seg} data-active={seg === 'schedule'} onClick={() => setSeg('schedule')}>
+          <span className={css.segIcon}>◷</span>{t('tasks.seg.schedule')}
+        </button>
+      </div>
+
+      <RecoList seg={seg} t={t} actions={actions} />
+
+      {seg === 'task' ? (
         <>
-          <JobGroup title={t('tasks.done')} rows={done} t={t} now={now} actions={actions} />
-          <JobGroup title={t('tasks.failed')} rows={failed} t={t} now={now} actions={actions} />
+          <p className={css.sectionHint}>{t('tasks.note')}</p>
+          {running.length === 0 ? <p className={css.sectionHint}>{t('tasks.empty.running')}</p> : (
+            <JobGroup title={t('tasks.running')} rows={running} t={t} now={now} actions={actions} />
+          )}
+          {done.length === 0 && failed.length === 0 ? (
+            <p className={css.sectionHint}>{t('tasks.empty.done')}</p>
+          ) : (
+            <>
+              <JobGroup title={t('tasks.done')} rows={done} t={t} now={now} actions={actions} />
+              <JobGroup title={t('tasks.failed')} rows={failed} t={t} now={now} actions={actions} />
+            </>
+          )}
         </>
+      ) : (
+        summary ? <ScheduleList cards={summary.schedules} t={t} onChanged={onChanged} /> : <div className={css.loading} />
       )}
     </div>
   )
