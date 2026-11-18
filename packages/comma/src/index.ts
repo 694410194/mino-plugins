@@ -10,6 +10,8 @@ import { Runtime } from './runtime.ts'
 import type { Source } from './source.ts'
 import { imSource } from './sources/im.ts'
 import { webwatchSource } from './sources/webwatch.ts'
+import { mailSource } from './sources/mail.ts'
+import { calendarSource } from './sources/calendar.ts'
 
 declare module '@deepseek-ai/dsh-llm' {
   interface MessageSourceMap {
@@ -36,6 +38,24 @@ export const Config = z.object({
       intervalMinutes: z.number().min(1).default(60),
       /** Lookback days per scan. */
       days: z.number().min(1).max(365).default(1),
+    }).prefault({}),
+    mail: z.object({
+      /** Poll mail_recent through the tools executor; absent connector-mail idles harmlessly. */
+      enabled: z.boolean().default(true),
+      intervalMinutes: z.number().min(1).default(30),
+      /** How many recent mails per poll (tool clamps to 50). */
+      limit: z.number().int().min(1).max(50).default(15),
+      /** Extra keywords searched every poll (订票/发票/验证码 style hits). */
+      queries: z.array(z.string()).default([]),
+    }).prefault({}),
+    calendar: z.object({
+      /** Poll cal_upcoming through the tools executor; absent connector-calendar idles harmlessly. */
+      enabled: z.boolean().default(true),
+      intervalMinutes: z.number().min(1).default(30),
+      /** Lookahead days per poll. */
+      days: z.number().min(1).max(90).default(3),
+      /** Attempt cal_sync (CalDAV pull) first; absent creds error is ignored. */
+      sync: z.boolean().default(true),
     }).prefault({}),
   }).prefault({}),
   proactive: z.object({
@@ -82,6 +102,12 @@ export async function apply(ctx: Context, config: CommaConfig): Promise<void> {
   }
   if (config.sources.webwatch.enabled) {
     sources.push(webwatchSource(ctx, config.sources.webwatch))
+  }
+  if (config.sources.mail.enabled) {
+    sources.push(mailSource(ctx, config.sources.mail))
+  }
+  if (config.sources.calendar.enabled) {
+    sources.push(calendarSource(ctx, config.sources.calendar))
   }
   runtime = new Runtime(ctx, sources, {
     workspaceRoot: config.workspaceRoot,
