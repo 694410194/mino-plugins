@@ -29,6 +29,11 @@ function openStore() {
   const db = new DatabaseSync(join(STORE, 'calendar.db'))
   db.exec(`CREATE TABLE IF NOT EXISTS events(dtstart TEXT, dtend TEXT, summary TEXT, location TEXT, source TEXT)`)
   db.exec(`CREATE INDEX IF NOT EXISTS idx_d ON events(dtstart)`)
+  // 写链要按 uid 定位远端资源——存量库补列（缺列才 ALTER，幂等）。
+  if (!db.prepare('PRAGMA table_info(events)').all().some(c => c.name === 'uid')) {
+    db.exec('ALTER TABLE events ADD COLUMN uid TEXT')
+  }
+  db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS idx_uid ON events(uid) WHERE uid IS NOT NULL`)
   // cal_sync 每次 REPORT 全量重拉——同一事件重复入库会让 cal_upcoming 越查越肥，
   // 同步前按四元组去重（同 dtstart+summary+dtend+source 视为同一事件）。
   db.exec(`DELETE FROM events WHERE rowid NOT IN (SELECT MIN(rowid) FROM events GROUP BY dtstart, dtend, summary, location, source)`)
@@ -149,6 +154,98 @@ export function apply(ctx) {
     },
     presentCall: (a) => ({ card: 'generic', title: '同步日历', kind: 'other', rawInput: a }),
   }))
+
+  const caldav = () => {
+    let c
+    try { c = JSON.parse(readFileSync(CFG_PATH, 'utf8')).caldav } catch {}
+    if (!c?.url || !c?.user || !c?.pass) throw new Error(`没配 CalDAV：在 ${CFG_PATH.replace(/\//g, '\\')} 填 {"caldav":{"url":"...","user","pass":"..."}}`)
+    return { ...c, auth: 'Basic ' + Buffer.from(`${c.user}:${c.pass}`).toString('base64'), base: c.url.endsWith('/') ? c.url : c.url + '/' }
+  }
+
+  const toIcs = (s) => { // 'YYYY-MM-DD[ HH:MM]' 本地时刻 → ics 本地形式
+    const m = String(s || '').match(/(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/)
+    if (!m) throw new Error(`日期格式不对：${s}（要 YYYY-MM-DD 或 YYYY-MM-DD HH:MM）`)
+    return `${m[1]}${m[2]}${m[3]}${m[4] ? 'T' + m[4] + m[5] + '00' : ''}`
+  }
+
+  ctx.tools.register(defineTool({
+    name: 'cal_write',
+    description: '在你的 CalDAV 日历写一条日程（有 uid 则覆盖更新，无则新建）并同步进本地库。写入前会请你确认。',
+    parameters: {
+      summary: { type: 'string', required: true, description: '标题' },
+      dtstart: { type: 'string', required: true, description: '开始 YYYY-MM-DD 或 YYYY-MM-DD HH:MM（本地时间）' },
+      dtend: { type: 'string', description: '结束，格式同 dtstart' },
+      location: { type: 'string', description: '地点' },
+      uid: { type: 'string', description: '更新已有事件时给它的 uid；不传=新建' },
+    },
+    output: { schema: { type: 'object', additionalProperties: false, properties: {
+      uid: { type: 'string' }, written: { type: 'boolean' } } },
+      render: (_a, v) => [{ type: 'text', text: v.written ? `日程已写入（uid ${v.uid}）` : '未写入' }] },
+    isConcurrencySafe: () => false,
+    async execute(args) {
+      if (!DatabaseSync) throw new Error('cal_write: 运行时缺 node:sqlite')
+      const c = caldav()
+      const uid = String(args.uid || `mino-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`)
+      const dtend = args.dtend ? toIcs(args.dtend) : ''
+      const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//mino//cal_write//CN', 'BEGIN:VEVENT',
+        `UID:${uid}`, `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\..+/, 'Z')}`,
+        `DTSTART:${toIcs(args.dtstart)}`, ...(dtend ? [`DTEND:${dtend}`] : []),
+        `SUMMARY:${String(args.summary).slice(0, 200)}`, ...(args.location ? [`LOCATION:${String(args.location).slice(0, 100)}`] : []),
+        'END:VEVENT', 'END:VCALENDAR', ''].join('\r\n')
+      const href = `${c.base}${encodeURIComponent(uid)}.ics`
+      const res = await fetch(href, {
+        method: 'PUT',
+        headers: { Authorization: c.auth, 'Content-Type': 'text/calendar; charset=utf-8' },
+        body: ics, signal: AbortSignal.timeout(30000),
+      })
+      if (!res.ok && res.status !== 201 && res.status !== 204) throw new Error(`cal_write: HTTP ${res.status}`)
+      const fmt = (t) => String(t).replace(/(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})?)?/, (_m, y, mo, d, h, mi) => `${y}-${mo}-${d}${h ? ' ' + h + ':' + mi : ''}`)
+      const db = openStore()
+      try {
+        db.prepare('DELETE FROM events WHERE uid=?').run(uid)
+        db.prepare('INSERT INTO events(dtstart,dtend,summary,location,source,uid) VALUES(?,?,?,?,?,?)')
+          .run(fmt(toIcs(args.dtstart)), dtend ? fmt(dtend) : '', String(args.summary).slice(0, 200), String(args.location || '').slice(0, 100), 'caldav', uid)
+      } finally { db.close() }
+      return { uid, written: true }
+    },
+    presentCall: (a) => ({ card: 'generic', title: `写日程「${a.summary}」`, kind: 'other', rawInput: a }),
+  }))
+
+  ctx.tools.register(defineTool({
+    name: 'cal_delete',
+    description: '按 uid 从你的 CalDAV 日历删除一条日程并清本地库。删除前会请你确认。',
+    parameters: { uid: { type: 'string', required: true, description: 'cal_write 返回的 uid' } },
+    output: { schema: { type: 'object', additionalProperties: false, properties: { deleted: { type: 'boolean' } } },
+      render: (_a, v) => [{ type: 'text', text: v.deleted ? '日程已删除' : '未删除' }] },
+    isConcurrencySafe: () => false,
+    async execute(args) {
+      const c = caldav()
+      const uid = String(args.uid)
+      const res = await fetch(`${c.base}${encodeURIComponent(uid)}.ics`, {
+        method: 'DELETE', headers: { Authorization: c.auth }, signal: AbortSignal.timeout(30000),
+      })
+      if (!res.ok && res.status !== 204 && res.status !== 404) throw new Error(`cal_delete: HTTP ${res.status}`)
+      const db = openStore()
+      try { db.prepare('DELETE FROM events WHERE uid=?').run(uid) } finally { db.close() }
+      return { deleted: true }
+    },
+    presentCall: (a) => ({ card: 'generic', title: '删日程', kind: 'other', rawInput: a }),
+  }))
+
+  // 敏感写动作挂官方审批缝：pre-execute 瀑布返回 ask，由宿主 approval 服务向人确认；
+  // 无审批答者（service 级调用/无 UI）按 fail-closed 拒绝。
+  const SENSITIVE = new Set(['cal_write', 'cal_delete'])
+  ctx.on('tools/pre-execute', async (exec, next) => {
+    if (!SENSITIVE.has(exec.name)) return next()
+    return {
+      kind: 'ask',
+      reason: `calendar connector sensitive action "${exec.name}"`,
+      displayReason: {
+        en: `Allow ${exec.name} (modify your calendar)?`,
+        zh: `允许执行 ${exec.name === 'cal_write' ? '写入日程' : '删除日程'}（${exec.name}）？`,
+      },
+    }
+  })
 
   ctx.effect(() => ctx.skills.registerProvider(() => createSkillProvider(ctx)))
 }
