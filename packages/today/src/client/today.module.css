@@ -1,25 +1,23 @@
-/* mino-today v3：按本机 Today 正式包解包出的设计系统复刻——
-   冷灰渐变底 + 玻璃拟态卡（blur(40px) saturate(1.4) + .5px 边 + 内顶光）、
-   墨蓝 ink 色阶（#3c3b41/#343451 alpha）、胶囊 tab（选中=墨色实心）、
-   强调色 Today 蓝 #008aff + 琥珀警示、16px 卡圆角。
-   字色仍走 DSH 语义 token 保宿主融合，玻璃/渐变/色阶是解包实值。 */
-
+/* mino-today v4：品牌色版——官网（mino.baby）薰衣草紫→腮红整页渐变、
+   墨色阶 #26262e、品牌紫 #a55ee8 + 粉 #ec6fb8，问候走墨→粉紫渐变字。
+   玻璃拟态与布局骨架沿用真 Today 解包结构。 */
 .page {
   height: 100%;
   overflow-y: auto;
   color: var(--dsw-alias-label-primary);
   font-family: var(--dsw-font-family, var(--dsh-font-family-text));
-  /* 整页晨曦渐变（todayai.cn 实机色：饱和天空蓝→蜜桃） */
-  background: linear-gradient(180deg, #a4c3f0 0%, #c3d8f4 30%, #eee9e2 62%, #f9dcba 84%, #f8cf9d 100%);
-  /* Today 解包色板 */
-  --t-ink: #3c3b41;
-  --t-ink-2: rgba(52, 52, 81, 0.75);
-  --t-ink-3: rgba(52, 52, 81, 0.45);
-  --t-ink-fill: rgba(52, 52, 81, 0.08);
-  --t-ink-fill-2: rgba(52, 52, 81, 0.04);
-  --today-accent: #008aff;
-  --today-accent-soft: rgba(0, 138, 255, 0.1);
-  --today-accent-ink: #0071dd;
+  /* 整页品牌渐变（mino.baby 官网色：薰衣草紫→腮红） */
+  background: linear-gradient(180deg, #dcd9f6 0%, #e9e4f7 32%, #f3ecf4 60%, #f9e3ef 84%, #fadbec 100%);
+  /* 品牌色板（官网实取） */
+  --t-ink: #26262e;
+  --t-ink-2: rgba(38, 38, 46, 0.72);
+  --t-ink-3: rgba(38, 38, 46, 0.45);
+  --t-ink-fill: rgba(38, 38, 46, 0.08);
+  --t-ink-fill-2: rgba(38, 38, 46, 0.04);
+  --today-accent: #a55ee8;
+  --today-accent-soft: rgba(165, 94, 232, 0.11);
+  --today-accent-ink: #8b4ad0;
+  --brand-pink: #ec6fb8;
   --today-warn: #b87900;
   --today-warn-soft: rgba(255, 197, 61, 0.28);
   --today-warn-ink: #8a5d00;
@@ -35,15 +33,16 @@
   --glass-e-shadow: -4px 8px 28px rgba(104, 104, 104, 0.04), 0 2px 8px rgba(100, 100, 100, 0.06);
 }
 :global(body[data-ds-dark-theme]) .page {
-  background: linear-gradient(180deg, #16273e 0%, #1b2233 30%, #1d1a1c 62%, #2b2118 84%, #2e2114 100%);
+  background: linear-gradient(180deg, #221f33 0%, #1e1b2c 32%, #1f1a24 60%, #291d29 84%, #2b1c28 100%);
   --t-ink: #e8e8ec;
   --t-ink-2: rgba(232, 232, 236, 0.68);
   --t-ink-3: rgba(232, 232, 236, 0.42);
   --t-ink-fill: rgba(255, 255, 255, 0.08);
   --t-ink-fill-2: rgba(255, 255, 255, 0.04);
-  --today-accent: #38bdf8;
-  --today-accent-soft: rgba(56, 189, 248, 0.14);
-  --today-accent-ink: #66b8ff;
+  --today-accent: #b983f0;
+  --today-accent-soft: rgba(185, 131, 240, 0.14);
+  --today-accent-ink: #cfa5f7;
+  --brand-pink: #f08cc4;
   --today-warn: #fbbf24;
   --today-warn-soft: rgba(251, 191, 36, 0.15);
   --today-warn-ink: #fcd34d;
@@ -80,7 +79,11 @@
   font-weight: 500;
   letter-spacing: -0.3px;
   line-height: 1.2;
-  color: var(--t-ink);
+  /* 官网招牌：墨色里一抹粉紫渐变 */
+  background: linear-gradient(100deg, var(--t-ink) 55%, var(--brand-pink) 85%, var(--today-accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .heroStats {
   display: flex;
@@ -1128,13 +1131,13 @@
   justify-content: center;
   font-size: 16px;
 }
-.recoIcon[data-tone='blue'] { background: rgba(0, 138, 255, 0.13); color: #0071dd; }
+.recoIcon[data-tone='blue'] { background: rgba(165, 94, 232, 0.14); color: #8b4ad0; }
 .recoIcon[data-tone='violet'] { background: rgba(139, 92, 246, 0.13); color: #7c4de8; }
 .recoIcon[data-tone='green'] { background: rgba(48, 164, 108, 0.13); color: #1e8a54; }
 .recoIcon[data-tone='amber'] { background: rgba(255, 197, 61, 0.2); color: #8a5d00; }
 .recoIcon[data-tone='red'] { background: rgba(229, 72, 77, 0.11); color: #c93a3f; }
 .recoIcon[data-tone='pink'] { background: rgba(236, 91, 141, 0.13); color: #d44d82; }
-:global(body[data-ds-dark-theme]) .recoIcon[data-tone='blue'] { color: #5eb1ff; }
+:global(body[data-ds-dark-theme]) .recoIcon[data-tone='blue'] { color: #cfa5f7; }
 :global(body[data-ds-dark-theme]) .recoIcon[data-tone='violet'] { color: #b39afb; }
 :global(body[data-ds-dark-theme]) .recoIcon[data-tone='green'] { color: #52c98a; }
 :global(body[data-ds-dark-theme]) .recoIcon[data-tone='amber'] { color: #fbbf24; }
@@ -1219,13 +1222,13 @@
   font-size: 16px;
 }
 .catIcon[data-tone='pink'] { background: rgba(236, 91, 141, 0.15); color: #d44d82; }
-.catIcon[data-tone='blue'] { background: rgba(0, 138, 255, 0.13); color: #0071dd; }
+.catIcon[data-tone='blue'] { background: rgba(165, 94, 232, 0.14); color: #8b4ad0; }
 .catIcon[data-tone='amber'] { background: rgba(255, 197, 61, 0.2); color: #8a5d00; }
 .catIcon[data-tone='green'] { background: rgba(48, 164, 108, 0.13); color: #1e8a54; }
 .catIcon[data-tone='violet'] { background: rgba(139, 92, 246, 0.13); color: #7c4de8; }
 .catIcon[data-tone='red'] { background: rgba(229, 72, 77, 0.11); color: #c93a3f; }
 :global(body[data-ds-dark-theme]) .catIcon[data-tone='pink'] { color: #f48ab3; }
-:global(body[data-ds-dark-theme]) .catIcon[data-tone='blue'] { color: #5eb1ff; }
+:global(body[data-ds-dark-theme]) .catIcon[data-tone='blue'] { color: #cfa5f7; }
 :global(body[data-ds-dark-theme]) .catIcon[data-tone='amber'] { color: #fbbf24; }
 :global(body[data-ds-dark-theme]) .catIcon[data-tone='green'] { color: #52c98a; }
 :global(body[data-ds-dark-theme]) .catIcon[data-tone='violet'] { color: #b39afb; }
