@@ -493,6 +493,13 @@
   text-align: center;
   color: var(--t-ink-3);
 }
+.feedLoading {
+  margin: 18px 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+  color: var(--t-ink-3);
+}
 
 /* ---------- 动态卡片（玻璃拟态卡） ---------- */
 .feedList {

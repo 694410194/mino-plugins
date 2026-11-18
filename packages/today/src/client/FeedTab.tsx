@@ -4,6 +4,11 @@
  * 会话跳转和划掉。
  */
 import { useEffect, useMemo, useRef, useState } from 'react'
+
+/** 对齐 todayV3.feed.window「这里只展示最近 14 天的内容」。 */
+const WINDOW_DAYS = 14
+/** 每次露出的条数（对应 today-feed-sentinel 的增量加载）。 */
+const PAGE = 12
 import { api, type FeedCard as FeedCardBody, type FeedItem, type ScheduleCard, type Summary } from './api.ts'
 import { batchOf, dayKey, edgeGlowHandlers, hhmm, relTime, useNow } from './shared.tsx'
 import type { TodayActions, Translate } from './TodayPage.tsx'
@@ -268,12 +273,17 @@ interface FeedGroup {
 export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summary: Summary | null; onChanged: () => void; actions: TodayActions }) {
   const [draft, setDraft] = useState('')
   const [posting, setPosting] = useState(false)
+  const [visible, setVisible] = useState(PAGE)
+  const sentinelRef = useRef<HTMLDivElement>(null)
   const now = useNow()
 
-  const groups = useMemo<FeedGroup[]>(() => {
-    if (!summary) return []
+  const { groups, total, windowed } = useMemo(() => {
+    const groups: FeedGroup[] = []
+    if (!summary) return { groups, total: 0, windowed: false }
+    const cutoff = Date.now() - WINDOW_DAYS * 86_400_000
+    const items = summary.items.filter(i => new Date(i.at).getTime() >= cutoff)
     const map = new Map<string, FeedGroup>()
-    for (const item of summary.items) {
+    for (const item of items) {
       const day = dayKey(new Date(item.at))
       const batch = batchOf(item.at)
       // 显式 batchId 的分组优先（简报/关注的成批产出），否则回落时段分桶。
@@ -287,8 +297,31 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
       map.set(key, g)
     }
     for (const g of map.values()) g.items.sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned))
-    return [...map.values()].sort((a, b) => b.key.localeCompare(a.key))
+    groups.push(...[...map.values()].sort((a, b) => b.key.localeCompare(a.key)))
+    return { groups, total: items.length, windowed: items.length < summary.items.length }
   }, [summary, t])
+
+  const shown = useMemo(() => {
+    let budget = visible
+    return groups
+      .map(g => {
+        const take = Math.min(g.items.length, budget)
+        budget -= take
+        return take > 0 ? { ...g, items: g.items.slice(0, take) } : null
+      })
+      .filter((g): g is FeedGroup => g !== null)
+  }, [groups, visible])
+
+  const hasMore = total > visible
+  useEffect(() => {
+    const el = sentinelRef.current
+    if (!el || !hasMore) return
+    const io = new IntersectionObserver(entries => {
+      if (entries.some(e => e.isIntersecting)) setVisible(v => v + PAGE)
+    }, { rootMargin: '240px' })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [hasMore])
 
   const submit = async () => {
     const title = draft.trim()
@@ -341,7 +374,7 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
           <p className={css.emptyText}>{t('feed.empty.body')}</p>
         </div>
       ) : (
-        groups.map(group => (
+        shown.map(group => (
           <section key={group.key} className={css.feedGroup}>
             <header className={css.feedGroupHead}>
               <span className={css.feedGroupKind}>{group.label}</span>
@@ -366,7 +399,11 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
           </section>
         ))
       )}
-      {summary.items.length > 0 ? <p className={css.feedEnd}>{t('feed.end')}</p> : null}
+      {summary.items.length > 0 ? (
+        hasMore
+          ? <div ref={sentinelRef} className={css.feedLoading}>{t('feed.loadingMore')}</div>
+          : <p className={css.feedEnd}>{t(windowed ? 'feed.window' : 'feed.end')}</p>
+      ) : null}
     </div>
   )
 }
