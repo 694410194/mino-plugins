@@ -122,6 +122,74 @@ function decodeHeader(s) {
     .replace(/=\?utf-8\?Q\?([^?]+)\?=/gi, (_m, q) => Buffer.from(q.replace(/_/g, ' ').replace(/=([0-9A-F]{2})/gi, (_x, h) => String.fromCharCode(parseInt(h, 16))), 'binary').toString('utf8'))
 }
 
+const encHeader = (s) => /[\x80-\xff]/.test(s) ? `=?utf-8?B?${Buffer.from(s, 'utf8').toString('base64')}?=` : s
+
+function buildRfc822({ from, to, cc, subject, body }) {
+  return [
+    `From: ${from}`,
+    `To: ${Array.isArray(to) ? to.join(', ') : to}`,
+    ...(cc ? [`Cc: ${cc}`] : []),
+    `Subject: ${encHeader(subject)}`,
+    `Date: ${new Date().toUTCString()}`,
+    'MIME-Version: 1.0',
+    'Content-Type: text/plain; charset=utf-8',
+    'Content-Transfer-Encoding: base64',
+    '',
+    Buffer.from(body, 'utf8').toString('base64').replace(/.{76}/g, '$&\r\n'),
+  ].join('\r\n')
+}
+
+// ── 最小 SMTP 客户端：EHLO→AUTH LOGIN→MAIL/RCPT/DATA────────────────────────
+class Smtp {
+  constructor(cfg) {
+    const smtp = cfg.smtp || {}
+    const dom = String(cfg.user || '').split('@')[1] || ''
+    this.host = smtp.host || `smtp.${dom}`
+    this.port = smtp.port ?? 465
+    this.tls = smtp.tls ?? true
+    this.user = cfg.user
+    this.pass = cfg.pass
+    this.buf = ''
+  }
+  /** 等一条 `code ` 开头的完结行；其他三位码完结行立即失败。 */
+  reply(code, timeout = 30000) {
+    return new Promise((resolve, reject) => {
+      const t = setTimeout(() => { this.sock.off('data', onData); reject(new Error('smtp timeout')) }, timeout)
+      const onData = (d) => {
+        this.buf += d.toString('utf8')
+        const last = this.buf.split('\r\n').filter(Boolean).pop() || ''
+        if (!/^\d{3} /.test(last)) return // 还有后续行（`code-` 续行）
+        clearTimeout(t); this.sock.off('data', onData); this.buf = ''
+        if (last.startsWith(`${code} `)) resolve(last)
+        else reject(new Error(`smtp 期望 ${code} 实得 ${last}`))
+      }
+      this.sock.on('data', onData)
+    })
+  }
+  async cmd(c, code) {
+    this.sock.write(`${c}\r\n`)
+    return this.reply(code)
+  }
+  async send(msg, to) {
+    this.sock = this.tls ? tlsConnect({ host: this.host, port: this.port }) : netConnect({ host: this.host, port: this.port })
+    await new Promise((res, rej) => { this.sock.once('secureConnect', res); this.sock.once('connect', res); this.sock.once('error', rej) })
+    await this.reply('220')
+    await this.cmd('EHLO mino.local', '250')
+    await this.cmd(`AUTH LOGIN ${Buffer.from(this.user, 'utf8').toString('base64')}`, '334')
+    await this.cmd(Buffer.from(this.pass, 'utf8').toString('base64'), '235')
+    await this.cmd(`MAIL FROM:<${this.user}>`, '250')
+    for (const rcpt of Array.isArray(to) ? to : [to]) await this.cmd(`RCPT TO:<${rcpt}>`, '250')
+    await this.cmd('DATA', '354')
+    this.sock.write(`${msg.replace(/\r\n\./g, '\r\n..')}\r\n.\r\n`)
+    await this.reply('250')
+    try { await this.cmd('QUIT', '221') } catch {}
+    this.sock.end()
+  }
+}
+
+/** 需要人工确认的发送类工具名——pre-execute 瀑布返回 ask，无审批答者时失败闭合。 */
+const SENSITIVE_TOOLS = new Set(['mail_send', 'mail_unsubscribe'])
+
 export function apply(ctx) {
   ctx.tools.register(defineTool({
     name: 'mail_recent',
@@ -165,6 +233,117 @@ export function apply(ctx) {
     },
     presentCall: (a) => ({ card: 'generic', title: '搜邮件', kind: 'other', rawInput: a }),
   }))
+
+  ctx.tools.register(defineTool({
+    name: 'mail_send',
+    description: '用你的邮箱 SMTP 发一封纯文本邮件。发送前会请你确认收件人和内容。',
+    parameters: {
+      to: { type: 'string', required: true, description: '收件人地址，多个用英文逗号分隔' },
+      subject: { type: 'string', required: true, description: '主题' },
+      body: { type: 'string', required: true, description: '正文纯文本' },
+      cc: { type: 'string', description: '抄送地址（可选）' },
+    },
+    output: { schema: { type: 'object', additionalProperties: false, properties: { sent: { type: 'boolean' }, to: { type: 'string' } } },
+      render: (_a, v) => [{ type: 'text', text: v.sent ? `已发送到 ${v.to}` : '未发送' }] },
+    isConcurrencySafe: () => false,
+    async execute(args) {
+      const cfg = loadCfg()
+      if (!cfg?.host || !cfg?.user || !cfg?.pass) throw new Error(NEED_CFG)
+      const to = String(args.to).split(',').map(s => s.trim()).filter(Boolean)
+      if (!to.length) throw new Error('mail_send: 收件人为空')
+      const msg = buildRfc822({ from: cfg.user, to, cc: args.cc, subject: String(args.subject), body: String(args.body) })
+      const smtp = new Smtp(cfg)
+      await smtp.send(msg, to)
+      return { sent: true, to: to.join(', ') }
+    },
+    presentCall: (a) => ({ card: 'generic', title: `发邮件给 ${a.to}`, kind: 'other', rawInput: a }),
+  }))
+
+  ctx.tools.register(defineTool({
+    name: 'mail_draft',
+    description: '在你的邮箱草稿箱（IMAP APPEND）存一封草稿，不发送。',
+    parameters: {
+      to: { type: 'string', required: true, description: '收件人地址' },
+      subject: { type: 'string', required: true, description: '主题' },
+      body: { type: 'string', required: true, description: '正文纯文本' },
+    },
+    output: { schema: { type: 'object', additionalProperties: false, properties: { drafted: { type: 'boolean' } } },
+      render: (_a, v) => [{ type: 'text', text: v.drafted ? '草稿已存入草稿箱' : '未存' }] },
+    isConcurrencySafe: () => false,
+    async execute(args) {
+      const cfg = loadCfg()
+      if (!cfg?.host || !cfg?.user || !cfg?.pass) throw new Error(NEED_CFG)
+      const msg = buildRfc822({ from: cfg.user, to: String(args.to).split(',').map(s => s.trim()).filter(Boolean), subject: String(args.subject), body: String(args.body) })
+      const im = new Imap(cfg)
+      try {
+        await im.connect(); await im.login()
+        const folder = cfg.drafts || 'Drafts'
+        const lines = await im.cmd(`APPEND "${folder.replace(/"/g, '')}" (\\Draft) {${Buffer.byteLength(msg)}}`, (l) => l.startsWith(`A${String(im.tag).padStart(4, '0')} `))
+        if (!lines.some(l => / OK /i.test(l))) throw new Error(`APPEND 失败：${lines.join(' ').slice(0, 200)}（drafts 文件夹名可在凭据 cfg.drafts 配置）`)
+        return { drafted: true }
+      } finally { im.close() }
+    },
+    presentCall: (a) => ({ card: 'generic', title: '存邮件草稿', kind: 'other', rawInput: a }),
+  }))
+
+  ctx.tools.register(defineTool({
+    name: 'mail_unsubscribe',
+    description: '按关键词找到订阅邮件，读 List-Unsubscribe 头并执行退订（https 一键退订直接调用；mailto 链接回链发送确认邮件）。执行前会请你确认。',
+    parameters: {
+      q: { type: 'string', required: true, description: '定位订阅邮件的关键词（如发件人或刊物名）' },
+    },
+    output: { schema: { type: 'object', additionalProperties: false, properties: {
+      found: { type: 'boolean' }, method: { type: 'string' }, detail: { type: 'string' } } },
+      render: (_a, v) => [{ type: 'text', text: v.found ? `退订已发出（${v.method}）` : '没找到可退订的邮件' }] },
+    isConcurrencySafe: () => false,
+    async execute(args) {
+      const cfg = loadCfg()
+      if (!cfg?.host || !cfg?.user || !cfg?.pass) throw new Error(NEED_CFG)
+      const im = new Imap(cfg)
+      try {
+        await im.connect(); await im.login()
+        const found = await im.search(args.q, 1)
+        const id = found.mails[0]?.id
+        if (!id) return { found: false, method: '', detail: 'no matching mail' }
+        const lines = await im.cmd(`FETCH ${id} (BODY.PEEK[HEADER.FIELDS (LIST-UNSUBSCRIBE LIST-UNSUBSCRIBE-POST SUBJECT FROM)])`)
+        const raw = lines.join('')
+        const hdr = raw.match(/LIST-UNSUBSCRIBE:\s*([^\r\n]+)/i)?.[1]?.replace(/[<>]/g, ' ').trim() || ''
+        const oneClick = /LIST-UNSUBSCRIBE-POST:\s*List-Unsubscribe=One-Click/i.test(raw)
+        if (!hdr) return { found: false, method: '', detail: 'no List-Unsubscribe header' }
+        const https = hdr.match(/https?:\/\/[^\s,>]+/)?.[0]
+        const mailto = hdr.match(/mailto:[^\s,>]+/)?.[0]
+        if (https) {
+          const res = await fetch(https, oneClick
+            ? { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'List-Unsubscribe=One-Click' }
+            : { method: 'GET', redirect: 'follow' })
+          return { found: true, method: oneClick ? 'https-one-click' : 'https', detail: `HTTP ${res.status}` }
+        }
+        if (mailto) {
+          const [addr, qs] = mailto.slice(7).split('?')
+          const p = new URLSearchParams(qs || '')
+          const msg = buildRfc822({ from: cfg.user, to: [decodeURIComponent(addr)], subject: p.get('subject') || 'unsubscribe', body: 'unsubscribe' })
+          await new Smtp(cfg).send(msg, [decodeURIComponent(addr)])
+          return { found: true, method: 'mailto', detail: `sent to ${addr}` }
+        }
+        return { found: false, method: '', detail: `unparseable header: ${hdr.slice(0, 120)}` }
+      } finally { im.close() }
+    },
+    presentCall: (a) => ({ card: 'generic', title: '退订邮件', kind: 'other', rawInput: a }),
+  }))
+
+  // 敏感写动作挂官方审批缝：pre-execute 瀑布返回 ask，由宿主 approval 服务向人确认；
+  // 无审批答者（service 级调用/无 UI）按 fail-closed 拒绝。
+  ctx.on('tools/pre-execute', async (exec, next) => {
+    if (!SENSITIVE_TOOLS.has(exec.name)) return next()
+    return {
+      kind: 'ask',
+      reason: `mail connector sensitive action "${exec.name}"`,
+      displayReason: {
+        en: `Allow ${exec.name} (${exec.name === 'mail_send' ? 'send mail' : 'unsubscribe'})?`,
+        zh: `允许执行 ${exec.name === 'mail_send' ? '发送邮件' : '邮件退订'}（${exec.name}）？`,
+      },
+    }
+  })
 
   ctx.effect(() => ctx.skills.registerProvider(() => createSkillProvider(ctx)))
 }
