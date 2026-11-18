@@ -73,10 +73,14 @@ async function readChromium(dbPath, days) {
   try {
     const db = new DatabaseSync(tmp, { readOnly: true })
     const cutoff = (Date.now() / 1000 - days * 86400 + CHROME_EPOCH) * 1e6
-    const rows = db.prepare(
-      `SELECT url, title, last_visit_time t FROM urls WHERE last_visit_time > ? ORDER BY last_visit_time DESC LIMIT 200000`).all(cutoff)
+    // Chromium last_visit_time ≈1.3e16 µs 超过 Number.MAX_SAFE_INTEGER：node:sqlite 对不安全
+    // 整数默认抛 RangeError——必须按 BigInt 读，先除到秒再转 Number。
+    const stmt = db.prepare(
+      `SELECT url, title, last_visit_time t FROM urls WHERE last_visit_time > ? ORDER BY last_visit_time DESC LIMIT 200000`)
+    stmt.setReadBigInts(true)
+    const rows = stmt.all(cutoff)
     db.close()
-    return rows.map(r => ({ url: r.url, title: r.title || '', ts: (r.t / 1e6 - CHROME_EPOCH) * 1000 }))
+    return rows.map(r => ({ url: r.url, title: r.title || '', ts: (Number(r.t / 1_000_000n) - CHROME_EPOCH) * 1000 }))
   } finally { try { const { unlinkSync } = await import('node:fs'); unlinkSync(tmp) } catch { } }
 }
 

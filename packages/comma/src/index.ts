@@ -9,6 +9,7 @@ import { z } from 'zod'
 import { Runtime } from './runtime.ts'
 import type { Source } from './source.ts'
 import { imSource } from './sources/im.ts'
+import { webwatchSource } from './sources/webwatch.ts'
 
 declare module '@deepseek-ai/dsh-llm' {
   interface MessageSourceMap {
@@ -27,6 +28,14 @@ export const Config = z.object({
       enabled: z.boolean().default(true),
       /** @xmanrui/dsh-im bot id in external-consumer exclusive mode; empty resolves config→state→listBots. */
       botId: z.string().default(''),
+    }).prefault({}),
+    webwatch: z.object({
+      /** Poll watch_scan through the tools executor; absent webwatch plugin idles harmlessly. */
+      enabled: z.boolean().default(true),
+      /** Poll interval in minutes. */
+      intervalMinutes: z.number().min(1).default(60),
+      /** Lookback days per scan. */
+      days: z.number().min(1).max(365).default(1),
     }).prefault({}),
   }).prefault({}),
   proactive: z.object({
@@ -70,6 +79,9 @@ export async function apply(ctx: Context, config: CommaConfig): Promise<void> {
   const sources: Source[] = []
   if (config.sources.im.enabled) {
     sources.push(imSource(ctx, config.sources.im, () => runtime.resolveBot()))
+  }
+  if (config.sources.webwatch.enabled) {
+    sources.push(webwatchSource(ctx, config.sources.webwatch))
   }
   runtime = new Runtime(ctx, sources, {
     workspaceRoot: config.workspaceRoot,
