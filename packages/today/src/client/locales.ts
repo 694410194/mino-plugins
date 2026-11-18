@@ -80,6 +80,12 @@ export const zh = {
   'feed.sent': '已发给米洛',
   'feed.expand': '展开',
   'feed.collapse': '收起',
+  'feed.newBatch': '新的',
+  'feed.updated.now': '刚刚更新',
+  'feed.updated.minutes': '{count} 分钟前更新',
+  'feed.updated.today': '今天 {time} 更新',
+  'feed.updated.yesterday': '昨天 {time} 更新',
+  'feed.updated.date': '{date} 更新',
 
   // Tasks tab
   'tasks.create': '+ 创建任务',
@@ -250,6 +256,12 @@ export const en: Record<keyof typeof zh, string> = {
   'feed.sent': 'Sent to Mino',
   'feed.expand': 'Expand',
   'feed.collapse': 'Collapse',
+  'feed.newBatch': 'New',
+  'feed.updated.now': 'Updated just now',
+  'feed.updated.minutes': 'Updated {count}m ago',
+  'feed.updated.today': 'Updated today {time}',
+  'feed.updated.yesterday': 'Updated yesterday {time}',
+  'feed.updated.date': 'Updated {date}',
 
   'tasks.create': '+ New task',
   'tasks.createSchedule': '+ New routine',

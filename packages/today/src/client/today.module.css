@@ -525,7 +525,7 @@
 .feedCard {
   position: relative;
   border: 0.5px solid var(--glass-e-border);
-  border-radius: 16px;
+  border-radius: 24px;
   background: var(--glass-e-bg);
   box-shadow: var(--glass-e-shadow);
   backdrop-filter: blur(30px);
@@ -539,13 +539,33 @@
   transform: translateY(-1px);
 }
 .feedCard[data-nav] { cursor: pointer; }
-.feedCard[data-kind='result'] { border-left: 3px solid var(--today-accent); }
-.feedCard[data-kind='moment'] { border-left: 3px solid var(--today-warn); }
+/* provider 行：对齐 client-today-card-shell——图标+来源名粗体小字+更新于，无左侧色条 */
 .feedHead {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 6px;
+}
+.feedProvider {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.6px;
+  color: var(--t-ink-2);
+}
+.feedProvider[data-kind='result'] .feedKindIcon { color: var(--today-accent); }
+.feedProvider[data-kind='moment'] .feedKindIcon { color: var(--today-warn); }
+.newBadge {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 3px 7px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--today-accent);
 }
 .feedKind {
   display: inline-flex;
@@ -563,8 +583,8 @@
   margin-left: auto;
 }
 .feedTitle {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   line-height: 1.5;
   color: var(--t-ink);
   display: -webkit-box;
@@ -619,13 +639,14 @@
   margin-top: 12px;
 }
 .suggestChip {
-  border: 0.5px solid var(--glass-e-border);
-  background: var(--t-ink-fill-2);
+  border: 0;
+  background: rgba(38, 38, 46, 0.06);
   color: var(--t-ink-2);
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 600;
   line-height: 1;
-  padding: 7px 12px;
-  border-radius: 999px;
+  padding: 8px 14px;
+  border-radius: 12px;
   cursor: pointer;
   transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
 }

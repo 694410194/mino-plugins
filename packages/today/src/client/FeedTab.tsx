@@ -238,6 +238,20 @@ function FeedBody({ body, t }: { body: string; t: Translate }) {
  * feed 卡 = 导航卡（对齐 data-today-v3-navigation-card）：点卡标记已读并进来源会话，
  * 正文只做紧凑预览；按钮/划词不误触。
  */
+/** 卡头时间用 Today 的 updatedAt 句式：刚刚更新 / N分钟前更新 / 今天HH:mm更新 / 昨天HH:mm更新 / M/D更新。 */
+function updatedLabel(iso: string, now: number, t: Translate): string {
+  const ms = new Date(iso).getTime()
+  if (Number.isNaN(ms)) return ''
+  const diff = now - ms
+  if (diff < 60_000) return t('feed.updated.now')
+  if (diff < 3_600_000) return t('feed.updated.minutes', { count: Math.floor(diff / 60_000) })
+  const d = new Date(iso), n = new Date(now)
+  const day = (x: Date) => x.getFullYear() * 1000 + x.getMonth() * 40 + x.getDate()
+  if (day(d) === day(n)) return t('feed.updated.today', { time: hhmm(iso) })
+  if (day(d) === day(n) - 1) return t('feed.updated.yesterday', { time: hhmm(iso) })
+  return t('feed.updated.date', { date: `${d.getMonth() + 1}/${d.getDate()}` })
+}
+
 function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }: { item: FeedItem; t: Translate; now: number; actions: TodayActions; onDelete: (id: string) => void; onFeedback: (id: string, signal: 'up' | 'down' | 'not_interested') => void; onPin: (id: string, pinned: boolean) => void; onRead: (id: string) => void }) {
   return (
     <li
@@ -257,12 +271,11 @@ function FeedCard({ item, t, now, actions, onDelete, onFeedback, onPin, onRead }
       <span className={css.edgeLight} />
       <div className={css.feedHead}>
         {!item.read ? <span className={css.unreadDot} title={t('feed.unread')} /> : null}
-        <span className={css.feedKind} data-kind={item.kind}>
+        <span className={css.feedProvider} data-kind={item.kind}>
           <span className={css.feedKindIcon}>{KIND_ICON[item.kind]}</span>
-          {t(`feed.kind.${item.kind}`)}
+          {item.source ?? t(`feed.kind.${item.kind}`)}
         </span>
-        {item.source ? <span className={css.chip} data-tone="source">{item.source}</span> : null}
-        <span className={css.feedTime}>{relTime(item.at, now)}</span>
+        <span className={css.feedTime}>{updatedLabel(item.at, now, t)}</span>
         <CardMenu item={item} t={t} actions={actions} onDelete={onDelete} onFeedback={onFeedback} onPin={onPin} />
       </div>
       <div className={css.feedTitle}>{item.title}</div>
@@ -401,6 +414,7 @@ export function FeedTab({ t, summary, onChanged, actions }: { t: Translate; summ
           <section key={group.key} className={css.feedGroup} ref={revealRef}>
             <header className={css.feedGroupHead}>
               <span className={css.feedGroupKind}>{group.label}</span>
+              {group.items.some(i => !i.read) ? <span className={css.newBadge}>{t('feed.newBatch')}</span> : null}
               <span className={css.feedGroupDivider}>·</span>
               <span className={css.feedGroupCount}>{t('memory.count', { count: group.items.length })}</span>
             </header>
