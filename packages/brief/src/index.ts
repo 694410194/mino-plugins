@@ -10,6 +10,7 @@
  */
 import type { Context } from '@deepseek-ai/cordis'
 import type {} from '@deepseek-ai/dsh-api-session-controller'
+import type { SessionController } from '@deepseek-ai/dsh-api-session-controller'
 import type {} from '@deepseek-ai/dsh-storage-domain'
 import type {} from '@deepseek-ai/dsh-workspace'
 import type {} from '@deepseek-ai/dsh-schedule'
@@ -46,7 +47,10 @@ export const Config = z.object({
 }).prefault({})
 export type BriefConfig = z.infer<typeof Config>
 
-const SESSION_ID = 'mino-brief'
+/** 会话 id 的品牌类型——经控制器签名派生，免直装 dsh-session。 */
+type SessionIdT = Awaited<ReturnType<SessionController['list']>>['items'][number]['sessionId']
+
+const SESSION_ID = 'mino-brief' as SessionIdT
 const PRESET_ID = 'mino-brief'
 const SESSION_TITLE = '简报'
 const TITLE_KEY = 'title'
@@ -59,14 +63,20 @@ export async function apply(ctx: Context, config: BriefConfig): Promise<void> {
   const state = domain.table('state')
 
   const workspace = await ctx.workspaceRegistry.create(config.workspaceRoot ?? process.cwd())
-  const existing = await ctx.sessionController.resolveAgent(SESSION_ID)
-  if ('error' in existing) {
-    await ctx.sessionController.create({
-      sessionId: SESSION_ID,
-      workspaceId: workspace.id,
-      agentPreset: PRESET_ID,
-    })
-    logger.info('brief session created: %s', SESSION_ID)
+  // resolveAgent 只覆盖活会话——冷会话要用持久层 list 判存在，避免重复 create 撞 ApiSessionCwdConflict。
+  const listed = await ctx.sessionController.list({}, new AbortController().signal)
+  if (!listed.items.some(item => item.sessionId === SESSION_ID)) {
+    try {
+      await ctx.sessionController.create({
+        sessionId: SESSION_ID,
+        workspaceId: workspace.id,
+        agentPreset: PRESET_ID,
+      })
+      logger.info('brief session created: %s', SESSION_ID)
+    } catch (error) {
+      // 会话已登记在另一个 workspace 下——投递按 sessionId 走，沿用旧会话即可。
+      logger.warn('brief session reuse: %s', error instanceof Error ? error.message : String(error))
+    }
   }
   const resolved = await ctx.sessionController.resolveAgent(SESSION_ID)
   if (!('error' in resolved) && state.get(TITLE_KEY) === undefined) {
@@ -80,7 +90,7 @@ export async function apply(ctx: Context, config: BriefConfig): Promise<void> {
     return
   }
   const catalog = await schedule.catalog()
-  const byId = new Map(catalog.map(entry => [entry.id, entry]))
+  const byId = new Map(catalog.map(entry => [entry.id as string, entry]))
 
   for (const spec of slotSpecs(config)) {
     const idKey = `schedule:${spec.slot}`
@@ -106,7 +116,7 @@ export async function apply(ctx: Context, config: BriefConfig): Promise<void> {
       timing: { kind: 'daily', daily: { time: normalizeTime(spec.time), time_zone: config.timeZone } },
       target: { kind: 'session', sessionId: SESSION_ID },
     })
-    await state.put(idKey, { key: idKey, value: created.id })
+    await state.put(idKey, { key: idKey, value: created.id as string })
     logger.info('brief schedule created: %s at %s %s', spec.title, spec.time, config.timeZone)
   }
 }
