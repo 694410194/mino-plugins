@@ -1,13 +1,14 @@
-/** The mino-comma runtime: owns the storage domain, the router Session, source fibers, and the attention loop. */
+/** The mino-call runtime: owns the storage domain, the router Session, source fibers, and the attention loop. */
 import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import type { Context } from '@deepseek-ai/cordis'
 import type {} from '@deepseek-ai/dsh-api-session-controller'
 import type { WorkspaceId, WorkspaceRegistry } from '@deepseek-ai/dsh-workspace'
 import type { SessionId } from '@deepseek-ai/dsh-session'
+import type {} from '@deepseek-ai/dsh-session-title'
 import type { Domain } from '@deepseek-ai/dsh-storage-domain'
 import { freezeMessage, MessageId, type UserMessage } from '@deepseek-ai/dsh-llm'
-import { commaDomain, type Matter, type SourceItem } from './domain.ts'
+import { callDomain, type Matter, type SourceItem } from './domain.ts'
 import type { NewItem, Source, SourceHost } from './source.ts'
 import {
   budgetAllows, budgetSpend, emptyBudget, heuristicUrgency, judgeMatters,
@@ -21,8 +22,8 @@ import {
   loopCheckpointOf, type TaskHost, type WorkerConfig,
 } from './tasks.ts'
 
-export const ROUTER_SESSION_ID = 'comma-router' as SessionId
-export const ROUTER_PRESET = 'mino-comma-router'
+export const ROUTER_SESSION_ID = 'call-router' as SessionId
+export const ROUTER_PRESET = 'mino-call-router'
 export const ROUTER_TITLE = 'Mino 陪伴'
 const ROUTER_STATE_KEY = 'router_session'
 const ROUTER_TITLE_KEY = 'router_title'
@@ -32,7 +33,7 @@ const MATTER_TITLE_MAX = 60
 const LOOP_TICK_MS = 60_000
 const RENDER_DEBOUNCE_MS = 2_000
 
-type CommaDomain = Domain<typeof commaDomain>
+type CallDomain = Domain<typeof callDomain>
 
 /** The `dshIm` proactive-delivery surface (@xmanrui/dsh-im contractVersion 1). */
 interface DshImSend {
@@ -73,7 +74,7 @@ export class Runtime implements SourceHost, TaskHost {
   readonly ready: Promise<void>
   readonly logger: Context['logger']
   private readonly controller = new AbortController()
-  private domain!: CommaDomain
+  private domain!: CallDomain
   private fibers: Promise<void>[] = []
   private readonly disposers: (() => void)[] = []
   private workspaceIdValue!: WorkspaceId
@@ -95,7 +96,7 @@ export class Runtime implements SourceHost, TaskHost {
 
   // ---- TaskHost 面（tasks.ts 的执行引擎读这些） ----
   get signal(): AbortSignal { return this.controller.signal }
-  commaDomain(): CommaDomain { return this.domain }
+  callDomain(): CallDomain { return this.domain }
   workspaceId(): WorkspaceId { return this.workspaceIdValue }
   workspaceRoot(): string { return this.options.workspaceRoot ?? process.cwd() }
   worker(): WorkerConfig { return this.options.worker }
@@ -109,8 +110,8 @@ export class Runtime implements SourceHost, TaskHost {
     try {
       await tools.execute({
         calls: [{
-          type: 'tool-call', id: `comma-task:${task.id}:${Date.now()}`, name: 'today_post',
-          arguments: JSON.stringify({ title: text.slice(0, MATTER_TITLE_MAX), kind: 'moment', batch: 'comma-task', source: 'comma:task' }),
+          type: 'tool-call', id: `call-task:${task.id}:${Date.now()}`, name: 'today_post',
+          arguments: JSON.stringify({ title: text.slice(0, MATTER_TITLE_MAX), kind: 'moment', batch: 'call-task', source: 'call:task' }),
         }],
         signal: this.controller.signal,
       })
@@ -118,7 +119,7 @@ export class Runtime implements SourceHost, TaskHost {
   }
 
   private async start(sources: Source[]): Promise<void> {
-    this.domain = await this.ctx.storageDomain.open(commaDomain)
+    this.domain = await this.ctx.storageDomain.open(callDomain)
     const workspace = await this.ctx.workspaceRegistry.create(this.options.workspaceRoot ?? process.cwd())
     this.workspaceIdValue = workspace.id
     // resolveAgent 只覆盖活会话——冷会话要用持久层 list 判存在，避免重复 create 撞 ApiSessionCwdConflict。
@@ -130,10 +131,10 @@ export class Runtime implements SourceHost, TaskHost {
           workspaceId: workspace.id,
           agentPreset: ROUTER_PRESET,
         })
-        this.ctx.logger.info('mino-comma router session created: %s', ROUTER_SESSION_ID)
+        this.ctx.logger.info('mino-call router session created: %s', ROUTER_SESSION_ID)
       } catch (error) {
         // 会话已登记在另一个 workspace 下——投递按 sessionId 走，沿用旧会话即可。
-        this.ctx.logger.warn('mino-comma: router session create skipped: %s', String(error))
+        this.ctx.logger.warn('mino-call: router session create skipped: %s', String(error))
       }
     }
     await this.domain.table('state').put(ROUTER_STATE_KEY, { key: ROUTER_STATE_KEY, value: ROUTER_SESSION_ID })
@@ -153,17 +154,17 @@ export class Runtime implements SourceHost, TaskHost {
     // agent/status idle 兜底契约违例（worker 停了但没输出状态块）。
     this.disposers.push(this.ctx.on('session/event', (session, event) => {
       void onSessionEvent(this, session.id, event.type, event.data)
-        .catch((error: unknown) => this.logger.warn('mino-comma worker event failed: %s', String(error)))
+        .catch((error: unknown) => this.logger.warn('mino-call worker event failed: %s', String(error)))
     }, { global: true }))
     this.disposers.push(this.ctx.on('agent/status', ({ agent, status }) => {
       if (status !== 'idle') return
       void onWorkerIdle(this, agent.id)
-        .catch((error: unknown) => this.logger.warn('mino-comma worker idle check failed: %s', String(error)))
+        .catch((error: unknown) => this.logger.warn('mino-call worker idle check failed: %s', String(error)))
     }, { global: true }))
     this.fibers = [
       ...sources.map(source =>
         source.run(this, signal).catch((error: unknown) => {
-          if (!signal.aborted) this.ctx.logger.error('mino-comma source %s exited: %s', source.kind, String(error))
+          if (!signal.aborted) this.ctx.logger.error('mino-call source %s exited: %s', source.kind, String(error))
         })),
       this.tickEvery(this.options.decideIntervalMinutes * 60_000, () => this.decideSweep()),
       this.tickEvery(LOOP_TICK_MS, () => this.loopTick()),
@@ -176,7 +177,7 @@ export class Runtime implements SourceHost, TaskHost {
       try {
         await tick()
       } catch (error) {
-        if (!signal.aborted) this.logger.warn('mino-comma tick failed: %s', String(error))
+        if (!signal.aborted) this.logger.warn('mino-call tick failed: %s', String(error))
       }
       await new Promise<void>(resolve => {
         if (signal.aborted) return resolve()
@@ -219,14 +220,14 @@ export class Runtime implements SourceHost, TaskHost {
   private async routerMessage(text: string): Promise<void> {
     const resolved = await this.ctx.sessionController.resolveAgent(ROUTER_SESSION_ID)
     if ('error' in resolved) {
-      this.logger.warn('mino-comma: router session unavailable, message dropped')
+      this.logger.warn('mino-call: router session unavailable, message dropped')
       return
     }
     const message: UserMessage = freezeMessage({
-      id: MessageId(`mino-comma:${crypto.randomUUID()}`),
+      id: MessageId(`mino-call:${crypto.randomUUID()}`),
       role: 'user',
       content: [{ type: 'text', text }],
-      source: { kind: 'mino-comma' },
+      source: { kind: 'mino-call' },
     })
     resolved.agent.followup(message)
   }
@@ -251,10 +252,10 @@ export class Runtime implements SourceHost, TaskHost {
     if (state.get(PAIRING_NAG_KEY)?.value === fingerprint) return
     await state.put(PAIRING_NAG_KEY, { key: PAIRING_NAG_KEY, value: fingerprint })
     const text = status === 'unavailable'
-      ? '[comma pairing] 还没有接入消息渠道（@xmanrui/dsh-im 未安装或没有可用 bot）。如果你想让我帮你盯消息，请提醒用户先装好并配好 IM 渠道，然后用 comma_im_pair 工具完成接管。'
+      ? '[call pairing] 还没有接入消息渠道（@xmanrui/dsh-im 未安装或没有可用 bot）。如果你想让我帮你盯消息，请提醒用户先装好并配好 IM 渠道，然后用 call_im_pair 工具完成接管。'
       : status === 'none'
-        ? '[comma pairing] IM 渠道已就绪但还没有可接管的 bot。请在 @xmanrui/dsh-im 里配好一个 bot（external-consumer 模式），然后用 comma_im_pair 完成接管。'
-        : `[comma pairing] 检测到多个可接管的 IM 账号：${candidates.join('、')}。请询问用户想让你盯哪一个，然后用 comma_im_pair 工具完成配对。`
+        ? '[call pairing] IM 渠道已就绪但还没有可接管的 bot。请在 @xmanrui/dsh-im 里配好一个 bot（external-consumer 模式），然后用 call_im_pair 完成接管。'
+        : `[call pairing] 检测到多个可接管的 IM 账号：${candidates.join('、')}。请询问用户想让你盯哪一个，然后用 call_im_pair 工具完成配对。`
     await this.routerMessage(text)
   }
 
@@ -321,13 +322,13 @@ export class Runtime implements SourceHost, TaskHost {
     try {
       await dshim.send(resolution.botId, resolution.targetId, text)
     } catch (error) {
-      this.logger.warn('mino-comma: im notify failed: %s', String(error))
+      this.logger.warn('mino-call: im notify failed: %s', String(error))
     }
   }
 
-  /** The feed source label a matter's cards carry in mino-today (`comma:<sourceKind>`). */
+  /** The feed source label a matter's cards carry in mino-today (`call:<sourceKind>`). */
   private feedSourceOf(items: SourceItem[]): string {
-    return `comma:${items[0]?.sourceKind ?? 'unknown'}`
+    return `call:${items[0]?.sourceKind ?? 'unknown'}`
   }
 
   /** Sources the user muted in the feed: any not_interested, or more downs than ups. */
@@ -348,17 +349,17 @@ export class Runtime implements SourceHost, TaskHost {
     try {
       await tools.execute({
         calls: [{
-          type: 'tool-call', id: `comma-feed:${matter.id}:${Date.now()}`, name: 'today_post',
+          type: 'tool-call', id: `call-feed:${matter.id}:${Date.now()}`, name: 'today_post',
           arguments: JSON.stringify({
             title: matter.title.slice(0, MATTER_TITLE_MAX),
             ...(latest ? { body: latest } : {}),
-            kind: 'moment', batch: 'comma', source: this.feedSourceOf(items),
+            kind: 'moment', batch: 'call', source: this.feedSourceOf(items),
           }),
         }],
         signal: this.controller.signal,
       })
     } catch (error) {
-      this.logger.warn('mino-comma: today_post handoff failed: %s', String(error))
+      this.logger.warn('mino-call: today_post handoff failed: %s', String(error))
     }
   }
 
@@ -410,7 +411,7 @@ export class Runtime implements SourceHost, TaskHost {
     const deliver = async (matter: Matter, items: SourceItem[]): Promise<number | undefined> => {
       if (!budgetAllows(budget, now, this.options.notifyBudgetPerDay, this.options.notifyMinIntervalMinutes)) return undefined
       const latest = items.slice(-3).map(i => `- ${i.summary}`).join('\n')
-      const text = `[comma ${matter.urgency}] ${matter.title}${latest ? `\n${latest}` : ''}`
+      const text = `[call ${matter.urgency}] ${matter.title}${latest ? `\n${latest}` : ''}`
       await this.routerMessage(text)
       await this.notifyIm(text)
       await this.postFeed(matter, items, latest)
@@ -458,13 +459,13 @@ export class Runtime implements SourceHost, TaskHost {
     if (!tools?.execute) return { changed: true } // 缝缺失不静默丢任务——按有变化放行并留错
     try {
       const out = await tools.execute({
-        calls: [{ type: 'tool-call', id: `comma-loop:${crypto.randomUUID()}`, name: checkTool, arguments: checkArgs ?? '{}' }],
+        calls: [{ type: 'tool-call', id: `call-loop:${crypto.randomUUID()}`, name: checkTool, arguments: checkArgs ?? '{}' }],
         signal: this.controller.signal,
       })
       const next = loopCheckpointOf(out as { results?: readonly { result?: unknown }[] })
       return next === checkpoint ? { changed: false } : { changed: true, next }
     } catch (error) {
-      this.logger.warn('mino-comma loop check %s failed: %s', checkTool, String(error))
+      this.logger.warn('mino-call loop check %s failed: %s', checkTool, String(error))
       return { changed: true }
     }
   }
@@ -482,7 +483,7 @@ export class Runtime implements SourceHost, TaskHost {
       } else {
         await loops.update(key, l => ({ ...l, lastRunAt: now }))
       }
-      await this.routerMessage(`[comma loop:${loop.name}] ${loop.prompt}`)
+      await this.routerMessage(`[call loop:${loop.name}] ${loop.prompt}`)
     }
     await sweepTaskTimeouts(this)
     if (this.options.briefing.enabled) await this.briefingTick(now)
@@ -498,8 +499,8 @@ export class Runtime implements SourceHost, TaskHost {
     const open = matters.filter(m => m.status === 'open')
     const needs = open.filter(m => NOTIFY_URGENCIES.includes(m.urgency)).length
     await state.put(BRIEFING_KEY, { key: BRIEFING_KEY, value: today })
-    await this.notifyIm(`Comma 简报: ${open.length} 项待处理，其中 ${needs} 项需要你。`)
-    await this.routerMessage(`[comma briefing] 今日待处理 ${open.length} 项（需要你 ${needs} 项）。Notebook 已刷新。`)
+    await this.notifyIm(`Call 简报: ${open.length} 项待处理，其中 ${needs} 项需要你。`)
+    await this.routerMessage(`[call briefing] 今日待处理 ${open.length} 项（需要你 ${needs} 项）。Notebook 已刷新。`)
   }
 
   private scheduleRender(): void {
@@ -507,7 +508,7 @@ export class Runtime implements SourceHost, TaskHost {
     if (this.renderTimer !== undefined) return
     this.renderTimer = setTimeout(() => {
       this.renderTimer = undefined
-      this.renderNotebook().catch((error: unknown) => this.logger.warn('mino-comma notebook render failed: %s', String(error)))
+      this.renderNotebook().catch((error: unknown) => this.logger.warn('mino-call notebook render failed: %s', String(error)))
     }, RENDER_DEBOUNCE_MS)
   }
 
@@ -515,7 +516,7 @@ export class Runtime implements SourceHost, TaskHost {
     const matters = [...this.domain.table('matters').entries()].map(([, m]) => m)
     const items = new Map([...this.domain.table('source_items').entries()].map(([k, i]) => [i.id, i]))
     const tasks = [...this.domain.table('tasks').entries()].map(([, t]) => t)
-    const path = this.options.notebookPath ?? join(this.workspaceRoot(), 'Comma', 'Notebook.md')
+    const path = this.options.notebookPath ?? join(this.workspaceRoot(), 'Call', 'Notebook.md')
     await mkdir(dirname(path), { recursive: true })
     await writeFile(path, renderNotebook(matters, items, Date.now(), tasks))
     this.notebookDirty = false

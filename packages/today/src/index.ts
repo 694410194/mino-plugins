@@ -623,7 +623,7 @@ export function apply(ctx: Context): void {
     sendJson(res, 200, { ok: true })
   })
 
-  /** 陪伴类插件（comma 等）消费反馈信号的公开服务面：按 source 聚合卡片反馈。 */
+  /** 陪伴类插件（call 等）消费反馈信号的公开服务面：按 source 聚合卡片反馈。 */
   interface FeedbackRow { source: string; up: number; down: number; notInterested: number }
   ;(ctx as Context & { provide: (name: string, svc: unknown) => void }).provide('mino-today', {
     feedbackSummary(): FeedbackRow[] {

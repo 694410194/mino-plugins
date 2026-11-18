@@ -1,5 +1,5 @@
 /**
- * Deterministic fixture for the comma task/worker layer. Stubs every official seam
+ * Deterministic fixture for the call task/worker layer. Stubs every official seam
  * (sessionController / agent.followup / sessionPersistence / schedule / subprocess)
  * with in-memory faces and asserts the whole lifecycle:
  * create→working→needs_review→answer→working→done, idle fallback, timeout sweep,
@@ -89,7 +89,7 @@ function makeHost(opts: {
     },
     logger: { info: () => {}, warn: () => {}, error: () => {} },
     signal: new AbortController().signal,
-    commaDomain: () => domainStub,
+    callDomain: () => domainStub,
     workspaceId: () => 'ws-1',
     workspaceRoot: () => '/tmp/ws',
     worker: () => ({ kind: opts.workerKind ?? 'dsh-session', command: opts.workerCommand ?? '', timeoutMinutes: opts.timeoutMinutes ?? 30 }),
@@ -103,8 +103,8 @@ const asst = (text: string) => ({ message: { content: [{ type: 'text', text }] }
 
 async function main() {
   // 1. status block parsing
-  assert.deepEqual(parseStatusBlock('汇报\n[COMMA-STATUS] done: 交付了 X'), { status: 'done', detail: '交付了 X' })
-  assert.equal(parseStatusBlock('中间块 [COMMA-STATUS] needs_review: q1\n后文\n[COMMA-STATUS] done: 最终')!.status, 'done')
+  assert.deepEqual(parseStatusBlock('汇报\n[CALL-STATUS] done: 交付了 X'), { status: 'done', detail: '交付了 X' })
+  assert.equal(parseStatusBlock('中间块 [CALL-STATUS] needs_review: q1\n后文\n[CALL-STATUS] done: 最终')!.status, 'done')
   assert.equal(parseStatusBlock('没有状态块'), undefined)
   ok('parseStatusBlock')
 
@@ -118,7 +118,7 @@ async function main() {
     assert.ok(created[0].sessionId.startsWith(WORKER_SESSION_PREFIX))
     assert.equal(created[0].workspaceId, 'ws-1')
     assert.equal(injected.length, 1)
-    assert.ok(injected[0].text.includes('整理账单') && injected[0].text.includes('[COMMA-STATUS]'))
+    assert.ok(injected[0].text.includes('整理账单') && injected[0].text.includes('[CALL-STATUS]'))
     assert.equal(tasks._map.get(task.id).workerSessionId, created[0].sessionId)
     ok('createTask→session worker')
   }
@@ -128,7 +128,7 @@ async function main() {
     const { host, tasks, created, notices } = makeHost()
     const task = await createTask(host, { title: '查快递', goal: '查 SF123' })
     const sid = created[0].sessionId
-    await onSessionEvent(host, sid, 'assistant/message', asst('已查到\n[COMMA-STATUS] done: 在途武汉'))
+    await onSessionEvent(host, sid, 'assistant/message', asst('已查到\n[CALL-STATUS] done: 在途武汉'))
     const t = tasks._map.get(task.id)
     assert.equal(t.status, 'done')
     assert.equal(t.result, '在途武汉')
@@ -141,7 +141,7 @@ async function main() {
     const { host, tasks, created, injected } = makeHost()
     const task = await createTask(host, { title: '订票', goal: '订周五高铁' })
     const sid = created[0].sessionId
-    await onSessionEvent(host, sid, 'assistant/message', asst('[COMMA-STATUS] needs_review: 二等座还是一等？'))
+    await onSessionEvent(host, sid, 'assistant/message', asst('[CALL-STATUS] needs_review: 二等座还是一等？'))
     assert.equal(tasks._map.get(task.id).status, 'needs_review')
     assert.equal(tasks._map.get(task.id).question, '二等座还是一等？')
     const res = await answerTask(host, task.id, '二等')
@@ -149,7 +149,7 @@ async function main() {
     assert.equal(tasks._map.get(task.id).status, 'working')
     assert.equal(tasks._map.get(task.id).rounds, 1)
     assert.ok(injected.at(-1)!.text.includes('二等'))
-    await onSessionEvent(host, sid, 'assistant/message', asst('[COMMA-STATUS] done: 已订 G123 二等座'))
+    await onSessionEvent(host, sid, 'assistant/message', asst('[CALL-STATUS] done: 已订 G123 二等座'))
     assert.equal(tasks._map.get(task.id).status, 'done')
     ok('needs_review→answer→done')
   }
@@ -158,7 +158,7 @@ async function main() {
   {
     const { host, tasks } = makeHost()
     const task = await createTask(host, { title: 't', goal: 'g' })
-    await onSessionEvent(host, 'other-session', 'assistant/message', asst('[COMMA-STATUS] done: stray'))
+    await onSessionEvent(host, 'other-session', 'assistant/message', asst('[CALL-STATUS] done: stray'))
     assert.equal(tasks._map.get(task.id).status, 'working') // 外会话不触任务
     const bad = await answerTask(host, task.id, 'hi')
     assert.equal(bad.ok, false)
@@ -184,7 +184,7 @@ async function main() {
     assert.match(t.question, /未按契约输出状态块/)
     // idle 兜底也能读到块——持久层尾部带块则正常 done
     const task2 = await createTask(host, { title: 't2', goal: 'g2' })
-    persisted.set(created[1].sessionId, [{ type: 'assistant/message', data: asst('[COMMA-STATUS] done: tail ok') }])
+    persisted.set(created[1].sessionId, [{ type: 'assistant/message', data: asst('[CALL-STATUS] done: tail ok') }])
     await onWorkerIdle(host, created[1].sessionId)
     assert.equal(tasks._map.get(task2.id).status, 'done')
     ok('idle fallback')
@@ -235,7 +235,7 @@ async function main() {
     assert.deepEqual(spawns[0].spec.stdio, { stdin: 'pipe', stdout: 'pipe', stderr: 'pipe' })
     assert.equal(typeof spawns[0].spec.graceMs, 'number')
     assert.ok(spawns[0].stdin[0]!.includes('cli 活'))
-    for (const cb of spawns[0].stdoutCb) cb(Buffer.from('[COMMA-STATUS] done: cli 交付'))
+    for (const cb of spawns[0].stdoutCb) cb(Buffer.from('[CALL-STATUS] done: cli 交付'))
     spawns[0].resolveDone()
     await new Promise(r => setTimeout(r, 10))
     assert.equal(tasks._map.get(task.id).status, 'done')
@@ -248,7 +248,7 @@ async function main() {
     const { host, tasks, created } = makeHost()
     const task = await createTask(host, { title: '竞态', goal: 'g' })
     const sid = created[0].sessionId
-    await onSessionEvent(host, sid, 'assistant/message', asst('[COMMA-STATUS] done: 先交付'))
+    await onSessionEvent(host, sid, 'assistant/message', asst('[CALL-STATUS] done: 先交付'))
     // idle 兜底迟到且无块——不得把 done 回退成 needs_review
     await handleWorkerOutput(host, tasks._map.get(task.id), '')
     const t = tasks._map.get(task.id)
@@ -256,7 +256,7 @@ async function main() {
     assert.equal(t.result, '先交付')
     // needs_review 同样不被无块覆盖（真实问题不丢）
     const t2 = await createTask(host, { title: '竞态2', goal: 'g2' })
-    await onSessionEvent(host, created[1].sessionId, 'assistant/message', asst('[COMMA-STATUS] needs_review: 选A还是B？'))
+    await onSessionEvent(host, created[1].sessionId, 'assistant/message', asst('[CALL-STATUS] needs_review: 选A还是B？'))
     await handleWorkerOutput(host, tasks._map.get(t2.id), '')
     assert.equal(tasks._map.get(t2.id).status, 'needs_review')
     assert.equal(tasks._map.get(t2.id).question, '选A还是B？')
@@ -268,23 +268,23 @@ async function main() {
     const { host, tasks, loops } = makeHost()
     const defs = routerToolDefs({
       ctx: host.ctx,
-      domain: () => host.commaDomain(),
+      domain: () => host.callDomain(),
       ready: () => Promise.resolve(),
       onChanged: () => {},
       tasks: { add: i => createTask(host, i), list: () => [...tasks._map.values()], answer: (id, a) => answerTask(host, id, a), cancel: id => cancelTask(host, id), find: ref => tasks._map.has(ref) ? { key: ref } : { error: 'not-found', candidates: [] } },
       loops: { add: async i => { const id = `loop:${i.name}`; await loops.put(id, { id, ...i, enabled: true }); return { ok: true, id } }, list: () => [...loops._map.values()], remove: async n => { await loops.delete(`loop:${n}`); return { ok: true } } },
     })
     const names = defs.map(d => d.name)
-    for (const n of ['comma_task_add', 'comma_tasks', 'comma_task_answer', 'comma_task_cancel', 'comma_loop_add', 'comma_loops', 'comma_loop_remove']) assert.ok(names.includes(n), n)
-    const add = defs.find(d => d.name === 'comma_task_add')!
+    for (const n of ['call_task_add', 'call_tasks', 'call_task_answer', 'call_task_cancel', 'call_loop_add', 'call_loops', 'call_loop_remove']) assert.ok(names.includes(n), n)
+    const add = defs.find(d => d.name === 'call_task_add')!
     const out: any = await add.execute(add.schema.parse({ title: '委派', goal: '干活' }))
     assert.equal(out.ok, true)
     assert.ok(tasks._map.has(out.taskId))
-    const loopAdd = defs.find(d => d.name === 'comma_loop_add')!
+    const loopAdd = defs.find(d => d.name === 'call_loop_add')!
     const lo: any = await loopAdd.execute(loopAdd.schema.parse({ name: 'watch-mail', everyMinutes: 15, prompt: '盯新邮件', checkTool: 'mail_recent', checkArgs: '{"limit":5}' }))
     assert.equal(lo.ok, true)
     assert.ok(loops._map.has('loop:watch-mail'))
-    const rm = defs.find(d => d.name === 'comma_loop_remove')!
+    const rm = defs.find(d => d.name === 'call_loop_remove')!
     assert.equal((await rm.execute(rm.schema.parse({ name: 'watch-mail' })) as any).ok, true)
     assert.equal(loops._map.has('loop:watch-mail'), false)
     ok('router tools surface')
@@ -324,8 +324,8 @@ async function main() {
   // checkpoint (the gate must compare results only, not the echoed ToolBatchResult envelope).
   {
     const a = loopCheckpointOf({ results: [{ result: { isError: false, value: { mails: 3 } } }] })
-    const b = loopCheckpointOf({ results: [{ callId: 'comma-loop:rand-1', result: { isError: false, value: { mails: 3 } } }] as any })
-    const c = loopCheckpointOf({ results: [{ callId: 'comma-loop:rand-2', result: { isError: false, value: { mails: 4 } } }] as any })
+    const b = loopCheckpointOf({ results: [{ callId: 'call-loop:rand-1', result: { isError: false, value: { mails: 3 } } }] as any })
+    const c = loopCheckpointOf({ results: [{ callId: 'call-loop:rand-2', result: { isError: false, value: { mails: 4 } } }] as any })
     assert.equal(a, b)
     assert.notEqual(a, c)
     ok('loop checkpoint gate')

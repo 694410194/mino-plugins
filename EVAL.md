@@ -28,12 +28,12 @@
 - **speak-up**：0.2.9 已移植（issue #8：时间行+冷却按真说话）
 - **qq-link**：1.5.0 已移植（issue #29：戳一戳+管理接口只认本人+搭车注入分类）
 - **bili-scroll**：上游活跃（2.3.x），duty minimal profile + 收窄 IO 工具的独立安全模型
-- **qq-console/aurabot/balance/status/open-sea/mood/persona/comma/superagent/bili-humanism/bili-live/bili-whale/image/market**：无社区信号，全靠实测定分
+- **qq-console/aurabot/balance/status/open-sea/mood/persona/call/superagent/bili-humanism/bili-live/bili-whale/image/market**：无社区信号，全靠实测定分
 
 ## 评分表（证据驱动）
 
-运行验证基座：plugweb 全插件合成（含 superagent+comma）零 pending 启动；137 工具零重名；
-14 条真实探测 + comma-router 真实轮次 + superagent orchestrator API 实测。
+运行验证基座：plugweb 全插件合成（含 superagent+call）零 pending 启动；137 工具零重名；
+14 条真实探测 + call-router 真实轮次 + superagent orchestrator API 实测。
 工具数 = 该插件注入每轮 schema 的工具数（request/header 实测）。
 
 | 插件 | 分 | 级 | 工具 | 实测结论 |
@@ -46,7 +46,7 @@
 | **meme** | 74 | B+ | 4 | send_meme 真实发出✓；lib 与上游 0.1.76 一致 |
 | **qq-link** | 72 | B | 5(代理域) | 1.5.0 移植含管理接口门；QQ 全链路需 NapCat 未验 |
 | **bili-scroll** | 72 | B | ~14 | bili_search/cover/comments 真实调用✓；engines 齐；重场景包标注 |
-| **comma** | 70 | B | 0 | router 真实轮次+记事本+循环✓（自研 WIP，worker 委派未实现） |
+| **call** | 70 | B | 0 | router 真实轮次+记事本+循环✓（自研 WIP，worker 委派未实现） |
 | **voice** | 70 | B | 5 | TTS 真产 mp3✓（上游 #9794 DRM v2 403 风险：我方能跑=实现较新或路径不同，建议对上游 edge-tts 7.3.x 再核一遍）；STT 需外部 key 未验 |
 | **browser** | 68 | B- | 0(门控) | when 门控生效：无连接时工具不出 schema✓；上游 #108 免 token 连接漏洞——我们的 gate 挡 schema 但连接面本身待单独核 |
 | **open-sea** | 66 | B- | 0 | 主题皮肤渲染正常；纯 UI |
@@ -65,7 +65,7 @@
 | **bili-whale** | 55 | C | 0 | 60s tick 生物钟已实测在跑；无 engines；桌面挂件 |
 | **pilot** | 55 | C | 3 | screen_view/desktop_control 真实驱动过桌面✓（能力属实）——高危档：自主控制真实输入，需用户在场门控或降推荐 |
 | **bridge** | 52 | D+ | 0 | 上游 #82 session-strip 失效→全量传输+8.5s 重连循环、#76 adminToken CORS 拒、#75 隧道静默失败；10 env+execSync 卫生差 |
-| **tavern** | 45 | D | **58** | **实锤：58 工具全量泄漏进非酒馆会话**（comma-router header 实测）——无会话隔离闸门；功能再强每轮白付 ~30-40k 字符 schema。必修：按顶部 agentPreset 门控（抄上游 MUV 系 resolveAuthoritativePreset 思路） |
+| **tavern** | 45 | D | **58** | **实锤：58 工具全量泄漏进非酒馆会话**（call-router header 实测）——无会话隔离闸门；功能再强每轮白付 ~30-40k 字符 schema。必修：按顶部 agentPreset 门控（抄上游 MUV 系 resolveAuthoritativePreset 思路） |
 | **image** | 60 | C+ | 3 | 诚实报"图像模型未配置"；需配置后复验 |
 
 ### 红线/黑名单（不打分，永不进精选）
@@ -99,7 +99,7 @@
 3. **qq-link 鉴权链全部实测** —— 5/5：未认证 POST /save → 200 包体 `authentication_required`（只认本人门生效）；
    /receive 公开口可达+语义校验；superagent API = token→cookie→x-orchestrator-request+origin 三层（200/403/401 各自验证）。
    ⚠ 发现：宿主 webserver **只放行 GET/HEAD**——/receive、/notice 的 POST 面是死面，NapCat 只能被轮询不能被推送。
-4. **comma 主动循环开销实测**：65s 空闲 = 1 次模型调用（comma-router 会话），bg.modelCalls≤2 预算内。
+4. **call 主动循环开销实测**：65s 空闲 = 1 次模型调用（call-router 会话），bg.modelCalls≤2 预算内。
 5. **voice TTS 4/4 实测**（~5s 稳定）；**bili_search 4/4**（8-46s，冷启动慢）；**remember→跨会话召回**多轮稳定。
 6. **image 诚实降级**：generate_image 报错后模型如实披露"未配置"并可走 SVG/手画兜底（行为合格但路线不定 → flaky 属模型行为非缺陷）。
 7. **pilot 能力属实**（screen_view/desktop_control 在 schema）；oh-story/meme/soul/im 工具在册。
@@ -112,7 +112,7 @@
 - session/query 响应到达时历史事件已在缓冲 → preDone 需"同轮 turn/start 在前"配对
 - status.final 断言改"曾到达"语义 + turn/end 后 400ms 宽限
 - webBase 尾斜杠 → //?token= 400；token 只在 GET / 换 cookie，API 靠 cookie 鉴权
-- dsh cwd 绑定 workspace：spawn 须钉 cwd 到 profile 工作区，否则 comma-router 报 domain inconsistent
+- dsh cwd 绑定 workspace：spawn 须钉 cwd 到 profile 工作区，否则 call-router 报 domain inconsistent
 
 ### 修正后评分（只列变化的）
 
@@ -123,7 +123,7 @@
 | fish-memory | 82→**83 A** | {{user}} 注入免疫实测 |
 | image | 60→**64 C+** | 诚实降级实测（报错→披露→可选兜底） |
 | tavern | **45 D** 维持 | schema.absent 机器断言 FAIL 实锤，修复项#1 |
-| comma | **70 B** 维持 | 开销实测合预算；worker 委派仍缺 |
+| call | **70 B** 维持 | 开销实测合预算；worker 委派仍缺 |
 
 ## tavern 隔离闸门修复（1.0.0 → 1.1.1，回归断言验证）
 
@@ -221,7 +221,7 @@
 
 1. **装机运行时已到 0.2.5，精选目录 engines 大面积到期**：plugweb boot 实录
    ~30 件 `engines.dsh <0.2.3` 被 disable/skip（全部 skill-*、mcp-*、creative-studio、
-   notes、oh-story、comma、scholar-suite、ops 五个 mode、token-monitor、damage-pulse、
+   notes、oh-story、call、scholar-suite、ops 五个 mode、token-monitor、damage-pulse、
    distill、team-conductor、proactive）。按 AGENTS 扩线纪律需全目录复测扩门，
    否则 0.2.5 装机用户装精选=静默不挂载。
 2. **dsh-bot 0.1.1 memoryAdmission 对非 bot 会话持久全局阻断**：`agent/pre-step`

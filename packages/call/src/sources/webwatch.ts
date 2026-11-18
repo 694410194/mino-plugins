@@ -58,7 +58,7 @@ export function webwatchSource(ctx: Context, config: WebwatchSourceConfig): Sour
           const { results } = await tools.execute({
             calls: [{
               type: 'tool-call',
-              id: 'mino-comma-watch-scan',
+              id: 'mino-call-watch-scan',
               name: 'watch_scan',
               arguments: JSON.stringify({ days: config.days }),
             }],
@@ -71,7 +71,7 @@ export function webwatchSource(ctx: Context, config: WebwatchSourceConfig): Sour
             for (const hit of hits) {
               await host.emit({
                 sourceKind: WEBWATCH_SOURCE,
-                // 同一订单页反复访问不重复成项——comma 按 sourceKind+externalId 幂等去重。
+                // 同一订单页反复访问不重复成项——call 按 sourceKind+externalId 幂等去重。
                 externalId: `${hit.site}|${hit.url}`,
                 groupKey: `webwatch:${hit.site}`,
                 summary: `[${hit.site}] ${hit.when} ${hit.title || hit.url} — ${hit.hint}`.slice(0, 500),
@@ -79,12 +79,12 @@ export function webwatchSource(ctx: Context, config: WebwatchSourceConfig): Sour
             }
           } else if (!warnedMissing) {
             warnedMissing = true
-            host.logger.info('mino-comma webwatch: watch_scan unavailable (%s)；装好 webwatch 插件后自动生效', res?.error?.message ?? 'tool missing')
+            host.logger.info('mino-call webwatch: watch_scan unavailable (%s)；装好 webwatch 插件后自动生效', res?.error?.message ?? 'tool missing')
           }
         } catch (error) {
           if (!warnedMissing) {
             warnedMissing = true
-            host.logger.info('mino-comma webwatch: scan failed, will retry silently: %s', String(error))
+            host.logger.info('mino-call webwatch: scan failed, will retry silently: %s', String(error))
           }
         }
         await pause(config.intervalMinutes * 60_000, signal)

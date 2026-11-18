@@ -30,7 +30,7 @@ export function renderNotebook(matters: Matter[], items: Map<string, SourceItem>
   }
 
   const lines: string[] = [
-    '# Comma Notebook', '',
+    '# Call Notebook', '',
     `Rendered ${stamp(now)} · ${open.length} open · ${done.length} recently done`, '',
     ...section('任务板', liveTasks.map(taskRow)),
     ...section('需要你', needs.map(m => `- **[${m.urgency}]** ${m.title}${latest(m)} · ${stamp(m.updatedAt)}`)),

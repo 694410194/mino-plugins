@@ -72,7 +72,7 @@ export function taskSource(ctx: Context, config: TaskSourceConfig): Source {
         } catch (error) {
           if (!warnedMissing) {
             warnedMissing = true
-            host.logger.info('mino-comma tasks: snapshot failed, will retry silently: %s', String(error))
+            host.logger.info('mino-call tasks: snapshot failed, will retry silently: %s', String(error))
           }
         }
         await pause(config.intervalMinutes * 60_000, signal)

@@ -58,7 +58,7 @@ export function heuristicUrgency(matter: Matter, items: SourceItem[]): MatterUrg
 export interface JudgeContext {
   /** Recent decided matters, newest first (`[decision] title`). */
   history: string[]
-  /** Feed source labels the person muted (e.g. `comma:mail`). */
+  /** Feed source labels the person muted (e.g. `call:mail`). */
   muted: string[]
 }
 
@@ -93,7 +93,7 @@ export async function judgeMatters(
     }
     return parseJudgeResponse(text)
   } catch (error) {
-    ctx.logger.warn('mino-comma decide: judge call failed, falling back to heuristics: %s', String(error))
+    ctx.logger.warn('mino-call decide: judge call failed, falling back to heuristics: %s', String(error))
     return undefined
   }
 }

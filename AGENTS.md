@@ -50,7 +50,7 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
   `pnpm exec tsx src/bin.ts --input <list> --output <index.json> --title <t>`），
   输入每行一个 npm 包名或公开 Git 仓 URL；Git 源按 workspace glob/`dsh.bundle`
   扫描包，**`private: true` 的包会被跳过**——private 在本仓的语义是"不进市场索引
-  /不发 npm"（comma=WIP；market 是内置随发行——桌面 profile bundle 层，不经过索引），
+  /不发 npm"（call=WIP；market 是内置随发行——桌面 profile bundle 层，不经过索引），
   workspace 排除走 `pnpm-workspace.yaml` 负向 glob。
 - 发布物：`github.com/694410194/mino-plugin-index`（index.json + icons/，
   与源仓 mino-plugins 分离，产物不进源仓）。
@@ -155,17 +155,17 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
   `sdk-app-startup`(`profile: sdk`)+`sdk-jsonrpc-server`(`inject:
   [sdkAppStartup, loader]`) 两行即可对全插件树跑 JSON-RPC。`plugtest` 档只有
   `dsh-base` 没有 sdk-app → `initialize` 永不响应（timeout initialize）。
-- **宿主机服务边界**：superagent/comma 依赖 `sessionController`/
+- **宿主机服务边界**：superagent/call 依赖 `sessionController`/
   `workspaceRegistry`/`agentPresets`/`webServer`——这些只有 web/desktop 档
   的 `dsh-web-app` bundle 提供；纯 stdio 档它们 pending 不激活是**设计使然**
-  不是插件缺陷（待办：comma/superagent 的 README 应写明宿主档位要求）。
+  不是插件缺陷（待办：call/superagent 的 README 应写明宿主档位要求）。
 - **会话持久路由**：session.header 记创建时刻的 provider/model；上游 provider
-  没了后**每次 turn 都报 `NO_ADAPTER`**（comma-router 实测踩中）。修法：删掉
-  旧 session 让插件按当前默认重建；长期应让 comma 支持 pin routerModel。
+  没了后**每次 turn 都报 `NO_ADAPTER`**（call-router 实测踩中）。修法：删掉
+  旧 session 让插件按当前默认重建；长期应让 call 支持 pin routerModel。
 - **`~/.mino/sessions/<workspace>/` 下不能有非 session 目录**：扫描器校验
   header id vs 目录名，改名/杂物目录=「corrupt session log」→ dsh-workspace
   插件报错 → workspaceRegistry 永不 provide → sessionController 及全部下游
-  （superagent/comma/bridge/speak-up…）连锁 pending。备份移出 sessions 树。
+  （superagent/call/bridge/speak-up…）连锁 pending。备份移出 sessions 树。
   同样地，删 session 目录不解 `storages/workspace.json` 的归属账——一个
   session 被两个 workspace 同时认领会让 dsh-workspace 报
   `workspace domain is inconsistent` 并同样连环 pending。

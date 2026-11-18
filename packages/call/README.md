@@ -1,4 +1,4 @@
-# mino-comma
+# mino-call
 
 Sessionless 主动陪伴 agent：常驻的"逗号"——把各来源的事件归并成**事项**
 （matter），按紧急度判断哪些需要你，把该推的推给你，其余安静躺在
@@ -11,17 +11,17 @@ Notebook 里。灵感来自 AFK-surf/Comma。
   未配走启发式（紧急词/问句探测）
 - **推送**：`critical/high/ask` 三档才会递给你；每日推送有预算
   （默认 12 条）和最小间隔（默认 30 分钟）
-- **留痕**：全部事项渲染成 `<workspace>/Comma/Notebook.md`，模型永不改写，
+- **留痕**：全部事项渲染成 `<workspace>/Call/Notebook.md`，模型永不改写，
   纯投影
 - **简报**：每天 `briefing.hour`（默认 9 点）推一条当日概览
 
 ## 形态
 
-bundle 自带三行：插件本体 + `mino-comma-router` 专用 preset（triage/委派
-prompt 的 Router Session）+ `mino-comma-worker` preset（任务执行载体，每轮
-回复必须以 `[COMMA-STATUS] done|needs_review|failed:` 状态块收尾）。装即
+bundle 自带三行：插件本体 + `mino-call-router` 专用 preset（triage/委派
+prompt 的 Router Session）+ `mino-call-worker` preset（任务执行载体，每轮
+回复必须以 `[CALL-STATUS] done|needs_review|failed:` 状态块收尾）。装即
 挂载，卸即干净。Router 会话在列表里显示为 **Mino 陪伴**（标题以用户改名
-语义永久固定）；worker 会话以 `comma-task-*` 命名。
+语义永久固定）；worker 会话以 `call-task-*` 命名。
 
 ## 对话面：事项 + 任务 + Loops + 配对
 
@@ -29,19 +29,19 @@ Router Session 上挂了 11 个 agent 作用域工具（`agent.ctx.tools.registe
 随 agent 销毁自动回滚，插件卸载时按账清理）——事项生命周期、任务委派、
 值守循环和配对全部可以对话完成，不需要 UI 面板也不需要改 YAML：
 
-- `comma_matters`：按状态列事项（counts + 标题 + 最新条目摘要）
-- `comma_matter_done`：把事项标为已处理（接受 id 或唯一标题子串）
-- `comma_matter_snooze`：推迟事项（`minutes` 或 ISO `until`），到点由
+- `call_matters`：按状态列事项（counts + 标题 + 最新条目摘要）
+- `call_matter_done`：把事项标为已处理（接受 id 或唯一标题子串）
+- `call_matter_snooze`：推迟事项（`minutes` 或 ISO `until`），到点由
   注意力扫描自动唤醒并重新判级
-- `comma_im_pair`：查看/选择 comma 接管的 IM bot；配对写 `state` 表
+- `call_im_pair`：查看/选择 call 接管的 IM bot；配对写 `state` 表
   持久化，未接管的源在下一次重试（~15s）生效
-- `comma_task_add`：把「该干的活」委派成 Task——起 `comma-task-*` worker
-  会话（`mino-comma-worker` preset）执行，状态机
+- `call_task_add`：把「该干的活」委派成 Task——起 `call-task-*` worker
+  会话（`mino-call-worker` preset）执行，状态机
   `open→working→needs_review→done/failed/cancelled` 持久化在 `tasks` 表
-- `comma_tasks` / `comma_task_cancel`：看任务板、撤任务
-- `comma_task_answer`：worker 卡在 needs_review（拿不准问你）时，答复经
+- `call_tasks` / `call_task_cancel`：看任务板、撤任务
+- `call_task_answer`：worker 卡在 needs_review（拿不准问你）时，答复经
   `agent.followup` 注回 worker 会话续跑——这就是「拍板→续干」回路
-- `comma_loop_add` / `comma_loop_remove` / `comma_loops`：模型自写值守
+- `call_loop_add` / `call_loop_remove` / `call_loops`：模型自写值守
   循环；配 `checkTool`+`checkArgs` 时每轮先跑确定性工具比对 checkpoint，
   输出没变则本轮静默（安静时零模型调用）
 
@@ -57,7 +57,7 @@ graceMs）起外部命令行 agent——autoloop 式，stdin 喂任务目标、s
 
 配对受阻时（@xmanrui/dsh-im 未装、没有可用 bot、多候选歧义）不再只写日志：
 按状态指纹**去重后**往 Router Session 注入一条提示消息，由陪伴人格
-向用户解释并引导用 `comma_im_pair` 完成选择；成功配对后指纹复位，
+向用户解释并引导用 `call_im_pair` 完成选择；成功配对后指纹复位，
 再次受阻会重新提示。
 
 ## 配置
@@ -74,7 +74,7 @@ graceMs）起外部命令行 agent——autoloop 式，stdin 喂任务目标、s
   则不推（事项照常在 Notebook 里）
 - `proactive.decideModel`：判断模型 `{provider, model}`，不设则启发式兜底
 - `loops[]`：周期唤醒 router 的循环项（`name/everyMinutes/prompt/enabled`），
-  运行时修改在重 seed 后保留；模型也可经 `comma_loop_add` 自写（可带
+  运行时修改在重 seed 后保留；模型也可经 `call_loop_add` 自写（可带
   `checkTool` 确定性前置闸）
 - `worker.kind`：`dsh-session`（默认，preset worker 会话）或 `cli`
   （`ctx.subprocess` 外部命令行 agent，配 `worker.command` 空格分隔 argv）
@@ -83,7 +83,7 @@ graceMs）起外部命令行 agent——autoloop 式，stdin 喂任务目标、s
 
 ## 前置条件
 
-- 存储域 `comma`（自动建库，无需动作）
+- 存储域 `call`（自动建库，无需动作）
 - IM 源与推送通道依赖 **@xmanrui/dsh-im**（`dshIm` 服务契约）；不装 @xmanrui/dsh-im 也能跑，
   只是没有入站源和外推
 

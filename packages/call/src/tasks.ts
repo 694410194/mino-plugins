@@ -1,6 +1,6 @@
 /**
- * Task lifecycle: comma 的执行半段。任务经官方缝委派给 worker 完成——
- * dsh-session 走 sessionController+preset 会话（每轮末输出 [COMMA-STATUS] 状态块），
+ * Task lifecycle: call 的执行半段。任务经官方缝委派给 worker 完成——
+ * dsh-session 走 sessionController+preset 会话（每轮末输出 [CALL-STATUS] 状态块），
  * cli 走 ctx.subprocess（autoloop 式外部命令行 agent，stdin 喂目标 stdout 收状态）。
  * 监控=session/event 全局监听 + agent/status idle 兜底 + sessionPersistence 读冷尾；
  * 敏感工具调用天然经官方 tools/pre-execute 门闸，无答者 fail-closed。
@@ -10,13 +10,13 @@ import type { SessionId } from '@deepseek-ai/dsh-session'
 import type { WorkspaceId } from '@deepseek-ai/dsh-workspace'
 import type { Domain } from '@deepseek-ai/dsh-storage-domain'
 import { freezeMessage, MessageId, type UserMessage } from '@deepseek-ai/dsh-llm'
-import type { commaDomain, Task, TaskStatus } from './domain.ts'
+import type { callDomain, Task, TaskStatus } from './domain.ts'
 
-export const WORKER_PRESET = 'mino-comma-worker'
-export const WORKER_SESSION_PREFIX = 'comma-task-'
+export const WORKER_PRESET = 'mino-call-worker'
+export const WORKER_SESSION_PREFIX = 'call-task-'
 
 /** Worker 输出契约：每轮回复末尾的状态块。 */
-export const STATUS_BLOCK_RE = /\[COMMA-STATUS\]\s*(done|needs_review|failed)\s*:\s*([^\n]+)/g
+export const STATUS_BLOCK_RE = /\[CALL-STATUS\]\s*(done|needs_review|failed)\s*:\s*([^\n]+)/g
 
 /**
  * Loop 闸的 checkpoint 面：只序列化每次调用的业务结果——ToolBatchResult 封套回显
@@ -51,7 +51,7 @@ export interface TaskHost {
   readonly ctx: Context
   readonly logger: Context['logger']
   readonly signal: AbortSignal
-  commaDomain(): CommaDomain
+  callDomain(): CallDomain
   /** Router workspace id——worker 会话开在同一 workspace。 */
   workspaceId(): WorkspaceId
   /** Router workspace 根目录——cli worker 的 cwd。 */
@@ -62,29 +62,29 @@ export interface TaskHost {
   onChanged(): void
 }
 
-type CommaDomain = Domain<typeof commaDomain>
-const table = (host: TaskHost) => host.commaDomain().table('tasks')
+type CallDomain = Domain<typeof callDomain>
+const table = (host: TaskHost) => host.callDomain().table('tasks')
 
 const newSessionId = (taskId: string) => `${WORKER_SESSION_PREFIX}${taskId.replace(/^task:/, '').slice(0, 12)}` as SessionId
 
 const briefOf = (task: Task): string => [
-  `[comma task] ${task.title}`,
+  `[call task] ${task.title}`,
   ``,
   task.goal,
   ``,
-  `完成后用状态块收尾：[COMMA-STATUS] done: <一句话交付>`,
-  `需要你拍板时：[COMMA-STATUS] needs_review: <具体问题>`,
-  `干不下去时：[COMMA-STATUS] failed: <原因>`,
+  `完成后用状态块收尾：[CALL-STATUS] done: <一句话交付>`,
+  `需要你拍板时：[CALL-STATUS] needs_review: <具体问题>`,
+  `干不下去时：[CALL-STATUS] failed: <原因>`,
 ].join('\n')
 
 async function injectToSession(host: TaskHost, sessionId: SessionId, text: string): Promise<boolean> {
   const resolved = await host.ctx.sessionController.resolveAgent(sessionId)
   if ('error' in resolved) return false
   const message: UserMessage = freezeMessage({
-    id: MessageId(`mino-comma:${crypto.randomUUID()}`),
+    id: MessageId(`mino-call:${crypto.randomUUID()}`),
     role: 'user',
     content: [{ type: 'text', text }],
-    source: { kind: 'mino-comma' },
+    source: { kind: 'mino-call' },
   })
   resolved.agent.followup(message)
   return true
@@ -114,13 +114,13 @@ async function applyStatus(host: TaskHost, task: Task, parsed: ParsedStatus): Pr
   let out: { task: Task; changed: boolean } | undefined
   if (parsed.status === 'done') {
     out = await transition(host, task.id, t => guard(t, { status: 'done' as TaskStatus, result: parsed.detail, question: undefined }))
-    if (out?.changed) await host.notify(`[comma 任务] 完成：${out.task.title} — ${parsed.detail}`, out.task)
+    if (out?.changed) await host.notify(`[call 任务] 完成：${out.task.title} — ${parsed.detail}`, out.task)
   } else if (parsed.status === 'needs_review') {
     out = await transition(host, task.id, t => guard(t, { status: 'needs_review' as TaskStatus, question: parsed.detail }))
-    if (out?.changed) await host.notify(`[comma 任务] 等你拍板：${out.task.title} — ${parsed.detail}（用 comma_task_answer 答复）`, out.task)
+    if (out?.changed) await host.notify(`[call 任务] 等你拍板：${out.task.title} — ${parsed.detail}（用 call_task_answer 答复）`, out.task)
   } else {
     out = await transition(host, task.id, t => guard(t, { status: 'failed' as TaskStatus, failure: parsed.detail }))
-    if (out?.changed) await host.notify(`[comma 任务] 失败：${out.task.title} — ${parsed.detail}`, out.task)
+    if (out?.changed) await host.notify(`[call 任务] 失败：${out.task.title} — ${parsed.detail}`, out.task)
   }
 }
 
@@ -134,7 +134,7 @@ export async function handleWorkerOutput(host: TaskHost, task: Task, text: strin
       ...t, status: 'needs_review' as TaskStatus,
       question: 'worker 未按契约输出状态块，请人工看一眼会话', updatedAt: Date.now(),
     }) : t)
-    if (out?.changed) await host.notify(`[comma 任务] 异常：${out.task.title} — worker 未输出状态块`, out.task)
+    if (out?.changed) await host.notify(`[call 任务] 异常：${out.task.title} — worker 未输出状态块`, out.task)
     return
   }
   await applyStatus(host, task, parsed)
@@ -241,7 +241,7 @@ export async function answerTask(host: TaskHost, taskId: string, answer: string)
   if (task === undefined) return { ok: false, error: 'not-found' }
   if (task.status !== 'needs_review') return { ok: false, error: `not-awaiting-answer:${task.status}` }
   if (task.workerKind === 'cli') return { ok: false, error: 'cli worker 已退出，答复无法续跑——重建任务或换 dsh-session' }
-  const injected = await injectToSession(host, task.workerSessionId as SessionId, `[comma 用户答复] ${answer}\n\n（答复后继续任务，仍按状态块收尾）`)
+  const injected = await injectToSession(host, task.workerSessionId as SessionId, `[call 用户答复] ${answer}\n\n（答复后继续任务，仍按状态块收尾）`)
   if (!injected) return { ok: false, error: 'worker-session-unavailable' }
   await transition(host, taskId, t => ({ ...t, status: 'working' as TaskStatus, question: undefined, rounds: t.rounds + 1, updatedAt: Date.now() }))
   return { ok: true }
@@ -312,7 +312,7 @@ export async function sweepTaskTimeouts(host: TaskHost): Promise<void> {
       ...t, status: 'needs_review' as TaskStatus,
       question: `worker 超过 ${host.worker().timeoutMinutes} 分钟无收尾，请人工看一眼会话`, updatedAt: Date.now(),
     }) : t)
-    if (out?.changed) await host.notify(`[comma 任务] 超时：${out.task.title} — worker 无收尾，请人工处置`, out.task)
+    if (out?.changed) await host.notify(`[call 任务] 超时：${out.task.title} — worker 无收尾，请人工处置`, out.task)
   }
 }
 
@@ -361,13 +361,13 @@ export async function recoverTasks(host: TaskHost): Promise<void> {
     }
     try {
       await schedule.create({
-        title: `comma 恢复任务：${task.title.slice(0, 40)}`,
-        prompt: `[comma 恢复] 之前被中断，请继续任务：${task.title}，仍按状态块收尾。`,
+        title: `call 恢复任务：${task.title.slice(0, 40)}`,
+        prompt: `[call 恢复] 之前被中断，请继续任务：${task.title}，仍按状态块收尾。`,
         timing: { kind: 'after', after_seconds: 3 },
         target: { kind: 'session', sessionId },
       }, undefined, host.signal)
     } catch (error) {
-      host.logger.warn('mino-comma: task %s recovery wake failed: %s', task.id, String(error))
+      host.logger.warn('mino-call: task %s recovery wake failed: %s', task.id, String(error))
     }
   }
 }

@@ -60,26 +60,26 @@ export function imSource(
       while (!signal.aborted) {
         const dshim = ctx.get('dshIm') as DshIm | undefined
         if (!dshim?.consumeInbound) {
-          host.logger.info('mino-comma im: @xmanrui/dsh-im not installed; retrying')
+          host.logger.info('mino-call im: @xmanrui/dsh-im not installed; retrying')
           await host.pairingStatus('unavailable')
           await pause(RETRY_MS, signal)
           continue
         }
         const resolution = await resolveBot()
         if (resolution.kind === 'none') {
-          host.logger.info('mino-comma im: no bot to consume; retrying')
+          host.logger.info('mino-call im: no bot to consume; retrying')
           await host.pairingStatus('none')
           await pause(RETRY_MS, signal)
           continue
         }
         if (resolution.kind === 'ambiguous') {
-          host.logger.warn('mino-comma im: multiple bots (%s); set sources.im.botId', resolution.candidates.join(', '))
+          host.logger.warn('mino-call im: multiple bots (%s); set sources.im.botId', resolution.candidates.join(', '))
           await host.pairingStatus('ambiguous', resolution.candidates)
           await pause(RETRY_MS, signal)
           continue
         }
         const botId = resolution.botId
-        if (resolution.origin === 'auto') host.logger.info('mino-comma im: auto-paired bot %s', botId)
+        if (resolution.origin === 'auto') host.logger.info('mino-call im: auto-paired bot %s', botId)
         try {
           const { account } = await dshim.describeBot(botId)
           const selfIds = new Set([botId, account.id ?? ''])
@@ -99,12 +99,12 @@ export function imSource(
                   })
                 }
               } catch (error) {
-                host.logger.warn('mino-comma im: dropped inbound event: %s', String(error))
+                host.logger.warn('mino-call im: dropped inbound event: %s', String(error))
               }
               return { accepted: true }
             },
           })
-          host.logger.info('mino-comma im: consuming bot %s', botId)
+          host.logger.info('mino-call im: consuming bot %s', botId)
           await new Promise<void>(resolve => {
             if (signal.aborted) return resolve()
             signal.addEventListener('abort', () => resolve(), { once: true })
@@ -112,7 +112,7 @@ export function imSource(
           release()
         } catch (error) {
           if (signal.aborted) return
-          host.logger.warn('mino-comma im: consumer error, retrying: %s', String(error))
+          host.logger.warn('mino-call im: consumer error, retrying: %s', String(error))
           await pause(RETRY_MS, signal)
         }
       }

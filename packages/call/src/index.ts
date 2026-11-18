@@ -1,4 +1,4 @@
-/** mino-comma: a sessionless proactive companion agent for Mino. */
+/** mino-call: a sessionless proactive companion agent for Mino. */
 import type { Context } from '@deepseek-ai/cordis'
 import type {} from '@deepseek-ai/dsh-api-session-controller'
 import type {} from '@deepseek-ai/dsh-agent'
@@ -16,11 +16,11 @@ import { taskSource } from './sources/tasks.ts'
 
 declare module '@deepseek-ai/dsh-llm' {
   interface MessageSourceMap {
-    'mino-comma': { kind: 'mino-comma' }
+    'mino-call': { kind: 'mino-call' }
   }
 }
 
-export const name = 'mino-comma'
+export const name = 'mino-call'
 export const inject = ['storageDomain', 'sessionController', 'workspaceRegistry', 'sessionPersistence', 'subprocess', 'schedule']
 export const Config = z.object({
   /** Directory the router Workspace owns; defaults to the profile's working directory. */
@@ -83,7 +83,7 @@ export const Config = z.object({
     postToFeed: z.boolean().default(true),
   }).prefault({}),
   notebook: z.object({
-    /** Rendered notebook path; defaults to <workspaceRoot>/Comma/Notebook.md. */
+    /** Rendered notebook path; defaults to <workspaceRoot>/Call/Notebook.md. */
     path: z.string().optional(),
   }).prefault({}),
   briefing: z.object({
@@ -91,7 +91,7 @@ export const Config = z.object({
     enabled: z.boolean().default(true),
     hour: z.number().int().min(0).max(23).default(9),
   }).prefault({}),
-  /** Worker 委派：任务执行载体。dsh-session=起 mino-comma-worker preset 会话；cli=经 ctx.subprocess 起外部命令行 agent（autoloop 式）。 */
+  /** Worker 委派：任务执行载体。dsh-session=起 mino-call-worker preset 会话；cli=经 ctx.subprocess 起外部命令行 agent（autoloop 式）。 */
   worker: z.object({
     kind: z.enum(['dsh-session', 'cli']).default('dsh-session'),
     /** kind=cli 时的外部命令行（argv 形式，空格分隔）；任务目标经 stdin 喂入。 */
@@ -107,9 +107,9 @@ export const Config = z.object({
     enabled: z.boolean().default(true),
   })).default([]),
 }).prefault({})
-export type CommaConfig = z.infer<typeof Config>
+export type CallConfig = z.infer<typeof Config>
 
-export async function apply(ctx: Context, config: CommaConfig): Promise<void> {
+export async function apply(ctx: Context, config: CallConfig): Promise<void> {
   let runtime!: Runtime
   // Registered before Runtime construction so the router's own materialization is caught.
   ctx.on('agent/created', ({ agent }) => { runtime?.decorateRouter(agent) })
@@ -146,7 +146,7 @@ export async function apply(ctx: Context, config: CommaConfig): Promise<void> {
   })
   ctx.effect(() => async () => { await runtime.stop() })
   await runtime.ready
-  ctx.logger.info('mino-comma ready (%d source%s)', sources.length, sources.length === 1 ? '' : 's')
+  ctx.logger.info('mino-call ready (%d source%s)', sources.length, sources.length === 1 ? '' : 's')
 }
 
 export * from './domain.ts'

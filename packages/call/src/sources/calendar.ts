@@ -63,8 +63,8 @@ export function calendarSource(ctx: Context, config: CalendarSourceConfig): Sour
           continue
         }
         try {
-          if (config.sync) await callTool(tools, signal, 'mino-comma-cal-sync', 'cal_sync', {}) // best-effort
-          const res = await callTool(tools, signal, 'mino-comma-cal-upcoming', 'cal_upcoming', { days: config.days })
+          if (config.sync) await callTool(tools, signal, 'mino-call-cal-sync', 'cal_sync', {}) // best-effort
+          const res = await callTool(tools, signal, 'mino-call-cal-upcoming', 'cal_upcoming', { days: config.days })
           if (res && !res.isError) {
             warnedMissing = false
             const events = (res.value as { events?: CalEvent[] } | undefined)?.events ?? []
@@ -79,12 +79,12 @@ export function calendarSource(ctx: Context, config: CalendarSourceConfig): Sour
             }
           } else if (!warnedMissing) {
             warnedMissing = true
-            host.logger.info('mino-comma calendar: cal_upcoming unavailable (%s)；装好 connector-calendar 后自动生效', res?.error?.message ?? 'tool missing')
+            host.logger.info('mino-call calendar: cal_upcoming unavailable (%s)；装好 connector-calendar 后自动生效', res?.error?.message ?? 'tool missing')
           }
         } catch (error) {
           if (!warnedMissing) {
             warnedMissing = true
-            host.logger.info('mino-comma calendar: poll failed, will retry silently: %s', String(error))
+            host.logger.info('mino-call calendar: poll failed, will retry silently: %s', String(error))
           }
         }
         await pause(config.intervalMinutes * 60_000, signal)

@@ -1,15 +1,15 @@
-# mino-comma bundle layer: the plugin and the agent preset its router Session runs under.
+# mino-call bundle layer: the plugin and the agent preset its router Session runs under.
 - insert:
-    - id: mino-comma
-      name: mino-comma
+    - id: mino-call
+      name: mino-call
     # Router Session preset: triage and delegation only — the persona carries the router
     # prompt; no shell, web, subagents, or scheduling until worker delegation lands.
-    - id: mino-comma-router-preset
+    - id: mino-call-router-preset
       name: '@deepseek-ai/dsh-agent-preset'
       config:
-        id: mino-comma-router
-        name: mino-comma 主 Session
-        description: mino-comma 的 Router Session 专用，不供手动选择。
+        id: mino-call-router
+        name: mino-call 主 Session
+        description: mino-call 的 Router Session 专用，不供手动选择。
         order: 92
         plugins:
           - id: persona
@@ -22,14 +22,14 @@
               maxBytes: 65536
           - id: time-context
             name: '@deepseek-ai/dsh-time-context'
-    # Worker Session preset：任务执行载体。每轮回复必须以 [COMMA-STATUS] 状态块收尾——
-    # done=交付、needs_review=等人拍板、failed=失败，comma 靠它推进任务生命周期。
-    - id: mino-comma-worker-preset
+    # Worker Session preset：任务执行载体。每轮回复必须以 [CALL-STATUS] 状态块收尾——
+    # done=交付、needs_review=等人拍板、failed=失败，call 靠它推进任务生命周期。
+    - id: mino-call-worker-preset
       name: '@deepseek-ai/dsh-agent-preset'
       config:
-        id: mino-comma-worker
-        name: mino-comma 任务执行
-        description: mino-comma 的 Task Worker 专用，不供手动选择。
+        id: mino-call-worker
+        name: mino-call 任务执行
+        description: mino-call 的 Task Worker 专用，不供手动选择。
         order: 93
         plugins:
           - id: persona
@@ -38,9 +38,9 @@
               prefix: >-
                 You are Mino's task worker. Complete the task handed to you with the tools you have.
                 Every reply MUST end with exactly one status block on its own line:
-                [COMMA-STATUS] done: <one-line result summary>
-                [COMMA-STATUS] needs_review: <the exact question you need the person to decide>
-                [COMMA-STATUS] failed: <why the task cannot proceed>
+                [CALL-STATUS] done: <one-line result summary>
+                [CALL-STATUS] needs_review: <the exact question you need the person to decide>
+                [CALL-STATUS] failed: <why the task cannot proceed>
                 Use needs_review only when a decision is truly the person's (sensitive action blocked,
                 ambiguous instruction, missing credential). Never put the status block inside a code fence.
           - id: agent-instructions

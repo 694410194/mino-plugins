@@ -1,9 +1,9 @@
 /** Explicit pairing resolution: config → durable selection → discovery. Never a hidden default. */
 import type { Context } from '@deepseek-ai/cordis'
 import type { Domain } from '@deepseek-ai/dsh-storage-domain'
-import type { commaDomain } from './domain.ts'
+import type { callDomain } from './domain.ts'
 
-type CommaDomain = Domain<typeof commaDomain>
+type CallDomain = Domain<typeof callDomain>
 
 /** The subset of the `dshIm` surface pairing resolution reads (PROACTIVE_DELIVERY: listBots → [{botId, channel}], listTargets → [{targetId, name?, kind, route}]). */
 interface DshImDiscovery {
@@ -27,7 +27,7 @@ export const NOTIFY_TARGET_KEY = 'notify_target'
 const dshimOf = (ctx: Context): DshImDiscovery | undefined =>
   ctx.get('dshIm') as DshImDiscovery | undefined
 
-export async function resolveBot(ctx: Context, domain: CommaDomain, configured: string): Promise<BotResolution> {
+export async function resolveBot(ctx: Context, domain: CallDomain, configured: string): Promise<BotResolution> {
   if (configured !== '') return { kind: 'resolved', botId: configured, origin: 'config' }
   const remembered = domain.table('state').get(SELECTED_BOT_KEY)?.value
   const dshim = dshimOf(ctx)
@@ -50,7 +50,7 @@ export async function resolveBot(ctx: Context, domain: CommaDomain, configured: 
 
 export async function resolveNotifyTarget(
   ctx: Context,
-  domain: CommaDomain,
+  domain: CallDomain,
   configured: { botId: string; targetId: string },
   sourceBotId: string | undefined,
 ): Promise<TargetResolution> {

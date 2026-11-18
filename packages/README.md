@@ -19,7 +19,7 @@
 | 目录 | 包 | 说明 |
 |---|---|---|
 | superagent | dsh-superagent | 主动陪伴 agent（fork dsh-superagent 原型） |
-| comma | mino-comma | Sessionless 主动陪伴：事项归并/紧急度判断/推送预算/Notebook |
+| call | mino-call | Sessionless 主动陪伴：事项归并/紧急度判断/推送预算/Notebook |
 | knowledge-studio | dsh-knowledge-studio | 工作区资料→报告/PPT/表格/导图/音视频 |
 | task-board | @linxin666/dsh-client-ui-task-board | 侧边栏多列任务看板（卡片=真实会话） |
 | pilot | @momasiku/dsh-pilot | Windows 桌面自动化（高危面） |

@@ -1,12 +1,12 @@
-/** Model-facing router tools: matter lifecycle and IM pairing over the comma domain. */
+/** Model-facing router tools: matter lifecycle and IM pairing over the call domain. */
 import type { Context } from '@deepseek-ai/cordis'
 import type { Domain } from '@deepseek-ai/dsh-storage-domain'
 import { z } from 'zod'
-import type { commaDomain, Matter, Task, Loop } from './domain.ts'
+import type { callDomain, Matter, Task, Loop } from './domain.ts'
 import { NOTIFY_URGENCIES } from './decide.ts'
 import { SELECTED_BOT_KEY } from './resolve.ts'
 
-type CommaDomain = Domain<typeof commaDomain>
+type CallDomain = Domain<typeof callDomain>
 
 export const PAIRING_NAG_KEY = 'pairing_nag'
 const PAIRING_NAG_RESOLVED = 'resolved'
@@ -30,7 +30,7 @@ export interface LoopOps {
 export interface RouterToolsHost {
   ctx: Context
   /** Lazily resolved: the agent may materialize before the runtime finishes opening the domain. */
-  domain(): CommaDomain
+  domain(): CallDomain
   ready(): Promise<void>
   /** Marks the notebook dirty so lifecycle edits render on the next tick. */
   onChanged(): void
@@ -48,7 +48,7 @@ interface DshImDiscovery {
 type MatterRef = { key: string; matter: Matter } | { error: 'not-found' | 'ambiguous'; candidates: { id: string; title: string }[] }
 
 /** Resolve a user- or model-supplied reference: exact id, then unique title substring. */
-function findMatter(domain: CommaDomain, ref: string): MatterRef {
+function findMatter(domain: CallDomain, ref: string): MatterRef {
   const table = domain.table('matters')
   const byId = table.get(ref)
   if (byId !== undefined) return { key: ref, matter: byId }
@@ -61,7 +61,7 @@ function findMatter(domain: CommaDomain, ref: string): MatterRef {
   }
 }
 
-const openCandidates = (domain: CommaDomain): { id: string; title: string }[] =>
+const openCandidates = (domain: CallDomain): { id: string; title: string }[] =>
   [...domain.table('matters').entries()]
     .filter(([, m]) => m.status === 'open')
     .slice(0, 8)
@@ -99,8 +99,8 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
     m.sourceItemIds.slice(-2).map(id => domain().table('source_items').get(id)?.summary).filter((s): s is string => s !== undefined)
 
   const matters: ToolSchema<{ status: 'open' | 'snoozed' | 'waiting' | 'done' | 'all'; limit: number }> = {
-    name: 'comma_matters',
-    description: 'List companion matters grouped from incoming sources. Use to answer "what is pending" and to find a matter id before calling comma_matter_done or comma_matter_snooze.',
+    name: 'call_matters',
+    description: 'List companion matters grouped from incoming sources. Use to answer "what is pending" and to find a matter id before calling call_matter_done or call_matter_snooze.',
     schema: z.object({
       status: z.enum(['open', 'snoozed', 'waiting', 'done', 'all']).default('open'),
       limit: z.number().int().min(1).max(50).default(20),
@@ -124,7 +124,7 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
   }
 
   const done: ToolSchema<{ matter: string }> = {
-    name: 'comma_matter_done',
+    name: 'call_matter_done',
     description: 'Mark a companion matter as handled. Accepts the matter id or a unique substring of its title.',
     schema: z.object({ matter: z.string().min(1) }),
     async execute(args) {
@@ -138,7 +138,7 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
   }
 
   const snooze: ToolSchema<{ matter: string; minutes?: number; until?: string }> = {
-    name: 'comma_matter_snooze',
+    name: 'call_matter_snooze',
     description: 'Snooze a companion matter; it re-opens when the time passes. Accepts the matter id or a unique title substring, plus `minutes` from now or an ISO `until` timestamp.',
     schema: z.object({
       matter: z.string().min(1),
@@ -157,8 +157,8 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
   }
 
   const pair: ToolSchema<{ botId?: string }> = {
-    name: 'comma_im_pair',
-    description: 'Show or choose which IM bot comma watches. Without arguments returns the current pairing and the candidates from dshIm.listBots; pass a candidate botId to select it. Takes effect on the next source retry (~15s) for an unpaired source.',
+    name: 'call_im_pair',
+    description: 'Show or choose which IM bot call watches. Without arguments returns the current pairing and the candidates from dshIm.listBots; pass a candidate botId to select it. Takes effect on the next source retry (~15s) for an unpaired source.',
     schema: z.object({ botId: z.string().min(1).optional() }),
     async execute(args) {
       const state = domain().table('state')
@@ -194,8 +194,8 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
     }
 
     const taskAdd: ToolSchema<{ title: string; goal: string; matterId?: string }> = {
-      name: 'comma_task_add',
-      description: 'Delegate real work to a comma task worker: give it a goal and it runs in its own session, reports back, and pauses for your decision when it truly needs one. Use when a matter or request needs hands-on work, not just a reminder.',
+      name: 'call_task_add',
+      description: 'Delegate real work to a call task worker: give it a goal and it runs in its own session, reports back, and pauses for your decision when it truly needs one. Use when a matter or request needs hands-on work, not just a reminder.',
       schema: z.object({
         title: z.string().min(1).describe('Short task title'),
         goal: z.string().min(1).describe('What done looks like, with enough context for the worker to act'),
@@ -207,7 +207,7 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
       },
     }
     const taskList: ToolSchema<{ status: 'open' | 'working' | 'needs_review' | 'done' | 'failed' | 'cancelled' | 'all'; limit: number }> = {
-      name: 'comma_tasks',
+      name: 'call_tasks',
       description: 'List delegated tasks on the board: working, needs_review, done, failed.',
       schema: z.object({
         status: z.enum(['open', 'working', 'needs_review', 'done', 'failed', 'cancelled', 'all']).default('all'),
@@ -226,7 +226,7 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
       },
     }
     const taskAnswer: ToolSchema<{ task: string; answer: string }> = {
-      name: 'comma_task_answer',
+      name: 'call_task_answer',
       description: 'Answer a task that is waiting for a decision (status needs_review); the worker resumes with your answer.',
       schema: z.object({
         task: z.string().min(1).describe('Task id or unique title substring'),
@@ -239,7 +239,7 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
       },
     }
     const taskCancel: ToolSchema<{ task: string }> = {
-      name: 'comma_task_cancel',
+      name: 'call_task_cancel',
       description: 'Cancel a delegated task.',
       schema: z.object({ task: z.string().min(1).describe('Task id or unique title substring') }),
       async execute(args) {
@@ -254,7 +254,7 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
   if (host.loops !== undefined) {
     const ops = host.loops
     const loopAdd: ToolSchema<{ name: string; everyMinutes: number; prompt: string; checkTool?: string; checkArgs?: string }> = {
-      name: 'comma_loop_add',
+      name: 'call_loop_add',
       description: 'Write a watch loop: runs your prompt on a schedule. Give checkTool+checkArgs (a public tool like mail_recent/cal_upcoming) to make quiet polls cost zero model calls — the prompt only fires when the check output changes.',
       schema: z.object({
         name: z.string().min(1).describe('Loop name (unique)'),
@@ -266,7 +266,7 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
       async execute(args) { return ops.add(args) },
     }
     const loopList: ToolSchema<Record<string, never>> = {
-      name: 'comma_loops',
+      name: 'call_loops',
       description: 'List watch loops.',
       schema: z.object({}),
       async execute() {
@@ -274,7 +274,7 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
       },
     }
     const loopRemove: ToolSchema<{ name: string }> = {
-      name: 'comma_loop_remove',
+      name: 'call_loop_remove',
       description: 'Remove a watch loop by name.',
       schema: z.object({ name: z.string().min(1) }),
       async execute(args) { return ops.remove(args.name) },

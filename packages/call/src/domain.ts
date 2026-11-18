@@ -1,11 +1,11 @@
 /**
- * The `comma` storage domain: durable entity tables behind the plugin's ports.
+ * The `call` storage domain: durable entity tables behind the plugin's ports.
  * Domain and table names must match UNIT_NAME_RE (`[a-z][a-z0-9_]*`).
  */
 import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain'
 import { z } from 'zod'
 
-/** Attention urgency bands, mirroring Comma's `decide` output. */
+/** Attention urgency bands, mirroring Call's `decide` output. */
 export const MATTER_URGENCIES = ['critical', 'high', 'ask', 'normal', 'low'] as const
 export type MatterUrgency = (typeof MATTER_URGENCIES)[number]
 
@@ -91,8 +91,8 @@ export const StateRow = z.object({
 })
 export type StateRow = z.infer<typeof StateRow>
 
-export const commaDomain = defineDomain({
-  name: 'comma',
+export const callDomain = defineDomain({
+  name: 'call',
   version: 1,
   tables: {
     matters: domainTable<string, Matter>(Matter),

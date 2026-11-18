@@ -65,7 +65,7 @@ export function mailSource(ctx: Context, config: MailSourceConfig): Source {
   const warnOnce = (host: SourceHost, why: string) => {
     if (warnedMissing) return
     warnedMissing = true
-    host.logger.info('mino-comma mail: mail_recent unavailable (%s)；装好 connector-mail 并填 IMAP 授权码后自动生效', why)
+    host.logger.info('mino-call mail: mail_recent unavailable (%s)；装好 connector-mail 并填 IMAP 授权码后自动生效', why)
   }
   return {
     kind: MAIL_SOURCE,
@@ -77,7 +77,7 @@ export function mailSource(ctx: Context, config: MailSourceConfig): Source {
           continue
         }
         try {
-          const res = await callTool(tools, signal, 'mino-comma-mail-recent', 'mail_recent', { limit: config.limit })
+          const res = await callTool(tools, signal, 'mino-call-mail-recent', 'mail_recent', { limit: config.limit })
           if (res && !res.isError) {
             warnedMissing = false
             const mails = (res.value as { mails?: MailRow[] } | undefined)?.mails ?? []
@@ -85,7 +85,7 @@ export function mailSource(ctx: Context, config: MailSourceConfig): Source {
             // 关键词侧查：命中 recent 窗口外的信单独归「mail-search:<q>」matter；
             // 已在 recent 面成项的信同 externalId 被去重，不会重复成项。
             for (const q of config.queries) {
-              const sres = await callTool(tools, signal, `mino-comma-mail-search-${q}`, 'mail_search', { q, limit: config.limit })
+              const sres = await callTool(tools, signal, `mino-call-mail-search-${q}`, 'mail_search', { q, limit: config.limit })
               if (!sres || sres.isError) continue
               for (const mail of ((sres.value as { mails?: MailRow[] } | undefined)?.mails ?? [])) await emitMail(host, mail, `·${q}`, `mail-search:${q}`)
             }
