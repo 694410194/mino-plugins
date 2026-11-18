@@ -82,35 +82,51 @@ async function injectToSession(host: TaskHost, sessionId: SessionId, text: strin
   return true
 }
 
-async function transition(host: TaskHost, taskId: string, mutate: (t: Task) => Task): Promise<Task | undefined> {
-  await table(host).update(taskId, mutate)
-  host.onChanged()
-  return table(host).get(taskId)
+/**
+ * 原子转移：mutate 在 update 闭包内执行（读-改-写一体），返回 no-op 时同一对象 →
+ * 不记 changed、不通知。终态（done/cancelled）粘性由 mutate 自行守卫——
+ * session/event 与 agent/status idle 兜底会并发，后写不得回退前者。
+ */
+async function transition(host: TaskHost, taskId: string, mutate: (t: Task) => Task): Promise<{ task: Task; changed: boolean } | undefined> {
+  let changed = false
+  const task = await table(host).update(taskId, t => {
+    const next = mutate(t)
+    changed = next !== t
+    return next
+  })
+  if (changed) host.onChanged()
+  return task === undefined ? undefined : { task, changed }
 }
+
+const STICKY: readonly TaskStatus[] = ['done', 'cancelled']
 
 async function applyStatus(host: TaskHost, task: Task, parsed: ParsedStatus): Promise<void> {
   const now = Date.now()
+  const guard = (t: Task, patch: Partial<Task>): Task => STICKY.includes(t.status) ? t : { ...t, ...patch, updatedAt: now }
+  let out: { task: Task; changed: boolean } | undefined
   if (parsed.status === 'done') {
-    const next = await transition(host, task.id, t => ({ ...t, status: 'done' as TaskStatus, result: parsed.detail, question: undefined, updatedAt: now }))
-    if (next) await host.notify(`[comma 任务] 完成：${next.title} — ${parsed.detail}`, next)
+    out = await transition(host, task.id, t => guard(t, { status: 'done' as TaskStatus, result: parsed.detail, question: undefined }))
+    if (out?.changed) await host.notify(`[comma 任务] 完成：${out.task.title} — ${parsed.detail}`, out.task)
   } else if (parsed.status === 'needs_review') {
-    const next = await transition(host, task.id, t => ({ ...t, status: 'needs_review' as TaskStatus, question: parsed.detail, updatedAt: now }))
-    if (next) await host.notify(`[comma 任务] 等你拍板：${next.title} — ${parsed.detail}（用 comma_task_answer 答复）`, next)
+    out = await transition(host, task.id, t => guard(t, { status: 'needs_review' as TaskStatus, question: parsed.detail }))
+    if (out?.changed) await host.notify(`[comma 任务] 等你拍板：${out.task.title} — ${parsed.detail}（用 comma_task_answer 答复）`, out.task)
   } else {
-    const next = await transition(host, task.id, t => ({ ...t, status: 'failed' as TaskStatus, failure: parsed.detail, updatedAt: now }))
-    if (next) await host.notify(`[comma 任务] 失败：${next.title} — ${parsed.detail}`, next)
+    out = await transition(host, task.id, t => guard(t, { status: 'failed' as TaskStatus, failure: parsed.detail }))
+    if (out?.changed) await host.notify(`[comma 任务] 失败：${out.task.title} — ${parsed.detail}`, out.task)
   }
 }
 
-/** 任务文本（worker 一轮回复/CLI stdout）→ 状态机。无状态块则把任务推进 needs_review。 */
+/** 任务文本（worker 一轮回复/CLI stdout）→ 状态机。无状态块且仍在 working 才推 needs_review。 */
 export async function handleWorkerOutput(host: TaskHost, task: Task, text: string): Promise<void> {
   const parsed = parseStatusBlock(text)
   if (parsed === undefined) {
-    const next = await transition(host, task.id, t => ({
+    // 契约违例守卫只允许 working→needs_review：idle 兜底读到的旧尾部若与
+    // 正常状态块转移并发，no-block 后写不得回退 done/needs_review/failed。
+    const out = await transition(host, task.id, t => t.status === 'working' ? ({
       ...t, status: 'needs_review' as TaskStatus,
       question: 'worker 未按契约输出状态块，请人工看一眼会话', updatedAt: Date.now(),
-    }))
-    if (next) await host.notify(`[comma 任务] 异常：${next.title} — worker 未输出状态块`, next)
+    }) : t)
+    if (out?.changed) await host.notify(`[comma 任务] 异常：${out.task.title} — worker 未输出状态块`, out.task)
     return
   }
   await applyStatus(host, task, parsed)
@@ -118,7 +134,7 @@ export async function handleWorkerOutput(host: TaskHost, task: Task, text: strin
 
 async function launchSessionWorker(host: TaskHost, task: Task): Promise<void> {
   const sessionId = newSessionId(task.id)
-  const t = await transition(host, task.id, cur => ({ ...cur, workerSessionId: sessionId, status: 'working', updatedAt: Date.now() }))
+  const launched = await transition(host, task.id, cur => ({ ...cur, workerSessionId: sessionId, status: 'working', updatedAt: Date.now() }))
   try {
     const listed = await host.ctx.sessionController.list({}, host.signal)
     if (!listed.items.some(item => item.sessionId === sessionId)) {
@@ -128,7 +144,7 @@ async function launchSessionWorker(host: TaskHost, task: Task): Promise<void> {
         agentPreset: WORKER_PRESET,
       })
     }
-    const ok = await injectToSession(host, sessionId, briefOf(t ?? task))
+    const ok = await injectToSession(host, sessionId, briefOf(launched?.task ?? task))
     if (!ok) throw new Error('worker session did not materialize')
   } catch (error) {
     await transition(host, task.id, cur => ({ ...cur, status: 'failed' as TaskStatus, failure: `worker 会话起不来: ${String(error)}`, updatedAt: Date.now() }))
@@ -284,11 +300,11 @@ export async function sweepTaskTimeouts(host: TaskHost): Promise<void> {
   const deadline = Date.now() - host.worker().timeoutMinutes * 60_000
   for (const [, task] of table(host).entries()) {
     if (task.status !== 'working' || task.updatedAt > deadline) continue
-    const next = await transition(host, task.id, t => ({
+    const out = await transition(host, task.id, t => t.status === 'working' ? ({
       ...t, status: 'needs_review' as TaskStatus,
       question: `worker 超过 ${host.worker().timeoutMinutes} 分钟无收尾，请人工看一眼会话`, updatedAt: Date.now(),
-    }))
-    if (next) await host.notify(`[comma 任务] 超时：${next.title} — worker 无收尾，请人工处置`, next)
+    }) : t)
+    if (out?.changed) await host.notify(`[comma 任务] 超时：${out.task.title} — worker 无收尾，请人工处置`, out.task)
   }
 }
 
@@ -297,7 +313,7 @@ interface ScheduleWakeFace {
   create(request: {
     title: string
     prompt: string
-    timing: { kind: 'after'; afterSeconds: number }
+    timing: { kind: 'after'; after_seconds: number }
     target: { kind: 'session'; sessionId: SessionId }
   }, actorSessionId?: SessionId, signal?: AbortSignal): Promise<unknown>
 }
@@ -339,7 +355,7 @@ export async function recoverTasks(host: TaskHost): Promise<void> {
       await schedule.create({
         title: `comma 恢复任务：${task.title.slice(0, 40)}`,
         prompt: `[comma 恢复] 之前被中断，请继续任务：${task.title}，仍按状态块收尾。`,
-        timing: { kind: 'after', afterSeconds: 3 },
+        timing: { kind: 'after', after_seconds: 3 },
         target: { kind: 'session', sessionId },
       }, undefined, host.signal)
     } catch (error) {

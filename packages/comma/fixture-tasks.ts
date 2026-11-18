@@ -9,7 +9,7 @@
 import assert from 'node:assert/strict'
 import {
   createTask, answerTask, cancelTask, onSessionEvent, onWorkerIdle,
-  recoverTasks, sweepTaskTimeouts, parseStatusBlock,
+  recoverTasks, sweepTaskTimeouts, parseStatusBlock, handleWorkerOutput,
   WORKER_PRESET, WORKER_SESSION_PREFIX,
 } from './src/tasks.ts'
 import { routerToolDefs } from './src/tools.ts'
@@ -215,6 +215,9 @@ async function main() {
     assert.ok(created.some(c => c.sessionId === tasks._map.get(open.id).workerSessionId)) // open 重派
     assert.ok(schedules.length > schedulesBefore) // working 经 schedule 唤醒
     assert.equal(schedules.at(-1).target.sessionId, tasks._map.get(working.id).workerSessionId)
+    // wire 契约回归：上游 ScheduleTiming 的 after 选择器是 snake_case after_seconds（曾误传 afterSeconds 被 ScheduleInputError 拒收）
+    assert.deepEqual(schedules.at(-1).timing, { kind: 'after', after_seconds: 3 })
+    assert.equal(schedules.at(-1).target.kind, 'session')
     assert.equal(tasks._map.get(lost.id).status, 'needs_review')
     assert.match(tasks._map.get(lost.id).question, /会话已不在持久层/)
     ok('cold recovery')
@@ -236,6 +239,26 @@ async function main() {
     assert.equal(tasks._map.get(task.id).status, 'done')
     assert.equal(tasks._map.get(task.id).result, 'cli 交付')
     ok('cli worker')
+  }
+
+  // 9b. race regression: done/needs_review 不被 idle 无块兜底回退（实机复现）
+  {
+    const { host, tasks, created } = makeHost()
+    const task = await createTask(host, { title: '竞态', goal: 'g' })
+    const sid = created[0].sessionId
+    await onSessionEvent(host, sid, 'assistant/message', asst('[COMMA-STATUS] done: 先交付'))
+    // idle 兜底迟到且无块——不得把 done 回退成 needs_review
+    await handleWorkerOutput(host, tasks._map.get(task.id), '')
+    const t = tasks._map.get(task.id)
+    assert.equal(t.status, 'done')
+    assert.equal(t.result, '先交付')
+    // needs_review 同样不被无块覆盖（真实问题不丢）
+    const t2 = await createTask(host, { title: '竞态2', goal: 'g2' })
+    await onSessionEvent(host, created[1].sessionId, 'assistant/message', asst('[COMMA-STATUS] needs_review: 选A还是B？'))
+    await handleWorkerOutput(host, tasks._map.get(t2.id), '')
+    assert.equal(tasks._map.get(t2.id).status, 'needs_review')
+    assert.equal(tasks._map.get(t2.id).question, '选A还是B？')
+    ok('race regression')
   }
 
   // 10. router tools surface: task ops + loop ops
