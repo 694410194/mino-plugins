@@ -79,6 +79,8 @@ export const Config = z.object({
     /** @xmanrui/dsh-im bot + saved delivery target for proactive pushes; both empty disables pushes. */
     botId: z.string().default(''),
     targetId: z.string().default(''),
+    /** Also post each delivered notification to the mino-today feed; feed feedback can then mute that source. */
+    postToFeed: z.boolean().default(true),
   }).prefault({}),
   notebook: z.object({
     /** Rendered notebook path; defaults to <workspaceRoot>/Comma/Notebook.md. */
@@ -126,6 +128,7 @@ export async function apply(ctx: Context, config: CommaConfig): Promise<void> {
     decideModel: config.proactive.decideModel,
     decideIntervalMinutes: config.proactive.intervalMinutes,
     notify: config.notify,
+    postToFeed: config.notify.postToFeed,
     notifyBudgetPerDay: config.proactive.notifyBudgetPerDay,
     notifyMinIntervalMinutes: config.proactive.notifyMinIntervalMinutes,
     notebookPath: config.notebook.path,

@@ -35,6 +35,19 @@ interface DshImSend {
   send(botId: string, targetId: string, text: string, options?: Record<string, unknown>): Promise<unknown>
 }
 
+/** The `tools` service execution face used for the optional today_post feed handoff. */
+interface ToolsExecFace {
+  execute(input: {
+    calls: readonly { type: 'tool-call'; id: string; name: string; arguments: string }[]
+    signal: AbortSignal
+  }): Promise<unknown>
+}
+
+/** The `mino-today` preference face: per-source aggregated feed feedback. */
+interface TodayFace {
+  feedbackSummary(): { source: string; up: number; down: number; notInterested: number }[]
+}
+
 export interface RuntimeOptions {
   workspaceRoot?: string
   /** Configured sources.im.botId; empty opts into pairing auto-resolution. */
@@ -42,6 +55,8 @@ export interface RuntimeOptions {
   decideModel?: DecideModel
   decideIntervalMinutes: number
   notify: { botId: string; targetId: string }
+  /** Delivered notifications also land on the mino-today feed (today_post handoff). */
+  postToFeed: boolean
   notifyBudgetPerDay: number
   notifyMinIntervalMinutes: number
   notebookPath?: string
@@ -74,14 +89,20 @@ export class Runtime implements SourceHost {
   private async start(sources: Source[]): Promise<void> {
     this.domain = await this.ctx.storageDomain.open(commaDomain)
     const workspace = await this.ctx.workspaceRegistry.create(this.options.workspaceRoot ?? process.cwd())
-    const existing = await this.ctx.sessionController.resolveAgent(ROUTER_SESSION_ID)
-    if ('error' in existing) {
-      await this.ctx.sessionController.create({
-        sessionId: ROUTER_SESSION_ID,
-        workspaceId: workspace.id,
-        agentPreset: ROUTER_PRESET,
-      })
-      this.ctx.logger.info('mino-comma router session created: %s', ROUTER_SESSION_ID)
+    // resolveAgent 只覆盖活会话——冷会话要用持久层 list 判存在，避免重复 create 撞 ApiSessionCwdConflict。
+    const listed = await this.ctx.sessionController.list({}, this.controller.signal)
+    if (!listed.items.some(item => item.sessionId === ROUTER_SESSION_ID)) {
+      try {
+        await this.ctx.sessionController.create({
+          sessionId: ROUTER_SESSION_ID,
+          workspaceId: workspace.id,
+          agentPreset: ROUTER_PRESET,
+        })
+        this.ctx.logger.info('mino-comma router session created: %s', ROUTER_SESSION_ID)
+      } catch (error) {
+        // 会话已登记在另一个 workspace 下——投递按 sessionId 走，沿用旧会话即可。
+        this.ctx.logger.warn('mino-comma: router session create skipped: %s', String(error))
+      }
     }
     await this.domain.table('state').put(ROUTER_STATE_KEY, { key: ROUTER_STATE_KEY, value: ROUTER_SESSION_ID })
     const router = await this.ctx.sessionController.resolveAgent(ROUTER_SESSION_ID)
@@ -221,6 +242,43 @@ export class Runtime implements SourceHost {
     }
   }
 
+  /** The feed source label a matter's cards carry in mino-today (`comma:<sourceKind>`). */
+  private feedSourceOf(items: SourceItem[]): string {
+    return `comma:${items[0]?.sourceKind ?? 'unknown'}`
+  }
+
+  /** Sources the user muted in the feed: any not_interested, or more downs than ups. */
+  private mutedFeedSources(): Set<string> {
+    const today = this.ctx.get('mino-today') as TodayFace | undefined
+    const muted = new Set<string>()
+    for (const row of today?.feedbackSummary?.() ?? []) {
+      if (row.notInterested > 0 || row.down > row.up) muted.add(row.source)
+    }
+    return muted
+  }
+
+  /** Hand a delivered notification to the feed so its card can gather feedback (soft dep). */
+  private async postFeed(matter: Matter, items: SourceItem[], latest: string): Promise<void> {
+    if (!this.options.postToFeed) return
+    const tools = this.ctx.get('tools') as ToolsExecFace | undefined
+    if (!tools?.execute) return
+    try {
+      await tools.execute({
+        calls: [{
+          type: 'tool-call', id: `comma-feed:${matter.id}:${Date.now()}`, name: 'today_post',
+          arguments: JSON.stringify({
+            title: matter.title.slice(0, MATTER_TITLE_MAX),
+            ...(latest ? { body: latest } : {}),
+            kind: 'moment', batch: 'comma', source: this.feedSourceOf(items),
+          }),
+        }],
+        signal: this.controller.signal,
+      })
+    } catch (error) {
+      this.logger.warn('mino-comma: today_post handoff failed: %s', String(error))
+    }
+  }
+
   /** One attention sweep: judge pending matters, deliver owed notifications under budget, render the notebook. */
   private async decideSweep(): Promise<void> {
     const matters = this.domain.table('matters')
@@ -252,6 +310,7 @@ export class Runtime implements SourceHost {
     const judged = this.options.decideModel
       ? await judgeMatters(this.ctx, this.options.decideModel, pending, this.controller.signal)
       : undefined
+    const muted = this.mutedFeedSources()
 
     const budgetRow = state.get(BUDGET_KEY)
     let budget: NotifyBudget = budgetRow ? { ...emptyBudget(), ...JSON.parse(budgetRow.value) } : emptyBudget()
@@ -263,6 +322,7 @@ export class Runtime implements SourceHost {
       const text = `[comma ${matter.urgency}] ${matter.title}${latest ? `\n${latest}` : ''}`
       await this.routerMessage(text)
       await this.notifyIm(text)
+      await this.postFeed(matter, items, latest)
       budget = budgetSpend(budget, now)
       budgetChanged = true
       return now
@@ -274,7 +334,8 @@ export class Runtime implements SourceHost {
     }
     for (const { key, matter, items } of pending) {
       const j = judged?.get(matter.id)
-      const urgency = j?.urgency ?? heuristicUrgency(matter, items)
+      // A feed-muted source stays quiet whatever the judge says (Today adjust/not-interested).
+      const urgency = muted.has(this.feedSourceOf(items)) ? 'low' : (j?.urgency ?? heuristicUrgency(matter, items))
       const wantsNotify = NOTIFY_URGENCIES.includes(urgency)
       const notifiedAt = wantsNotify ? await deliver({ ...matter, urgency }, items) : undefined
       await matters.update(key, m => ({
