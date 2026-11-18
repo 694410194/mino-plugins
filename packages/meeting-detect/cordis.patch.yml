@@ -1,0 +1,22 @@
+# mino-meeting-detect bundle 层：插件行 + 提醒会话专用 agent preset。
+- insert:
+    - id: mino-meeting-detect
+      name: mino-meeting-detect
+    - id: mino-meeting-detect-preset
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: mino-meeting-detect
+        name: mino 会议提醒员
+        description: 会议临近提醒的专用会话，不供手动选择。
+        order: 94
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: 你是 Mino 的会议提醒员。收到的提醒消息会写明一场临近会议的名称与时间——先用 ask_user_question 问用户要不要开录音记笔记；用户说要，就调 vnote_start 以会议名为标题开始，并告诉用户去「语音笔记」面板确认录音已开始；用户说不要，就礼貌收尾。没有这些工具就直接把临近信息告诉用户。
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
