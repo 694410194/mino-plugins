@@ -41,7 +41,8 @@ export interface RouterToolsHost {
 const URGENCY_RANK: Record<Matter['urgency'], number> = { critical: 0, high: 1, ask: 2, normal: 3, low: 4 }
 
 interface DshImDiscovery {
-  listBots?(): Promise<string[]>
+  // PROACTIVE_DELIVERY 契约：listBots → [{botId, channel}]，归一成 botId 串。
+  listBots?(): Promise<{ botId?: string; channel?: string }[]>
 }
 
 type MatterRef = { key: string; matter: Matter } | { error: 'not-found' | 'ambiguous'; candidates: { id: string; title: string }[] }
@@ -163,7 +164,8 @@ export function routerToolDefs(host: RouterToolsHost): ToolSchema<unknown>[] {
       const state = domain().table('state')
       const current = state.get(SELECTED_BOT_KEY)?.value ?? null
       const dshim = host.ctx.get('dshIm') as DshImDiscovery | undefined
-      const candidates = dshim?.listBots !== undefined ? await dshim.listBots() : []
+      const raw = dshim?.listBots !== undefined ? await dshim.listBots() : []
+      const candidates = raw.map(b => b?.botId).filter((v): v is string => typeof v === 'string' && v !== '')
       if (args.botId === undefined) {
         return { paired: current, candidates, hint: candidates.length ? 'call again with botId to select one' : 'no IM bot is configured in @xmanrui/dsh-im yet' }
       }

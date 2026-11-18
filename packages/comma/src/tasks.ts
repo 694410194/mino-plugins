@@ -18,6 +18,14 @@ export const WORKER_SESSION_PREFIX = 'comma-task-'
 /** Worker 输出契约：每轮回复末尾的状态块。 */
 export const STATUS_BLOCK_RE = /\[COMMA-STATUS\]\s*(done|needs_review|failed)\s*:\s*([^\n]+)/g
 
+/**
+ * Loop 闸的 checkpoint 面：只序列化每次调用的业务结果——ToolBatchResult 封套回显
+ * 本次随机 callId，整包比对永不相等（修过的真 bug：确定性闸会永远放行）。
+ */
+export function loopCheckpointOf(out: { results?: readonly { result?: unknown }[] } | undefined): string {
+  return JSON.stringify((out?.results ?? []).map(entry => entry?.result))
+}
+
 export interface ParsedStatus {
   status: 'done' | 'needs_review' | 'failed'
   detail: string

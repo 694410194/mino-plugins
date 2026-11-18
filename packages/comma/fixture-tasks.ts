@@ -14,6 +14,8 @@ import {
 } from './src/tasks.ts'
 import { routerToolDefs } from './src/tools.ts'
 import { renderNotebook } from './src/notebook.ts'
+import { resolveBot, SELECTED_BOT_KEY } from './src/resolve.ts'
+import { loopCheckpointOf } from './src/tasks.ts'
 
 const results: string[] = []
 const ok = (name: string) => { results.push(`PASS ${name}`) }
@@ -296,6 +298,37 @@ async function main() {
     } as any])
     assert.ok(md.includes('任务板') && md.includes('[needs_review]') && md.includes('订票'))
     ok('notebook board')
+  }
+
+  // 12. dshIm wire contract regression: listBots returns {botId, channel} objects (PROACTIVE_DELIVERY),
+  // not strings — resolution must normalize before compare/select.
+  {
+    const state = tableStub<any>()
+    const domain = { table: (n: string) => n === 'state' ? state : tableStub<any>() }
+    const ctxOne = { get: (n: string) => n === 'dshIm' ? { listBots: async () => [{ botId: 'bot-a', channel: 'feishu' }] } : undefined }
+    const r1 = await resolveBot(ctxOne as any, domain as any, '')
+    assert.deepEqual(r1, { kind: 'resolved', botId: 'bot-a', origin: 'auto' })
+    assert.equal(state.get(SELECTED_BOT_KEY)?.value, 'bot-a')
+    // remembered bot still present in a multi-bot list stays resolved (not cleared by object≠string mismatch)
+    const ctxMany = { get: (n: string) => n === 'dshIm' ? { listBots: async () => [{ botId: 'bot-a' }, { botId: 'bot-b' }] } : undefined }
+    const r2 = await resolveBot(ctxMany as any, domain as any, '')
+    assert.deepEqual(r2, { kind: 'resolved', botId: 'bot-a', origin: 'state' })
+    // remembered bot vanished → cleared → ambiguous with string candidates
+    const ctxOther = { get: (n: string) => n === 'dshIm' ? { listBots: async () => [{ botId: 'bot-b' }, { botId: 'bot-c' }] } : undefined }
+    const r3 = await resolveBot(ctxOther as any, domain as any, '')
+    assert.equal(r3.kind, 'ambiguous')
+    ok('dshIm listBots contract')
+  }
+
+  // 13. loop checkpoint gate: identical business results with different random callIds → same
+  // checkpoint (the gate must compare results only, not the echoed ToolBatchResult envelope).
+  {
+    const a = loopCheckpointOf({ results: [{ result: { isError: false, value: { mails: 3 } } }] })
+    const b = loopCheckpointOf({ results: [{ callId: 'comma-loop:rand-1', result: { isError: false, value: { mails: 3 } } }] as any })
+    const c = loopCheckpointOf({ results: [{ callId: 'comma-loop:rand-2', result: { isError: false, value: { mails: 4 } } }] as any })
+    assert.equal(a, b)
+    assert.notEqual(a, c)
+    ok('loop checkpoint gate')
   }
 
   console.log(results.join('\n'))

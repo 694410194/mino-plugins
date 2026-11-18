@@ -5,9 +5,9 @@ import type { commaDomain } from './domain.ts'
 
 type CommaDomain = Domain<typeof commaDomain>
 
-/** The subset of the `dshIm` surface pairing resolution reads. */
+/** The subset of the `dshIm` surface pairing resolution reads (PROACTIVE_DELIVERY: listBots → [{botId, channel}], listTargets → [{targetId, name?, kind, route}]). */
 interface DshImDiscovery {
-  listBots?(): Promise<string[]>
+  listBots?(): Promise<{ botId?: string; channel?: string }[]>
   listTargets?(botId: string): Promise<{ targetId: string }[]>
 }
 
@@ -31,7 +31,8 @@ export async function resolveBot(ctx: Context, domain: CommaDomain, configured: 
   if (configured !== '') return { kind: 'resolved', botId: configured, origin: 'config' }
   const remembered = domain.table('state').get(SELECTED_BOT_KEY)?.value
   const dshim = dshimOf(ctx)
-  const candidates = dshim?.listBots !== undefined ? await dshim.listBots() : undefined
+  const raw = dshim?.listBots !== undefined ? await dshim.listBots() : undefined
+  const candidates = raw === undefined ? undefined : raw.map(b => b?.botId).filter((v): v is string => typeof v === 'string' && v !== '')
   if (remembered !== undefined && remembered !== '') {
     // A remembered bot that vanished from discovery is cleared and re-resolved; an empty list is transient.
     if (candidates === undefined || candidates.length === 0 || candidates.includes(remembered)) {

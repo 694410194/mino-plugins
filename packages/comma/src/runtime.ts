@@ -18,7 +18,7 @@ import { resolveBot, resolveNotifyTarget, type BotResolution } from './resolve.t
 import { PAIRING_NAG_KEY, registerRouterTools, type TaskOps } from './tools.ts'
 import {
   createTask, answerTask, cancelTask, onSessionEvent, onWorkerIdle, recoverTasks, sweepTaskTimeouts,
-  type TaskHost, type WorkerConfig,
+  loopCheckpointOf, type TaskHost, type WorkerConfig,
 } from './tasks.ts'
 
 export const ROUTER_SESSION_ID = 'comma-router' as SessionId
@@ -461,7 +461,7 @@ export class Runtime implements SourceHost, TaskHost {
         calls: [{ type: 'tool-call', id: `comma-loop:${crypto.randomUUID()}`, name: checkTool, arguments: checkArgs ?? '{}' }],
         signal: this.controller.signal,
       })
-      const next = JSON.stringify(out)
+      const next = loopCheckpointOf(out as { results?: readonly { result?: unknown }[] })
       return next === checkpoint ? { changed: false } : { changed: true, next }
     } catch (error) {
       this.logger.warn('mino-comma loop check %s failed: %s', checkTool, String(error))
