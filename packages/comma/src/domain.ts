@@ -12,6 +12,31 @@ export type MatterUrgency = (typeof MATTER_URGENCIES)[number]
 export const MATTER_STATUSES = ['open', 'snoozed', 'waiting', 'done'] as const
 export type MatterStatus = (typeof MATTER_STATUSES)[number]
 
+export const TASK_STATUSES = ['open', 'working', 'needs_review', 'done', 'failed', 'cancelled'] as const
+export type TaskStatus = (typeof TASK_STATUSES)[number]
+
+/** A task is the unit of proactive execution: work the router delegated to a worker. */
+export const Task = z.object({
+  id: z.string(),
+  title: z.string(),
+  goal: z.string(),
+  status: z.enum(TASK_STATUSES),
+  /** 'dsh-session' = 起 preset worker 会话；'cli' = ctx.subprocess 起外部命令行 agent。 */
+  workerKind: z.enum(['dsh-session', 'cli']),
+  workerSessionId: z.string().optional(),
+  /** needs_review 时等用户拍板的问题。 */
+  question: z.string().optional(),
+  /** done 时的交付摘要。 */
+  result: z.string().optional(),
+  failure: z.string().optional(),
+  /** 来源 matter（信号→干活链路）。 */
+  matterId: z.string().optional(),
+  rounds: z.number(),
+  createdAt: z.number(),
+  updatedAt: z.number(),
+})
+export type Task = z.infer<typeof Task>
+
 /** A matter is the unit of proactive attention: grouped source items needing a decision. */
 export const Matter = z.object({
   id: z.string(),
@@ -51,6 +76,9 @@ export const Loop = z.object({
   everyMinutes: z.number(),
   prompt: z.string(),
   enabled: z.boolean(),
+  /** 确定性前置闸：先跑这个公开工具，输出与 checkpoint 相同则本轮静默（零 LLM token）。 */
+  checkTool: z.string().optional(),
+  checkArgs: z.string().optional(),
   lastRunAt: z.number().optional(),
   checkpoint: z.string().optional(),
 })
@@ -69,6 +97,7 @@ export const commaDomain = defineDomain({
   tables: {
     matters: domainTable<string, Matter>(Matter),
     source_items: domainTable<string, SourceItem>(SourceItem),
+    tasks: domainTable<string, Task>(Task),
     loops: domainTable<string, Loop>(Loop),
     state: domainTable<string, StateRow>(StateRow),
   },

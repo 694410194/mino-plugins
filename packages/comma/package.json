@@ -33,7 +33,7 @@
     "dsh": ">=0.2.2-alpha.1 <0.3.0"
   },
   "dependencies": {
-    "zod": "4.4.3"
+    "zod": "4.6.6"
   },
   "devDependencies": {
     "@types/node": "22.20.0",

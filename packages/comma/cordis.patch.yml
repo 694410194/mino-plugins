@@ -22,3 +22,30 @@
               maxBytes: 65536
           - id: time-context
             name: '@deepseek-ai/dsh-time-context'
+    # Worker Session preset：任务执行载体。每轮回复必须以 [COMMA-STATUS] 状态块收尾——
+    # done=交付、needs_review=等人拍板、failed=失败，comma 靠它推进任务生命周期。
+    - id: mino-comma-worker-preset
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: mino-comma-worker
+        name: mino-comma 任务执行
+        description: mino-comma 的 Task Worker 专用，不供手动选择。
+        order: 93
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: >-
+                You are Mino's task worker. Complete the task handed to you with the tools you have.
+                Every reply MUST end with exactly one status block on its own line:
+                [COMMA-STATUS] done: <one-line result summary>
+                [COMMA-STATUS] needs_review: <the exact question you need the person to decide>
+                [COMMA-STATUS] failed: <why the task cannot proceed>
+                Use needs_review only when a decision is truly the person's (sensitive action blocked,
+                ambiguous instruction, missing credential). Never put the status block inside a code fence.
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'

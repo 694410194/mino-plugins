@@ -51,8 +51,8 @@ importers:
   packages/comma:
     dependencies:
       zod:
-        specifier: 4.4.3
-        version: 4.4.3
+        specifier: 4.6.6
+        version: 4.6.6
     devDependencies:
       '@types/node':
         specifier: 22.20.0
@@ -78,6 +78,8 @@ importers:
       '@deepseek-ai/dsh-skill':
         specifier: '>=0.1.1-rc.2 <0.1.2 || >=0.1.2-rc.1 <0.2.0-0'
         version: 0.1.2-rc.1(@deepseek-ai/cordis@4.0.5)(@deepseek-ai/dsh-llm@0.1.2-rc.1(@deepseek-ai/cordis@4.0.5))(@deepseek-ai/dsh-scope@0.1.2-rc.1(@deepseek-ai/cordis@4.0.5)(@deepseek-ai/dsh-invariants@0.1.2-rc.1(@deepseek-ai/cordis@4.0.5)))
+
+  packages/cred-vault: {}
 
   packages/credcheck: {}
 
@@ -274,6 +276,8 @@ importers:
 
   packages/note-import: {}
 
+  packages/notion: {}
+
   packages/ocr: {}
 
   packages/old-disk: {}
@@ -323,6 +327,8 @@ importers:
   packages/qq: {}
 
   packages/qq-console: {}
+
+  packages/qq-meeting: {}
 
   packages/qqbot:
     dependencies:
@@ -6440,6 +6446,9 @@ packages:
 
   zod@4.4.3:
     resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
+
+  zod@4.6.6:
+    resolution: {integrity: sha512-4UmzQUF5fxvfcYHlbjBmejU+w+hbDnWFx4aS8kBx7nPBHcO2SqPbpAG8snbdg+Xse4pRefR98hgjFgIMCI/UhA==}
 
   zod@4.6.7:
     resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
@@ -14454,5 +14463,7 @@ snapshots:
       '@yuku-parser/binding-win32-x64': 0.8.7
 
   zod@4.4.3: {}
+
+  zod@4.6.6: {}
 
   zod@4.6.7: {}

@@ -21,7 +21,7 @@ declare module '@deepseek-ai/dsh-llm' {
 }
 
 export const name = 'mino-comma'
-export const inject = ['storageDomain', 'sessionController', 'workspaceRegistry']
+export const inject = ['storageDomain', 'sessionController', 'workspaceRegistry', 'sessionPersistence', 'subprocess', 'schedule']
 export const Config = z.object({
   /** Directory the router Workspace owns; defaults to the profile's working directory. */
   workspaceRoot: z.string().optional(),
@@ -91,6 +91,14 @@ export const Config = z.object({
     enabled: z.boolean().default(true),
     hour: z.number().int().min(0).max(23).default(9),
   }).prefault({}),
+  /** Worker 委派：任务执行载体。dsh-session=起 mino-comma-worker preset 会话；cli=经 ctx.subprocess 起外部命令行 agent（autoloop 式）。 */
+  worker: z.object({
+    kind: z.enum(['dsh-session', 'cli']).default('dsh-session'),
+    /** kind=cli 时的外部命令行（argv 形式，空格分隔）；任务目标经 stdin 喂入。 */
+    command: z.string().default(''),
+    /** worker 单轮超时（分钟），超时判失联。 */
+    timeoutMinutes: z.number().min(1).default(30),
+  }).prefault({}),
   /** Seed loops upserted by name at every boot; runtime edits survive reseeding. */
   loops: z.array(z.object({
     name: z.string().min(1),
@@ -133,6 +141,7 @@ export async function apply(ctx: Context, config: CommaConfig): Promise<void> {
     notifyMinIntervalMinutes: config.proactive.notifyMinIntervalMinutes,
     notebookPath: config.notebook.path,
     briefing: config.briefing,
+    worker: config.worker,
     seedLoops: config.loops,
   })
   ctx.effect(() => async () => { await runtime.stop() })
@@ -144,4 +153,5 @@ export * from './domain.ts'
 export * from './source.ts'
 export * from './decide.ts'
 export * from './notebook.ts'
+export * from './tasks.ts'
 export { ROUTER_PRESET, ROUTER_SESSION_ID, Runtime, type RuntimeOptions } from './runtime.ts'

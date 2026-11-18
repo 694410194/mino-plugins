@@ -17,15 +17,17 @@ Notebook 里。灵感来自 AFK-surf/Comma。
 
 ## 形态
 
-bundle 自带两行：插件本体 + `mino-comma-router` 专用 preset（triage/委派
-prompt 的 Router Session）。装即挂载，卸即干净。会话在列表里显示为
-**Mino 陪伴**（标题以用户改名语义永久固定）。
+bundle 自带三行：插件本体 + `mino-comma-router` 专用 preset（triage/委派
+prompt 的 Router Session）+ `mino-comma-worker` preset（任务执行载体，每轮
+回复必须以 `[COMMA-STATUS] done|needs_review|failed:` 状态块收尾）。装即
+挂载，卸即干净。Router 会话在列表里显示为 **Mino 陪伴**（标题以用户改名
+语义永久固定）；worker 会话以 `comma-task-*` 命名。
 
-## 对话面：事项管理 + 配对
+## 对话面：事项 + 任务 + Loops + 配对
 
-Router Session 上挂了 4 个 agent 作用域工具（`agent.ctx.tools.register`，
-随 agent 销毁自动回滚，插件卸载时按账清理）——事项生命周期和配对全部
-可以对话完成，不需要 UI 面板也不需要改 YAML：
+Router Session 上挂了 11 个 agent 作用域工具（`agent.ctx.tools.register`，
+随 agent 销毁自动回滚，插件卸载时按账清理）——事项生命周期、任务委派、
+值守循环和配对全部可以对话完成，不需要 UI 面板也不需要改 YAML：
 
 - `comma_matters`：按状态列事项（counts + 标题 + 最新条目摘要）
 - `comma_matter_done`：把事项标为已处理（接受 id 或唯一标题子串）
@@ -33,6 +35,25 @@ Router Session 上挂了 4 个 agent 作用域工具（`agent.ctx.tools.register
   注意力扫描自动唤醒并重新判级
 - `comma_im_pair`：查看/选择 comma 接管的 IM bot；配对写 `state` 表
   持久化，未接管的源在下一次重试（~15s）生效
+- `comma_task_add`：把「该干的活」委派成 Task——起 `comma-task-*` worker
+  会话（`mino-comma-worker` preset）执行，状态机
+  `open→working→needs_review→done/failed/cancelled` 持久化在 `tasks` 表
+- `comma_tasks` / `comma_task_cancel`：看任务板、撤任务
+- `comma_task_answer`：worker 卡在 needs_review（拿不准问你）时，答复经
+  `agent.followup` 注回 worker 会话续跑——这就是「拍板→续干」回路
+- `comma_loop_add` / `comma_loop_remove` / `comma_loops`：模型自写值守
+  循环；配 `checkTool`+`checkArgs` 时每轮先跑确定性工具比对 checkpoint，
+  输出没变则本轮静默（安静时零模型调用）
+
+Worker 监控三通道：`session/event` 全局监听解析 assistant 消息状态块；
+`agent/status` idle 兜底——worker 停了没收尾就经 `sessionPersistence`
+读持久层尾部重判，仍无状态块按契约违例转 needs_review；`worker.timeoutMinutes`
+超时巡检同转 needs_review。冷恢复：`open` 任务重派；`working` 任务经官方
+`schedule` 投递「继续」唤醒物化冷会话；会话真丢转 needs_review 拍给人。
+worker 调敏感工具天然走官方 pre-execute 审批缝，无答者 fail-closed。
+`worker.kind=cli` 时改经 `ctx.subprocess.spawn`（显式 argv/cwd/stdio/
+graceMs）起外部命令行 agent——autoloop 式，stdin 喂任务目标、stdout 收
+状态块（此形态不支持 answer 续跑）。
 
 配对受阻时（@xmanrui/dsh-im 未装、没有可用 bot、多候选歧义）不再只写日志：
 按状态指纹**去重后**往 Router Session 注入一条提示消息，由陪伴人格
@@ -53,7 +74,11 @@ Router Session 上挂了 4 个 agent 作用域工具（`agent.ctx.tools.register
   则不推（事项照常在 Notebook 里）
 - `proactive.decideModel`：判断模型 `{provider, model}`，不设则启发式兜底
 - `loops[]`：周期唤醒 router 的循环项（`name/everyMinutes/prompt/enabled`），
-  运行时修改在重 seed 后保留
+  运行时修改在重 seed 后保留；模型也可经 `comma_loop_add` 自写（可带
+  `checkTool` 确定性前置闸）
+- `worker.kind`：`dsh-session`（默认，preset worker 会话）或 `cli`
+  （`ctx.subprocess` 外部命令行 agent，配 `worker.command` 空格分隔 argv）
+- `worker.timeoutMinutes`：worker 单轮超时（默认 30），超时转 needs_review
 - `notebook.path` / `briefing` / `workspaceRoot` 均有默认值
 
 ## 前置条件
@@ -67,12 +92,17 @@ Router Session 上挂了 4 个 agent 作用域工具（`agent.ctx.tools.register
 `pnpm typecheck`/`build` 需要 `@deepseek-ai/*` 解析到**邻仓 mino-agent 源码**
 （vendored cordis），不是 npm 发布版：把 `node_modules/@deepseek-ai/<pkg>`
 junction 到 `../mino-agent` 对应包目录即可（同 `scripts/map-superagent-deps.cjs`
-的约定）。当前需 6 个：cordis、dsh-api-session-controller、dsh-llm、
-dsh-session、dsh-storage-domain、dsh-workspace。
+的约定）。当前需 7 个：cordis、dsh-api-session-controller、dsh-llm、
+dsh-session、dsh-storage-domain、dsh-workspace、dsh-agent。
+`zod` 须与工作区 dsh 包同版（当前 4.6.6），低了 typecheck 报
+`validate/validateAsync` 结构缺失。
+
+`fixture-tasks.ts` 是任务/worker 层的确定性夹具（stub 官方缝跑全生命周期
+11 组断言）：`node fixture-tasks.ts`。
 
 ## 已知边界
 
-- worker 委派未落地：router 只做 triage 与提醒，不分派子任务（preset 注释
-  已声明）
 - `decideModel` 走裸 `llm.stream`，不经过 preset 工具面；误判只影响推送时机，
   不影响事项持久化
+- cli worker 一次性执行，无 needs_review 续跑（进程已退出）；需要拍板回路
+  的任务用 `dsh-session`

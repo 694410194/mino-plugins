@@ -3,7 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import type { Context } from '@deepseek-ai/cordis'
 import type {} from '@deepseek-ai/dsh-api-session-controller'
-import type { WorkspaceRegistry } from '@deepseek-ai/dsh-workspace'
+import type { WorkspaceId, WorkspaceRegistry } from '@deepseek-ai/dsh-workspace'
 import type { SessionId } from '@deepseek-ai/dsh-session'
 import type { Domain } from '@deepseek-ai/dsh-storage-domain'
 import { freezeMessage, MessageId, type UserMessage } from '@deepseek-ai/dsh-llm'
@@ -15,7 +15,11 @@ import {
 } from './decide.ts'
 import { renderNotebook } from './notebook.ts'
 import { resolveBot, resolveNotifyTarget, type BotResolution } from './resolve.ts'
-import { PAIRING_NAG_KEY, registerRouterTools } from './tools.ts'
+import { PAIRING_NAG_KEY, registerRouterTools, type TaskOps } from './tools.ts'
+import {
+  createTask, answerTask, cancelTask, onSessionEvent, onWorkerIdle, recoverTasks, sweepTaskTimeouts,
+  type TaskHost, type WorkerConfig,
+} from './tasks.ts'
 
 export const ROUTER_SESSION_ID = 'comma-router' as SessionId
 export const ROUTER_PRESET = 'mino-comma-router'
@@ -61,15 +65,18 @@ export interface RuntimeOptions {
   notifyMinIntervalMinutes: number
   notebookPath?: string
   briefing: { enabled: boolean; hour: number }
+  worker: WorkerConfig
   seedLoops: { name: string; everyMinutes: number; prompt: string; enabled: boolean }[]
 }
 
-export class Runtime implements SourceHost {
+export class Runtime implements SourceHost, TaskHost {
   readonly ready: Promise<void>
   readonly logger: Context['logger']
   private readonly controller = new AbortController()
   private domain!: CommaDomain
   private fibers: Promise<void>[] = []
+  private readonly disposers: (() => void)[] = []
+  private workspaceIdValue!: WorkspaceId
   private notebookDirty = true
   private renderTimer?: ReturnType<typeof setTimeout>
   /** The bot the IM source is bound to once pairing resolves; the notify default falls back to it. */
@@ -78,7 +85,7 @@ export class Runtime implements SourceHost {
   private readonly mountedTools = new Map<string, () => void>()
 
   constructor(
-    private readonly ctx: Context,
+    readonly ctx: Context,
     sources: Source[],
     private readonly options: RuntimeOptions,
   ) {
@@ -86,9 +93,34 @@ export class Runtime implements SourceHost {
     this.ready = this.start(sources)
   }
 
+  // ---- TaskHost 面（tasks.ts 的执行引擎读这些） ----
+  get signal(): AbortSignal { return this.controller.signal }
+  commaDomain(): CommaDomain { return this.domain }
+  workspaceId(): WorkspaceId { return this.workspaceIdValue }
+  workspaceRoot(): string { return this.options.workspaceRoot ?? process.cwd() }
+  worker(): WorkerConfig { return this.options.worker }
+  onChanged(): void { this.scheduleRender() }
+  /** 任务生命周期消息：路由会话 + IM + feed 卡三通道投递。 */
+  async notify(text: string, task: { id: string; title: string }): Promise<void> {
+    await this.routerMessage(text)
+    await this.notifyIm(text)
+    const tools = this.ctx.get('tools') as ToolsExecFace | undefined
+    if (!this.options.postToFeed || !tools?.execute) return
+    try {
+      await tools.execute({
+        calls: [{
+          type: 'tool-call', id: `comma-task:${task.id}:${Date.now()}`, name: 'today_post',
+          arguments: JSON.stringify({ title: text.slice(0, MATTER_TITLE_MAX), kind: 'moment', batch: 'comma-task', source: 'comma:task' }),
+        }],
+        signal: this.controller.signal,
+      })
+    } catch { /* feed 投递失败不阻塞任务流转 */ }
+  }
+
   private async start(sources: Source[]): Promise<void> {
     this.domain = await this.ctx.storageDomain.open(commaDomain)
     const workspace = await this.ctx.workspaceRegistry.create(this.options.workspaceRoot ?? process.cwd())
+    this.workspaceIdValue = workspace.id
     // resolveAgent 只覆盖活会话——冷会话要用持久层 list 判存在，避免重复 create 撞 ApiSessionCwdConflict。
     const listed = await this.ctx.sessionController.list({}, this.controller.signal)
     if (!listed.items.some(item => item.sessionId === ROUTER_SESSION_ID)) {
@@ -114,8 +146,20 @@ export class Runtime implements SourceHost {
       }
     }
     await this.seedLoops(this.options.seedLoops)
+    await recoverTasks(this)
 
     const signal = this.controller.signal
+    // Task worker 监控：assistant/message 收尾状态块（全局监听见 cold/后台会话的事件），
+    // agent/status idle 兜底契约违例（worker 停了但没输出状态块）。
+    this.disposers.push(this.ctx.on('session/event', (session, event) => {
+      void onSessionEvent(this, session.id, event.type, event.data)
+        .catch((error: unknown) => this.logger.warn('mino-comma worker event failed: %s', String(error)))
+    }, { global: true }))
+    this.disposers.push(this.ctx.on('agent/status', ({ agent, status }) => {
+      if (status !== 'idle') return
+      void onWorkerIdle(this, agent.id)
+        .catch((error: unknown) => this.logger.warn('mino-comma worker idle check failed: %s', String(error)))
+    }, { global: true }))
     this.fibers = [
       ...sources.map(source =>
         source.run(this, signal).catch((error: unknown) => {
@@ -222,12 +266,51 @@ export class Runtime implements SourceHost {
       domain: () => this.domain,
       ready: () => this.ready,
       onChanged: () => this.scheduleRender(),
+      tasks: this.taskOps,
+      loops: this.loopOps,
     }))
   }
 
   /** Forget a disposed router agent; its scoped registrations rolled back with the agent ctx. */
   dropRouter(agent: { id: SessionId }): void {
     this.mountedTools.delete(agent.id)
+  }
+
+  /** 任务执行面：router 会话的模型用这些工具把「该干的活」委派成 Task。 */
+  private readonly taskOps: TaskOps = {
+    add: async input => createTask(this, input),
+    list: () => [...this.domain.table('tasks').entries()].map(([, t]) => t),
+    answer: async (taskId, answer) => answerTask(this, taskId, answer),
+    cancel: async taskId => cancelTask(this, taskId),
+    find: ref => {
+      const table = this.domain.table('tasks')
+      if (table.get(ref) !== undefined) return { key: ref }
+      const needle = ref.toLowerCase()
+      const hits = [...table.entries()].filter(([, t]) => t.title.toLowerCase().includes(needle))
+      return hits.length === 1 ? { key: hits[0]![0] } : { error: hits.length === 0 ? 'not-found' : 'ambiguous', candidates: hits.slice(0, 8).map(([id, t]) => ({ id, title: t.title })) }
+    },
+  }
+
+  /** Loop 管理面：模型自写值守程序（可选 checkTool 确定性闸）。 */
+  private readonly loopOps = {
+    add: async (input: { name: string; everyMinutes: number; prompt: string; checkTool?: string; checkArgs?: string }) => {
+      const id = `loop:${input.name}`
+      await this.domain.table('loops').put(id, {
+        id, name: input.name, everyMinutes: input.everyMinutes, prompt: input.prompt,
+        enabled: true,
+        ...(input.checkTool !== undefined ? { checkTool: input.checkTool } : {}),
+        ...(input.checkArgs !== undefined ? { checkArgs: input.checkArgs } : {}),
+      })
+      this.scheduleRender()
+      return { ok: true, id }
+    },
+    list: () => [...this.domain.table('loops').entries()].map(([, l]) => l),
+    remove: async (name: string) => {
+      const id = `loop:${name}`
+      if (this.domain.table('loops').get(id) === undefined) return { ok: false, error: 'not-found' }
+      await this.domain.table('loops').delete(id)
+      return { ok: true }
+    },
   }
 
   private async notifyIm(text: string): Promise<void> {
@@ -369,15 +452,39 @@ export class Runtime implements SourceHost {
     }
   }
 
+  /** 确定性前置闸：跑公开工具比对 checkpoint，输出没变则本轮静默（零 LLM token）。 */
+  private async loopCheckChanged(checkTool: string, checkArgs: string | undefined, checkpoint: string | undefined): Promise<{ changed: boolean; next?: string }> {
+    const tools = this.ctx.get('tools') as ToolsExecFace | undefined
+    if (!tools?.execute) return { changed: true } // 缝缺失不静默丢任务——按有变化放行并留错
+    try {
+      const out = await tools.execute({
+        calls: [{ type: 'tool-call', id: `comma-loop:${crypto.randomUUID()}`, name: checkTool, arguments: checkArgs ?? '{}' }],
+        signal: this.controller.signal,
+      })
+      const next = JSON.stringify(out)
+      return next === checkpoint ? { changed: false } : { changed: true, next }
+    } catch (error) {
+      this.logger.warn('mino-comma loop check %s failed: %s', checkTool, String(error))
+      return { changed: true }
+    }
+  }
+
   /** Fire due loops into the router session and run the daily briefing check. */
   private async loopTick(): Promise<void> {
     const loops = this.domain.table('loops')
     const now = Date.now()
     for (const [key, loop] of loops.entries()) {
       if (!loop.enabled || now - (loop.lastRunAt ?? 0) < Math.max(loop.everyMinutes, 5) * 60_000) continue
+      if (loop.checkTool) {
+        const gate = await this.loopCheckChanged(loop.checkTool, loop.checkArgs, loop.checkpoint)
+        await loops.update(key, l => ({ ...l, lastRunAt: now, ...(gate.next !== undefined ? { checkpoint: gate.next } : {}) }))
+        if (!gate.changed) continue
+      } else {
+        await loops.update(key, l => ({ ...l, lastRunAt: now }))
+      }
       await this.routerMessage(`[comma loop:${loop.name}] ${loop.prompt}`)
-      await loops.update(key, l => ({ ...l, lastRunAt: now }))
     }
+    await sweepTaskTimeouts(this)
     if (this.options.briefing.enabled) await this.briefingTick(now)
     if (this.notebookDirty) await this.renderNotebook()
   }
@@ -407,9 +514,10 @@ export class Runtime implements SourceHost {
   private async renderNotebook(): Promise<void> {
     const matters = [...this.domain.table('matters').entries()].map(([, m]) => m)
     const items = new Map([...this.domain.table('source_items').entries()].map(([k, i]) => [i.id, i]))
-    const path = this.options.notebookPath ?? join(this.options.workspaceRoot ?? process.cwd(), 'Comma', 'Notebook.md')
+    const tasks = [...this.domain.table('tasks').entries()].map(([, t]) => t)
+    const path = this.options.notebookPath ?? join(this.workspaceRoot(), 'Comma', 'Notebook.md')
     await mkdir(dirname(path), { recursive: true })
-    await writeFile(path, renderNotebook(matters, items))
+    await writeFile(path, renderNotebook(matters, items, Date.now(), tasks))
     this.notebookDirty = false
   }
 
