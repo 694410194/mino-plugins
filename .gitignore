@@ -7,3 +7,6 @@ lib/
 eval/Comma/
 eval/reports/*.boot
 eval/reports/*.stdout
+
+# task-board tsdown bundle byproduct (exports point to lib/, not dist/)
+packages/task-board/dist/

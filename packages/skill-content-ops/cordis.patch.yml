@@ -2,3 +2,9 @@
 - insert:
     - id: skill-content-ops
       name: 'mino-content-ops'
+
+    # ShotCraft 工作台挂载面（host 半）：/dsh-shotcraft-workbench 路由，
+    # 拉起上游 workbench/scripts/open.mjs 的 dev server 给面板 iframe。
+    # 浏览器半 client.js 经 package.json 的 dsh.client 自动加载。
+    - id: shotcraft-workbench
+      name: 'mino-content-ops/workbench'

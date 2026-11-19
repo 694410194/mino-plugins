@@ -18,14 +18,28 @@
   "private": true,
   "files": [
     "index.js",
+    "workbench.js",
+    "client.js",
     "cordis.patch.yml",
     "skills",
     "README.md",
     "LICENSE"
   ],
+  "exports": {
+    ".": "./index.js",
+    "./workbench": "./workbench.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ]
     }
   },
   "engines": {

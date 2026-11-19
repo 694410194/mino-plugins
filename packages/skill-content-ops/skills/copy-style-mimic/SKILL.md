@@ -10,11 +10,14 @@ license: MIT
 
 ## 步骤
 
-### 1. 拿样本文本
+### 1. 拿样本或文风卡
 
-视频样本走 `$video-breakdown` 的 ASR；图文样本直接用原文。样本要足量（≥100 段/句），不够就如实说明指纹不可靠。
+- **文风卡**（content-factory/resource/styles/ 下的 `.md`）：已经是结构化画像，直接当指纹用，跳过第 2 步。卡的格式见 `references/persona-template.md`（上游 perfectly-replicate-writing-skills，MIT）。
+- **原始样本**：视频样本走 `$video-breakdown` 的 ASR；图文样本直接用原文。样本要足量（≥100 段/句），不够就如实说明指纹不可靠。
 
 ### 2. 量文风指纹（全部出真数）
+
+结构化画像的完整维度框架见 `references/7-dimensions-framework.md`（词汇/句法/语气/篇章/修辞/情感/视角 + 格式适配，上游 MIT 验证框架）；14 种成稿结构公式见 `references/writing-formulas.md`。快速版按下述清单量：
 
 - **句/段长分布**：总数、均值、中位、最短最长、≤5字/6-12/13-20/>20 各档计数
 - **语速**（口播样本）：总字数 ÷ 总时长，实测锚点 425 字/分
