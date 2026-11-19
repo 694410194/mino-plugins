@@ -820,7 +820,7 @@ export function FeedTab({ t, summary, onChanged, actions, renderSlot }: { t: Tra
     <div>
       {events !== null ? <EventsCard events={events} t={t} now={now} /> : null}
 
-      <h2 className={css.sectionTitle}>
+      <h2 className={css.sectionTitle} id="today-schedule">
         {t('section.routines')}
         <button type="button" className={css.linkButton} onClick={actions.openSchedules}>{t('section.scheduleAll')} →</button>
       </h2>
@@ -850,7 +850,7 @@ export function FeedTab({ t, summary, onChanged, actions, renderSlot }: { t: Tra
       />
 
       <div className={css.sectionRow}>
-        <h2 className={css.sectionTitle}>
+        <h2 className={css.sectionTitle} id="today-feed">
           {t('section.feed')}
           {summary.items.some(i => !i.read) ? (
             <button type="button" className={css.linkButton} onClick={() => { void api.markRead().then(onChanged).catch(() => {}) }}>

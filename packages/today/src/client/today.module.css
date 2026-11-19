@@ -103,6 +103,15 @@
   -webkit-backdrop-filter: blur(40px) saturate(1.4);
   color: var(--t-ink-2);
 }
+button.statChip {
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+button.statChip:hover {
+  color: var(--t-ink);
+  border-color: var(--t-ink-3);
+}
 .heroSide {
   position: absolute;
   z-index: 1;

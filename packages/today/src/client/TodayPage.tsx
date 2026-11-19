@@ -148,9 +148,30 @@ export function TodayPage({ t, actions, useSessionList, useJobs, renderSlot }: T
               <h1 className={css.heroGreeting}>{t(greetingKey(today.getHours()))}</h1>
               <div className={css.heroStats}>
                 {stats ? <span className={css.statChip}>{t('hero.stat.days', { count: daysSince(stats.oldestAt) })}</span> : null}
-                {stats ? <span className={css.statChip}>{t('hero.stat.feed', { count: stats.feedCount })}</span> : null}
-                {stats ? <span className={css.statChip}>{t('hero.stat.diary', { count: stats.diaryDays })}</span> : null}
-                {summary ? <span className={css.statChip}>{t('hero.stat.schedule', { count: summary.schedules.length })}</span> : null}
+                {stats ? (
+                  <button
+                    type="button"
+                    className={css.statChip}
+                    title={t('section.feed')}
+                    onClick={() => document.getElementById('today-feed')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                  >{t('hero.stat.feed', { count: stats.feedCount })}</button>
+                ) : null}
+                {stats ? (
+                  <button
+                    type="button"
+                    className={css.statChip}
+                    title={t('tab.diary')}
+                    onClick={() => setTab('diary')}
+                  >{t('hero.stat.diary', { count: stats.diaryDays })}</button>
+                ) : null}
+                {summary ? (
+                  <button
+                    type="button"
+                    className={css.statChip}
+                    title={t('section.routines')}
+                    onClick={() => document.getElementById('today-schedule')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                  >{t('hero.stat.schedule', { count: summary.schedules.length })}</button>
+                ) : null}
               </div>
             </div>
             <div className={css.heroSide}>
