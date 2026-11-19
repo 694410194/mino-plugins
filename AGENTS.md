@@ -194,6 +194,25 @@ Mino 插件生态：全部走官方 `dsh.bundle` + `cordis.patch.yml` 组合，�
   对 web 档无效）。新 token 见 stdout `dsh web: http://...?token=...`，
   旧 token 全部作废；浏览器黑屏先 Ctrl+Shift+R 硬刷再查 console。
 
+### vstest 档部署纪律（2026-11-19 立，stale-tarball 事故后改 link: 直链）
+
+`~/.mino/profiles/vstest` 的本地插件依赖**一律 `link:` 源码直链**（today/brief/
+call/voice-notes/calendar/mail/webwatch/content-ops/meeting-detect/cred-vault/
+image/persona/market/fish-memory），**禁止 `file:` tarball 进开发档**。
+
+- 事故教训：`file:` 依赖下每次 `pnpm install` 都用旧 tgz 重新解压覆盖
+  node_modules——手工 `cp lib` 部署会被静默回滚，表现为路由/功能时有时无
+  （calendar `/api/day` 曾两次启动结果不同）。link: 下源改+重建 lib 即部署，
+  不存在这个环节。
+- **唯一入口 `node scripts/vstest.mjs`**（在 mino-plugins 根跑）：`pnpm run build`
+  指定包（默认全部可构建包）→ taskkill 清 3081 → 轮询端口真空 → 重启 runtime →
+  打印 token URL。纯 JS 包（calendar/mail/webwatch）改源码用 `--no-build`。
+- **禁止**：手工 `cp`/`mklink` 进 `vstest/node_modules`、单独跑 `pnpm install`
+  后不重打 tgz 就宣称部署完成、在 vstest 里保留 `file:` 本地包。
+- `file:` tgz 只活在 plugweb 档和发布链——那里测的就是真实安装产物（能抓
+  task-board 0.4.13 那种 tarball 缺 lib 的事故），vstest 的职责是开发环快迭代。
+- task-board 等第三方 npm 包直接写 registry 版本号（`0.4.19`），别下 tgz 再 `file:`。
+
 ## 部署事实（mino-deploy）
 
 `site/` → `scripts/sync.sh`（工作站 rsync，需 DEPLOY_HOST/KEY；Windows Git
