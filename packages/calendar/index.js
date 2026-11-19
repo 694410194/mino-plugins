@@ -237,10 +237,10 @@ export function apply(ctx) {
   }))
 
   // 「日程进展」公共读面：今日页经这条路由取某天事件（含跨日），路由缺席=没装日历连接器。
-  // webServer 是软依赖（ctx.get）——无 web 宿主上插件照常工作，只是没有这个只读面。
-  const webServer = ctx.get('webServer')
-  if (webServer?.register) {
-    ctx.effect(() => webServer.register({
+  // webServer 是可选依赖：ctx.inject 等它上线再挂路由（激活顺序无关），无 web 宿主
+  // 上回调不跑、插件其余面照常工作——ctx.get 在 apply 时机拿会丢竞态。
+  ctx.inject(['webServer'], (webCtx) => {
+    webCtx.effect(() => webCtx.webServer.register({
       kind: 'exact',
       path: '/mino-connector-calendar/api/day',
       handler: (req, res) => {
@@ -276,7 +276,7 @@ export function apply(ctx) {
         }
       },
     }))
-  }
+  })
 
   // 敏感写动作挂官方审批缝：pre-execute 瀑布返回 ask，由宿主 approval 服务向人确认；
   // 无审批答者（service 级调用/无 UI）按 fail-closed 拒绝。
