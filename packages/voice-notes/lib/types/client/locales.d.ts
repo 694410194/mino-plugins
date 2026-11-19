@@ -1,0 +1,27 @@
+export type CopyKey = keyof typeof zh;
+export declare const zh: {
+    readonly 'entry.label': "语音笔记";
+    readonly 'page.title': "语音笔记";
+    readonly 'record.start': "开始录音";
+    readonly 'record.stop': "结束并转写";
+    readonly 'record.recording': "录音中";
+    readonly 'record.micDenied': "麦克风不可用——检查浏览器授权";
+    readonly 'list.empty': "还没有语音笔记。点「开始录音」录第一段。";
+    readonly 'list.status.recording': "录制中";
+    readonly 'list.status.transcribing': "转写中";
+    readonly 'list.status.ready': "已完成";
+    readonly 'list.status.failed': "失败";
+    readonly 'detail.transcript': "转写";
+    readonly 'detail.summary': "纪要";
+    readonly 'detail.audio': "音频分段";
+    readonly 'detail.noTranscript': "（暂无）";
+    readonly 'action.share': "分享";
+    readonly 'action.delete': "删除";
+    readonly 'action.refresh': "刷新";
+    readonly 'share.copied': "链接已复制";
+    readonly 'share.path': "分享页";
+    readonly 'group.today': "今天";
+    readonly 'group.yesterday': "昨天";
+    readonly 'group.earlier': "更早";
+};
+export declare const en: Record<CopyKey, string>;
