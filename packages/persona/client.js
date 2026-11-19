@@ -784,7 +784,9 @@ window.__ModuleLoader__.load({
       ctx.slots.inject("sidebar.brand.name", function () {
         return ctx.slots.register({
           name: "sidebar.brand.name",
-          id: "mino-brand-name"
+          id: "mino-brand-name",
+          // 单席位升序取小者渲染：官方品牌包占 0，覆盖要负数——同 0 再注册直接抛错。
+          priority: -1
         }, function () {
           return h("span", { style: { fontSize: "15px", fontWeight: 600, letterSpacing: ".01em" } }, "Mino");
         });
